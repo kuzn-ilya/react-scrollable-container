@@ -6,7 +6,13 @@ import './scrollable.less';
 export class Scrollable extends React.Component<ScrollableProps, void> {
     render(): JSX.Element {
         return (
-            <div className="scrollable">Scrollable here!</div>
+            <div 
+                className="scrollable" 
+                style={this.props.style}
+            >
+                Scrollable here!
+                {this.props.children}
+            </div>
         );
     }
 }

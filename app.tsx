@@ -2,20 +2,11 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
 import { Scrollable } from './sources/components/scrollable';
-
 import './app.less';
 
-export class App extends React.Component<void, void> {
-    render(): JSX.Element {
-        return (
-            <div className="app">
-                Hello, world!
-                <Scrollable />
-            </div>
-        );
-    }
-}
-
 ReactDOM.render((
-    <App />
+    <Scrollable 
+        children={[<div>first</div>,<div>second</div>]} 
+        style={{ height: "100%", width: "100%" }} 
+    />
 ), document.getElementById('app'));

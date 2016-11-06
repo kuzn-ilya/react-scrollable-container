@@ -4,13 +4,6 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var path = require('path');
 var ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
 
-var loadFakeData = !!process.env.FAKE;
-var standAlone = !!process.env.STAND_ALONE;
-
-var sourceMapPlugins = process.env.NODE_ENV !== 'production' 
-  ? [new webpack.SourceMapDevToolPlugin({ filename: null, test: /\.tsx?$/ })]
-  : [];
-
 var common = {
     context: __dirname,
     entry: {
@@ -74,11 +67,10 @@ if (process.env.NODE_ENV === 'development' || !process.env.NODE_ENV) {
             new webpack.HotModuleReplacementPlugin(),
             new webpack.DefinePlugin({
                 'process.env': {
-                    'NODE_ENV': JSON.stringify('development'),
-                    loadFakeData: JSON.stringify(loadFakeData),
-                    standAlone: JSON.stringify(standAlone),
+                    'NODE_ENV': JSON.stringify('development')
                 }
-            })
+            }),
+            new webpack.SourceMapDevToolPlugin({ filename: null, test: /\.tsx?$/ })
         ],
         devtool: 'eval-source-map'
     });

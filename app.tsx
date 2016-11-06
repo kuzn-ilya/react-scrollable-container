@@ -1,12 +1,15 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-import { Scrollable } from './sources/components/scrollable';
+import { RightPanel } from './sources/components/right-panel';
 import './app.less';
 
+const children = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30].map(item => (<div key={item}>item #{item}</div>));
+
 ReactDOM.render((
-    <Scrollable 
-        children={[<div>first</div>,<div>second</div>]} 
-        style={{ height: "100%", width: "100%" }} 
+    <RightPanel 
+        children={children} 
+        height="100%"
+        width="100%" 
     />
 ), document.getElementById('app'));

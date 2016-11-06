@@ -53,8 +53,7 @@ var common = {
             name: "libs",
             minChunks: 0
         }),
-    ].concat(sourceMapPlugins),
-
+    ]
 };
 
 if (process.env.NODE_ENV === 'development' || !process.env.NODE_ENV) {

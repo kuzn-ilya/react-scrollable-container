@@ -4,7 +4,27 @@ import * as ReactDOM from 'react-dom';
 import { RightPanel } from './sources/components/right-panel';
 import './app.less';
 
-const children = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30].map(item => (<div key={item}>item #{item}</div>));
+import { fakeData } from './sources/data/fake.data';
+
+const children = fakeData.map(
+    (item, index) => (
+        <div key={index}>
+            <span style={{width: "30px", display: "inline-block", borderRight: "solid 1px grey", borderBottom: "solid 1px grey"}}>{item.id}</span>
+            <span style={{width: "150px", display: "inline-block", borderRight: "solid 1px grey", borderBottom: "solid 1px grey"}}>{item.firstName}</span>
+            <span style={{width: "150px", display: "inline-block", borderRight: "solid 1px grey", borderBottom: "solid 1px grey"}}>{item.lastName}</span>
+            <span style={{width: "250px", display: "inline-block", borderRight: "solid 1px grey", borderBottom: "solid 1px grey"}}>{item.email}</span>
+            <span style={{width: "150px", display: "inline-block", borderRight: "solid 1px grey", borderBottom: "solid 1px grey"}}>{item.gender}</span>
+            <span style={{width: "150px", display: "inline-block", borderRight: "solid 1px grey", borderBottom: "solid 1px grey"}}>{item.ipAddress}</span>
+            <span style={{width: "200px", display: "inline-block", borderRight: "solid 1px grey", borderBottom: "solid 1px grey"}}>{item.creditCardType}</span>
+            <span style={{width: "150px", display: "inline-block", borderRight: "solid 1px grey", borderBottom: "solid 1px grey"}}>{item.creditCardNumber}</span>
+            <span style={{width: "150px", display: "inline-block", borderRight: "solid 1px grey", borderBottom: "solid 1px grey"}}>{item.creditCardExpires}</span>
+            <span style={{width: "250px", display: "inline-block", borderRight: "solid 1px grey", borderBottom: "solid 1px grey"}}>{item.city}</span>
+            <span style={{width: "150px", display: "inline-block", borderRight: "solid 1px grey", borderBottom: "solid 1px grey"}}>{item.company}</span>
+            <span style={{width: "250px", display: "inline-block", borderRight: "solid 1px grey", borderBottom: "solid 1px grey"}}>{item.department}</span>
+            <span style={{width: "150px", display: "inline-block", borderRight: "solid 1px grey", borderBottom: "solid 1px grey"}}>{item.currency}</span>
+        </div>
+    )
+);
 
 ReactDOM.render((
     <RightPanel 
@@ -13,7 +33,7 @@ ReactDOM.render((
         width="100%"
         headerHeight={50}
         headerChild={<div style={{width: 1028}}>Header</div>}
-        childWidth={1028}
-        childHeight={500}
+        childWidth={2200}
+        childHeight={1900}
     />
 ), document.getElementById('app'));

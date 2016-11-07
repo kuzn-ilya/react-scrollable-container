@@ -4,11 +4,14 @@ import { RightHeader } from './right-header';
 import { RightContent } from './right-content';
 import { RightPanelProps } from './right-panel.props';
 import { RightPanelState } from './right-panel.state';
+import './right-panel.less';
 
 export class RightPanel extends React.Component<RightPanelProps, RightPanelState> {
     constructor(props: RightPanelProps) {
         super(props);
         this.state = {};
+        this.handleScroll = this.handleScroll.bind(this);
+        this.handleScrollBarThumbChanged = this.handleScrollBarThumbChanged.bind(this);
     }
 
     render(): JSX.Element {
@@ -30,21 +33,23 @@ export class RightPanel extends React.Component<RightPanelProps, RightPanelState
                     childWidth={this.props.childWidth} 
                     childHeight={this.props.childHeight} 
                     headerHeight={this.props.headerHeight}
-                    onScrollBarThumbChanged={this.onScrollBarThumbChanged.bind(this)}
-                    onScroll={this.onScroll.bind(this)} />
+                    onScrollBarThumbChanged={this.handleScrollBarThumbChanged}
+                    onScroll={this.handleScroll} />
             </div>
         );
     }
 
-    onScrollBarThumbChanged(horizontalScrollThumbHeight: number, verticalScrollThumbWidth: number) {
-        this.setState((prevState, props) =>
-            { horizontalScrollThumbHeight, verticalScrollThumbWidth }
-        );
-    }
+    private handleScrollBarThumbChanged: (horizontalScrollThumbHeight: number, verticalScrollThumbWidth: number) => void = 
+        (horizontalScrollThumbHeight, verticalScrollThumbWidth) => {
+            this.setState((prevState, props) =>
+                ({ horizontalScrollThumbHeight, verticalScrollThumbWidth })
+            );
+        }
 
-    onScroll(scrollLeft: number, scrollTop: number) {
-        this.setState((prevState, props) => 
-            { scrollLeft, scrollTop }
-        );
-    }
+    private handleScroll: (scrollLeft: number, scrollTop: number) => void =
+        (scrollLeft, scrollTop) => {
+            this.setState((prevState, props) => 
+                ({ scrollLeft, scrollTop })
+            );
+        }
 }

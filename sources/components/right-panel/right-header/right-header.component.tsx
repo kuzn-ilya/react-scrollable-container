@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { RightHeaderProps } from './right-header.props';
+import './right-header.less';
 
 export class RightHeader extends React.Component<RightHeaderProps, void> {
     componentWillReceiveProps(nextProps: RightHeaderProps) {

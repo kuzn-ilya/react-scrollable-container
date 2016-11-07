@@ -1,5 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import { addPrefixToClass } from './../../../utils/css.utils';
+
 import { RightContentProps } from './right-content.props';
 import './right-content.less';
 
@@ -26,24 +28,17 @@ export class RightContent extends React.Component<RightContentProps, void> {
     render(): JSX.Element {
         return (
             <div 
+                className={addPrefixToClass("right-content-container")}
                 style={{
-                    overflow: "auto", 
-                    position: "absolute",
-                    top: this.props.headerHeight,
-                    bottom: 0,
-                    left: 0,
-                    right: 0
+                    top: this.props.headerHeight
                 }} 
                 onScroll={this.handleScroll} 
             >
                 <div 
+                    className={addPrefixToClass("right-content")}
                     style={{
-                        position: "relative",
-                        overflow: "hidden",
-                        top: 0,
-                        left: 0,
                         height: this.props.childHeight,
-                        width: this.props.childWidth,
+                        width: this.props.childWidth
                     }}
                 >
                     {this.props.children}

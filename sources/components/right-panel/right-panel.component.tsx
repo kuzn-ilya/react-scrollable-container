@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import { addPrefixToClass } from './../../utils/css.utils';
+
 import { RightHeader } from './right-header';
 import { RightContent } from './right-content';
 import { RightPanelProps } from './right-panel.props';
@@ -16,12 +18,11 @@ export class RightPanel extends React.Component<RightPanelProps, RightPanelState
 
     render(): JSX.Element {
         return (
-            <div 
+            <div
+                className={addPrefixToClass("right-panel")}
                 style={{
                     height: this.props.height,
-                    width: this.props.width,
-                    position: "relative",
-                    overflow: "hidden"
+                    width: this.props.width
                 }}
             >
                 <RightHeader child={this.props.headerChild} 

@@ -1,5 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import { addPrefixToClass } from './../../../utils/css.utils';
+
 import { RightHeaderProps } from './right-header.props';
 import './right-header.less';
 
@@ -22,14 +24,13 @@ export class RightHeader extends React.Component<RightHeaderProps, void> {
 
     render(): JSX.Element {
         return (
-            <div style={{ 
-                height: this.props.height,
-                position: "absolute",
-                backgroundColor: "yellow",
-                left: 0,
-                right: this.props.spaceWidth ? this.props.spaceWidth : 0,
-                overflow: "hidden"
-            }} >
+            <div
+                className={addPrefixToClass("right-header")} 
+                style={{ 
+                    height: this.props.height,
+                    right: this.props.spaceWidth ? this.props.spaceWidth : 0
+                }}
+            >
                 {this.props.child}
             </div>
         );

@@ -4,4 +4,6 @@ export interface RightPanelProps {
     width?: string | number;
     headerHeight?: number | string;
     headerChild?: JSX.Element;
+    childWidth: number;
+    childHeight: number;
 }

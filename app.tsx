@@ -11,7 +11,9 @@ ReactDOM.render((
         children={children} 
         height="100%"
         width="100%"
-        headerHeight="20px"
-        headerChild={<div style={{width: "1028px"}}>Header</div>}
+        headerHeight={50}
+        headerChild={<div style={{width: 1028}}>Header</div>}
+        childWidth={1028}
+        childHeight={500}
     />
 ), document.getElementById('app'));

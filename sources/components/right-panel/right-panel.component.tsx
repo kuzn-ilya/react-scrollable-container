@@ -1,11 +1,16 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 
 import { RightHeader } from './right-header';
 import { RightContent } from './right-content';
 import { RightPanelProps } from './right-panel.props';
+import { RightPanelState } from './right-panel.state';
 
-export class RightPanel extends React.Component<RightPanelProps, void> {
+export class RightPanel extends React.Component<RightPanelProps, RightPanelState> {
+    constructor(props: RightPanelProps) {
+        super(props);
+        this.state = {};
+    }
+
     render(): JSX.Element {
         return (
             <div 
@@ -13,24 +18,33 @@ export class RightPanel extends React.Component<RightPanelProps, void> {
                     height: this.props.height,
                     width: this.props.width,
                     position: "relative",
-                    outline: "1px solid red"
+                    overflow: "hidden"
                 }}
             >
-                <RightHeader height={this.props.headerHeight} child={this.props.headerChild} />
-                <RightContent headerHeight={this.props.headerHeight} children={this.props.children} />
+                <RightHeader child={this.props.headerChild} 
+                    childWidth={this.props.childWidth} 
+                    height={this.props.headerHeight}
+                    spaceWidth={this.state.verticalScrollThumbWidth}
+                    scrollLeft={ this.state.scrollLeft } />
+                <RightContent children={this.props.children} 
+                    childWidth={this.props.childWidth} 
+                    childHeight={this.props.childHeight} 
+                    headerHeight={this.props.headerHeight}
+                    onScrollBarThumbChanged={this.onScrollBarThumbChanged.bind(this)}
+                    onScroll={this.onScroll.bind(this)} />
             </div>
         );
     }
 
-    getScrollbarWidth(): number {
-        let node = ReactDOM.findDOMNode(this) as HTMLElement;
-        let scrollbarWidth = node.offsetWidth - node.clientWidth;
-        return scrollbarWidth;
-    }    
+    onScrollBarThumbChanged(horizontalScrollThumbHeight: number, verticalScrollThumbWidth: number) {
+        this.setState((prevState, props) =>
+            { horizontalScrollThumbHeight, verticalScrollThumbWidth }
+        );
+    }
 
-    getScrollbarHeight(): number {
-        let node = ReactDOM.findDOMNode(this) as HTMLElement;
-        let scrollbarHeight = node.offsetHeight - node.clientHeight;
-        return scrollbarHeight;
-    }    
+    onScroll(scrollLeft: number, scrollTop: number) {
+        this.setState((prevState, props) => {
+            return { scrollLeft, scrollTop };
+        });
+    }
 }

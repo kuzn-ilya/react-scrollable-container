@@ -6,6 +6,7 @@ import './app.less';
 
 import { fakeData } from './examples/grid/data/fake.data';
 import { Row } from './examples/grid/row/row.component';
+import { Header } from './examples/grid/header/header.component';
 
 const children = fakeData.map(
     (item, index) => 
@@ -14,11 +15,11 @@ const children = fakeData.map(
 
 ReactDOM.render((
     <RightPanel 
-        children={children} 
+        children={children}
         height="100%"
         width="100%"
-        headerHeight={50}
-        headerChild={<div style={{width: 1028}}>Header</div>}
+        headerHeight={19}
+        headerChild={<Header childWidth={2190}/>}
         childWidth={2190}
         childHeight={1900}
     />

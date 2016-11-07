@@ -43,8 +43,8 @@ export class RightPanel extends React.Component<RightPanelProps, RightPanelState
     }
 
     onScroll(scrollLeft: number, scrollTop: number) {
-        this.setState((prevState, props) => {
-            return { scrollLeft, scrollTop };
-        });
+        this.setState((prevState, props) => 
+            { scrollLeft, scrollTop }
+        );
     }
 }

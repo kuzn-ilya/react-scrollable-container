@@ -62,7 +62,7 @@ export class RightContent extends React.Component<RightContentProps, void> {
         let scrollTop = node.scrollTop;
         let scrollLeft = node.scrollLeft;
         if (this.props.onScroll) {
-            this.props.onScroll(scrollLeft, scrollTop);
+           this.props.onScroll(scrollLeft, scrollTop);
         }
     }
 }

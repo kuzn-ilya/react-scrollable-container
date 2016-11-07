@@ -10,6 +10,8 @@ ReactDOM.render((
     <RightPanel 
         children={children} 
         height="100%"
-        width="100%" 
+        width="100%"
+        headerHeight="20px"
+        headerChild={<div style={{width: "1028px"}}>Header</div>}
     />
 ), document.getElementById('app'));

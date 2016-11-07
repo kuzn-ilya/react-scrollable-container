@@ -1,22 +1,23 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
+import { RightHeader } from './right-header';
+import { RightContent } from './right-content';
 import { RightPanelProps } from './right-panel.props';
-import './right-panel.less';
 
 export class RightPanel extends React.Component<RightPanelProps, void> {
     render(): JSX.Element {
         return (
             <div 
-                className="right-panel" 
                 style={{
                     height: this.props.height,
-                    width: this.props.width
+                    width: this.props.width,
+                    position: "relative",
+                    outline: "1px solid red"
                 }}
             >
-                Scrollable here
-                {this.props.children}
-
+                <RightHeader height={this.props.headerHeight} child={this.props.headerChild} />
+                <RightContent headerHeight={this.props.headerHeight} children={this.props.children} />
             </div>
         );
     }

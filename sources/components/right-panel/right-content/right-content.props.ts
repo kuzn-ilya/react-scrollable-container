@@ -3,6 +3,6 @@ export interface RightContentProps {
     children?: JSX.Element[];
     childWidth: number;
     childHeight: number;
-    onScrollBarThumbChanged?: (horizontalScrollThumbHeight: number, verticalScrollThumbWidth: number) => void; 
+    onScrollBarThumbSizeChanged?: (horizontalScrollThumbHeight: number, verticalScrollThumbWidth: number) => void; 
     onScroll?: (scrollLeft: number, scrollTop: number) => void; 
 }

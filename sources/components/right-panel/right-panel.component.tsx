@@ -13,7 +13,7 @@ export class RightPanel extends React.Component<RightPanelProps, RightPanelState
         super(props);
         this.state = {};
         this.handleScroll = this.handleScroll.bind(this);
-        this.handleScrollBarThumbChanged = this.handleScrollBarThumbChanged.bind(this);
+        this.handleScrollBarThumbSizeChanged = this.handleScrollBarThumbSizeChanged.bind(this);
     }
 
     render(): JSX.Element {
@@ -34,13 +34,13 @@ export class RightPanel extends React.Component<RightPanelProps, RightPanelState
                     childWidth={this.props.childWidth} 
                     childHeight={this.props.childHeight} 
                     headerHeight={this.props.headerHeight}
-                    onScrollBarThumbChanged={this.handleScrollBarThumbChanged}
+                    onScrollBarThumbSizeChanged={this.handleScrollBarThumbSizeChanged}
                     onScroll={this.handleScroll} />
             </div>
         );
     }
 
-    private handleScrollBarThumbChanged: (horizontalScrollThumbHeight: number, verticalScrollThumbWidth: number) => void = 
+    private handleScrollBarThumbSizeChanged: (horizontalScrollThumbHeight: number, verticalScrollThumbWidth: number) => void = 
         (horizontalScrollThumbHeight, verticalScrollThumbWidth) => {
             this.setState((prevState, props) =>
                 ({ horizontalScrollThumbHeight, verticalScrollThumbWidth })

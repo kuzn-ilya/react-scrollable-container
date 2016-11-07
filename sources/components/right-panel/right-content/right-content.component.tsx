@@ -60,8 +60,8 @@ export class RightContent extends React.Component<RightContentProps, void> {
                 this.horizontalScrollThumbHeight = newHeight;
                 this.verticalScrollThumbWidth = newWidth;
 
-                if (this.props.onScrollBarThumbChanged) {
-                    this.props.onScrollBarThumbChanged(this.horizontalScrollThumbHeight, this.verticalScrollThumbWidth);
+                if (this.props.onScrollBarThumbSizeChanged) {
+                    this.props.onScrollBarThumbSizeChanged(this.horizontalScrollThumbHeight, this.verticalScrollThumbWidth);
                 }
             }
         }

@@ -8,7 +8,7 @@ export class Header extends React.Component<HeaderProps, void> {
         return (
             <div style={{
                 height: "100%",
-                width: this.props.childWidth,
+                width: "100%",
                 position: "relative",
                 top: "0px",
                 left: "0px"                

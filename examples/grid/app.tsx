@@ -18,7 +18,7 @@ const component = (
         contentHeight={1900}
     >
         <Header>
-            <GridHeader childWidth={2190} />
+            <GridHeader />
         </Header>
         <Content>
             {fakeData.map(item => (<Row model={item} />))}

@@ -1,18 +1,20 @@
 @import '../variables.less';
 
 .@{base-css-name} {
-    &-content-container {
-        overflow: auto; 
-        position: absolute;
-        bottom: 0px;
-        left: 0px;
-        right: 0px;
-    }
-    
     &-content {
-        overflow: hidden;
-        position: relative;
-        top: 0px;
-        left: 0px;
+        &-container {
+            overflow: auto; 
+            position: absolute;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+        }
+        
+        & {
+            overflow: hidden;
+            position: relative;
+            top: 0px;
+            left: 0px;
+        }
     }
 }

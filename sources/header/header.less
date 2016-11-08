@@ -2,9 +2,20 @@
 
 .@{base-css-name} {
     &-header {
-        position: absolute;
-        background-color: yellow;
-        left: 0px;
-        overflow: hidden;
+        &-container {
+            overflow: hidden; 
+            position: absolute;
+            top: 0px;
+            bottom: 0px;
+            left: 0px;
+        }
+        
+        & {
+            position: relative;
+            background-color: yellow;
+            left: 0px;
+            top: 0px;
+            overflow: hidden;
+        }
     }
 }

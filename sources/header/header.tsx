@@ -33,13 +33,21 @@ export class Header extends React.Component<HeaderProps, void> implements React.
     render(): JSX.Element {
         return (
             <div
-                className={addPrefixToClass("header")} 
+                className={addPrefixToClass("header-container")} 
                 style={{ 
                     height: this.props.height,
                     right: this.props.spaceWidth || 0
                 }}
             >
-                {this.props.children}
+                <div
+                    className={addPrefixToClass("header")} 
+                    style={{
+                        width: this.props.contentWidth,
+                        height: this.props.height
+                    }}
+                >
+                    {this.props.children}
+                </div>
             </div>
         );
     }

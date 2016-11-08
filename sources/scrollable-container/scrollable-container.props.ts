@@ -1,9 +1,11 @@
-export interface RightPanelProps {
-    children?: JSX.Element[];
+import * as React from 'react';
+
+export interface ScrollableContainerProps {
+    children: React.ReactNode;
     height?: string | number;
     width?: string | number;
     headerHeight?: number | string;
-    headerChild?: JSX.Element;
+    headerChildren: React.ReactNode;
     childWidth: number;
     childHeight: number;
 }

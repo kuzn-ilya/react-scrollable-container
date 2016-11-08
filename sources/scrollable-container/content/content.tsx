@@ -1,15 +1,15 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { addPrefixToClass } from './../../../utils/css.utils';
+import { addPrefixToClass } from './../../utils/css.utils';
 
-import { RightContentProps } from './right-content.props';
-import './right-content.less';
+import { ContentProps } from './content.props';
+import './content.less';
 
-export class RightContent extends React.Component<RightContentProps, void> {
+export class Content extends React.Component<ContentProps, void> {
     private horizontalScrollThumbHeight?: number;
     private verticalScrollThumbWidth?: number;
     
-    constructor(props: RightContentProps) {
+    constructor(props: ContentProps) {
         super(props);
         this.handleWindowResize = this.handleWindowResize.bind(this);
         this.handleScroll = this.handleScroll.bind(this);
@@ -28,14 +28,14 @@ export class RightContent extends React.Component<RightContentProps, void> {
     render(): JSX.Element {
         return (
             <div 
-                className={addPrefixToClass("right-content-container")}
+                className={addPrefixToClass("content-container")}
                 style={{
                     top: this.props.headerHeight
                 }} 
                 onScroll={this.handleScroll} 
             >
                 <div 
-                    className={addPrefixToClass("right-content")}
+                    className={addPrefixToClass("content")}
                     style={{
                         height: this.props.childHeight,
                         width: this.props.childWidth

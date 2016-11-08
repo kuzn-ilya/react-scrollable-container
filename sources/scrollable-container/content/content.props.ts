@@ -1,6 +1,8 @@
-export interface RightContentProps {
+import * as React from 'react';
+
+export interface ContentProps {
     headerHeight: number | string;
-    children?: JSX.Element[];
+    children: React.ReactNode;
     childWidth: number;
     childHeight: number;
     onScrollBarThumbSizeChanged?: (horizontalScrollThumbHeight: number, verticalScrollThumbWidth: number) => void; 

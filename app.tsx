@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-import { RightPanel } from './sources/components/right-panel';
+import { ScrollableContainer } from './sources/scrollable-container';
 import './app.less';
 
 import { fakeData } from './examples/grid/data/fake.data';
@@ -14,12 +14,12 @@ const children = fakeData.map(
 );
 
 ReactDOM.render((
-    <RightPanel 
+    <ScrollableContainer 
         children={children}
         height="100%"
         width="100%"
         headerHeight={19}
-        headerChild={<Header childWidth={2190}/>}
+        headerChildren={<Header childWidth={2190}/>}
         childWidth={2190}
         childHeight={1900}
     />

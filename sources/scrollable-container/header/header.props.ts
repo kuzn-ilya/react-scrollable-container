@@ -1,6 +1,8 @@
-export interface RightHeaderProps {
+import * as React from 'react';
+
+export interface HeaderProps {
     height: number | string;
-    child?: JSX.Element;
+    children: React.ReactNode;
     childWidth: number;
     spaceWidth?: number;
     scrollLeft?: number;

@@ -1,4 +1,4 @@
-export interface RightPanelState {
+export interface ScrollableContainerState {
     horizontalScrollThumbHeight?: number;
     verticalScrollThumbWidth?: number;
     scrollLeft?: number;

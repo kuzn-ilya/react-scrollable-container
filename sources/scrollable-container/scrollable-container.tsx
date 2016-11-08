@@ -1,15 +1,15 @@
 import * as React from 'react';
 
-import { addPrefixToClass } from './../../utils/css.utils';
+import { addPrefixToClass } from './../utils/css.utils';
 
-import { RightHeader } from './right-header';
-import { RightContent } from './right-content';
-import { RightPanelProps } from './right-panel.props';
-import { RightPanelState } from './right-panel.state';
-import './right-panel.less';
+import { Header } from './header';
+import { Content } from './content';
+import { ScrollableContainerProps } from './scrollable-container.props';
+import { ScrollableContainerState } from './scrollable-container.state';
+import './scrollable-container.less';
 
-export class RightPanel extends React.Component<RightPanelProps, RightPanelState> {
-    constructor(props: RightPanelProps) {
+export class ScrollableContainer extends React.Component<ScrollableContainerProps, ScrollableContainerState> {
+    constructor(props: ScrollableContainerProps) {
         super(props);
         this.state = {};
         this.handleScroll = this.handleScroll.bind(this);
@@ -19,18 +19,18 @@ export class RightPanel extends React.Component<RightPanelProps, RightPanelState
     render(): JSX.Element {
         return (
             <div
-                className={addPrefixToClass("right-panel")}
+                className={addPrefixToClass("scrollable-container")}
                 style={{
                     height: this.props.height,
                     width: this.props.width
                 }}
             >
-                <RightHeader child={this.props.headerChild} 
+                <Header children={this.props.headerChildren} 
                     childWidth={this.props.childWidth} 
                     height={this.props.headerHeight}
                     spaceWidth={this.state.verticalScrollThumbWidth}
                     scrollLeft={ this.state.scrollLeft } />
-                <RightContent children={this.props.children} 
+                <Content children={this.props.children} 
                     childWidth={this.props.childWidth} 
                     childHeight={this.props.childHeight} 
                     headerHeight={this.props.headerHeight}

@@ -5,6 +5,6 @@ export interface ContentProps {
     top?: number | string;
     contentWidth?: number;
     contentHeight?: number;
-    onScrollBarThumbSizeChanged?: (horizontalScrollThumbHeight: number, verticalScrollThumbWidth: number) => void; 
-    onScroll?: (scrollLeft: number, scrollTop: number) => void; 
+    onScrollBarThumbSizeChanged?: (horizontalScrollThumbHeight: number, verticalScrollThumbWidth: number) => void;
+    onScroll?: (scrollLeft: number, scrollTop: number) => void;
 }

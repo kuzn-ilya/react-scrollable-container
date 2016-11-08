@@ -11,13 +11,13 @@ export class Content extends React.Component<ContentProps, void> {
         children: null,
         contentWidth: null,
         contentHeight: null,
-        onScrollBarThumbSizeChanged: null, 
-        onScroll: null 
-    } 
+        onScrollBarThumbSizeChanged: null,
+        onScroll: null
+    };
 
     private horizontalScrollThumbHeight?: number;
     private verticalScrollThumbWidth?: number;
-    
+
     constructor(props: ContentProps) {
         super(props);
         this.handleWindowResize = this.handleWindowResize.bind(this);
@@ -36,15 +36,15 @@ export class Content extends React.Component<ContentProps, void> {
 
     render(): JSX.Element {
         return (
-            <div 
-                className={addPrefixToClass("content-container")}
+            <div
+                className={addPrefixToClass('content-container')}
                 style={{
                     top: this.props.top
-                }} 
-                onScroll={this.handleScroll} 
+                }}
+                onScroll={this.handleScroll}
             >
-                <div 
-                    className={addPrefixToClass("content")}
+                <div
+                    className={addPrefixToClass('content')}
                     style={{
                         height: this.props.contentHeight,
                         width: this.props.contentWidth
@@ -65,7 +65,7 @@ export class Content extends React.Component<ContentProps, void> {
             let el = ReactDOM.findDOMNode(this) as HTMLElement;
             let newWidth = el.offsetWidth - el.clientWidth;
             let newHeight = el.offsetHeight - el.clientHeight;
-            if (newWidth != this.verticalScrollThumbWidth || newHeight != this.horizontalScrollThumbHeight) {
+            if (newWidth !== this.verticalScrollThumbWidth || newHeight !== this.horizontalScrollThumbHeight) {
                 this.horizontalScrollThumbHeight = newHeight;
                 this.verticalScrollThumbWidth = newWidth;
 

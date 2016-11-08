@@ -10,37 +10,37 @@ export class Header extends React.Component<HeaderProps, void> implements React.
         height: null,
         children: null,
         contentWidth: null,
-        spaceWidth: "0px", // TODO
+        spaceWidth: '0px', // TODO
         scrollLeft: 0
-    } 
+    };
 
     componentWillReceiveProps(nextProps: HeaderProps) {
-        if (nextProps.scrollLeft != this.props.scrollLeft) {
+        if (nextProps.scrollLeft !== this.props.scrollLeft) {
             let node = ReactDOM.findDOMNode(this);
             if (node) {
                 node.scrollLeft = nextProps.scrollLeft;
-            } 
+            }
         }
     }
 
     shouldComponentUpdate(nextProps: HeaderProps) {
-        return !(nextProps.contentWidth == this.props.contentWidth 
-            && nextProps.children == this.props.children 
-            && nextProps.height == this.props.height
-            && nextProps.spaceWidth == this.props.spaceWidth);
+        return !(nextProps.contentWidth === this.props.contentWidth
+            && nextProps.children === this.props.children
+            && nextProps.height === this.props.height
+            && nextProps.spaceWidth === this.props.spaceWidth);
     }
 
     render(): JSX.Element {
         return (
             <div
-                className={addPrefixToClass("header-container")} 
-                style={{ 
+                className={addPrefixToClass('header-container')}
+                style={{
                     height: this.props.height,
                     right: this.props.spaceWidth || 0
                 }}
             >
                 <div
-                    className={addPrefixToClass("header")} 
+                    className={addPrefixToClass('header')}
                     style={{
                         width: this.props.contentWidth,
                         height: this.props.height

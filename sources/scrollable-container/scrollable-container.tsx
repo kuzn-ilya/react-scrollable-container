@@ -17,6 +17,7 @@ export class ScrollableContainer extends React.Component<ScrollableContainerProp
     }
 
     render(): JSX.Element {
+        // tslint:disable-next-line:no-any
         let newChildren = React.Children.map(this.props.children, (child: React.ReactElement<any>) => {
             if (child.props && typeof child.props.spaceWidth !== 'undefined') {
                 let newChild = (
@@ -59,14 +60,14 @@ export class ScrollableContainer extends React.Component<ScrollableContainerProp
 
     private handleScrollBarThumbSizeChanged: (horizontalScrollThumbHeight: number, verticalScrollThumbWidth: number) => void =
         (horizontalScrollThumbHeight, verticalScrollThumbWidth) => {
-            this.setState((prevState, props) =>
+            this.setState((prevState: ScrollableContainerState, props: ScrollableContainerProps) =>
                 ({ horizontalScrollThumbHeight, verticalScrollThumbWidth })
             );
         }
 
     private handleScroll: (scrollLeft: number, scrollTop: number) => void =
         (scrollLeft, scrollTop) => {
-            this.setState((prevState, props) =>
+            this.setState((prevState: ScrollableContainerState, props: ScrollableContainerProps) =>
                 ({ scrollLeft, scrollTop })
             );
         }

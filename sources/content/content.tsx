@@ -7,12 +7,12 @@ import './content.less';
 
 export class Content extends React.Component<ContentProps, void> {
     static defaultProps: ContentProps = {
-        top: null,
         children: null,
-        contentWidth: null,
         contentHeight: null,
+        contentWidth: null,
+        onScroll: null,
         onScrollBarThumbSizeChanged: null,
-        onScroll: null
+        top: null
     };
 
     private horizontalScrollThumbHeight?: number;
@@ -24,12 +24,12 @@ export class Content extends React.Component<ContentProps, void> {
         this.handleScroll = this.handleScroll.bind(this);
     }
 
-    componentDidMount() {
+    componentDidMount(): void {
         this.measureScrollbars();
         window.addEventListener('resize', this.measureScrollbars);
     }
 
-    componentWillUnmount() {
+    componentWillUnmount(): void {
         window.removeEventListener('resize', this.measureScrollbars);
         this.horizontalScrollThumbHeight = this.verticalScrollThumbWidth = null;
     }
@@ -81,7 +81,7 @@ export class Content extends React.Component<ContentProps, void> {
             let scrollTop = node.scrollTop;
             let scrollLeft = node.scrollLeft;
             if (this.props.onScroll) {
-            this.props.onScroll(scrollLeft, scrollTop);
+                this.props.onScroll(scrollLeft, scrollTop);
             }
         }
 }

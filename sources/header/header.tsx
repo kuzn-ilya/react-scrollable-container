@@ -7,14 +7,14 @@ import './header.less';
 
 export class Header extends React.Component<HeaderProps, void> implements React.Mixin<HeaderProps, void> {
     static defaultProps: HeaderProps = {
-        height: null,
         children: null,
         contentWidth: null,
-        spaceWidth: '0px', // TODO
-        scrollLeft: 0
+        height: null,
+        scrollLeft: 0,
+        spaceWidth: '0px' // TODO
     };
 
-    componentWillReceiveProps(nextProps: HeaderProps) {
+    componentWillReceiveProps(nextProps: HeaderProps): void {
         if (nextProps.scrollLeft !== this.props.scrollLeft) {
             let node = ReactDOM.findDOMNode(this);
             if (node) {
@@ -23,7 +23,7 @@ export class Header extends React.Component<HeaderProps, void> implements React.
         }
     }
 
-    shouldComponentUpdate(nextProps: HeaderProps) {
+    shouldComponentUpdate(nextProps: HeaderProps): boolean {
         return !(nextProps.contentWidth === this.props.contentWidth
             && nextProps.children === this.props.children
             && nextProps.height === this.props.height
@@ -42,8 +42,8 @@ export class Header extends React.Component<HeaderProps, void> implements React.
                 <div
                     className={addPrefixToClass('header')}
                     style={{
-                        width: this.props.contentWidth,
-                        height: this.props.height
+                        height: this.props.height,
+                        width: this.props.contentWidth
                     }}
                 >
                     {this.props.children}

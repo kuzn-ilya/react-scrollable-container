@@ -9,12 +9,7 @@ import { fakeData } from './data/fake.data';
 import { Row } from './row/row.component';
 import { Header as GridHeader } from './header/header.component';
 
-const children = fakeData.map(
-    (item, index) => 
-        (<Row model={item} />)
-);
-
-ReactDOM.render((
+const component = ( 
     <ScrollableContainer 
         height="100%"
         width="100%"
@@ -26,7 +21,9 @@ ReactDOM.render((
             <GridHeader childWidth={2190} />
         </Header>
         <Content>
-            {children}
+            {fakeData.map(item => (<Row model={item} />))}
         </Content>
     </ScrollableContainer>
-), document.getElementById('app'));
+);
+
+ReactDOM.render(component, document.getElementById('app'));

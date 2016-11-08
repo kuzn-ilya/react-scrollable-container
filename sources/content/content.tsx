@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { addPrefixToClass } from './../../utils/css.utils';
+import { addPrefixToClass } from './../utils/css.utils';
 
 import { ContentProps } from './content.props';
 import './content.less';

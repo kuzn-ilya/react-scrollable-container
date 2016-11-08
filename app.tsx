@@ -2,8 +2,8 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
 import { ScrollableContainer } from './sources/scrollable-container';
-import { Header } from './sources/scrollable-container/header';
-import { Content } from './sources/scrollable-container/content';
+import { Header } from './sources/header';
+import { Content } from './sources/content';
 import './app.less';
 
 import { fakeData } from './examples/grid/data/fake.data';

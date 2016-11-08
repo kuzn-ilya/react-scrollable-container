@@ -6,6 +6,15 @@ import { ContentProps } from './content.props';
 import './content.less';
 
 export class Content extends React.Component<ContentProps, void> {
+    static defaultProps: ContentProps = {
+        headerHeight: "0px",
+        children: null,
+        childWidth: "100%",
+        childHeight: "100%",
+        onScrollBarThumbSizeChanged: null, 
+        onScroll: null 
+    } 
+
     private horizontalScrollThumbHeight?: number;
     private verticalScrollThumbWidth?: number;
     

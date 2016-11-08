@@ -5,7 +5,15 @@ import { addPrefixToClass } from './../../utils/css.utils';
 import { HeaderProps } from './header.props';
 import './header.less';
 
-export class Header extends React.Component<HeaderProps, void> {
+export class Header extends React.Component<HeaderProps, void> implements React.Mixin<HeaderProps, void> {
+    static defaultProps: HeaderProps = {
+        height: "100%",
+        children: null,
+        childWidth: "100%",
+        spaceWidth: "0px", // TODO
+        scrollLeft: 0
+    } 
+
     componentWillReceiveProps(nextProps: HeaderProps) {
         if (nextProps.scrollLeft != this.props.scrollLeft) {
             let node = ReactDOM.findDOMNode(this);

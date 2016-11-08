@@ -7,9 +7,9 @@ import './header.less';
 
 export class Header extends React.Component<HeaderProps, void> implements React.Mixin<HeaderProps, void> {
     static defaultProps: HeaderProps = {
-        height: "100%",
+        height: null,
         children: null,
-        childWidth: "100%",
+        contentWidth: null,
         spaceWidth: "0px", // TODO
         scrollLeft: 0
     } 
@@ -23,11 +23,11 @@ export class Header extends React.Component<HeaderProps, void> implements React.
         }
     }
 
-    shouldComponentUpdate(newProps: HeaderProps) {
-        return !(newProps.childWidth == this.props.childWidth 
-            && newProps.children == this.props.children 
-            && newProps.height == this.props.height
-            && newProps.spaceWidth == this.props.spaceWidth);
+    shouldComponentUpdate(nextProps: HeaderProps) {
+        return !(nextProps.contentWidth == this.props.contentWidth 
+            && nextProps.children == this.props.children 
+            && nextProps.height == this.props.height
+            && nextProps.spaceWidth == this.props.spaceWidth);
     }
 
     render(): JSX.Element {
@@ -36,7 +36,7 @@ export class Header extends React.Component<HeaderProps, void> implements React.
                 className={addPrefixToClass("header")} 
                 style={{ 
                     height: this.props.height,
-                    right: this.props.spaceWidth ? this.props.spaceWidth : 0
+                    right: this.props.spaceWidth || 0
                 }}
             >
                 {this.props.children}

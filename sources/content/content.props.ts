@@ -1,10 +1,10 @@
 import * as React from 'react';
 
 export interface ContentProps {
-    headerHeight: number | string;
-    children: React.ReactNode;
-    childWidth: number | string;
-    childHeight: number | string;
+    children?: React.ReactNode;
+    top?: number | string;
+    contentWidth?: number;
+    contentHeight?: number;
     onScrollBarThumbSizeChanged?: (horizontalScrollThumbHeight: number, verticalScrollThumbWidth: number) => void; 
     onScroll?: (scrollLeft: number, scrollTop: number) => void; 
 }

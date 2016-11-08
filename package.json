@@ -4,7 +4,7 @@
   "description": "React Grid Viewport probe",
   "main": "app.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=development webpack-dev-server",
+    "example-grid": "cross-env NODE_ENV=development webpack-dev-server --config ./examples/grid/webpack.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

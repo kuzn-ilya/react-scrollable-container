@@ -7,10 +7,10 @@ import './content.less';
 
 export class Content extends React.Component<ContentProps, void> {
     static defaultProps: ContentProps = {
-        headerHeight: "0px",
+        top: null,
         children: null,
-        childWidth: "100%",
-        childHeight: "100%",
+        contentWidth: null,
+        contentHeight: null,
         onScrollBarThumbSizeChanged: null, 
         onScroll: null 
     } 
@@ -39,15 +39,15 @@ export class Content extends React.Component<ContentProps, void> {
             <div 
                 className={addPrefixToClass("content-container")}
                 style={{
-                    top: this.props.headerHeight
+                    top: this.props.top
                 }} 
                 onScroll={this.handleScroll} 
             >
                 <div 
                     className={addPrefixToClass("content")}
                     style={{
-                        height: this.props.childHeight,
-                        width: this.props.childWidth
+                        height: this.props.contentHeight,
+                        width: this.props.contentWidth
                     }}
                 >
                     {this.props.children}

@@ -23,8 +23,8 @@ export class ScrollableContainer extends React.Component<ScrollableContainerProp
             if (child.props && typeof child.props.spaceWidth != "undefined") {
                 let newChild = (
                     <Header children = {child.props.children}
-                        childWidth={child.props.childWidth} 
-                        height={child.props.height}
+                        contentWidth={child.props.contentWidth || this.props.contentWidth} 
+                        height={child.props.height || this.props.headerHeight || "0px"}
                         spaceWidth={this.state.verticalScrollThumbWidth}
                         scrollLeft={this.state.scrollLeft } 
                     />
@@ -33,9 +33,9 @@ export class ScrollableContainer extends React.Component<ScrollableContainerProp
             } else if (child.props && typeof child.props.onScrollBarThumbSizeChanged != "undefined" && typeof child.props.onScroll != "undefined") {
                 let newChild = (
                     <Content children={child.props.children} 
-                        childWidth={child.props.childWidth} 
-                        childHeight={child.props.childHeight} 
-                        headerHeight={child.props.headerHeight}
+                        contentWidth={child.props.contentWidth || this.props.contentWidth} 
+                        contentHeight={child.props.contentHeight || this.props.contentHeight} 
+                        top={child.props.top || this.props.headerHeight || "0px"}
                         onScrollBarThumbSizeChanged={this.handleScrollBarThumbSizeChanged}
                         onScroll={this.handleScroll} 
                     />

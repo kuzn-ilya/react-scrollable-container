@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-import { ScrollableContainer, Header, Content } from '../../sources';
+import { ScrollableContainer, Header, Content, LeftPanel } from '../../sources';
 
 import './app.less';
 
@@ -9,8 +9,8 @@ import { fakeData } from './data/fake.data';
 import { Row } from './row/row.component';
 import { Header as GridHeader } from './header/header.component';
 
-const component = ( 
-    <ScrollableContainer 
+const component = (
+    <ScrollableContainer
         height="100%"
         width="100%"
         headerHeight={19}
@@ -21,8 +21,9 @@ const component = (
             <GridHeader />
         </Header>
         <Content>
-            {fakeData.map(item => (<Row model={item} />))}
+            {fakeData.map((item) => (<Row model={item} />))}
         </Content>
+        <LeftPanel />
     </ScrollableContainer>
 );
 

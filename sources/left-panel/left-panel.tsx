@@ -7,8 +7,7 @@ export class LeftPanel extends React.Component<LeftPanelProps, void> {
 
     render(): JSX.Element {
         return (
-            <div>
-            </div>
+            null
         );
     }
 }

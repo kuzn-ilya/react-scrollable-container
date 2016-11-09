@@ -12,7 +12,7 @@ import { Header as GridHeader } from './header/header.component';
 const component = (
     <ScrollableContainer
         height="100%"
-        width="100%"
+        width="80%"
         headerHeight={19}
         contentWidth={2190}
         contentHeight={1900}

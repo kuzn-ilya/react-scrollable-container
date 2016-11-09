@@ -6,6 +6,7 @@ import { ScrollableContainerProps } from './scrollable-container.props';
 import { ScrollableContainerState } from './scrollable-container.state';
 import { Header } from './../header';
 import { Content } from './../content';
+import { LeftPanel } from './../left-panel';
 import './scrollable-container.less';
 
 export class ScrollableContainer extends React.Component<ScrollableContainerProps, ScrollableContainerState> {
@@ -20,7 +21,7 @@ export class ScrollableContainer extends React.Component<ScrollableContainerProp
 
     render(): JSX.Element {
         // tslint:disable-next-line:no-any
-        let newChildren = React.Children.map(this.props.children, (child: React.ReactElement<any>) => {
+        let rightChildren = React.Children.map(this.props.children, (child: React.ReactElement<any>) => {
             if (child.props && (child.type as any).reactScrollableContainerName === 'Header') {
                 let newChild = (
                     <Header children = {child.props.children}
@@ -43,19 +44,35 @@ export class ScrollableContainer extends React.Component<ScrollableContainerProp
                 );
                 return newChild;
             }
+            return null;
+        });
 
-            return child;
+        // tslint:disable-next-line:no-any
+        let leftChildren = React.Children.map(this.props.children, (child: React.ReactElement<any>) => {
+            if (child.props && (child.type as any).reactScrollableContainerName === 'LeftPanel') {
+                let newChild = (
+                    <LeftPanel children={child.props.children}
+                    />
+                );
+                return newChild;
+            }
+            return null;
         });
 
         return (
-            <div
-                className={addPrefixToClass('scrollable-container')}
-                style={{
-                    height: this.props.height,
-                    width: this.props.width
-                }}
-            >
-                {newChildren}
+            <div style={{width: "100%", height: "100%"}}>
+                <div style={{float: "left", height: "100%", width: "20%"}}>
+                    {leftChildren}
+                </div>
+                <div
+                    className={addPrefixToClass('scrollable-container')}
+                    style={{
+                        height: this.props.height,
+                        width: this.props.width
+                    }}
+                >
+                    {rightChildren}
+                </div>
             </div>
         );
     }

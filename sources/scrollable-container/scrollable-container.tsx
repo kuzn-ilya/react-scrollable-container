@@ -9,6 +9,8 @@ import { Content } from './../content';
 import './scrollable-container.less';
 
 export class ScrollableContainer extends React.Component<ScrollableContainerProps, ScrollableContainerState> {
+    static reactScrollableContainerName = 'ScrollableContainer';
+
     constructor(props: ScrollableContainerProps) {
         super(props);
         this.state = {};
@@ -19,7 +21,7 @@ export class ScrollableContainer extends React.Component<ScrollableContainerProp
     render(): JSX.Element {
         // tslint:disable-next-line:no-any
         let newChildren = React.Children.map(this.props.children, (child: React.ReactElement<any>) => {
-            if (child.props && typeof child.props.spaceWidth !== 'undefined') {
+            if (child.props && (child.type as any).reactScrollableContainerName === 'Header') {
                 let newChild = (
                     <Header children = {child.props.children}
                         contentWidth={child.props.contentWidth || this.props.contentWidth}
@@ -29,7 +31,7 @@ export class ScrollableContainer extends React.Component<ScrollableContainerProp
                     />
                 );
                 return newChild;
-            } else if (child.props && typeof child.props.onScrollBarThumbSizeChanged !== 'undefined' && typeof child.props.onScroll !== 'undefined') {
+            } else if (child.props && (child.type as any).reactScrollableContainerName === 'Content') {
                 let newChild = (
                     <Content children={child.props.children}
                         contentWidth={child.props.contentWidth || this.props.contentWidth}

@@ -6,6 +6,8 @@ import { HeaderProps } from './header.props';
 import './header.less';
 
 export class Header extends React.Component<HeaderProps, void> implements React.Mixin<HeaderProps, void> {
+    static reactScrollableContainerName = 'Header';
+
     static defaultProps: HeaderProps = {
         children: null,
         contentWidth: null,

@@ -6,6 +6,8 @@ import { ContentProps } from './content.props';
 import './content.less';
 
 export class Content extends React.Component<ContentProps, void> {
+    static reactScrollableContainerName = 'Content';
+
     static defaultProps: ContentProps = {
         children: null,
         contentHeight: null,

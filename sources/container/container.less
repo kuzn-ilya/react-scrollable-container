@@ -1,0 +1,26 @@
+@import '../variables.less';
+
+.@{base-css-name} {
+    &-container {
+        & {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        &-scrollable {
+            overflow: auto; 
+            position: absolute;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            top: 0px;
+        }
+        
+        &-wrapper {
+            overflow: hidden;
+            position: relative;
+            top: 0px;
+            left: 0px;
+        }
+    }
+}

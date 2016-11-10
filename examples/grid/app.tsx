@@ -25,7 +25,7 @@ const component = (
     //         {fakeData.map((item) => (<Row model={item} />))}
     //     </Content>
     // </ScrollableContainer>
-    <Container height="200px" width="200px" style={{left: "40px", top: "40px"}}>
+    <Container style={{left: "40px", top: "40px", height: "200px", width: "200px" }}>
         <div style={{top: "0px", left: "200px", display: "inline-block", position: "absolute", border: "1px solid red", whiteSpace: "nowrap"}}>Test 1</div>
         <div style={{top: "20px", left: "20px", display: "inline-block", position: "absolute", border: "1px solid red", whiteSpace: "nowrap"}}>Test 2</div>
         <div style={{top: "100px", left: "20px", display: "inline-block", position: "absolute", border: "1px solid red", whiteSpace: "nowrap"}}>Test 3</div>

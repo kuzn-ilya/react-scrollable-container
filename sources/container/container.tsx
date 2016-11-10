@@ -1,6 +1,4 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import * as assign from 'object-assign';
 import { addPrefixToClass } from './../utils/css.utils';
 
 import { ContainerProps } from './container.props';
@@ -26,6 +24,8 @@ export class Container extends React.Component<ContainerProps, ContainerState> i
         };
     }
 
+    private ref: HTMLElement;
+
     getChildContext(): ContainerContext {
         return {
             height: this.state.height,
@@ -43,14 +43,11 @@ export class Container extends React.Component<ContainerProps, ContainerState> i
     }
 
     render(): JSX.Element {
-        let style = assign({}, {
-            height: this.props.height,
-            width: this.props.width
-        }, this.props.style);
-
         return (
-            <div className={addPrefixToClass('container')}
-                style={style}>
+            <div
+                ref={(ref) => this.ref = ref}
+                className={addPrefixToClass('container')}
+                style={this.props.style}>
                 <ContainerScrollable>
                     {this.props.children}
                 </ContainerScrollable>
@@ -62,8 +59,8 @@ export class Container extends React.Component<ContainerProps, ContainerState> i
         () => this.measureScrollbars();
 
     private measureScrollbars: () => void =
-        () => {
-            let el = ReactDOM.findDOMNode(this) as HTMLElement;
-            this.setState({ height: el.offsetHeight, width: el.offsetWidth});
-        }
+        () => this.setState({
+                height: this.ref ? this.ref.offsetHeight : 0,
+                width: this.ref ? this.ref.offsetWidth : 0
+        });
 }

@@ -19,10 +19,12 @@
   },
   "homepage": "https://github.com/kuzn-ilya/react-scrollable-container.git#readme",
   "dependencies": {
+    "object-assign": "^4.1.0",
     "react": "^15.3.2",
     "react-dom": "^15.3.2"
   },
   "devDependencies": {
+    "@types/object-assign": "^4.0.30",
     "@types/react": "^0.14.44",
     "@types/react-dom": "^0.14.18",
     "awesome-typescript-loader": "^2.2.4",

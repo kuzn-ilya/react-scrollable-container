@@ -31,9 +31,10 @@ export class ContainerWrapper extends React.Component<ContainerWrapperProps, Con
         console.log("maxX", maxX, "maxY", maxY);
         for (let i = 0; i < el.children.length; i++) {
             let child = el.children[i] as HTMLElement;
-            console.log(child.style);
-            let x = child.offsetLeft + child.offsetWidth;
-            let y = child.offsetTop + child.offsetHeight;
+            let clientRect = child.getBoundingClientRect();
+            console.log(child.offsetLeft, child.offsetWidth, child.offsetTop, child.offsetHeight, clientRect);
+            let x = child.offsetLeft + clientRect.right - clientRect.left;
+            let y = child.offsetTop + clientRect.bottom - clientRect.top;
             console.log(x, y);
             maxX = Math.max(maxX, x);
             maxY = Math.max(maxY, y);

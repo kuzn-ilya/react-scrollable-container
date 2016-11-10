@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import * as assign from 'object-assign';
 import { addPrefixToClass } from './../utils/css.utils';
 
 import { ContainerProps } from './container.props';
@@ -42,12 +43,14 @@ export class Container extends React.Component<ContainerProps, ContainerState> i
     }
 
     render(): JSX.Element {
+        let style = assign({}, {
+            height: this.props.height,
+            width: this.props.width
+        }, this.props.style);
+
         return (
             <div className={addPrefixToClass('container')}
-                style={{
-                    height: this.props.height,
-                    width: this.props.width
-                }}>
+                style={style}>
                 <ContainerScrollable>
                     {this.props.children}
                 </ContainerScrollable>

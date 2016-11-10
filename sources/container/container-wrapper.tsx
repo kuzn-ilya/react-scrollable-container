@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 import { addPrefixToClass } from './../utils/css.utils';
 import { ContainerWrapperProps } from './container-wrapper.props';
 import { ContainerWrapperState } from './container-wrapper.state';
@@ -13,6 +12,8 @@ export class ContainerWrapper extends React.Component<ContainerWrapperProps, Con
         };
     }
 
+    private ref: HTMLElement;
+
     shouldComponentUpdate(nextProps: ContainerWrapperProps, nextState: ContainerWrapperState): boolean {
         return this.state.childrenHeight !== nextState.childrenHeight
             || this.state.childrenWidth !== nextState.childrenWidth;
@@ -25,21 +26,16 @@ export class ContainerWrapper extends React.Component<ContainerWrapperProps, Con
     }
 
     componentDidMount(): void {
-        let el = ReactDOM.findDOMNode(this) as HTMLElement;
-        let maxX = el.offsetLeft + el.offsetWidth;
-        let maxY = el.offsetTop + el.offsetHeight;
-        console.log("maxX", maxX, "maxY", maxY);
-        for (let i = 0; i < el.children.length; i++) {
-            let child = el.children[i] as HTMLElement;
+        let maxX = this.ref.offsetLeft + this.ref.offsetWidth;
+        let maxY = this.ref.offsetTop + this.ref.offsetHeight;
+        for (let i = 0; i < this.ref.children.length; i++) {
+            let child = this.ref.children[i] as HTMLElement;
             let clientRect = child.getBoundingClientRect();
-            console.log(child.offsetLeft, child.offsetWidth, child.offsetTop, child.offsetHeight, clientRect);
             let x = child.offsetLeft + clientRect.right - clientRect.left;
             let y = child.offsetTop + clientRect.bottom - clientRect.top;
-            console.log(x, y);
             maxX = Math.max(maxX, x);
             maxY = Math.max(maxY, y);
         }
-        console.log("maxX", maxX, "maxY", maxY);
         this.setState({
             childrenHeight: maxY,
             childrenWidth: maxX
@@ -49,7 +45,9 @@ export class ContainerWrapper extends React.Component<ContainerWrapperProps, Con
     render(): JSX.Element {
         return (
             <div className={addPrefixToClass('container-wrapper')}
-                style={{ height: this.state.childrenHeight, width: this.state.childrenWidth}}>
+                style={{ height: this.state.childrenHeight, width: this.state.childrenWidth}}
+                ref={(ref) => this.ref = ref}>
+
                 {this.props.children}
             </div>
         );

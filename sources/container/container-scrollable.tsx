@@ -2,10 +2,9 @@ import * as React from 'react';
 import { addPrefixToClass } from './../utils/css.utils';
 
 import { ContainerWrapper } from './container-wrapper';
-import { ContainerContext } from './container.context';
-import { ContainerScrollableContext } from './container-scrollable.context';
+import { ContainerScrollableProps } from  './container-scrollable.props';
 
-export class ContainerScrollable extends React.Component<void, void> implements React.ChildContextProvider<ContainerScrollableContext> {
+export class ContainerScrollable extends React.Component<ContainerScrollableProps, void> {
 
     static contextTypes: React.ValidationMap<any> = {
         height: React.PropTypes.number,
@@ -17,13 +16,13 @@ export class ContainerScrollable extends React.Component<void, void> implements 
         width: React.PropTypes.number
     };
 
-    getChildContext(): ContainerScrollableContext {
-        return this.context as ContainerContext;
-    }
-
     render(): JSX.Element {
         return (
-            <div className={addPrefixToClass('container-scrollable')}>
+            <div className={addPrefixToClass('container-scrollable')}
+                style={{
+                    overflowX: this.props.overflowX,
+                    overflowY: this.props.overflowY
+                }}>
                 <ContainerWrapper>
                     {this.props.children}
                 </ContainerWrapper>

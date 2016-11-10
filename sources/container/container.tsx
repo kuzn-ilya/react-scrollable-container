@@ -3,12 +3,11 @@ import { addPrefixToClass } from './../utils/css.utils';
 
 import { ContainerProps } from './container.props';
 import { ContainerState } from './container.state';
-import { ContainerContext } from './container.context';
 import { ContainerScrollable } from './container-scrollable';
 
 import './container.less';
 
-export class Container extends React.Component<ContainerProps, ContainerState> implements React.ChildContextProvider<ContainerContext> {
+export class Container extends React.Component<ContainerProps, ContainerState> {
 
     static childContextTypes: React.ValidationMap<any> = {
         height: React.PropTypes.number,
@@ -26,13 +25,6 @@ export class Container extends React.Component<ContainerProps, ContainerState> i
 
     private ref: HTMLElement;
 
-    getChildContext(): ContainerContext {
-        return {
-            height: this.state.height,
-            width: this.state.width
-        };
-    }
-
     componentDidMount(): void {
         this.measureScrollbars();
         window.addEventListener('resize', this.handleWindowResize);
@@ -48,7 +40,7 @@ export class Container extends React.Component<ContainerProps, ContainerState> i
                 ref={(ref) => this.ref = ref}
                 className={addPrefixToClass('container')}
                 style={this.props.style}>
-                <ContainerScrollable>
+                <ContainerScrollable overflowX={this.props.overflowX} overflowY={this.props.overflowY}>
                     {this.props.children}
                 </ContainerScrollable>
             </div>
@@ -60,7 +52,7 @@ export class Container extends React.Component<ContainerProps, ContainerState> i
 
     private measureScrollbars: () => void =
         () => this.setState({
-                height: this.ref ? this.ref.offsetHeight : 0,
-                width: this.ref ? this.ref.offsetWidth : 0
+            height: this.ref ? this.ref.offsetHeight : 0,
+            width: this.ref ? this.ref.offsetWidth : 0
         });
 }

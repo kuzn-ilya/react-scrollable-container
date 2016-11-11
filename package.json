@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "example-grid": "cross-env NODE_ENV=development webpack-dev-server --config ./examples/grid/webpack.config.js",
-    "test": "mocha --require ignore-styles --compilers ts:ts-node/register,tsx:ts-node/register ./tests/**/*.spec.tsx",
+    "test": "mocha --require ignore-styles --require jsdom-global --compilers ts:ts-node/register,tsx:ts-node/register ./tests/**/*.spec.tsx",
     "tslint": "tslint sources/**/*.ts{,x}"
   },
   "repository": {
@@ -43,6 +43,7 @@
     "html-webpack-plugin": "^2.24.1",
     "ignore-styles": "^5.0.1",
     "jsdom": "^9.8.3",
+    "jsdom-global": "^2.1.0",
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
     "mocha": "^3.1.2",

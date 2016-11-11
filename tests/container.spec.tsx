@@ -1,27 +1,36 @@
 import * as React from 'react';
 import * as chai from 'chai';
-import * as chaiEnzyme from 'chai-enzyme'
-import { shallow } from 'enzyme';
+import * as chaiEnzyme from 'chai-enzyme';
+import { shallow, mount } from 'enzyme';
 
 import { Container } from '../sources/container/container';
 
 const expect = chai.expect;
 chai.use(chaiEnzyme());
 
+const jsdom = require('jsdom-global');
+jsdom();
+
 describe('Container', () => {
 
     it('should be defined', () => {
-        let container = shallow(<Container overflowX="auto" overflowY="auto"/>);
-        expect(container).is.to.be;
+        let wrapper = shallow(<Container overflowX="auto" overflowY="auto"/>);
+        expect(wrapper).is.to.be;
     });
 
     it('should have one div inside', () => {
-        let container = shallow(<Container overflowX="auto" overflowY="auto"/>);
-        expect(container.find('div')).to.have.length(1);
+        let wrapper = shallow(<Container overflowX="auto" overflowY="auto"/>);
+        expect(wrapper.find('div')).to.have.length(1);
     });
 
     it('should have a class "react-container-container"', () => {
-        let container = shallow(<Container overflowX="auto" overflowY="auto"/>);
-        expect(container.find('div')).to.have.className('react-container-container');
+        let wrapper = shallow(<Container overflowX="auto" overflowY="auto"/>);
+        expect(wrapper.find('div')).to.have.className('react-container-container');
     });
+
+    it('should render into document', () => {
+        let wrapper = mount(<Container overflowX="auto" overflowY="auto"/>);
+        expect(wrapper).is.to.be;
+    });
+
 });

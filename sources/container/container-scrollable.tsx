@@ -1,32 +1,50 @@
 import * as React from 'react';
 import { addPrefixToClass } from './../utils/css.utils';
 
-import { ContainerWrapper } from './container-wrapper';
 import { ContainerScrollableProps } from  './container-scrollable.props';
+import { ContainerScrollableState } from  './container-scrollable.state';
 
-export class ContainerScrollable extends React.Component<ContainerScrollableProps, void> {
+export class ContainerScrollable extends React.Component<ContainerScrollableProps, ContainerScrollableState> {
 
-    static contextTypes: React.ValidationMap<any> = {
-        height: React.PropTypes.number,
-        width: React.PropTypes.number
-    };
+    constructor(props: ContainerScrollableProps) {
+        super(props);
+        this.handleWindowResize = this.handleWindowResize.bind(this);
+        this.state = {
+            height: 0,
+            width: 0
+        }
+    }
 
-    static childContextTypes: React.ValidationMap<any> = {
-        height: React.PropTypes.number,
-        width: React.PropTypes.number
-    };
+    componentDidMount(): void {
+        this.measureScrollbars();
+        window.addEventListener('resize', this.handleWindowResize);
+    }
+
+    componentWillUnmount(): void {
+        window.removeEventListener('resize', this.handleWindowResize);
+    }
+
+    private ref: HTMLElement;
 
     render(): JSX.Element {
         return (
             <div className={addPrefixToClass('container-scrollable')}
+                ref={(ref) => this.ref = ref}
                 style={{
                     overflowX: this.props.overflowX,
                     overflowY: this.props.overflowY
                 }}>
-                <ContainerWrapper>
                     {this.props.children}
-                </ContainerWrapper>
             </div>
         );
     }
+
+    private handleWindowResize: () => void =
+        () => this.measureScrollbars();
+
+    private measureScrollbars: () => void =
+        () => this.setState({
+            height: this.ref ? this.ref.offsetHeight : 0,
+            width: this.ref ? this.ref.offsetWidth : 0
+        });
 }

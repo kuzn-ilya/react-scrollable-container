@@ -42,7 +42,7 @@ describe('ContainerScrollable', () => {
     it('should be able to resize', () => {
         let wrapper = mount(<ContainerScrollable overflowX="auto" overflowY="auto"/>);
         expect(wrapper).is.to.be;
-        window.resizeBy(100, 100);
-        window.resizeBy(300, 300);
+
+        window.dispatchEvent(new UIEvent('resize'));
     });
 });

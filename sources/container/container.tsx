@@ -2,37 +2,13 @@ import * as React from 'react';
 import { addPrefixToClass } from './../utils/css.utils';
 
 import { ContainerProps } from './container.props';
-import { ContainerState } from './container.state';
 import { ContainerScrollable } from './container-scrollable';
 
 require('./container.less');
 
-export class Container extends React.Component<ContainerProps, ContainerState> {
-
-    static childContextTypes: React.ValidationMap<any> = {
-        height: React.PropTypes.number,
-        width: React.PropTypes.number
-    };
-
-    constructor(props: ContainerProps) {
-        super(props);
-        this.handleWindowResize = this.handleWindowResize.bind(this);
-        this.state = {
-            height: 0,
-            width: 0
-        };
-    }
+export class Container extends React.Component<ContainerProps, void> {
 
     private ref: HTMLElement;
-
-    componentDidMount(): void {
-        this.measureScrollbars();
-        window.addEventListener('resize', this.handleWindowResize);
-    }
-
-    componentWillUnmount(): void {
-        window.removeEventListener('resize', this.handleWindowResize);
-    }
 
     render(): JSX.Element {
         return (
@@ -46,13 +22,4 @@ export class Container extends React.Component<ContainerProps, ContainerState> {
             </div>
         );
     }
-
-    private handleWindowResize: () => void =
-        () => this.measureScrollbars();
-
-    private measureScrollbars: () => void =
-        () => this.setState({
-            height: this.ref ? this.ref.offsetHeight : 0,
-            width: this.ref ? this.ref.offsetWidth : 0
-        });
 }

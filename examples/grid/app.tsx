@@ -26,11 +26,11 @@ const component = (
     //     </Content>
     // </ScrollableContainer>
     <Container style={{left: "40px", top: "40px", width: "200px", height: "200px"}} overflowX="auto" overflowY="auto">
-        <div style={{top: "0px", left: "200px", display: "inline-block", position: "absolute", border: "1px solid red", whiteSpace: "nowrap"}}>Test 1</div>
-        <div style={{top: "20px", left: "20px", display: "inline-block", position: "absolute", border: "1px solid red", whiteSpace: "nowrap"}}>Test 2</div>
-        <div style={{top: "100px", left: "20px", display: "inline-block", position: "absolute", border: "1px solid red", whiteSpace: "nowrap"}}>Test 3</div>
-        <div style={{top: "140px", left: "0px", display: "inline-block", position: "absolute", border: "1px solid red", whiteSpace: "nowrap"}}>Test 4</div>
-        <div style={{top: "260px", left: "0px", display: "inline-block", position: "absolute", border: "1px solid red", whiteSpace: "nowrap"}}>Test 5</div>
+        <div style={{top: "0px", left: "200px", display: "inline-block", position: "absolute", border: "1px solid red"}}>Test 1</div>
+        <div style={{top: "20px", left: "20px", display: "inline-block", position: "absolute", border: "1px solid red"}}>Test 2</div>
+        <div style={{top: "100px", left: "20px", display: "inline-block", position: "absolute", border: "1px solid red"}}>Test 3</div>
+        <div style={{top: "140px", left: "0px", display: "inline-block", position: "absolute", border: "1px solid red"}}>Test 4</div>
+        <div style={{top: "260px", left: "0px", display: "inline-block", position: "absolute", border: "1px solid red"}}>Test 5</div>
     </Container>
 );
 

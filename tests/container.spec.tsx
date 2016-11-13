@@ -42,6 +42,6 @@ describe('Container', () => {
     it('should be able to resize', () => {
         let wrapper = mount(<Container overflowX="auto" overflowY="auto"/>);
         expect(wrapper).is.to.be;
-        window.resizeTo(100, 100);
+        window.dispatchEvent(new UIEvent('resize'));
     });
 });

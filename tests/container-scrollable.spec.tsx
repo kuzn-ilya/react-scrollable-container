@@ -45,4 +45,16 @@ describe('ContainerScrollable', () => {
 
         window.dispatchEvent(new UIEvent('resize'));
     });
+
+    it('should have default contentHeight and contentWidth properties in the state', () => {
+        let wrapper = shallow(<ContainerScrollable overflowX="auto" overflowY="auto"/>);
+        expect(wrapper).to.have.state('contentHeight', 'auto');
+        expect(wrapper).to.have.state('contentWidth', 'auto');
+    });
+
+    it('should have the same contentHeight and contentWidth properties in the state as for props', () => {
+        let wrapper = shallow(<ContainerScrollable overflowX="auto" overflowY="auto" contentWidth={100} contentHeight = {200} />);
+        expect(wrapper).to.have.state('contentHeight', 200);
+        expect(wrapper).to.have.state('contentWidth', 100);
+    });
 });

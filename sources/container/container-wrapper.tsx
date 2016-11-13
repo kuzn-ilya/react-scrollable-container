@@ -26,13 +26,13 @@ export class ContainerWrapper extends React.Component<ContainerWrapperProps, Con
     }
 
     componentDidMount(): void {
-        let maxX = this.ref.offsetLeft + this.ref.offsetWidth;
-        let maxY = this.ref.offsetTop + this.ref.offsetHeight;
+        let maxX = this.ref.offsetLeft + this.ref.offsetWidth || 0;
+        let maxY = this.ref.offsetTop + this.ref.offsetHeight || 0;
         for (let i = 0; i < this.ref.children.length; i++) {
             let child = this.ref.children[i] as HTMLElement;
             let clientRect = child.getBoundingClientRect();
-            let x = child.offsetLeft + clientRect.right - clientRect.left;
-            let y = child.offsetTop + clientRect.bottom - clientRect.top;
+            let x = child.offsetLeft + clientRect.right - clientRect.left || 0;
+            let y = child.offsetTop + clientRect.bottom - clientRect.top || 0;
             maxX = Math.max(maxX, x);
             maxY = Math.max(maxY, y);
         }

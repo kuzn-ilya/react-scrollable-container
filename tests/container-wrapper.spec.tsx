@@ -1,12 +1,14 @@
 import * as React from 'react';
 import * as chai from 'chai';
 import * as chaiEnzyme from 'chai-enzyme';
+import * as chaiSpies from 'chai-spies';
 import { shallow, mount } from 'enzyme';
 
 import { ContainerWrapper } from '../sources/container/container-wrapper';
 
 const expect = chai.expect;
 chai.use(chaiEnzyme());
+chai.use(chaiSpies);
 
 const jsdom = require('jsdom-global');
 jsdom();
@@ -64,4 +66,15 @@ describe('ContainerScrollable', () => {
         expect(wrapper.childAt(0)).to.contain(<div>Text</div>);
     });
 
+    it('should call onChildrenSizeChanged event handler', () => {
+        let spy = chai.spy((width: number, height: number) => { return; });
+        let wrapper = mount(
+            <ContainerWrapper onChildrenSizeChanged={spy}>
+                <div>Text</div>
+            </ContainerWrapper>
+        );
+        wrapper.setState({childrenHeigth: 10, childrenWidth: 10});
+        expect(spy).to.have.been.called.once;
+        expect(spy).to.have.been.called.with.exactly(10, 10);
+    });
 });

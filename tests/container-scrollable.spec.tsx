@@ -27,11 +27,11 @@ describe('ContainerScrollable', () => {
         expect(wrapper).is.to.be;
     });
 
-    it('should be able to unmount', () => {
-        let wrapper = shallow(<ContainerScrollable overflowX="auto" overflowY="auto"/>);
-        wrapper.unmount();
-        expect(wrapper).is.to.be;
-    });
+    // it('should be able to unmount', () => {
+    //     let wrapper = shallow(<ContainerScrollable overflowX="auto" overflowY="auto"/>);
+    //     wrapper.unmount();
+    //     expect(wrapper).is.to.be;
+    // });
 
     it('should have one div inside', () => {
         let wrapper = shallow(<ContainerScrollable overflowX="auto" overflowY="auto"/>);

@@ -41,10 +41,12 @@ export class ContainerScrollable extends React.Component<ContainerScrollableProp
 
     componentDidMount(): void {
         this.measureScrollbars();
+        this.ref.addEventListener('scroll', this.handleScroll);
         window.addEventListener('resize', this.handleWindowResize);
     }
 
     componentWillUnmount(): void {
+        this.ref.removeEventListener('scroll', this.handleScroll);
         window.removeEventListener('resize', this.handleWindowResize);
     }
 
@@ -79,7 +81,6 @@ export class ContainerScrollable extends React.Component<ContainerScrollableProp
                     overflowX: this.props.overflowX,
                     overflowY: this.props.overflowY
                 }}
-                onScroll={this.handleScroll}
             >
                 {wrapper}
             </div>
@@ -89,10 +90,10 @@ export class ContainerScrollable extends React.Component<ContainerScrollableProp
     private handleWindowResize: () => void =
         () => this.measureScrollbars();
 
-    private handleScroll: (event: React.UIEvent<HTMLDivElement>) => void = (event) => {
+    private handleScroll: (event: UIEvent) => void = (event) => {
         this.setState(assign(this.state, {
-            scrollLeft: event.currentTarget.scrollLeft,
-            scrollTop: event.currentTarget.scrollTop
+            scrollLeft: event.srcElement.scrollLeft,
+            scrollTop: event.srcElement.scrollTop
         }));
     }
 

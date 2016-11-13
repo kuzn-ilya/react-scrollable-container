@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "example-grid": "cross-env NODE_ENV=development webpack-dev-server --config ./examples/grid/webpack.config.js",
-    "test": "mocha --require ignore-styles --require jsdom-global --compilers ts:ts-node/register,tsx:ts-node/register ./tests/**/*.spec.tsx",
+    "test": "mocha --require ignore-styles --compilers ts:ts-node/register,tsx:ts-node/register ./tests/**/*.spec.tsx",
     "tslint": "tslint sources/**/*.ts{,x}",
     "test:coverage": "nyc npm run test"
   },

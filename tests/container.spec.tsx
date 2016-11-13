@@ -5,14 +5,23 @@ import { shallow, mount } from 'enzyme';
 
 import { Container } from '../sources/container/container';
 
+import { globalJsdom } from './jsdom-helper';
+
 const expect = chai.expect;
 chai.use(chaiEnzyme());
 
-const jsdom = require('jsdom-global');
-jsdom();
-
 describe('Container', () => {
+    let jsdom: () => void;
+    beforeEach((done: () => void) => {
+        jsdom = globalJsdom();
+        done();
+    });
 
+    afterEach((done: () => void) => {
+        jsdom();
+        done();
+    });
+    
     it('should be defined', () => {
         let wrapper = shallow(<Container overflowX="auto" overflowY="auto"/>);
         expect(wrapper).is.to.be;

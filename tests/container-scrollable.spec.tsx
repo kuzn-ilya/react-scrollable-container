@@ -1,17 +1,26 @@
 import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import * as chai from 'chai';
 import * as chaiEnzyme from 'chai-enzyme';
 import { shallow, mount } from 'enzyme';
 
 import { ContainerScrollable } from '../sources/container/container-scrollable';
+import { globalJsdom } from './jsdom-helper';
 
 const expect = chai.expect;
 chai.use(chaiEnzyme());
 
-const jsdom = require('jsdom-global');
-jsdom();
-
 describe('ContainerScrollable', () => {
+    let jsdom: () => void;
+    beforeEach((done: () => void) => {
+        jsdom = globalJsdom('<!doctype html><html><head><meta charset="utf-8"></head><body><div id="app" /></body></html>');
+        done();
+    });
+
+    afterEach((done: () => void) => {
+        jsdom();
+        done();
+    });
 
     it('should be defined', () => {
         let wrapper = shallow(<ContainerScrollable overflowX="auto" overflowY="auto"/>);
@@ -56,5 +65,21 @@ describe('ContainerScrollable', () => {
         let wrapper = shallow(<ContainerScrollable overflowX="auto" overflowY="auto" contentWidth={100} contentHeight = {200} />);
         expect(wrapper).to.have.state('contentHeight', 200);
         expect(wrapper).to.have.state('contentWidth', 100);
+    });
+
+    it('should handle scroll event', () => {
+        ReactDOM.render(<ContainerScrollable overflowX="auto" overflowY="auto" contentWidth={100} contentHeight = {200} />,
+            window.document.getElementById('app'));
+        let div = document.querySelector('.react-container-container-scrollable');
+        expect(div).is.to.be.not.null;
+        div.dispatchEvent(new UIEvent('scroll'));
+    });
+
+    it('should handle scroll event 2', () => {
+        ReactDOM.render(<ContainerScrollable overflowX="auto" overflowY="auto" contentWidth={100} contentHeight = {200} />,
+            window.document.getElementById('app'));
+        let div = document.querySelector('.react-container-container-scrollable');
+        expect(div).is.to.be.not.null;
+        div.dispatchEvent(new UIEvent('scroll'));
     });
 });

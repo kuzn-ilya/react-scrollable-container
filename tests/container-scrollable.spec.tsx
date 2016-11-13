@@ -27,6 +27,7 @@ describe('ContainerScrollable', () => {
         expect(wrapper).is.to.be;
     });
 
+    // TODO find out how it should be - now I don't understand what unmont call (applied to result of shallow) should do actually.
     // it('should be able to unmount', () => {
     //     let wrapper = shallow(<ContainerScrollable overflowX="auto" overflowY="auto"/>);
     //     wrapper.unmount();
@@ -72,14 +73,7 @@ describe('ContainerScrollable', () => {
             window.document.getElementById('app'));
         let div = document.querySelector('.react-container-container-scrollable');
         expect(div).is.to.be.not.null;
-        div.dispatchEvent(new UIEvent('scroll'));
-    });
-
-    it('should handle scroll event 2', () => {
-        ReactDOM.render(<ContainerScrollable overflowX="auto" overflowY="auto" contentWidth={100} contentHeight = {200} />,
-            window.document.getElementById('app'));
-        let div = document.querySelector('.react-container-container-scrollable');
-        expect(div).is.to.be.not.null;
-        div.dispatchEvent(new UIEvent('scroll'));
+        let evt = new UIEvent('scroll', { detail: 10});
+        div.dispatchEvent(evt);
     });
 });

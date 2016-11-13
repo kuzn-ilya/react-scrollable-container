@@ -6,8 +6,29 @@
   "scripts": {
     "example-grid": "cross-env NODE_ENV=development webpack-dev-server --config ./examples/grid/webpack.config.js",
     "test": "mocha --require ignore-styles --require jsdom-global --compilers ts:ts-node/register,tsx:ts-node/register ./tests/**/*.spec.tsx",
-    "tslint": "tslint sources/**/*.ts{,x}"
+    "tslint": "tslint sources/**/*.ts{,x}",
+    "test:coverage": "nyc npm run test"
   },
+  "nyc": {
+    "include": [
+      "sources/*.ts",
+      "sources/**/*.ts",
+      "sources/*.tsx",
+      "sources/**/*.tsx"
+    ],
+    "extension": [
+      ".ts",
+      ".tsx"
+    ],
+    "require": [
+      "ts-node/register"
+    ],
+    "reporter": [
+      "json",
+      "html"
+    ],
+    "all": true
+  },  
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kuzn-ilya/react-scrollable-container.git"
@@ -47,6 +68,7 @@
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
     "mocha": "^3.1.2",
+    "nyc": "^8.4.0",
     "react-addons-test-utils": "^15.3.2",
     "react-hot-loader": "^3.0.0-beta.6",
     "style-loader": "^0.13.1",

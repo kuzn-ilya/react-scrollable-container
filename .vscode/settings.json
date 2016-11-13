@@ -4,6 +4,7 @@
         "node_modules/**": true,
         "build/**": true,
         "npm-debug.*.*": true,
-        "npm-debug.*": true
+        "npm-debug.*": true,
+        ".nyc_output/**": true
     }
 }

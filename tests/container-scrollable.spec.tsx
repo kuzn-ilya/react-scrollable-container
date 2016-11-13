@@ -29,7 +29,7 @@ describe('ContainerScrollable', () => {
         expect(wrapper.find('div')).to.have.length(1);
     });
 
-    it('should have a class "react-container-container"', () => {
+    it('should have a class "react-container-container-scrollable"', () => {
         let wrapper = shallow(<ContainerScrollable overflowX="auto" overflowY="auto"/>);
         expect(wrapper.find('div')).to.have.className('react-container-container-scrollable');
     });

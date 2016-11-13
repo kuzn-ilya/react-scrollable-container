@@ -22,6 +22,7 @@ export class Container extends React.Component<ContainerProps, ContainerState> {
                     contentWidth={this.props.contentWidth}
                     overflowX={this.props.overflowX}
                     overflowY={this.props.overflowY}
+                    onScrollPosChanged={this.props.onScrollPosChanged}
                 >
                     {this.props.children}
                 </ContainerScrollable>

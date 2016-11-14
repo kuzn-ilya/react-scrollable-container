@@ -12,8 +12,8 @@ module.exports = function (config) {
       'node_modules'
     ],
     preprocessors: {
-      'test/**/*.spec.tsx': ['webpack'],
-      'test/**/*.spec.ts': ['webpack']
+      'test/**/*.spec.tsx': ['webpack', 'sourcemap', 'coverage'],
+      'test/**/*.spec.ts': ['webpack', 'sourcemap', 'coverage']
     },
     webpack: webpackConfig,
     webpackServer: { noInfo: true },
@@ -21,8 +21,17 @@ module.exports = function (config) {
       'progress',
       'dots',
       'spec',
-      'mocha'
+      'mocha',
+      'coverage'
     ],
+    coverageReporter: {
+      dir : 'coverage/',
+      reporters: [
+        { type: 'text-summary' },
+        { type: 'json' },
+        { type: 'html' }
+      ]
+    },    
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,

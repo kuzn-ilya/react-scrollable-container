@@ -5,6 +5,7 @@ var path = require('path');
 var ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
 
 var common = {
+    devtool: 'inline-source-map',
     context: __dirname,
     entry: {
         app: "./app.tsx",
@@ -27,7 +28,7 @@ var common = {
         loaders: [
             {
                 test: /\.tsx?$/,
-                loaders: ['awesome-typescript-loader?forkChecker=true'],
+                loaders: ['istanbul-instrumenter-loader', 'awesome-typescript-loader?forkChecker=true'],
                 exclude: ["node_modules"]
             },
             {
@@ -45,6 +46,7 @@ var common = {
                 exclude: ["node_modules"]
             }
         ]
+      
     },
     output: {
         path: path.resolve(__dirname, 'build'),

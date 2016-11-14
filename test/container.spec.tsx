@@ -5,22 +5,22 @@ import { shallow, mount } from 'enzyme';
 
 import { Container } from '../sources/container/container';
 
-import { globalJsdom } from './jsdom-helper';
+//import { globalJsdom } from './jsdom-helper';
 
 const expect = chai.expect;
 chai.use(chaiEnzyme());
 
 describe('Container', () => {
-    let jsdom: () => void;
-    beforeEach((done: () => void) => {
-        jsdom = globalJsdom();
-        done();
-    });
+    // let jsdom: () => void;
+    // beforeEach((done: () => void) => {
+    //     jsdom = globalJsdom();
+    //     done();
+    // });
 
-    afterEach((done: () => void) => {
-        jsdom();
-        done();
-    });
+    // afterEach((done: () => void) => {
+    //     jsdom();
+    //     done();
+    // });
     
     it('should be defined', () => {
         let wrapper = shallow(<Container overflowX="auto" overflowY="auto"/>);
@@ -48,9 +48,9 @@ describe('Container', () => {
         expect(wrapper).is.to.be;
     });
 
-    it('should be able to resize', () => {
-        let wrapper = mount(<Container overflowX="auto" overflowY="auto"/>);
-        expect(wrapper).is.to.be;
-        window.dispatchEvent(new UIEvent('resize'));
-    });
+    // it('should be able to resize', () => {
+    //     let wrapper = mount(<Container overflowX="auto" overflowY="auto"/>);
+    //     expect(wrapper).is.to.be;
+    //     window.dispatchEvent(new UIEvent('resize'));
+    // });
 });

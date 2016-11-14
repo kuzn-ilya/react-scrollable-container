@@ -5,7 +5,7 @@ import { addPrefixToClass } from './../utils/css.utils';
 import { ContainerScrollableProps } from  './container-scrollable.props';
 import { ContainerScrollableState } from  './container-scrollable.state';
 
-require('./container.less');
+import './container.less';
 
 export class ContainerScrollable extends React.Component<ContainerScrollableProps, ContainerScrollableState> {
 

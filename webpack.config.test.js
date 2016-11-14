@@ -10,18 +10,29 @@ var common = {
         app: "./app.tsx",
         libs: [
             "react",
-            "react-dom"
+            "react-dom",
+            "enzyme"
         ]
     },
     resolve: {
         extensions: ['.js', '.ts', '.tsx']
     },
+    externals: {
+        'cheerio': 'window',
+        'react/addons': 'addons',
+        'react/lib/ExecutionEnvironment': 'ExecutionEnvironment',
+        'react/lib/ReactContext': 'ReactContext'
+    },
     module: {
         loaders: [
             {
                 test: /\.tsx?$/,
-                loaders: ["react-hot-loader/webpack", 'awesome-typescript-loader?forkChecker=true'],
+                loaders: ['awesome-typescript-loader?forkChecker=true'],
                 exclude: ["node_modules"]
+            },
+            {
+                test: /\.json$/,
+                loader: 'json-loader'
             },
             {
                 test: /\.ejs?$/,
@@ -47,11 +58,7 @@ var common = {
             template: './index.ejs',
             inject: 'body'
         }),
-        new ForkCheckerPlugin(),
-        new webpack.optimize.CommonsChunkPlugin({
-            name: "libs",
-            minChunks: 0
-        }),
+        new ForkCheckerPlugin()
     ]
 };
 

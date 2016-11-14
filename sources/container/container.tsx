@@ -5,7 +5,7 @@ import { ContainerProps } from './container.props';
 import { ContainerState } from './container.state';
 import { ContainerScrollable } from './container-scrollable';
 
-require('./container.less');
+import './container.less';
 
 export class Container extends React.Component<ContainerProps, ContainerState> {
 

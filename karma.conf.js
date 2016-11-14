@@ -5,15 +5,15 @@ module.exports = function (config) {
     basePath: '',
     frameworks: ['mocha', 'chai'],
     files: [
-      'test/*.spec.ts',
       'test/*.spec.tsx'
     ],
     exclude: [
       'node_modules'
     ],
     preprocessors: {
-      'test/**/*.spec.tsx': ['webpack', 'sourcemap', 'coverage'],
-      'test/**/*.spec.ts': ['webpack', 'sourcemap', 'coverage']
+      'sources/**/*.tsx': ['webpack', 'coverage', 'sourcemap'],
+      'sources/**/*.ts': ['webpack', 'coverage', 'sourcemap'],
+      'test/**/*.spec.tsx': ['webpack']
     },
     webpack: webpackConfig,
     webpackServer: { noInfo: true },

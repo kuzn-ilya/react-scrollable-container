@@ -28,7 +28,7 @@ var common = {
         loaders: [
             {
                 test: /\.tsx?$/,
-                loaders: ['istanbul-instrumenter-loader', 'awesome-typescript-loader?forkChecker=true'],
+                loaders: [/*'istanbul-instrumenter-loader',*/ 'awesome-typescript-loader?forkChecker=true'],
                 exclude: ["node_modules"]
             },
             {

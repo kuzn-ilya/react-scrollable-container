@@ -16,10 +16,12 @@ module.exports = function (config) {
       'test/**/*.spec.ts': ['webpack']
     },
     webpack: webpackConfig,
+    webpackServer: { noInfo: true },
     reporters: [
       'progress',
       'dots',
-      'spec'
+      'spec',
+      'mocha'
     ],
     port: 9876,
     colors: true,

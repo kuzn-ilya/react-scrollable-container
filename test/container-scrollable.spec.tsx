@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+//import * as ReactDOM from 'react-dom';
 import * as chai from 'chai';
 import * as chaiEnzyme from 'chai-enzyme';
 import { shallow, mount } from 'enzyme';
@@ -27,13 +27,11 @@ describe('ContainerScrollable', () => {
         expect(wrapper).is.to.be;
     });
 
-    // TODO find out how it should be - now I don't understand what unmont call (applied to result of shallow) should do actually.
-    // TODO repair test
-    // it('should be able to unmount', () => {
-    //     let wrapper = shallow(<ContainerScrollable overflowX="auto" overflowY="auto"/>);
-    //     wrapper.unmount();
-    //     expect(wrapper).is.to.be;
-    // });
+    it('should be able to unmount', () => {
+        let wrapper = mount(<ContainerScrollable overflowX="auto" overflowY="auto"/>);
+        wrapper.unmount();
+        expect(wrapper).is.to.be;
+    });
 
     it('should have one div inside', () => {
         let wrapper = shallow(<ContainerScrollable overflowX="auto" overflowY="auto"/>);

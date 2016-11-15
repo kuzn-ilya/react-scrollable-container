@@ -63,8 +63,9 @@ describe('ContainerScrollable', () => {
         let wrapper = mount(<ContainerScrollable overflowX="auto" overflowY="auto" contentWidth={100} contentHeight = {200} 
             onScrollPosChanged={handleScrollPosChanged}/>);
         let el = ReactDOM.findDOMNode(wrapper.instance());
-        console.log(el);
-        el.dispatchEvent(new Event('scroll'));
+        let e = document.createEvent('UIEvent');
+        e.initUIEvent('scroll', true, true, window, 10);
+        el.dispatchEvent(e);
         expect(handleScrollPosChanged).has.been.called.once;
     });
 

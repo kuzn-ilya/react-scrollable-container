@@ -7,7 +7,8 @@ module.exports = function (config) {
     frameworks: ['mocha', 'chai', 'source-map-support'],
 
     files: [
-      './app.tsx'
+      './test/**/*.spec.ts',
+      './test/**/*.spec.tsx'
     ],
 
     exclude: [
@@ -15,7 +16,8 @@ module.exports = function (config) {
     ],
     
     preprocessors: {
-      './app.tsx': ['webpack'],
+      './test/**/*.spec.ts': ['webpack'],
+      './test/**/*.spec.tsx': ['webpack']
     },
 
     webpack: webpackConfig,
@@ -36,7 +38,7 @@ module.exports = function (config) {
             }
         ]
     },
-        
+
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,

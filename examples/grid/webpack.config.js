@@ -14,7 +14,7 @@ var common = {
         ]
     },
     resolve: {
-        extensions: ['.js', '.ts', '.tsx']
+        extensions: ['', '.js', '.ts', '.tsx']
     },
     module: {
         loaders: [
@@ -25,8 +25,7 @@ var common = {
             },
             {
                 test: /\.ejs?$/,
-                loaders: ['ejs-loader'],
-                include: path.resolve(__dirname, "client")
+                loaders: ['ejs-loader']
             },
             {
                 test: /(\.less$)|(\.css$)/,
@@ -43,7 +42,7 @@ var common = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            title: 'react-grid-viewport',
+            title: 'react-container',
             template: './index.ejs',
             inject: 'body'
         }),
@@ -55,43 +54,41 @@ var common = {
     ]
 };
 
-if (process.env.NODE_ENV === 'development' || !process.env.NODE_ENV) {
-    module.exports = merge(common, {
-        devServer: {
-            inline: true,
-            hot: true
-        },
-        plugins: [
-            new webpack.HotModuleReplacementPlugin(),
-            new webpack.DefinePlugin({
-                'process.env': {
-                    'NODE_ENV': JSON.stringify('development')
-                }
-            }),
-            new webpack.SourceMapDevToolPlugin({ filename: null, test: /\.tsx?$/ })
-        ],
-        devtool: 'eval-source-map'
-    });
-}
+module.exports = merge(common, {
+    devServer: {
+        inline: true,
+        hot: true
+    },
+    plugins: [
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.DefinePlugin({
+            'process.env': {
+                'NODE_ENV': JSON.stringify('development')
+            }
+        }),
+        new webpack.SourceMapDevToolPlugin({ filename: null, test: /\.tsx?$/ })
+    ],
+    devtool: 'eval-source-map'
+});
 
-if (process.env.NODE_ENV === 'production') {
-    module.exports = merge(common, {
-        devtool: 'cheap-module-source-map',
-        plugins: [
-            new webpack.optimize.UglifyJsPlugin({
-                compress: {
-                    warnings: false
-                }
-            }),
-            new webpack.DefinePlugin({
-                'process.env': {
-                    'NODE_ENV': JSON.stringify('production'),
-                    loadFakeData: JSON.stringify(loadFakeData),
-                    standAlone: JSON.stringify(standAlone),
-                }
-            }),
-            new webpack.optimize.OccurrenceOrderPlugin(true),
-            new webpack.optimize.DedupePlugin(),
-        ]
-    })
-}
+// if (process.env.NODE_ENV === 'production') {
+//     module.exports = merge(common, {
+//         devtool: 'cheap-module-source-map',
+//         plugins: [
+//             new webpack.optimize.UglifyJsPlugin({
+//                 compress: {
+//                     warnings: false
+//                 }
+//             }),
+//             new webpack.DefinePlugin({
+//                 'process.env': {
+//                     'NODE_ENV': JSON.stringify('production'),
+//                     loadFakeData: JSON.stringify(loadFakeData),
+//                     standAlone: JSON.stringify(standAlone),
+//                 }
+//             }),
+//             new webpack.optimize.OccurrenceOrderPlugin(true),
+//             new webpack.optimize.DedupePlugin(),
+//         ]
+//     })
+// }

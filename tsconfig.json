@@ -2,11 +2,10 @@
     "compileOnSave": true,
     "compilerOptions": {
         "module": "commonjs",
-        "moduleResolution": "node",
         "target": "es5",
         "noImplicitAny": true,
         "noEmitOnError": true,
-        "removeComments": false,
+        "removeComments": true,
         "preserveConstEnums": true,
         "jsx": "react",
         "outDir": "./build",
@@ -24,19 +23,13 @@
             "chai"
         ],
         "noUnusedLocals": true,
-        "noFallthroughCasesInSwitch": true,
-        "sourceMap": true
+        "noFallthroughCasesInSwitch": true
     },
     "exclude": [
         "node_modules"
     ],
     "awesomeTypescriptLoaderOptions": {
-        "resolveGlobs": true,
         "forkChecker": true,
         "useWebpackText": true
-    },    
-    "filesGlob": [
-        "./source/**/*.ts",
-        "!./node_modules/**"
-    ]
+    }
 }

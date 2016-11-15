@@ -7,19 +7,12 @@ var ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
 var common = {
     devtool: 'inline-source-map',
 
-    /**
-     * These parameters will be used for rendering `index.html`.
-     */
-    metadata: {
-        title: 'React Container',
-        baseUrl: '/'
-    },
-
     resolve: {
         extensions: ['', '.js', '.ts', '.tsx', '.less', '.html'],
         modulesDirectories: ['node_modules', 'sources']
     },
 
+    // Externals are necessary for working enzyme.
     externals: {
         'cheerio': 'window',
         'react/addons': 'addons',
@@ -56,10 +49,6 @@ var common = {
         ],
         
         postLoaders: [
-            /**
-             * Instruments TS source files for subsequent code coverage.
-             * See https://github.com/deepsweet/istanbul-instrumenter-loader
-             */
             {
                 test: /\.tsx?$/,
                 loader: 'istanbul-instrumenter-loader',
@@ -69,23 +58,7 @@ var common = {
                 ]
             }
         ]        
-    },
-    output: {
-        path: path.resolve(__dirname, 'build'),
-        filename: "[name].js",
-        publicPath: "/",
-        sourceMapFilename: '[name].js.map',
-    },
-    plugins: [
-        new HtmlWebpackPlugin({
-            title: 'react-grid-viewport',
-            template: './index.ejs',
-            inject: 'body'
-        }),
-        new webpack.HotModuleReplacementPlugin(),
-        new ForkCheckerPlugin(),
-        new webpack.SourceMapDevToolPlugin({ filename: null, test: /\.tsx?$/ })
-    ]
+    }
 };
 
 module.exports = common;

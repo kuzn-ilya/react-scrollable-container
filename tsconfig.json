@@ -18,9 +18,6 @@
             "es7"
         ],
         "types": [
-            "node",
-            "mocha",
-            "chai"
         ],
         "noUnusedLocals": true,
         "noFallthroughCasesInSwitch": true

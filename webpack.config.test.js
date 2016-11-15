@@ -6,29 +6,37 @@ var ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
 
 var common = {
     devtool: 'inline-source-map',
-    context: __dirname,
-    entry: {
-        app: "./app.tsx",
-        libs: [
-            "react",
-            "react-dom",
-            "enzyme"
-        ]
+
+    /**
+     * These parameters will be used for rendering `index.html`.
+     */
+    metadata: {
+        title: 'React Container',
+        baseUrl: '/'
     },
+
     resolve: {
-        extensions: ['.js', '.ts', '.tsx']
+        extensions: ['', '.js', '.ts', '.tsx', '.less', '.html'],
+        modulesDirectories: ['node_modules', 'sources']
     },
+
     externals: {
         'cheerio': 'window',
         'react/addons': 'addons',
         'react/lib/ExecutionEnvironment': 'ExecutionEnvironment',
         'react/lib/ReactContext': 'ReactContext'
     },
+
     module: {
         loaders: [
             {
                 test: /\.tsx?$/,
-                loaders: [/*'istanbul-instrumenter-loader',*/ 'awesome-typescript-loader?forkChecker=true'],
+                loaders: [
+                    'awesome-typescript-loader?' + JSON.stringify({
+                        sourceMap: false,
+                        inlineSourceMap: true
+                    })
+                ],
                 exclude: ["node_modules"]
             },
             {
@@ -45,8 +53,22 @@ var common = {
                 loaders: ['style-loader', 'css-loader', 'less-loader'],
                 exclude: ["node_modules"]
             }
-        ]
-      
+        ],
+        
+        postLoaders: [
+            /**
+             * Instruments TS source files for subsequent code coverage.
+             * See https://github.com/deepsweet/istanbul-instrumenter-loader
+             */
+            {
+                test: /\.tsx?$/,
+                loader: 'istanbul-instrumenter-loader',
+                exclude: [
+                    'node_modules',
+                    'test'
+                ]
+            }
+        ]        
     },
     output: {
         path: path.resolve(__dirname, 'build'),
@@ -60,47 +82,10 @@ var common = {
             template: './index.ejs',
             inject: 'body'
         }),
-        new ForkCheckerPlugin()
+        new webpack.HotModuleReplacementPlugin(),
+        new ForkCheckerPlugin(),
+        new webpack.SourceMapDevToolPlugin({ filename: null, test: /\.tsx?$/ })
     ]
 };
 
-if (process.env.NODE_ENV === 'development' || !process.env.NODE_ENV) {
-    module.exports = merge(common, {
-        devServer: {
-            inline: true,
-            hot: true
-        },
-        plugins: [
-            new webpack.HotModuleReplacementPlugin(),
-            new webpack.DefinePlugin({
-                'process.env': {
-                    'NODE_ENV': JSON.stringify('development')
-                }
-            }),
-            new webpack.SourceMapDevToolPlugin({ filename: null, test: /\.tsx?$/ })
-        ],
-        devtool: 'eval-source-map'
-    });
-}
-
-if (process.env.NODE_ENV === 'production') {
-    module.exports = merge(common, {
-        devtool: 'cheap-module-source-map',
-        plugins: [
-            new webpack.optimize.UglifyJsPlugin({
-                compress: {
-                    warnings: false
-                }
-            }),
-            new webpack.DefinePlugin({
-                'process.env': {
-                    'NODE_ENV': JSON.stringify('production'),
-                    loadFakeData: JSON.stringify(loadFakeData),
-                    standAlone: JSON.stringify(standAlone),
-                }
-            }),
-            new webpack.optimize.OccurrenceOrderPlugin(true),
-            new webpack.optimize.DedupePlugin(),
-        ]
-    })
-}
+module.exports = common;

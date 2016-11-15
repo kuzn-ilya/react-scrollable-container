@@ -3,41 +3,46 @@ var webpackConfig = require('./webpack.config.test');
 module.exports = function (config) {
   config.set({
     basePath: '',
-    frameworks: ['mocha', 'chai'],
+
+    frameworks: ['mocha', 'chai', 'source-map-support'],
+
     files: [
-      'test/*.spec.tsx'
+      './app.tsx'
     ],
+
     exclude: [
       'node_modules'
     ],
+    
     preprocessors: {
-      'sources/**/*.tsx': ['webpack', 'coverage', 'sourcemap'],
-      'sources/**/*.ts': ['webpack', 'coverage', 'sourcemap'],
-      'test/**/*.spec.tsx': ['webpack']
+      './app.tsx': ['webpack'],
     },
+
     webpack: webpackConfig,
+
     webpackServer: { noInfo: true },
     reporters: [
-      'progress',
-      'dots',
-      'spec',
       'mocha',
       'coverage'
     ],
+    
     coverageReporter: {
-      dir : 'coverage/',
-      reporters: [
-        { type: 'text-summary' },
-        { type: 'json' },
-        { type: 'html' }
-      ]
-    },    
+        dir: 'coverage',
+        reporters: [
+            {
+                type: 'json',
+                subdir: '.',
+                file: 'coverage.json'
+            }
+        ]
+    },
+        
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
     browsers: ['PhantomJS'],
-    singleRun: false,
+    singleRun: true,
     concurrency: Infinity
   })
 }

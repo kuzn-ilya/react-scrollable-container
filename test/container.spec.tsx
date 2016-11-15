@@ -48,6 +48,7 @@ describe('Container', () => {
         expect(wrapper).is.to.be;
     });
 
+    // TODO repair test
     // it('should be able to resize', () => {
     //     let wrapper = mount(<Container overflowX="auto" overflowY="auto"/>);
     //     expect(wrapper).is.to.be;

@@ -1,26 +1,17 @@
 import * as React from 'react';
-//import * as ReactDOM from 'react-dom';
+import * as ReactDOM from 'react-dom';
 import * as chai from 'chai';
+import * as chaiSpies from 'chai-spies';
 import * as chaiEnzyme from 'chai-enzyme';
 import { shallow, mount } from 'enzyme';
 
 import { ContainerScrollable } from '../sources/container/container-scrollable';
-// import { globalJsdom } from './jsdom-helper';
 
 const expect = chai.expect;
 chai.use(chaiEnzyme());
+chai.use(chaiSpies);
 
 describe('ContainerScrollable', () => {
-    // let jsdom: () => void;
-    // beforeEach((done: () => void) => {
-    //     jsdom = globalJsdom('<!doctype html><html><head><meta charset="utf-8"></head><body><div id="app" /></body></html>');
-    //     done();
-    // });
-
-    // afterEach((done: () => void) => {
-    //     jsdom();
-    //     done();
-    // });
 
     it('should be defined', () => {
         let wrapper = shallow(<ContainerScrollable overflowX="auto" overflowY="auto"/>);
@@ -48,13 +39,12 @@ describe('ContainerScrollable', () => {
         expect(wrapper).is.to.be;
     });
 
-    // TODO repair test
-    // it('should be able to resize', () => {
-    //     let wrapper = mount(<ContainerScrollable overflowX="auto" overflowY="auto"/>);
-    //     expect(wrapper).is.to.be;
+    it('should be able to resize', () => {
+        let wrapper = mount(<ContainerScrollable overflowX="auto" overflowY="auto"/>);
+        expect(wrapper).is.to.be;
 
-    //     window.dispatchEvent(new UIEvent('resize'));
-    // });
+        window.dispatchEvent(new Event('resize'));
+    });
 
     it('should have default contentHeight and contentWidth properties in the state', () => {
         let wrapper = shallow(<ContainerScrollable overflowX="auto" overflowY="auto"/>);
@@ -68,14 +58,14 @@ describe('ContainerScrollable', () => {
         expect(wrapper).to.have.state('contentWidth', 100);
     });
 
-    // TODO repair test
-    // it('should handle scroll event', () => {
-    //     ReactDOM.render(<ContainerScrollable overflowX="auto" overflowY="auto" contentWidth={100} contentHeight = {200} />,
-    //         window.document.getElementById('app'));
-    //     let div = document.querySelector('.react-container-container-scrollable');
-    //     expect(div).is.to.be.not.null;
-    //     let evt = new UIEvent('scroll', { detail: 10});
-    //     div.dispatchEvent(evt);
-    // });
+    it('should handle scroll event', () => {
+        let handleScrollPosChanged = chai.spy();
+        let wrapper = mount(<ContainerScrollable overflowX="auto" overflowY="auto" contentWidth={100} contentHeight = {200} 
+            onScrollPosChanged={handleScrollPosChanged}/>);
+        let el = ReactDOM.findDOMNode(wrapper.instance());
+        console.log(el);
+        el.dispatchEvent(new Event('scroll'));
+        expect(handleScrollPosChanged).has.been.called.once;
+    });
 
 });

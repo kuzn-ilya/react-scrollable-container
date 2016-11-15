@@ -14,7 +14,6 @@ var common = {
 
     // Externals are necessary for working enzyme.
     externals: {
-        'cheerio': 'window',
         'react/addons': 'addons',
         'react/lib/ExecutionEnvironment': 'ExecutionEnvironment',
         'react/lib/ReactContext': 'ReactContext'

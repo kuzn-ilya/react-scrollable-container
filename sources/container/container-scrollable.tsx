@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as assign from 'object-assign';
 import { addPrefixToClass } from './../utils/css.utils';
+import { omit } from './../utils/object.utils';
 
 import { ContainerScrollableProps } from  './container-scrollable.props';
 import { ContainerScrollableState } from  './container-scrollable.state';
@@ -55,12 +56,15 @@ export class ContainerScrollable extends React.Component<ContainerScrollableProp
     render(): JSX.Element {
         let wrapper: React.ReactNode = null;
 
+        let divProps = omit(this.props, 'contentHeight', 'contentWidth', 'overflowX', 'overflowY', 'onScrollPosChanged');
+
         if (this.state.contentWidth !== 'auto' || this.state.contentHeight !== 'auto') {
             wrapper = (
                 <div style={{
-                    width: this.state.contentWidth === 'auto' ? "100%" : this.state.contentWidth,
-                    height: this.state.contentHeight === 'auto' ? "100%" : this.state.contentHeight,
-                }}>
+                        width: this.state.contentWidth === 'auto' ? "100%" : this.state.contentWidth,
+                        height: this.state.contentHeight === 'auto' ? "100%" : this.state.contentHeight
+                    }}
+               >
                     {this.props.children}
                     <div className={addPrefixToClass('container-wrapper')}
                         style={{
@@ -81,6 +85,7 @@ export class ContainerScrollable extends React.Component<ContainerScrollableProp
                     overflowX: this.props.overflowX,
                     overflowY: this.props.overflowY
                 }}
+                {...divProps}
             >
                 {wrapper}
             </div>

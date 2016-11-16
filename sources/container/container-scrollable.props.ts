@@ -1,13 +1,14 @@
-import { CSSProperties } from 'react';
+import { HTMLProps } from 'react';
+import { Overflow } from './../utils/types';
 
-export interface ContainerScrollableProps {
+export interface ContainerScrollableProps extends HTMLProps<HTMLDivElement> {
     contentWidth?: 'auto' | number;
     contentHeight?: 'auto' | number;
-    overflowX: 'auto' | 'hidden' | 'scroll' | 'visible';
-    overflowY: 'auto' | 'hidden' | 'scroll' | 'visible';
+    overflowX: Overflow;
+    overflowY: Overflow;
     scrollLeft?: number;
     scrollTop?: number;
-    style?: CSSProperties;
 
     onScrollPosChanged?: (left: number, top: number) => void;
+
 }

@@ -2,17 +2,15 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as chai from 'chai';
 import * as chaiSpies from 'chai-spies';
-import * as chaiEnzyme from 'chai-enzyme';
-import { shallow, mount } from 'enzyme';
 import * as TestUtils from 'react-addons-test-utils';
 
 import { Overflow } from '../sources/utils/types';
 import { ContainerScrollable } from '../sources/container/container-scrollable';
 
 const expect = chai.expect;
-chai.use(chaiEnzyme());
 chai.use(chaiSpies);
 
+// TODO How can test window reisize? Is it possible?
 describe('ContainerScrollable', () => {
 
     function renderIntoDocument<P, S>(element: React.ReactElement<P>): React.Component<P, S> {
@@ -74,39 +72,29 @@ describe('ContainerScrollable', () => {
         expect(domElement.classList[0]).to.be.equal('react-container-container-scrollable');
     });
 
-    it('should render into document', () => {
-        let wrapper = mount(<ContainerScrollable overflowX="auto" overflowY="auto"/>);
-        expect(wrapper).is.to.be;
-    });
-
-    it('should be able to resize', () => {
-        let wrapper = mount(<ContainerScrollable overflowX="auto" overflowY="auto"/>);
-        expect(wrapper).is.to.be;
-
-        window.dispatchEvent(new Event('resize'));
-    });
-
     it('should have default contentHeight and contentWidth properties in the state', () => {
-        let wrapper = shallow(<ContainerScrollable overflowX="auto" overflowY="auto"/>);
-        expect(wrapper).to.have.state('contentHeight', 'auto');
-        expect(wrapper).to.have.state('contentWidth', 'auto');
+        let container = renderIntoDocument(<ContainerScrollable overflowX="auto" overflowY="auto"/>);
+        expect(container.state).to.have.property('contentHeight', 'auto');
+        expect(container.state).to.have.property('contentWidth', 'auto');
     });
 
     it('should have the same contentHeight and contentWidth properties in the state as for props', () => {
-        let wrapper = shallow(<ContainerScrollable overflowX="auto" overflowY="auto" contentWidth={100} contentHeight = {200} />);
-        expect(wrapper).to.have.state('contentHeight', 200);
-        expect(wrapper).to.have.state('contentWidth', 100);
+        let container = renderIntoDocument(<ContainerScrollable overflowX="auto" overflowY="auto" 
+            contentWidth={100} contentHeight = {200} />);
+        expect(container.state).to.have.property('contentHeight', 200);
+        expect(container.state).to.have.property('contentWidth', 100);
     });
 
+    // TODO scroll event
     // it('should handle scroll event', () => {
-    //     let handleScrollPosChanged = chai.spy();
-    //     let wrapper = mount(<ContainerScrollable overflowX="auto" overflowY="auto" contentWidth={100} contentHeight = {200} 
-    //         onScrollPosChanged={handleScrollPosChanged}/>);
-    //     let el = ReactDOM.findDOMNode(wrapper.instance());
+    //     let handleScrollPosChanged = chai.spy((left: number, top: number) => { return; });
+    //     let container = renderIntoDocument(<ContainerScrollable overflowX="auto" overflowY="auto" 
+    //         contentWidth={100} contentHeight={200} onScrollPosChanged={handleScrollPosChanged} />);
+    //     let domElement = ReactDOM.findDOMNode(container);
     //     let e = document.createEvent('UIEvent');
     //     e.initUIEvent('scroll', true, true, window, 10);
-    //     el.dispatchEvent(e);
-    //     expect(handleScrollPosChanged).has.been.called.once;
+    //     domElement.dispatchEvent(e);
+    //     expect(handleScrollPosChanged).to.have.been.called();
     // });
 
 });

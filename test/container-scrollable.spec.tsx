@@ -2,7 +2,8 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as chai from 'chai';
 import * as chaiSpies from 'chai-spies';
-import * as TestUtils from 'react-addons-test-utils';
+
+import { renderIntoDocument, unmountComponent } from './test.utils';
 
 import { Overflow } from '../sources/utils/types';
 import { ContainerScrollable } from '../sources/container/container-scrollable';
@@ -12,16 +13,6 @@ chai.use(chaiSpies);
 
 // TODO How can test window reisize? Is it possible?
 describe('ContainerScrollable', () => {
-
-    function renderIntoDocument<P, S>(element: React.ReactElement<P>): React.Component<P, S> {
-        return TestUtils.renderIntoDocument<P>(element) as React.Component<P, S>;
-    }
-
-    function unmountComponent<P, S>(component: React.Component<P, S>): void {
-        let element = ReactDOM.findDOMNode(component);
-        let parent = element.parentElement;
-        ReactDOM.unmountComponentAtNode(parent);
-    }
 
     it('should be defined', () => {
         let container = renderIntoDocument(<ContainerScrollable overflowX="auto" overflowY="auto"/>);

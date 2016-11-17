@@ -26,7 +26,7 @@ describe('ContainerScrollable', () => {
     it('should be defined', () => {
         let container = renderIntoDocument(<ContainerScrollable overflowX="auto" overflowY="auto"/>);
         let domElement = ReactDOM.findDOMNode(container);
-        expect(domElement).to.be.exist;
+        expect(domElement).to.exist;
     });
 
     it('should have a <div> in the root', () => {
@@ -57,12 +57,12 @@ describe('ContainerScrollable', () => {
         let parentElement = ReactDOM.findDOMNode(container).parentElement;
 
         let element = parentElement.querySelector('#container');
-        expect(element).is.exist;
+        expect(element).to.exist;
 
         unmountComponent(container);
 
         element = parentElement.querySelector('#container');
-        expect(element).is.not.exist;
+        expect(element).to.not.exist;
     });
 
     it('should have a class "react-container-container-scrollable"', () => {

@@ -1,10 +1,11 @@
-import { CSSProperties } from 'react';
+import { HTMLProps, CSSProperties } from 'react';
+import { Overflow, Size } from '../utils/types';
 
-export interface ContainerProps {
-    overflowX: 'auto' | 'hidden' | 'scroll' | 'visible';
-    overflowY: 'auto' | 'hidden' | 'scroll' | 'visible';
-    contentWidth?: 'auto' | number;
-    contentHeight?: 'auto' | number;
+export interface ContainerProps extends HTMLProps<HTMLDivElement> {
+    overflowX: Overflow;
+    overflowY: Overflow;
+    contentWidth?: Size;
+    contentHeight?: Size;
     scrollLeft?: number;
     scrollTop?: number;
     style?: CSSProperties;

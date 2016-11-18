@@ -18,25 +18,9 @@ export class ContainerScrollable extends React.Component<ContainerScrollableProp
             contentHeight: this.props.contentHeight ? this.props.contentHeight : 'auto',
             contentWidth: this.props.contentWidth ? this.props.contentWidth : 'auto',
             height: 0,
-            width: 0,
-            scrollLeft: this.props.scrollLeft ? this.props.scrollLeft : 0,
-            scrollTop: this.props.scrollTop ? this.props.scrollTop : 0
-        }
-    }
-
-    componentWillReceiveProps(nextProps: ContainerScrollableProps): void {
-        let changed = false;
-        if (nextProps.scrollLeft !== this.props.scrollLeft && this.ref) {
-            this.ref.scrollLeft = nextProps.scrollLeft;
-            changed = true;
-        }
-        if (nextProps.scrollTop !== this.props.scrollTop && this.ref) {
-            this.ref.scrollTop = nextProps.scrollTop;
-            changed = true;
-        }
-
-        if (changed && this.props.onScrollPosChanged) {
-            this.props.onScrollPosChanged(nextProps.scrollLeft, nextProps.scrollTop);
+            scrollLeft: 0,
+            scrollTop: 0,
+            width: 0
         }
     }
 
@@ -61,8 +45,8 @@ export class ContainerScrollable extends React.Component<ContainerScrollableProp
         if (this.state.contentWidth !== 'auto' || this.state.contentHeight !== 'auto') {
             wrapper = (
                 <div style={{
-                        width: this.state.contentWidth === 'auto' ? "100%" : this.state.contentWidth,
-                        height: this.state.contentHeight === 'auto' ? "100%" : this.state.contentHeight
+                        height: this.state.contentHeight === 'auto' ? "100%" : this.state.contentHeight,
+                        width: this.state.contentWidth === 'auto' ? "100%" : this.state.contentWidth
                     }}
                >
                     {this.props.children}
@@ -96,10 +80,17 @@ export class ContainerScrollable extends React.Component<ContainerScrollableProp
         () => this.measureScrollbars();
 
     private handleScroll: (event: UIEvent) => void = (event) => {
-        this.setState(assign(this.state, {
-            scrollLeft: event.srcElement.scrollLeft,
-            scrollTop: event.srcElement.scrollTop
-        }));
+        let scrollLeft = event.srcElement.scrollLeft;
+        let scrollTop = event.srcElement.scrollTop;
+        if (this.state.scrollLeft != scrollLeft || this.state.scrollTop != scrollTop) {
+            this.setState(assign(this.state, {
+                scrollLeft,
+                scrollTop
+            }));
+            if (this.props.onScrollPosChanged) {
+                this.props.onScrollPosChanged(scrollLeft, scrollTop);
+            }
+        }
     }
 
     private measureScrollbars: () => void =

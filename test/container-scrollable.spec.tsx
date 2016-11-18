@@ -75,17 +75,4 @@ describe('ContainerScrollable', () => {
         expect(container.state).to.have.property('contentHeight', 200);
         expect(container.state).to.have.property('contentWidth', 100);
     });
-
-    // TODO scroll event
-    // it('should handle scroll event', () => {
-    //     let handleScrollPosChanged = chai.spy((left: number, top: number) => { return; });
-    //     let container = renderIntoDocument(<ContainerScrollable overflowX="auto" overflowY="auto" 
-    //         contentWidth={100} contentHeight={200} onScrollPosChanged={handleScrollPosChanged} />);
-    //     let domElement = ReactDOM.findDOMNode(container);
-    //     let e = document.createEvent('UIEvent');
-    //     e.initUIEvent('scroll', true, true, window, 10);
-    //     domElement.dispatchEvent(e);
-    //     expect(handleScrollPosChanged).to.have.been.called();
-    // });
-
 });

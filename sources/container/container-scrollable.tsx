@@ -18,14 +18,18 @@ export class ContainerScrollable extends React.Component<ContainerScrollableProp
             contentHeight: this.props.contentHeight ? this.props.contentHeight : 'auto',
             contentWidth: this.props.contentWidth ? this.props.contentWidth : 'auto',
             height: 0,
-            scrollLeft: 0,
-            scrollTop: 0,
+            scrollLeft: props.scrollLeft ? props.scrollLeft : 0,
+            scrollTop: props.scrollTop ? props.scrollTop : 0,
             width: 0
         }
     }
 
     componentDidMount(): void {
         this.measureScrollbars();
+
+        this.ref.scrollLeft = this.state.scrollLeft;
+        this.ref.scrollTop = this.state.scrollTop;
+
         this.ref.addEventListener('scroll', this.handleScroll);
         window.addEventListener('resize', this.handleWindowResize);
     }

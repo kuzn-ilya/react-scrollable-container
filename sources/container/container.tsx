@@ -15,10 +15,6 @@ export class Container extends React.Component<ContainerProps, ContainerState> {
     constructor(props: ContainerProps) {
         super(props);
         this.handleScrollPosChanged = this.handleScrollPosChanged.bind(this);
-        this.state = {
-            scrollLeft: 0,
-            scrollTop: 0
-        }
     }
 
     render(): JSX.Element {
@@ -38,6 +34,8 @@ export class Container extends React.Component<ContainerProps, ContainerState> {
                     overflowX={this.props.overflowX}
                     overflowY={this.props.overflowY}
                     onScrollPosChanged={this.handleScrollPosChanged}
+                    scrollLeft={this.props.scrollLeft}
+                    scrollTop={this.props.scrollTop}
                 >
                     {this.props.children}
                 </ContainerScrollable>

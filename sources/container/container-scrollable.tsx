@@ -52,8 +52,8 @@ export class ContainerScrollable extends React.Component<ContainerScrollableProp
                     {this.props.children}
                     <div className={addPrefixToClass('container-wrapper')}
                         style={{
-                            left: this.state.contentWidth === 'auto' ? 0 : this.state.contentWidth,
-                            top: this.state.contentHeight === 'auto' ? 0 : this.state.contentHeight
+                            left: this.state.contentWidth === 'auto' ? 0 : this.state.contentWidth - 1,
+                            top: this.state.contentHeight === 'auto' ? 0 : this.state.contentHeight - 1
                         }}
                     />
                 </div>

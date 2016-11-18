@@ -10,4 +10,3 @@ export function unmountComponent<P, S>(component: React.Component<P, S>): void {
     let parent = element.parentElement;
     ReactDOM.unmountComponentAtNode(parent);
 }
-

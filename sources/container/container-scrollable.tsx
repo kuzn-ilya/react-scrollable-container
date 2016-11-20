@@ -57,13 +57,13 @@ export class ContainerScrollable extends React.Component<ContainerScrollableProp
     private ref: HTMLElement;
 
     render(): JSX.Element {
-        let wrapper: React.ReactNode = null;
+        let content: React.ReactNode = null;
 
         let divProps = omit(this.props, 'contentHeight', 'contentWidth', 'overflowX', 'overflowY', 
             'onScrollPosChanged', 'scrollLeft', 'scrollTop');
 
         if (this.state.contentWidth !== 'auto' || this.state.contentHeight !== 'auto') {
-            wrapper = (
+            content = (
                 <div style={{
                         height: this.state.contentHeight === 'auto' ? "100%" : this.state.contentHeight,
                         width: this.state.contentWidth === 'auto' ? "100%" : this.state.contentWidth
@@ -79,7 +79,7 @@ export class ContainerScrollable extends React.Component<ContainerScrollableProp
                 </div>
             );
         } else {
-            wrapper = this.props.children;
+            content = this.props.children;
         }
 
         return (
@@ -91,7 +91,7 @@ export class ContainerScrollable extends React.Component<ContainerScrollableProp
                 }}
                 {...divProps}
             >
-                {wrapper}
+                {content}
             </div>
         );
     }

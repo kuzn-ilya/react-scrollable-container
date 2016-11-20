@@ -61,7 +61,6 @@ class Comp extends React.Component<{}, { x: number, y: number }> {
     }
 
     handleScrollPosChanged: (x: number, y: number) => void = (x, y) => {
-        console.log("x", x, "y", y);
         this.setState(assign(this.state, { x, y }));
     };
 

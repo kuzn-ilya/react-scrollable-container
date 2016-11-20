@@ -172,6 +172,7 @@ describe('DOM: Container', () => {
         expect(scrollable.scrollTop).equal(30);
     });
 
+    // TODO make this test working
     // it('shoud be able to sync scroll bars of two containers', () => {
 
     //     class Comp extends React.Component<{}, { x: number, y: number }> {
@@ -182,7 +183,6 @@ describe('DOM: Container', () => {
     //         }
 
     //         handleScrollPosChanged: (x: number, y: number) => void = (x, y) => {
-    //             console.log("x", x, "y", y);
     //             this.setState(assign(this.state, { x, y }));
     //         };
 
@@ -221,7 +221,7 @@ describe('DOM: Container', () => {
     //     expect(scrollable1).to.exist;
 
     //     scrollable1.scrollLeft = 20;
-    //     scrollable1.scrollTop = 10;
+    //     //scrollable1.scrollTop = 10;
 
     //     let e = document.createEvent('CustomEvent');
     //     e.initCustomEvent('scroll', true, true, null);

@@ -100,8 +100,8 @@ export class ContainerScrollable extends React.Component<ContainerScrollableProp
         () => this.measureScrollbars();
 
     private handleScroll: (event: UIEvent) => void = (event) => {
-        let scrollLeft = event.srcElement.scrollLeft;
-        let scrollTop = event.srcElement.scrollTop;
+        let scrollLeft = (event.target as Element).scrollLeft;
+        let scrollTop = (event.target as Element).scrollTop;
         if (this.state.scrollLeft !== scrollLeft || this.state.scrollTop !== scrollTop) {
             this.setState(assign(this.state, {
                 scrollLeft,

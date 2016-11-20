@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as chai from 'chai';
 import * as chaiSpies from 'chai-spies';
+import { is } from 'useragent';
 
 import { renderIntoDocument, unmountComponent } from './test.utils';
 
@@ -31,7 +32,12 @@ describe('ContainerScrollable', () => {
             it(`should have overflow "${value}" attribute if both overflowX and overflowY properties have "${value}" values`, () => {
                 let container = renderIntoDocument(<ContainerScrollable overflowX={value} overflowY={value}/>);
                 let domElement = ReactDOM.findDOMNode(container) as HTMLElement;
-                expect(domElement.style.overflow).to.be.equal(value);
+                if (is('IE')) {
+                    expect(domElement.style.overflowX).to.be.equal(value);
+                    expect(domElement.style.overflowY).to.be.equal(value);
+                } else {
+                    expect(domElement.style.overflow).to.be.equal(value);
+                }
             });
         });
 

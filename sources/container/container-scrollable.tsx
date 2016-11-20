@@ -24,6 +24,16 @@ export class ContainerScrollable extends React.Component<ContainerScrollableProp
         }
     }
 
+    componentWillReceiveProps(nextProps: ContainerScrollableProps) {
+        if ((nextProps.scrollLeft && this.state.scrollLeft !== nextProps.scrollLeft)
+            || (nextProps.scrollTop && this.state.scrollTop !== nextProps.scrollTop)) {
+            this.setState(assign(this.state, {
+                scrollLeft: nextProps.scrollLeft ? nextProps.scrollLeft : 0,
+                scrollTop: nextProps.scrollTop ? nextProps.scrollTop : 0
+            }));
+        }
+    }
+
     componentDidMount(): void {
         this.measureScrollbars();
 
@@ -32,6 +42,11 @@ export class ContainerScrollable extends React.Component<ContainerScrollableProp
 
         this.ref.addEventListener('scroll', this.handleScroll);
         window.addEventListener('resize', this.handleWindowResize);
+    }
+
+    componentDidUpdate(): void {
+        this.ref.scrollLeft = this.state.scrollLeft;
+        this.ref.scrollTop = this.state.scrollTop;
     }
 
     componentWillUnmount(): void {
@@ -44,7 +59,8 @@ export class ContainerScrollable extends React.Component<ContainerScrollableProp
     render(): JSX.Element {
         let wrapper: React.ReactNode = null;
 
-        let divProps = omit(this.props, 'contentHeight', 'contentWidth', 'overflowX', 'overflowY', 'onScrollPosChanged');
+        let divProps = omit(this.props, 'contentHeight', 'contentWidth', 'overflowX', 'overflowY', 
+            'onScrollPosChanged', 'scrollLeft', 'scrollTop');
 
         if (this.state.contentWidth !== 'auto' || this.state.contentHeight !== 'auto') {
             wrapper = (
@@ -86,7 +102,7 @@ export class ContainerScrollable extends React.Component<ContainerScrollableProp
     private handleScroll: (event: UIEvent) => void = (event) => {
         let scrollLeft = event.srcElement.scrollLeft;
         let scrollTop = event.srcElement.scrollTop;
-        if (this.state.scrollLeft != scrollLeft || this.state.scrollTop != scrollTop) {
+        if (this.state.scrollLeft !== scrollLeft || this.state.scrollTop !== scrollTop) {
             this.setState(assign(this.state, {
                 scrollLeft,
                 scrollTop

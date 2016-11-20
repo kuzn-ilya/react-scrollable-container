@@ -43,7 +43,7 @@ describe('DOM: Container', () => {
         document.body.removeChild(div);
     });
 
-    it('shoud have scrollbars if child is not fit to client rectangle', () => {
+    it('should have scrollbars if child is not fit to client rectangle', () => {
         ReactDOM.render(
             <Container id="container" style={{left: "40px", top: "40px", width: "200px", height: "200px"}}
                 overflowX="auto" overflowY="auto">
@@ -66,7 +66,7 @@ describe('DOM: Container', () => {
         expect(scrollable.scrollHeight).equal(280);
     });
 
-    it('shoud fire onScrollPosChanged event when it is scrolled', () => {
+    it('should fire onScrollPosChanged event when it is scrolled', () => {
         let handleScrollPosChanged = chai.spy((left: number, top: number) => { return; });
 
         let container = ReactDOM.render(
@@ -97,7 +97,7 @@ describe('DOM: Container', () => {
         expect(container.state.scrollTop).to.be.equal(10);
     });
 
-    it('shoud have a scrollbar when contentWidth and contentHeight set up to values greater than width and height', () => {
+    it('should have scrollbars when contentWidth and contentHeight set up to values greater than width and height', () => {
         let container = ReactDOM.render(
             <Container id="container" style={{left: "40px", top: "40px", width: "200px", height: "200px"}}
                 overflowX="auto" overflowY="auto"
@@ -106,7 +106,8 @@ describe('DOM: Container', () => {
             div) as Container;
 
         expect(container).to.exist;
-        expect(container.props).has.property('contentWidth')
+        expect(container.props.contentWidth).to.be.equal(400);
+        expect(container.props.contentHeight).to.be.equal(300);
 
         let element = document.body.querySelector('#container');
         let scrollable = element.querySelector('.react-container-container-scrollable');
@@ -116,7 +117,7 @@ describe('DOM: Container', () => {
         expect(scrollable.scrollHeight).equal(300);
     });
 
-    it('shoud have a horizontal scrollbar when contentWidth greater than width', () => {
+    it('should have a horizontal scrollbar when contentWidth greater than width', () => {
         let container = ReactDOM.render(
             <Container id="container" style={{left: "40px", top: "40px", width: "200px", height: "200px"}}
                 overflowX="auto" overflowY="auto"
@@ -134,7 +135,7 @@ describe('DOM: Container', () => {
         expect(scrollable.offsetHeight).equal(200);
     });
 
-    it('shoud have a vertical scrollbar when contentHeight greater than height', () => {
+    it('should have a vertical scrollbar when contentHeight greater than height', () => {
         let container = ReactDOM.render(
             <Container id="container" style={{left: "40px", top: "40px", width: "200px", height: "200px"}}
                 overflowX="auto" overflowY="auto"
@@ -152,66 +153,85 @@ describe('DOM: Container', () => {
         expect(scrollable.offsetWidth).equal(200);
     });
 
-    it('shoud be able to sync scroll bars of two containers', () => {
-
-        class Comp extends React.Component<{}, { x: number, y: number }> {
-            constructor(props: {}) {
-                super(props);
-                this.handleScrollPosChanged = this.handleScrollPosChanged.bind(this);
-                this.state = { x: 0, y: 0 };
-            }
-
-            handleScrollPosChanged: (x: number, y: number) => void = (x, y) => {
-                console.log("x", x, "y", y);
-                this.setState(assign(this.state, { x, y }));
-            };
-
-            render() {
-                return (
-                    <div>
-                        <Container id="container1" style={{left: "40px", top: "40px", width: "200px", height: "200px"}}
-                            overflowX="auto" overflowY="auto"
-                            contentHeight={400}
-                            onScrollPosChanged={this.handleScrollPosChanged}
-                            scrollLeft={this.state.x}
-                            scrollTop={this.state.y}
-                             />
-                        <Container id="container2" style={{left: "40px", top: "240px", width: "200px", height: "200px"}}
-                            overflowX="auto" overflowY="auto"
-                            contentHeight={400}
-                            onScrollPosChanged={this.handleScrollPosChanged}
-                            scrollLeft={this.state.x}
-                            scrollTop={this.state.y}
-                            />
-                    </div>
-                );
-            }
-
-        }
-
+    it('should apply scrollLeft and scrollTop to dom element whether they are supplied', () => {
         let container = ReactDOM.render(
-            <Comp />,
+            <Container id="container" style={{left: "40px", top: "40px", width: "200px", height: "200px"}}
+                overflowX="auto" overflowY="auto"
+                contentHeight={300} contentWidth={400}
+                scrollLeft={20} scrollTop={30}
+                />,
             div) as Container;
 
         expect(container).to.exist;
 
-        let element1 = document.body.querySelector('#container1');
-        let scrollable1 = element1.querySelector('.react-container-container-scrollable') as HTMLElement;
+        let element = document.body.querySelector('#container');
+        let scrollable = element.querySelector('.react-container-container-scrollable');
 
-        expect(scrollable1).to.exist;
-
-        scrollable1.scrollLeft = 20;
-        scrollable1.scrollTop = 10;
-
-        let e = document.createEvent('CustomEvent');
-        e.initCustomEvent('scroll', true, true, null);
-        scrollable1.dispatchEvent(e);
-
-        let element2 = document.body.querySelector('#container2');
-        let scrollable2 = element2.querySelector('.react-container-container-scrollable') as HTMLElement;
-        expect(scrollable2).to.exist;
-
-        expect(scrollable2.scrollLeft).to.be.equal(20);
-        expect(scrollable2.scrollTop).to.be.equal(10);
+        expect(scrollable).to.exist;
+        expect(scrollable.scrollLeft).equal(20);
+        expect(scrollable.scrollTop).equal(30);
     });
+
+    // it('shoud be able to sync scroll bars of two containers', () => {
+
+    //     class Comp extends React.Component<{}, { x: number, y: number }> {
+    //         constructor(props: {}) {
+    //             super(props);
+    //             this.handleScrollPosChanged = this.handleScrollPosChanged.bind(this);
+    //             this.state = { x: 0, y: 0 };
+    //         }
+
+    //         handleScrollPosChanged: (x: number, y: number) => void = (x, y) => {
+    //             console.log("x", x, "y", y);
+    //             this.setState(assign(this.state, { x, y }));
+    //         };
+
+    //         render() {
+    //             return (
+    //                 <div>
+    //                     <Container id="container1" style={{left: "40px", top: "40px", width: "200px", height: "200px"}}
+    //                         overflowX="auto" overflowY="auto"
+    //                         contentHeight={400}
+    //                         onScrollPosChanged={this.handleScrollPosChanged}
+    //                         scrollLeft={this.state.x}
+    //                         scrollTop={this.state.y}
+    //                          />
+    //                     <Container id="container2" style={{left: "40px", top: "240px", width: "200px", height: "200px"}}
+    //                         overflowX="auto" overflowY="auto"
+    //                         contentHeight={400}
+    //                         onScrollPosChanged={this.handleScrollPosChanged}
+    //                         scrollLeft={this.state.x}
+    //                         scrollTop={this.state.y}
+    //                         />
+    //                 </div>
+    //             );
+    //         }
+
+    //     }
+
+    //     let container = ReactDOM.render(
+    //         <Comp />,
+    //         div) as Container;
+
+    //     expect(container).to.exist;
+
+    //     let element1 = document.body.querySelector('#container1');
+    //     let scrollable1 = element1.querySelector('.react-container-container-scrollable') as HTMLElement;
+
+    //     expect(scrollable1).to.exist;
+
+    //     scrollable1.scrollLeft = 20;
+    //     scrollable1.scrollTop = 10;
+
+    //     let e = document.createEvent('CustomEvent');
+    //     e.initCustomEvent('scroll', true, true, null);
+    //     scrollable1.dispatchEvent(e);
+
+    //     let element2 = document.body.querySelector('#container2');
+    //     let scrollable2 = element2.querySelector('.react-container-container-scrollable') as HTMLElement;
+    //     expect(scrollable2).to.exist;
+
+    //     expect(scrollable2.scrollLeft).to.be.equal(20);
+    //     expect(scrollable2.scrollTop).to.be.equal(10);
+    // });
 });

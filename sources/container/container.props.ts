@@ -7,8 +7,6 @@ export interface ContainerProps extends HTMLProps<HTMLDivElement> {
     contentWidth?: Size;
     contentHeight?: Size;
     style?: CSSProperties;
-    scrollLeft?: number;
-    scrollTop?: number;
 
     onScrollPosChanged?: (left: number, top: number) => void;
 }

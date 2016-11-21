@@ -18,35 +18,15 @@ export class ContainerScrollable extends React.Component<ContainerScrollableProp
             contentHeight: this.props.contentHeight ? this.props.contentHeight : 'auto',
             contentWidth: this.props.contentWidth ? this.props.contentWidth : 'auto',
             height: 0,
-            scrollLeft: props.scrollLeft ? props.scrollLeft : 0,
-            scrollTop: props.scrollTop ? props.scrollTop : 0,
             width: 0
-        }
-    }
-
-    componentWillReceiveProps(nextProps: ContainerScrollableProps) {
-        if ((nextProps.scrollLeft && this.state.scrollLeft !== nextProps.scrollLeft)
-            || (nextProps.scrollTop && this.state.scrollTop !== nextProps.scrollTop)) {
-            this.setState(assign(this.state, {
-                scrollLeft: nextProps.scrollLeft ? nextProps.scrollLeft : 0,
-                scrollTop: nextProps.scrollTop ? nextProps.scrollTop : 0
-            }));
         }
     }
 
     componentDidMount(): void {
         this.measureScrollbars();
 
-        this.ref.scrollLeft = this.state.scrollLeft;
-        this.ref.scrollTop = this.state.scrollTop;
-
         this.ref.addEventListener('scroll', this.handleScroll);
         window.addEventListener('resize', this.handleWindowResize);
-    }
-
-    componentDidUpdate(): void {
-        this.ref.scrollLeft = this.state.scrollLeft;
-        this.ref.scrollTop = this.state.scrollTop;
     }
 
     componentWillUnmount(): void {
@@ -60,7 +40,7 @@ export class ContainerScrollable extends React.Component<ContainerScrollableProp
         let content: React.ReactNode = null;
 
         let divProps = omit(this.props, 'contentHeight', 'contentWidth', 'overflowX', 'overflowY', 
-            'onScrollPosChanged', 'scrollLeft', 'scrollTop');
+            'onScrollPosChanged');
 
         if (this.state.contentWidth !== 'auto' || this.state.contentHeight !== 'auto') {
             content = (
@@ -102,14 +82,8 @@ export class ContainerScrollable extends React.Component<ContainerScrollableProp
     private handleScroll: (event: UIEvent) => void = (event) => {
         let scrollLeft = (event.target as Element).scrollLeft;
         let scrollTop = (event.target as Element).scrollTop;
-        if (this.state.scrollLeft !== scrollLeft || this.state.scrollTop !== scrollTop) {
-            this.setState(assign(this.state, {
-                scrollLeft,
-                scrollTop
-            }));
-            if (this.props.onScrollPosChanged) {
-                this.props.onScrollPosChanged(scrollLeft, scrollTop);
-            }
+        if (this.props.onScrollPosChanged) {
+            this.props.onScrollPosChanged(scrollLeft, scrollTop);
         }
     }
 

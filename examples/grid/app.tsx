@@ -8,19 +8,8 @@ import { fakeData } from './data/fake.data';
 import { Row } from './row/row.component';
 import { HeaderCell } from './header-cell/header-cell.component';
 import { Container } from '../../sources/container/container';
-import * as assign from 'object-assign';
 
 class Comp extends React.Component<{}, { x: number, y: number }> {
-    constructor(props: {}) {
-        super(props);
-        this.handleScrollPosChanged = this.handleScrollPosChanged.bind(this);
-        this.state = { x: 0, y: 0 };
-    }
-
-    handleScrollPosChanged: (x: number, y: number) => void = (x, y) => {
-        this.setState(assign(this.state, { x, y }));
-    };
-
     render() {
         return (
             <div style={{
@@ -34,9 +23,6 @@ class Comp extends React.Component<{}, { x: number, y: number }> {
                     contentWidth={2190}
                     contentHeight="auto"
                     overflowX="auto" overflowY="auto"
-                    onScrollPosChanged={this.handleScrollPosChanged}
-                    scrollLeft={this.state.x}
-                    scrollTop={this.state.y} 
                 >
                     <HeaderCell width={30} caption="id" />
                     <HeaderCell width={150} caption="firstName" />
@@ -59,9 +45,6 @@ class Comp extends React.Component<{}, { x: number, y: number }> {
                     contentWidth={2190}
                     contentHeight="auto"
                     overflowX="auto" overflowY="auto"
-                    onScrollPosChanged={this.handleScrollPosChanged}
-                    scrollLeft={this.state.x}
-                    scrollTop={this.state.y} 
                 >
                      {fakeData.map((item) => (<Row model={item} />))}
                 </Container>

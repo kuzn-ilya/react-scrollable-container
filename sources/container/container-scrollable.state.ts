@@ -3,6 +3,4 @@ export interface ContainerScrollableState {
     contentHeight: 'auto' | number;
     height: number;
     width: number;
-    scrollLeft: number;
-    scrollTop: number;
 }

@@ -6,8 +6,6 @@ export interface ContainerScrollableProps extends HTMLProps<HTMLDivElement> {
     contentHeight?: Size;
     overflowX: Overflow;
     overflowY: Overflow;
-    scrollLeft?: number;
-    scrollTop?: number;
 
     onScrollPosChanged?: (left: number, top: number) => void;
 

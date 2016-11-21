@@ -150,4 +150,51 @@ describe('DOM: Container', () => {
         expect(scrollable.scrollHeight).equal(400);
         expect(scrollable.offsetWidth).equal(200);
     });
+
+    // TODO make this test working
+    // it('shoud be able to sync scroll bars of two containers', () => {
+
+    //     class Comp extends React.Component<{}, { x: number, y: number }> {
+    //         render() {
+    //             return (
+    //                 <div>
+    //                     <Container id="container1" style={{left: "40px", top: "40px", width: "200px", height: "200px"}}
+    //                         overflowX="auto" overflowY="auto"
+    //                         contentHeight={400}
+    //                     />
+    //                     <Container id="container2" style={{left: "40px", top: "240px", width: "200px", height: "200px"}}
+    //                         overflowX="auto" overflowY="auto"
+    //                         contentHeight={400}
+    //                     />
+    //                 </div>
+    //             );
+    //         }
+
+    //     }
+
+    //     let container = ReactDOM.render(
+    //         <Comp />,
+    //         div) as Container;
+
+    //     expect(container).to.exist;
+
+    //     let element1 = document.body.querySelector('#container1');
+    //     let scrollable1 = element1.querySelector('.react-container-container-scrollable') as HTMLElement;
+
+    //     expect(scrollable1).to.exist;
+
+    //     scrollable1.scrollLeft = 20;
+    //     scrollable1.scrollTop = 10;
+
+    //     let e = document.createEvent('CustomEvent');
+    //     e.initCustomEvent('scroll', true, true, null);
+    //     scrollable1.dispatchEvent(e);
+
+    //     let element2 = document.body.querySelector('#container2');
+    //     let scrollable2 = element2.querySelector('.react-container-container-scrollable') as HTMLElement;
+    //     expect(scrollable2).to.exist;
+
+    //     expect(scrollable2.scrollLeft).to.be.equal(20);
+    //     expect(scrollable2.scrollTop).to.be.equal(10);
+    // });
 });

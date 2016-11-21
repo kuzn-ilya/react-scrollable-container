@@ -12,11 +12,21 @@ export class Container extends React.Component<ContainerProps, ContainerState> {
 
     private ref: HTMLElement;
 
+    static componentList: Container[] = [];
+
     constructor(props: ContainerProps) {
         super(props);
         this.handleScrollPosChanged = this.handleScrollPosChanged.bind(this);
         this.state = {
         }
+    }
+
+    componentDidMount() {
+        Container.componentList.push(this);
+    }
+
+    componentWillUnmount() {
+        Container.componentList = Container.componentList.filter(item => item !== this);
     }
 
     render(): JSX.Element {
@@ -45,6 +55,17 @@ export class Container extends React.Component<ContainerProps, ContainerState> {
     handleScrollPosChanged: (left: number, top: number) => void = (scrollLeft, scrollTop) => {
         if (this.props.onScrollPosChanged) {
             this.props.onScrollPosChanged(scrollLeft, scrollTop);
+        }
+
+        if (this.ref) {
+            let parent = this.ref.parentElement;
+            let children = parent.querySelectorAll('.' + addPrefixToClass('container'));
+            for (let i = 0; i < children.length; i++) {
+                if (children[i] !== this.ref) {
+                    let items = Container.componentList.filter((value) => value.ref === children[i]);
+                    items.forEach((value) => console.log(value));
+                }
+            }
         }
     }
 }

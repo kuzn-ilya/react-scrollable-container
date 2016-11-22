@@ -30,7 +30,7 @@ export class Container extends React.Component<ContainerProps, ContainerState> {
     }
 
     render(): JSX.Element {
-        let divProps = omit(this.props, 'contentHeight', 'contentWidth', 'overflowX', 'overflowY', 
+        let divProps = omit(this.props, 'contentHeight', 'contentWidth', 'overflowX', 'overflowY',
             'onScrollPosChanged');
 
         return (
@@ -55,17 +55,6 @@ export class Container extends React.Component<ContainerProps, ContainerState> {
     handleScrollPosChanged: (left: number, top: number) => void = (scrollLeft, scrollTop) => {
         if (this.props.onScrollPosChanged) {
             this.props.onScrollPosChanged(scrollLeft, scrollTop);
-        }
-
-        if (this.ref) {
-            let parent = this.ref.parentElement;
-            let children = parent.querySelectorAll('.' + addPrefixToClass('container'));
-            for (let i = 0; i < children.length; i++) {
-                if (children[i] !== this.ref) {
-                    let items = Container.componentList.filter((value) => value.ref === children[i]);
-                    items.forEach((value) => console.log(value));
-                }
-            }
         }
     }
 }

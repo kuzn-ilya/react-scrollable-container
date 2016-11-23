@@ -5,18 +5,17 @@ import { omit } from './../utils/object.utils';
 
 import { ContainerScrollableProps } from  './container-scrollable.props';
 import { ContainerScrollableState } from  './container-scrollable.state';
+import { ContainerScrollableContent } from './container-scrollable-content';
 
 import './container.less';
 
-export class ContainerScrollable extends React.Component<ContainerScrollableProps, ContainerScrollableState> {
+export class ContainerScrollable extends React.PureComponent<ContainerScrollableProps, ContainerScrollableState> {
 
     constructor(props: ContainerScrollableProps) {
         super(props);
         this.handleWindowResize = this.handleWindowResize.bind(this);
         this.handleScroll = this.handleScroll.bind(this);
         this.state = {
-            contentHeight: this.props.contentHeight ? this.props.contentHeight : 'auto',
-            contentWidth: this.props.contentWidth ? this.props.contentWidth : 'auto',
             height: 0,
             width: 0
         }
@@ -25,8 +24,24 @@ export class ContainerScrollable extends React.Component<ContainerScrollableProp
     componentDidMount(): void {
         this.measureScrollbars();
 
+        if (this.props.scrollLeft !== null) {
+            this.ref.scrollLeft = this.props.scrollLeft;
+        }
+        if (this.props.scrollTop !== null) {
+            this.ref.scrollTop = this.props.scrollTop;
+        }
+
         this.ref.addEventListener('scroll', this.handleScroll);
         window.addEventListener('resize', this.handleWindowResize);
+    }
+
+    componentDidUpdate(): void {
+        if (this.props.scrollLeft !== null) {
+            this.ref.scrollLeft = this.props.scrollLeft;
+        }
+        if (this.props.scrollTop !== null) {
+            this.ref.scrollTop = this.props.scrollTop;
+        }
     }
 
     componentWillUnmount(): void {
@@ -37,30 +52,8 @@ export class ContainerScrollable extends React.Component<ContainerScrollableProp
     private ref: HTMLElement;
 
     render(): JSX.Element {
-        let content: React.ReactNode = null;
-
         let divProps = omit(this.props, 'contentHeight', 'contentWidth', 'overflowX', 'overflowY', 
             'onScrollPosChanged');
-
-        if (this.state.contentWidth !== 'auto' || this.state.contentHeight !== 'auto') {
-            content = (
-                <div style={{
-                        height: this.state.contentHeight === 'auto' ? "100%" : this.state.contentHeight,
-                        width: this.state.contentWidth === 'auto' ? "100%" : this.state.contentWidth
-                    }}
-               >
-                    {this.props.children}
-                    <div className={addPrefixToClass('container-wrapper')}
-                        style={{
-                            left: this.state.contentWidth === 'auto' ? 0 : this.state.contentWidth - 1,
-                            top: this.state.contentHeight === 'auto' ? 0 : this.state.contentHeight - 1
-                        }}
-                    />
-                </div>
-            );
-        } else {
-            content = this.props.children;
-        }
 
         return (
             <div className={addPrefixToClass('container-scrollable')}
@@ -71,7 +64,9 @@ export class ContainerScrollable extends React.Component<ContainerScrollableProp
                 }}
                 {...divProps}
             >
-                {content}
+                <ContainerScrollableContent contentWidth={this.props.contentWidth} contentHeight={this.props.contentHeight}>
+                    {this.props.children}
+                </ContainerScrollableContent>
             </div>
         );
     }

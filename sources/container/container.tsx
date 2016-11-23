@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { addPrefixToClass } from './../utils/css.utils';
-import { omit } from './../utils/object.utils';
 
 import { ContainerProps } from './container.props';
 import { ContainerState } from './container.state';
@@ -8,11 +7,9 @@ import { ContainerScrollable } from './container-scrollable';
 
 import './container.less';
 
-export class Container extends React.Component<ContainerProps, ContainerState> {
+export class Container extends React.PureComponent<ContainerProps, ContainerState> {
 
     private ref: HTMLElement;
-
-    static componentList: Container[] = [];
 
     constructor(props: ContainerProps) {
         super(props);
@@ -21,24 +18,13 @@ export class Container extends React.Component<ContainerProps, ContainerState> {
         }
     }
 
-    componentDidMount() {
-        Container.componentList.push(this);
-    }
-
-    componentWillUnmount() {
-        Container.componentList = Container.componentList.filter(item => item !== this);
-    }
-
     render(): JSX.Element {
-        let divProps = omit(this.props, 'contentHeight', 'contentWidth', 'overflowX', 'overflowY',
-            'onScrollPosChanged');
 
         return (
             <div
                 ref={(ref) => this.ref = ref}
                 className={addPrefixToClass('container')}
                 style={this.props.style}
-                {...divProps}
             >
                 <ContainerScrollable
                     contentHeight={this.props.contentHeight}
@@ -46,6 +32,8 @@ export class Container extends React.Component<ContainerProps, ContainerState> {
                     overflowX={this.props.overflowX}
                     overflowY={this.props.overflowY}
                     onScrollPosChanged={this.handleScrollPosChanged}
+                    scrollLeft={this.props.scrollLeft}
+                    scrollTop={this.props.scrollTop}
                 >
                     {this.props.children}
                 </ContainerScrollable>

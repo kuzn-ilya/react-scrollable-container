@@ -7,7 +7,7 @@ import './app.less';
 import { fakeData } from './data/fake.data';
 import { Row } from './row/row.component';
 import { HeaderCell } from './header-cell/header-cell.component';
-import { ContainerScrollable } from '../../sources/container/container-scrollable';
+import { ScrollableContainer } from '../../sources/container/ScrollableContainer';
 
 interface HeaderCellModel {
     width: number;
@@ -66,30 +66,30 @@ class Comp extends React.Component<{}, CompState> {
                 height: "100%"
             }}>
                 <button onClick={() => this.setState({x: this.state.x, y: this.state.y, headerCellModels: this.state.headerCellModels, rowModels: this.state.rowModels.slice(0, this.state.rowModels.length - 1)})}>Remove</button>
-                <ContainerScrollable id="container1"
+                <ScrollableContainer id="container1"
                     contentWidth={2190}
                     contentHeight="auto"
                     overflowX="auto" overflowY="auto"
                     onScrollPosChanged={this.handleScrollPosChanged}
                     scrollLeft={this.state.x}
-                    childState={this.state.headerCellModels}
-                    children= {this.mapHeader}
+                    data={this.state.headerCellModels}
+                    dataRenderer={this.mapHeader}
                     width="100%"
                     height="39px"
                 >
-                </ContainerScrollable>
-                <ContainerScrollable id="container2"
+                </ScrollableContainer>
+                <ScrollableContainer id="container2"
                     contentWidth={2190}
                     contentHeight="auto"
                     overflowX="auto" overflowY="auto"
                     onScrollPosChanged={this.handleScrollPosChanged}
                     scrollLeft={this.state.x}
-                    childState={this.state.rowModels}
-                    children={this.mapRows}
+                    data={this.state.rowModels}
+                    dataRenderer={this.mapRows}
                     width="100%"
                     height="90%"
                 >
-                </ContainerScrollable>
+                </ScrollableContainer>
             </div>
         );
     }

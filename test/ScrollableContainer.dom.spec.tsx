@@ -3,12 +3,12 @@ import * as ReactDOM from 'react-dom';
 import * as chai from 'chai';
 import * as chaiSpies from 'chai-spies';
 
-import { ContainerScrollable } from '../sources/container/container-scrollable';
+import { ScrollableContainer } from '../sources/container/ScrollableContainer';
 
 const expect = chai.expect;
 chai.use(chaiSpies);
 
-describe('DOM: ContainerScrollable', () => {
+describe('DOM: ScrollableContainer', () => {
     let div: HTMLDivElement = null;
     let style: HTMLStyleElement = null;
 
@@ -42,12 +42,12 @@ describe('DOM: ContainerScrollable', () => {
 
     it('should have scrollbars if child is not fit to client rectangle', () => {
         ReactDOM.render(
-            <ContainerScrollable id="container" 
+            <ScrollableContainer id="container" 
                 width = "200px" 
                 height = "200px"
                 overflowX="auto" overflowY="auto">
                 <div style={{top: "260px", left: "280px"}} className="divClass" />
-            </ContainerScrollable>,
+            </ScrollableContainer>,
             div);
 
         let element = document.body.querySelector('#container') as HTMLElement;
@@ -69,14 +69,14 @@ describe('DOM: ContainerScrollable', () => {
         let handleScrollPosChanged = chai.spy((left: number, top: number) => { return; });
 
         let container = ReactDOM.render(
-            <ContainerScrollable id="container" 
+            <ScrollableContainer id="container" 
                 width = "200px"
                 height = "200px"
                 overflowX="auto" overflowY="auto"
                 onScrollPosChanged={handleScrollPosChanged}>
                 <div style={{top: "260px", left: "280px"}} className="divClass" />
-            </ContainerScrollable>,
-            div) as ContainerScrollable;
+            </ScrollableContainer>,
+            div) as ScrollableContainer;
 
         expect(container).to.exist;
 
@@ -98,13 +98,13 @@ describe('DOM: ContainerScrollable', () => {
 
     it('should have scrollbars when contentWidth and contentHeight set up to values greater than width and height', () => {
         let container = ReactDOM.render(
-            <ContainerScrollable id="container"
+            <ScrollableContainer id="container"
                 width = "200px"
                 height = "200px"
                 overflowX="auto" overflowY="auto"
                 contentHeight={300} contentWidth={400}
                 />,
-            div) as ContainerScrollable;
+            div) as ScrollableContainer;
 
         expect(container).to.exist;
         expect(container.props.contentWidth).to.be.equal(400);
@@ -120,12 +120,12 @@ describe('DOM: ContainerScrollable', () => {
 
     it('should have a horizontal scrollbar when contentWidth greater than width', () => {
         let container = ReactDOM.render(
-            <ContainerScrollable id="container" 
+            <ScrollableContainer id="container" 
                 width = "200px"
                 height = "200px"
                 overflowX="auto" overflowY="auto"
                 contentWidth={400} />,
-            div) as ContainerScrollable;
+            div) as ScrollableContainer;
 
         expect(container).to.exist;
 
@@ -140,12 +140,12 @@ describe('DOM: ContainerScrollable', () => {
 
     it('should have a vertical scrollbar when contentHeight greater than height', () => {
         let container = ReactDOM.render(
-            <ContainerScrollable id="container" 
+            <ScrollableContainer id="container" 
                 width="200px" 
                 height="200px"
                 overflowX="auto" overflowY="auto"
                 contentHeight={400} />,
-            div) as ContainerScrollable;
+            div) as ScrollableContainer;
 
         expect(container).to.exist;
 
@@ -206,7 +206,7 @@ describe('DOM: ContainerScrollable', () => {
     // });
 
     it('should have the same dimensions as its applied in a style attribute', () => {
-        ReactDOM.render(<ContainerScrollable id="container" 
+        ReactDOM.render(<ScrollableContainer id="container" 
             width = "200px"
             height = "200px" 
             overflowX="auto" overflowY="auto"/>,

@@ -2,15 +2,15 @@ import * as React from 'react';
 import * as assign from 'object-assign';
 import { addPrefixToClass } from './../utils/css.utils';
 
-import { ContainerScrollableProps } from  './container-scrollable.props';
-import { ContainerScrollableState } from  './container-scrollable.state';
-import { ContainerScrollableContent } from './container-scrollable-content';
+import { ScrollableContainerProps } from  './ScrollableContainerProps';
+import { ScrollableContainerState } from  './ScrollableContainerState';
+import { ScrollableContainerContent } from './ScrollableContainerContent';
 
 import './container.less';
 
-export class ContainerScrollable extends React.PureComponent<ContainerScrollableProps, ContainerScrollableState> {
+export class ScrollableContainer extends React.PureComponent<ScrollableContainerProps, ScrollableContainerState> {
 
-    constructor(props: ContainerScrollableProps) {
+    constructor(props: ScrollableContainerProps) {
         super(props);
         this.handleWindowResize = this.handleWindowResize.bind(this);
         this.handleScroll = this.handleScroll.bind(this);
@@ -67,11 +67,12 @@ export class ContainerScrollable extends React.PureComponent<ContainerScrollable
                         overflowY: this.props.overflowY
                     }}
                 >
-                    <ContainerScrollableContent contentWidth={this.props.contentWidth} contentHeight={this.props.contentHeight} 
-                        children={this.props.children}
-                        childState={this.props.childState}
+                    <ScrollableContainerContent contentWidth={this.props.contentWidth} contentHeight={this.props.contentHeight} 
+                        dataRenderer={this.props.dataRenderer}
+                        data={this.props.data}
                     >
-                    </ContainerScrollableContent>
+                        {this.props.children}
+                    </ScrollableContainerContent>
                 </div>
             </div>
         );

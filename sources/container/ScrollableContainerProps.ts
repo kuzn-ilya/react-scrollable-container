@@ -1,6 +1,6 @@
 import { Overflow, Size } from './../utils/types';
 
-export interface ContainerScrollableProps {
+export interface ScrollableContainerProps {
     id?: string;
     contentWidth?: Size;
     contentHeight?: Size;
@@ -12,8 +12,8 @@ export interface ContainerScrollableProps {
 
     onScrollPosChanged?: (left: number, top: number) => void;
 
-    children?: (childState: any) => React.ReactNode | React.ReactNode;
-    childState?: any;
+    dataRenderer?: (data: any) => React.ReactNode;
+    data?: any;
     width: string | number;
     height: string | number;
 }

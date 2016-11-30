@@ -2,23 +2,13 @@ import * as React from 'react';
 import { addPrefixToClass } from './../utils/css.utils';
 
 import './container.less';
-import { Size } from './../utils/types';
 
-interface ContainerScrollableContentProps {
-    contentWidth?: Size;
-    contentHeight?: Size;
-    children?: (childState: any) => React.ReactNode | React.ReactNode;
-    childState?: any;
-}
+import {ScrollableContainerContentState} from './ScrollableContainerContentState';
+import {ScrollableContainerContentProps} from './ScrollableContainerContentProps';
 
-interface ContainerScrollableContentState {
-    contentWidth: 'auto' | number;
-    contentHeight: 'auto' | number;
-}
+export class ScrollableContainerContent extends React.PureComponent<ScrollableContainerContentProps, ScrollableContainerContentState> {
 
-export class ContainerScrollableContent extends React.PureComponent<ContainerScrollableContentProps, ContainerScrollableContentState> {
-
-    constructor(props: ContainerScrollableContentProps) {
+    constructor(props: ScrollableContainerContentProps) {
         super(props);
         this.state = {
             contentHeight: this.props.contentHeight ? this.props.contentHeight : 'auto',
@@ -39,20 +29,14 @@ export class ContainerScrollableContent extends React.PureComponent<ContainerScr
             );
         }
 
-        let children: React.ReactNode = null;
-        if (typeof this.props.children === 'function') {
-            children = this.props.children(this.props.childState);
-        } else if (this.props.children) {
-            children = this.props.children;
-        }
-
         return (
             <div style={{
                     height: this.state.contentHeight === 'auto' ? "100%" : this.state.contentHeight,
                     width: this.state.contentWidth === 'auto' ? "100%" : this.state.contentWidth
                 }}
             >
-                {children}
+                {this.props.dataRenderer ? this.props.dataRenderer(this.props.data) : null}
+                {this.props.children}
                 {wrapper}
             </div>
         );

@@ -7,6 +7,8 @@ import { Size } from './../utils/types';
 interface ContainerScrollableContentProps {
     contentWidth?: Size;
     contentHeight?: Size;
+    children: (childState: any) => React.ReactNode;
+    childState: any;
 }
 
 interface ContainerScrollableContentState {
@@ -48,7 +50,7 @@ export class ContainerScrollableContent extends React.PureComponent<ContainerScr
                     width: this.state.contentWidth === 'auto' ? "100%" : this.state.contentWidth
                 }}
             >
-                {this.props.children}
+                {(this.props.children(this.props.childState))}
                 {wrapper}
             </div>
         );

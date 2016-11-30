@@ -12,4 +12,6 @@ export interface ContainerScrollableProps extends HTMLProps<HTMLDivElement> {
 
     onScrollPosChanged?: (left: number, top: number) => void;
 
+    children: (childState: any) => React.ReactNode;
+    childState: any;
 }

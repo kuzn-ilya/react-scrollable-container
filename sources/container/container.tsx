@@ -34,8 +34,9 @@ export class Container extends React.PureComponent<ContainerProps, ContainerStat
                     onScrollPosChanged={this.handleScrollPosChanged}
                     scrollLeft={this.props.scrollLeft}
                     scrollTop={this.props.scrollTop}
+                    children={this.props.children}
+                    childState={this.props.childState}
                 >
-                    {this.props.children}
                 </ContainerScrollable>
             </div>
         );

@@ -64,8 +64,10 @@ export class ContainerScrollable extends React.PureComponent<ContainerScrollable
                 }}
                 {...divProps}
             >
-                <ContainerScrollableContent contentWidth={this.props.contentWidth} contentHeight={this.props.contentHeight}>
-                    {this.props.children}
+                <ContainerScrollableContent contentWidth={this.props.contentWidth} contentHeight={this.props.contentHeight} 
+                    children={this.props.children}
+                    childState={this.props.childState}
+                >
                 </ContainerScrollableContent>
             </div>
         );

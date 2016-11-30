@@ -9,6 +9,8 @@ export interface ContainerProps extends HTMLProps<HTMLDivElement> {
     style?: CSSProperties;
     scrollLeft?: number;
     scrollTop?: number;
+    children: (childState: any) => React.ReactNode;
+    childState: any;
 
     onScrollPosChanged?: (left: number, top: number) => void;
 }

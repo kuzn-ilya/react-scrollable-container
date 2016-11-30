@@ -1,7 +1,7 @@
-import { HTMLProps } from 'react';
 import { Overflow, Size } from './../utils/types';
 
-export interface ContainerScrollableProps extends HTMLProps<HTMLDivElement> {
+export interface ContainerScrollableProps {
+    id?: string;
     contentWidth?: Size;
     contentHeight?: Size;
     overflowX: Overflow;
@@ -12,6 +12,8 @@ export interface ContainerScrollableProps extends HTMLProps<HTMLDivElement> {
 
     onScrollPosChanged?: (left: number, top: number) => void;
 
-    children: (childState: any) => React.ReactNode;
-    childState: any;
+    children?: (childState: any) => React.ReactNode | React.ReactNode;
+    childState?: any;
+    width: string | number;
+    height: string | number;
 }

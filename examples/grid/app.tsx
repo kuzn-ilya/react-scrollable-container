@@ -7,7 +7,7 @@ import './app.less';
 import { fakeData } from './data/fake.data';
 import { Row } from './row/row.component';
 import { HeaderCell } from './header-cell/header-cell.component';
-import { Container } from '../../sources/container/container';
+import { ContainerScrollable } from '../../sources/container/container-scrollable';
 
 interface HeaderCellModel {
     width: number;
@@ -66,10 +66,7 @@ class Comp extends React.Component<{}, CompState> {
                 height: "100%"
             }}>
                 <button onClick={() => this.setState({x: this.state.x, y: this.state.y, headerCellModels: this.state.headerCellModels, rowModels: this.state.rowModels.slice(0, this.state.rowModels.length - 1)})}>Remove</button>
-                <Container id="container1" style={{
-                    width: "100%",
-                    height: "39px"
-                }}
+                <ContainerScrollable id="container1"
                     contentWidth={2190}
                     contentHeight="auto"
                     overflowX="auto" overflowY="auto"
@@ -77,12 +74,11 @@ class Comp extends React.Component<{}, CompState> {
                     scrollLeft={this.state.x}
                     childState={this.state.headerCellModels}
                     children= {this.mapHeader}
+                    width="100%"
+                    height="39px"
                 >
-                </Container>
-                <Container id="container2" style={{
-                        width: "100%",
-                        height: "90%"
-                    }}
+                </ContainerScrollable>
+                <ContainerScrollable id="container2"
                     contentWidth={2190}
                     contentHeight="auto"
                     overflowX="auto" overflowY="auto"
@@ -90,8 +86,10 @@ class Comp extends React.Component<{}, CompState> {
                     scrollLeft={this.state.x}
                     childState={this.state.rowModels}
                     children={this.mapRows}
+                    width="100%"
+                    height="90%"
                 >
-                </Container>
+                </ContainerScrollable>
             </div>
         );
     }

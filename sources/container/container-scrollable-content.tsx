@@ -7,8 +7,8 @@ import { Size } from './../utils/types';
 interface ContainerScrollableContentProps {
     contentWidth?: Size;
     contentHeight?: Size;
-    children: (childState: any) => React.ReactNode;
-    childState: any;
+    children?: (childState: any) => React.ReactNode | React.ReactNode;
+    childState?: any;
 }
 
 interface ContainerScrollableContentState {
@@ -26,12 +26,7 @@ export class ContainerScrollableContent extends React.PureComponent<ContainerScr
         }
     }
 
-    componentWillReceiveProps(nextProps: ContainerScrollableContentProps, nextState: ContainerScrollableContentState) {
-        console.log(nextProps, nextState);
-    }
-
     render(): JSX.Element {
-        console.log('content render');
         let wrapper: React.ReactNode = null;
         if (this.state.contentWidth !== 'auto' || this.state.contentHeight !== 'auto') {
             wrapper = (
@@ -44,13 +39,20 @@ export class ContainerScrollableContent extends React.PureComponent<ContainerScr
             );
         }
 
+        let children: React.ReactNode = null;
+        if (typeof this.props.children === 'function') {
+            children = this.props.children(this.props.childState);
+        } else if (this.props.children) {
+            children = this.props.children;
+        }
+
         return (
             <div style={{
                     height: this.state.contentHeight === 'auto' ? "100%" : this.state.contentHeight,
                     width: this.state.contentWidth === 'auto' ? "100%" : this.state.contentWidth
                 }}
             >
-                {(this.props.children(this.props.childState))}
+                {children}
                 {wrapper}
             </div>
         );

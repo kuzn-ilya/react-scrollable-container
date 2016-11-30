@@ -1,7 +1,6 @@
 import * as React from 'react';
 import * as assign from 'object-assign';
 import { addPrefixToClass } from './../utils/css.utils';
-import { omit } from './../utils/object.utils';
 
 import { ContainerScrollableProps } from  './container-scrollable.props';
 import { ContainerScrollableState } from  './container-scrollable.state';
@@ -52,23 +51,28 @@ export class ContainerScrollable extends React.PureComponent<ContainerScrollable
     private ref: HTMLElement;
 
     render(): JSX.Element {
-        let divProps = omit(this.props, 'contentHeight', 'contentWidth', 'overflowX', 'overflowY', 
-            'onScrollPosChanged');
-
         return (
-            <div className={addPrefixToClass('container-scrollable')}
-                ref={(ref) => this.ref = ref}
+            <div
+                className={addPrefixToClass('container')}
                 style={{
-                    overflowX: this.props.overflowX,
-                    overflowY: this.props.overflowY
+                    height: this.props.height,
+                    width: this.props.width
                 }}
-                {...divProps}
+                id={this.props.id}
             >
-                <ContainerScrollableContent contentWidth={this.props.contentWidth} contentHeight={this.props.contentHeight} 
-                    children={this.props.children}
-                    childState={this.props.childState}
+                <div className={addPrefixToClass('container-scrollable')}
+                    ref={(ref) => this.ref = ref}
+                    style={{
+                        overflowX: this.props.overflowX,
+                        overflowY: this.props.overflowY
+                    }}
                 >
-                </ContainerScrollableContent>
+                    <ContainerScrollableContent contentWidth={this.props.contentWidth} contentHeight={this.props.contentHeight} 
+                        children={this.props.children}
+                        childState={this.props.childState}
+                    >
+                    </ContainerScrollableContent>
+                </div>
             </div>
         );
     }

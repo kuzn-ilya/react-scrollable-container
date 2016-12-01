@@ -23,10 +23,10 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
     componentDidMount(): void {
         this.measureScrollbars();
 
-        if (this.props.scrollLeft !== null) {
+        if (this.props.scrollLeft) {
             this.ref.scrollLeft = this.props.scrollLeft;
         }
-        if (this.props.scrollTop !== null) {
+        if (this.props.scrollTop) {
             this.ref.scrollTop = this.props.scrollTop;
         }
 
@@ -35,10 +35,10 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
     }
 
     componentDidUpdate(): void {
-        if (this.props.scrollLeft !== null) {
+        if (this.props.scrollLeft) {
             this.ref.scrollLeft = this.props.scrollLeft;
         }
-        if (this.props.scrollTop !== null) {
+        if (this.props.scrollTop) {
             this.ref.scrollTop = this.props.scrollTop;
         }
     }

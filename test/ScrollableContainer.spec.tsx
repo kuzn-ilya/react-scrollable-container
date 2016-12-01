@@ -57,7 +57,8 @@ describe('ScrollableContainer', () => {
     });
 
     it('should be able to unmount', () => {
-        let container = renderIntoDocument(<ScrollableContainer id="container" overflowX="auto" overflowY="hidden" height={100} width={100}/>);
+        let container = renderIntoDocument(<ScrollableContainer id="container" overflowX="auto"
+            overflowY="hidden" height={100} width={100}/>);
         let parentElement = ReactDOM.findDOMNode(container).parentElement;
 
         let element = parentElement.querySelector('#container');

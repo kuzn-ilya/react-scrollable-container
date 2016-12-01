@@ -12,7 +12,9 @@ export interface ScrollableContainerProps {
 
     onScrollPosChanged?: (left: number, top: number) => void;
 
+    // tslint:disable-next-line:no-any
     dataRenderer?: (data: any) => React.ReactNode;
+    // tslint:disable-next-line:no-any
     data?: any;
     width: string | number;
     height: string | number;

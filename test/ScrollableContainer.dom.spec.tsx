@@ -42,11 +42,11 @@ describe('DOM: ScrollableContainer', () => {
 
     it('should have scrollbars if child is not fit to client rectangle', () => {
         ReactDOM.render(
-            <ScrollableContainer id="container" 
-                width = "200px" 
+            <ScrollableContainer id="container"
+                width = "200px"
                 height = "200px"
                 overflowX="auto" overflowY="auto">
-                <div style={{top: "260px", left: "280px"}} className="divClass" />
+                <div style={{left: '280px', top: '260px'}} className="divClass" />
             </ScrollableContainer>,
             div);
 
@@ -69,12 +69,12 @@ describe('DOM: ScrollableContainer', () => {
         let handleScrollPosChanged = chai.spy((left: number, top: number) => { return; });
 
         let container = ReactDOM.render(
-            <ScrollableContainer id="container" 
+            <ScrollableContainer id="container"
                 width = "200px"
                 height = "200px"
                 overflowX="auto" overflowY="auto"
                 onScrollPosChanged={handleScrollPosChanged}>
-                <div style={{top: "260px", left: "280px"}} className="divClass" />
+                <div style={{left: '280px', top: '260px'}} className="divClass" />
             </ScrollableContainer>,
             div) as ScrollableContainer;
 
@@ -120,7 +120,7 @@ describe('DOM: ScrollableContainer', () => {
 
     it('should have a horizontal scrollbar when contentWidth greater than width', () => {
         let container = ReactDOM.render(
-            <ScrollableContainer id="container" 
+            <ScrollableContainer id="container"
                 width = "200px"
                 height = "200px"
                 overflowX="auto" overflowY="auto"
@@ -140,8 +140,8 @@ describe('DOM: ScrollableContainer', () => {
 
     it('should have a vertical scrollbar when contentHeight greater than height', () => {
         let container = ReactDOM.render(
-            <ScrollableContainer id="container" 
-                width="200px" 
+            <ScrollableContainer id="container"
+                width="200px"
                 height="200px"
                 overflowX="auto" overflowY="auto"
                 contentHeight={400} />,
@@ -206,9 +206,9 @@ describe('DOM: ScrollableContainer', () => {
     // });
 
     it('should have the same dimensions as its applied in a style attribute', () => {
-        ReactDOM.render(<ScrollableContainer id="container" 
+        ReactDOM.render(<ScrollableContainer id="container"
             width = "200px"
-            height = "200px" 
+            height = "200px"
             overflowX="auto" overflowY="auto"/>,
             div);
 

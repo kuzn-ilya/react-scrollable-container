@@ -7,11 +7,11 @@ export class Header extends React.Component<HeaderProps, void> {
     render(): JSX.Element {
         return (
             <div style={{
-                height: "100%",
-                width: "100%",
-                position: "relative",
-                top: "0px",
-                left: "0px"                
+                height: '100%',
+                left: '0px',
+                position: 'relative',
+                top: '0px',
+                width: '100%'
             }}>
                 <HeaderCell width={30} caption="id" />
                 <HeaderCell width={150} caption="firstName" />

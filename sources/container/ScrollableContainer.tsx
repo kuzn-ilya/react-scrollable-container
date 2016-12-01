@@ -17,7 +17,7 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
         this.state = {
             height: 0,
             width: 0
-        }
+        };
     }
 
     componentDidMount(): void {
@@ -48,7 +48,7 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
         window.removeEventListener('resize', this.handleWindowResize);
     }
 
-    private ref: HTMLElement;
+    private ref: HTMLDivElement;
 
     render(): JSX.Element {
         return (
@@ -61,13 +61,13 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
                 id={this.props.id}
             >
                 <div className={addPrefixToClass('container-scrollable')}
-                    ref={(ref) => this.ref = ref}
+                    ref={(ref: HTMLDivElement) => this.ref = ref}
                     style={{
                         overflowX: this.props.overflowX,
                         overflowY: this.props.overflowY
                     }}
                 >
-                    <ScrollableContainerContent contentWidth={this.props.contentWidth} contentHeight={this.props.contentHeight} 
+                    <ScrollableContainerContent contentWidth={this.props.contentWidth} contentHeight={this.props.contentHeight}
                         dataRenderer={this.props.dataRenderer}
                         data={this.props.data}
                     >

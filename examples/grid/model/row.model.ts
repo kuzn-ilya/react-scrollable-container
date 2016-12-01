@@ -13,4 +13,4 @@ export interface RowModel {
       creditCardNumber: string;
       currency: string;
       creditCardExpires: string;
-} 
+}

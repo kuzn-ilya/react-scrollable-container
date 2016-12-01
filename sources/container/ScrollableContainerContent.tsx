@@ -13,7 +13,7 @@ export class ScrollableContainerContent extends React.PureComponent<ScrollableCo
         this.state = {
             contentHeight: this.props.contentHeight ? this.props.contentHeight : 'auto',
             contentWidth: this.props.contentWidth ? this.props.contentWidth : 'auto'
-        }
+        };
     }
 
     render(): JSX.Element {
@@ -31,8 +31,8 @@ export class ScrollableContainerContent extends React.PureComponent<ScrollableCo
 
         return (
             <div style={{
-                    height: this.state.contentHeight === 'auto' ? "100%" : this.state.contentHeight,
-                    width: this.state.contentWidth === 'auto' ? "100%" : this.state.contentWidth
+                    height: this.state.contentHeight === 'auto' ? '100%' : this.state.contentHeight,
+                    width: this.state.contentWidth === 'auto' ? '100%' : this.state.contentWidth
                 }}
             >
                 {this.props.dataRenderer ? this.props.dataRenderer(this.props.data) : null}

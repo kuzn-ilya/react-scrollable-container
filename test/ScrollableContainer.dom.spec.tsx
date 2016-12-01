@@ -9,8 +9,8 @@ const expect = chai.expect;
 chai.use(chaiSpies);
 
 describe('DOM: ScrollableContainer', () => {
-    let div: HTMLDivElement = null;
-    let style: HTMLStyleElement = null;
+    let div: HTMLDivElement;
+    let style: HTMLStyleElement;
 
     beforeEach(() => {
         style = document.createElement('style');

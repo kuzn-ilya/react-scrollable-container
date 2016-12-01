@@ -1,21 +1,21 @@
 import { Overflow, Size } from './../utils/types';
 
 export interface ScrollableContainerProps {
-    id?: string;
-    contentWidth?: Size;
-    contentHeight?: Size;
-    overflowX: Overflow;
-    overflowY: Overflow;
+    readonly id?: string;
+    readonly contentWidth?: Size;
+    readonly contentHeight?: Size;
+    readonly overflowX: Overflow;
+    readonly overflowY: Overflow;
 
-    scrollLeft?: number;
-    scrollTop?: number;
+    readonly scrollLeft?: number;
+    readonly scrollTop?: number;
 
-    onScrollPosChanged?: (left: number, top: number) => void;
+    readonly onScrollPosChanged?: (left: number, top: number) => void;
 
     // tslint:disable-next-line:no-any
-    dataRenderer?: (data: any) => React.ReactNode;
+    readonly dataRenderer?: (data: any) => React.ReactNode;
     // tslint:disable-next-line:no-any
-    data?: any;
-    width: string | number;
-    height: string | number;
+    readonly data?: any;
+    readonly width: string | number;
+    readonly height: string | number;
 }

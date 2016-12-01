@@ -9,12 +9,12 @@ export class Content extends React.Component<ContentProps, void> {
     static reactScrollableContainerName = 'Content';
 
     static defaultProps: ContentProps = {
-        children: null,
-        contentHeight: null,
-        contentWidth: null,
-        onScroll: null,
-        onScrollBarThumbSizeChanged: null,
-        top: null
+        children: undefined,
+        contentHeight: undefined,
+        contentWidth: undefined,
+        onScroll: undefined,
+        onScrollBarThumbSizeChanged: undefined,
+        top: undefined
     };
 
     private horizontalScrollThumbHeight?: number;
@@ -33,7 +33,7 @@ export class Content extends React.Component<ContentProps, void> {
 
     componentWillUnmount(): void {
         window.removeEventListener('resize', this.measureScrollbars);
-        this.horizontalScrollThumbHeight = this.verticalScrollThumbWidth = null;
+        this.horizontalScrollThumbHeight = this.verticalScrollThumbWidth = undefined;
     }
 
     render(): JSX.Element {

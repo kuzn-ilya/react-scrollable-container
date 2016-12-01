@@ -1,4 +1,4 @@
 export interface ScrollableContainerContentState {
-    contentWidth: 'auto' | number;
-    contentHeight: 'auto' | number;
+    readonly contentWidth: 'auto' | number;
+    readonly contentHeight: 'auto' | number;
 }

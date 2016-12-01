@@ -9,9 +9,9 @@ export class Header extends React.Component<HeaderProps, void> implements React.
     static reactScrollableContainerName = 'Header';
 
     static defaultProps: HeaderProps = {
-        children: null,
-        contentWidth: null,
-        height: null,
+        children: undefined,
+        contentWidth: undefined,
+        height: undefined,
         scrollLeft: 0,
         spaceWidth: '0px' // TODO
     };
@@ -19,7 +19,7 @@ export class Header extends React.Component<HeaderProps, void> implements React.
     componentWillReceiveProps(nextProps: HeaderProps): void {
         if (nextProps.scrollLeft !== this.props.scrollLeft) {
             let node = ReactDOM.findDOMNode(this);
-            if (node) {
+            if (node && nextProps.scrollLeft) {
                 node.scrollLeft = nextProps.scrollLeft;
             }
         }

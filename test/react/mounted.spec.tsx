@@ -20,14 +20,16 @@ describe('mounted', () => {
     }
 
     it('should be defined', () => {
-        let Cmp = mounted(Comp, () => {}, () => {});
+        // tslint:disable-next-line:variable-name
+        let Cmp = mounted(Comp, () => { return; }, () => { return; });
         let container = renderIntoDocument(<Cmp prop={42} />);
         let domElement = ReactDOM.findDOMNode(container);
         expect(domElement).to.exist;
     });
 
     it('should have same states', () => {
-        let Cmp = mounted(Comp, () => {}, () => {});
+        // tslint:disable-next-line:variable-name
+        let Cmp = mounted(Comp, () => { return; }, () => { return; });
         let container = renderIntoDocument<{prop: number}, {state: number}>(<Cmp prop={42} />);
 
         expect(container.props.prop).equal(42);
@@ -41,6 +43,7 @@ describe('mounted', () => {
         let handleMounted = chai.spy();
         let handleUnmounting = chai.spy();
 
+        // tslint:disable-next-line:variable-name
         let Cmp = mounted(Comp, handleMounted, handleUnmounting);
         let container = renderIntoDocument(<Cmp prop={42} />);
         unmountComponent(container);

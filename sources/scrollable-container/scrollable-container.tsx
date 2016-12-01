@@ -21,6 +21,7 @@ export class ScrollableContainer extends React.Component<ScrollableContainerProp
     render(): JSX.Element {
         // tslint:disable-next-line:no-any
         let children = React.Children.map(this.props.children, (child: React.ReactElement<any>) => {
+            // tslint:disable-next-line:no-any
             if (child.props && (child.type as any).reactScrollableContainerName === 'Header') {
                 let newChild = (
                     <Header children = {child.props.children}
@@ -31,6 +32,7 @@ export class ScrollableContainer extends React.Component<ScrollableContainerProp
                     />
                 );
                 return newChild;
+            // tslint:disable-next-line:no-any
             } else if (child.props && (child.type as any).reactScrollableContainerName === 'Content') {
                 let newChild = (
                     <Content children={child.props.children}

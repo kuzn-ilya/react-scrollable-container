@@ -20,6 +20,7 @@ describe('baseRender', () => {
     }
 
     it('should be defined', () => {
+        // tslint:disable-next-line:variable-name
         let Cmp = baseRender(Comp);
         let container = renderIntoDocument(<Cmp prop={42} />);
         let domElement = ReactDOM.findDOMNode(container);
@@ -27,6 +28,7 @@ describe('baseRender', () => {
     });
 
     it('should have same states', () => {
+        // tslint:disable-next-line:variable-name
         let Cmp = baseRender(Comp);
         let container = renderIntoDocument<{prop: number}, {state: number}>(<Cmp prop={42} />);
 

@@ -25,8 +25,7 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
         this.handleWindowResize = this.handleWindowResize.bind(this);
         this.handleScroll = this.handleScroll.bind(this);
         this.state = {
-            height: 0,
-            width: 0
+            vertScrollThumbWidth: 0
         };
     }
 
@@ -95,9 +94,15 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
         }
     }
 
-    private measureScrollbars: () => void =
-        () => this.setState({
-            height: this.ref ? this.ref.offsetHeight : 0,
-            width: this.ref ? this.ref.offsetWidth : 0
-        });
+    private measureScrollbars: () => void = () => {
+        if (this.ref) {
+            let newWidth = this.ref.offsetWidth - this.ref.clientWidth;
+            if (newWidth !== this.state.vertScrollThumbWidth) {
+                this.setState({ vertScrollThumbWidth: newWidth });
+                if (this.props.onVerticalScrollVisibilityChanged) {
+                    this.props.onVerticalScrollVisibilityChanged(newWidth > 0, newWidth);
+                }
+            }
+        }
+    }
 }

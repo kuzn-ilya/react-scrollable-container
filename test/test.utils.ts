@@ -15,3 +15,17 @@ export function findRenderedComponentWithType<P, S, P2, S2, T extends React.Comp
     root: React.Component<P, S>, type: React.ClassType<P2, T, C>): React.Component<P2, S2> {
     return TestUtils.findRenderedComponentWithType(root, type) as React.Component<P2, S2>;
 }
+
+export function simulateScroll(element: Element, scrollLeft?: number, scrollTop?: number): void {
+    if (scrollLeft) {
+        element.scrollLeft = scrollLeft;
+    }
+
+    if (scrollTop) {
+        element.scrollTop = scrollTop;
+    }
+
+    let e = document.createEvent('CustomEvent');
+    e.initCustomEvent('scroll', true, true, null);
+    element.dispatchEvent(e);
+}

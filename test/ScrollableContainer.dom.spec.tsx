@@ -4,6 +4,7 @@ import * as chai from 'chai';
 import * as chaiSpies from 'chai-spies';
 
 import { ScrollableContainer } from '../sources/container/ScrollableContainer';
+import { simulateScroll } from './test.utils';
 
 const expect = chai.expect;
 chai.use(chaiSpies);
@@ -83,12 +84,7 @@ describe('DOM: ScrollableContainer', () => {
         let element = document.body.querySelector('#container');
         let scrollable = element.querySelector('.react-container-container-scrollable');
 
-        scrollable.scrollLeft = 20;
-        scrollable.scrollTop = 10;
-
-        let e = document.createEvent('CustomEvent');
-        e.initCustomEvent('scroll', true, true, null);
-        scrollable.dispatchEvent(e);
+        simulateScroll(scrollable, 20, 10);
 
         expect(handleScrollPosChanged).to.have.been.called.once;
         expect(handleScrollPosChanged).to.have.been.called.with.exactly(20, 10);
@@ -182,14 +178,14 @@ describe('DOM: ScrollableContainer', () => {
                 this.state = {
                     x: 0,
                     y: 0
-                }
+                };
             }
 
             handleScrollPosChanged: (x: number, y: number) => void = (x, y) => {
                 this.setState( {x, y} );
             }
 
-            render() {
+            render(): JSX.Element {
                 return (
                     <div>
                         <ScrollableContainer id="container1"
@@ -227,16 +223,11 @@ describe('DOM: ScrollableContainer', () => {
         expect(container).to.exist;
 
         let element1 = document.body.querySelector('#container1');
-        let scrollable1 = element1.querySelector('.react-container-container-scrollable') as HTMLElement;
+        let scrollable1 = element1.querySelector('.react-container-container-scrollable');
 
         expect(scrollable1).to.exist;
 
-        scrollable1.scrollLeft = 20;
-        scrollable1.scrollTop = 10;
-
-        let e = document.createEvent('CustomEvent');
-        e.initCustomEvent('scroll', true, true, null);
-        scrollable1.dispatchEvent(e);
+        simulateScroll(scrollable1, 20, 10);
 
         let element2 = document.body.querySelector('#container2');
         let scrollable2 = element2.querySelector('.react-container-container-scrollable') as HTMLElement;
@@ -245,4 +236,57 @@ describe('DOM: ScrollableContainer', () => {
         expect(scrollable2.scrollLeft).equals(20);
         expect(scrollable2.scrollTop).equals(10);
     });
+
+    it('should fire onVerticalScrollBarVisibilityChanged if ContentHeight greater than height', () => {
+        let handleVerticalScrollVisibilityChanged = chai.spy((visible: boolean, thumbWidth: number) => {
+            expect(visible).equal(true);
+            expect(thumbWidth).to.be.greaterThan(0);
+        });
+
+        let container = ReactDOM.render(
+            <ScrollableContainer id="container"
+                width="200px"
+                height="200px"
+                overflowX="auto"
+                overflowY="auto"
+                contentHeight={400}
+                onVerticalScrollVisibilityChanged={handleVerticalScrollVisibilityChanged} />,
+            div) as ScrollableContainer;
+
+        expect(container).to.exist;
+
+        let element = document.body.querySelector('#container');
+        let scrollable = element.querySelector('.react-container-container-scrollable');
+
+        expect(scrollable).to.exist;
+
+        expect(handleVerticalScrollVisibilityChanged).to.have.been.called.once;
+    });
+
+    it('should fire onVerticalScrollBarVisibilityChanged if ContentHeight becomes less than height', () => {
+        let handleVerticalScrollVisibilityChanged = chai.spy((visible: boolean, thumbWidth: number) => {
+            return;
+        });
+
+        let container = ReactDOM.render(
+            <ScrollableContainer id="container"
+                width="200px"
+                height="200px"
+                overflowX="auto"
+                overflowY="auto"
+                contentHeight={400}
+                onVerticalScrollVisibilityChanged={handleVerticalScrollVisibilityChanged} />,
+            div) as ScrollableContainer;
+
+        expect(container).to.exist;
+
+        let element = document.body.querySelector('#container') as HTMLElement;
+
+        element.style.height = '500px';
+
+        expect(handleVerticalScrollVisibilityChanged).to.have.been.called.twice;
+        expect(handleVerticalScrollVisibilityChanged).to.have.been.called.with(true);
+        expect(handleVerticalScrollVisibilityChanged).to.have.been.called.with(false, 0);
+    });
+
 });

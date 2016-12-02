@@ -11,6 +11,8 @@ export interface ScrollableContainerProps {
     readonly scrollTop?: number;
 
     readonly onScrollPosChanged?: (left: number, top: number) => void;
+    readonly onHorizontalScrollVisibilityChanged?: (visible: boolean) => void;
+    readonly onVerticalScrollVisibilityChanged?: (visible: boolean, thumbWidth: number) => void;
 
     // tslint:disable-next-line:no-any
     readonly dataRenderer?: (data: any) => React.ReactNode;

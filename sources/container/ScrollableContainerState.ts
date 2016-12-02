@@ -1,4 +1,3 @@
 export interface ScrollableContainerState {
-    readonly height: number;
-    readonly width: number;
+    readonly vertScrollThumbWidth: number;
 }

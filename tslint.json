@@ -85,7 +85,7 @@
         "trailing-comma": [true, {"multiline": "never", "singleline": "never"}],
 
         // Style
-        "align": [true, "parameters", "statements"],
+        "align": [true, "statements"],
         "arrow-parens": true,
         "class-name": true,
         "comment-format": [

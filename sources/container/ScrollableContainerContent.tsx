@@ -13,23 +13,14 @@ export class ScrollableContainerContent extends React.PureComponent<ScrollableCo
         contentWidth: 'auto'
     };
 
-
-    constructor(props: ScrollableContainerContentProps) {
-        super(props);
-        this.state = {
-            contentHeight: this.props.contentHeight!,
-            contentWidth: this.props.contentWidth!
-        };
-    }
-
     render(): JSX.Element {
         let wrapper: React.ReactNode = null;
-        if (this.state.contentWidth !== 'auto' || this.state.contentHeight !== 'auto') {
+        if (this.props.contentWidth !== 'auto' || this.props.contentHeight !== 'auto') {
             wrapper = (
                 <div className={addPrefixToClass('container-wrapper')}
                     style={{
-                        left: this.state.contentWidth === 'auto' ? 0 : this.state.contentWidth - 1,
-                        top: this.state.contentHeight === 'auto' ? 0 : this.state.contentHeight - 1
+                        left: this.props.contentWidth === 'auto' ? 0 : this.props.contentWidth - 1,
+                        top: this.props.contentHeight === 'auto' ? 0 : this.props.contentHeight - 1
                     }}
                 />
             );
@@ -37,8 +28,8 @@ export class ScrollableContainerContent extends React.PureComponent<ScrollableCo
 
         return (
             <div style={{
-                    height: this.state.contentHeight === 'auto' ? '100%' : this.state.contentHeight,
-                    width: this.state.contentWidth === 'auto' ? '100%' : this.state.contentWidth
+                    height: this.props.contentHeight === 'auto' ? '100%' : this.props.contentHeight,
+                    width: this.props.contentWidth === 'auto' ? '100%' : this.props.contentWidth
                 }}
             >
                 {this.props.dataRenderer ? this.props.dataRenderer(this.props.data) : null}

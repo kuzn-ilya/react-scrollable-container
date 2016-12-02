@@ -8,11 +8,17 @@ import {ScrollableContainerContentProps} from './ScrollableContainerContentProps
 
 export class ScrollableContainerContent extends React.PureComponent<ScrollableContainerContentProps, ScrollableContainerContentState> {
 
+    static defaultProps: ScrollableContainerContentProps = {
+        contentHeight: 'auto',
+        contentWidth: 'auto'
+    };
+
+
     constructor(props: ScrollableContainerContentProps) {
         super(props);
         this.state = {
-            contentHeight: this.props.contentHeight ? this.props.contentHeight : 'auto',
-            contentWidth: this.props.contentWidth ? this.props.contentWidth : 'auto'
+            contentHeight: this.props.contentHeight!,
+            contentWidth: this.props.contentWidth!
         };
     }
 

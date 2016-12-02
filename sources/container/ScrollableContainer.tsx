@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as assign from 'object-assign';
 import { addPrefixToClass } from './../utils/css.utils';
 
 import { ScrollableContainerProps } from  './ScrollableContainerProps';
@@ -9,6 +8,15 @@ import { ScrollableContainerContent } from './ScrollableContainerContent';
 import './container.less';
 
 export class ScrollableContainer extends React.PureComponent<ScrollableContainerProps, ScrollableContainerState> {
+
+    static defaultProps: ScrollableContainerProps = {
+        contentHeight: 'auto',
+        contentWidth: 'auto',
+        height: '100%',
+        overflowX: 'auto',
+        overflowY: 'auto',
+        width: '100%'
+    };
 
     constructor(props: ScrollableContainerProps) {
         super(props);
@@ -90,8 +98,8 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
     }
 
     private measureScrollbars: () => void =
-        () => this.setState(assign(this.state, {
+        () => this.setState({
             height: this.ref ? this.ref.offsetHeight : 0,
             width: this.ref ? this.ref.offsetWidth : 0
-        }));
+        });
 }

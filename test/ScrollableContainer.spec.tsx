@@ -4,10 +4,11 @@ import * as chai from 'chai';
 import * as chaiSpies from 'chai-spies';
 import { is } from 'useragent';
 
-import { renderIntoDocument, unmountComponent } from './test.utils';
+import { renderIntoDocument, unmountComponent, findRenderedComponentWithType } from './test.utils';
 
 import { Overflow } from '../sources/utils/types';
 import { ScrollableContainer } from '../sources/container/ScrollableContainer';
+import { ScrollableContainerContent } from '../sources/container/ScrollableContainerContent';
 
 const expect = chai.expect;
 chai.use(chaiSpies);
@@ -32,6 +33,13 @@ describe('ScrollableContainer', () => {
             overflowX="auto" overflowY="hidden" height={100} width={100}/>);
         let domElement = ReactDOM.findDOMNode(container);
         expect(domElement.id).equal('container');
+    });
+
+    it('should have default values for contentWidth and contentHeight if they are not passed', () => {
+        let container = renderIntoDocument(<ScrollableContainer id="container"
+            overflowX="auto" overflowY="hidden" height={100} width={100}/>);
+        expect(container.props.contentWidth).equals('auto');
+        expect(container.props.contentHeight).equals('auto');
     });
 
     ['auto', 'hidden', 'scroll', 'visible']
@@ -83,4 +91,11 @@ describe('ScrollableContainer', () => {
         expect(domElement.classList).to.have.length(1);
         expect(domElement.classList[0]).to.be.equal('react-container-container-scrollable');
     });
+
+    it('should have a child of type ScrollableContainerContent', () => {
+        let container = renderIntoDocument(<ScrollableContainer overflowX="auto" overflowY="auto" height={100} width={100}/>);
+        let child = findRenderedComponentWithType(container, ScrollableContainerContent);
+        expect(child).to.exist;
+    });
+
 });

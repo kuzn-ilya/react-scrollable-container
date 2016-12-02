@@ -15,6 +15,8 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
         height: '100%',
         overflowX: 'auto',
         overflowY: 'auto',
+        scrollLeft: 0,
+        scrollTop: 0,
         width: '100%'
     };
 
@@ -30,26 +32,15 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
 
     componentDidMount(): void {
         this.measureScrollbars();
-
-        if (this.props.scrollLeft) {
-            this.ref.scrollLeft = this.props.scrollLeft;
-        }
-        if (this.props.scrollTop) {
-            this.ref.scrollTop = this.props.scrollTop;
-        }
+        this.updateScrollPositions();
 
         this.ref.addEventListener('scroll', this.handleScroll);
         window.addEventListener('resize', this.handleWindowResize);
     }
 
     componentDidUpdate(): void {
-        if (this.props.scrollLeft) {
-            this.ref.scrollLeft = this.props.scrollLeft;
-        }
-        if (this.props.scrollTop) {
-            this.ref.scrollTop = this.props.scrollTop;
-        }
-    }
+        this.updateScrollPositions();
+}
 
     componentWillUnmount(): void {
         this.ref.removeEventListener('scroll', this.handleScroll);
@@ -94,6 +85,13 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
         let scrollTop = (event.target as Element).scrollTop;
         if (this.props.onScrollPosChanged) {
             this.props.onScrollPosChanged(scrollLeft, scrollTop);
+        }
+    }
+
+    private updateScrollPositions(): void {
+        if (this.ref) {
+            this.ref.scrollLeft = this.props.scrollLeft!;
+            this.ref.scrollTop = this.props.scrollTop!;
         }
     }
 

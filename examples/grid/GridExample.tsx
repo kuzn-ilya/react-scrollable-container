@@ -1,7 +1,4 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-
-import './app.less';
 
 import { Data } from './data/data';
 import { fakeData } from './data/fake.data';
@@ -22,7 +19,7 @@ interface CompState {
     rowsThumbWidth: number;
 }
 
-class Comp extends React.Component<{}, CompState> {
+export class GridExample extends React.Component<{}, CompState> {
     constructor(props: {}) {
         super(props);
         this.handleScrollPosChanged = this.handleScrollPosChanged.bind(this);
@@ -85,25 +82,27 @@ class Comp extends React.Component<{}, CompState> {
                 height: '100%',
                 width: '100%'
             }}>
-                <button onClick={(): void => this.setState({
-                    headerCellModels: this.state.headerCellModels,
-                    rowModels: this.state.rowModels.slice(0, this.state.rowModels.length - 1),
-                    rowsThumbWidth: this.state.rowsThumbWidth,
-                    x: this.state.x,
-                    y: this.state.y
-                })}>
+                <button
+                    height="21px"
+                    onClick={(): void => this.setState({
+                        headerCellModels: this.state.headerCellModels,
+                        rowModels: this.state.rowModels.slice(0, this.state.rowModels.length - 1),
+                        rowsThumbWidth: this.state.rowsThumbWidth,
+                        x: this.state.x,
+                        y: this.state.y
+                    })}>
                     Remove
                 </button>
                 <ScrollableContainer id="container1"
                     contentWidth={2190}
                     contentHeight="auto"
-                    overflowX="auto" overflowY="hidden"
+                    overflowX="hidden" overflowY="hidden"
                     onScrollPosChanged={this.handleScrollPosChanged}
                     scrollLeft={this.state.x}
                     data={this.state.headerCellModels}
                     dataRenderer={this.mapHeader}
                     width="100%"
-                    height="39px"
+                    height="19px"
                     vertScrollBarReplacerWidth={this.state.rowsThumbWidth}
                 >
                 </ScrollableContainer>
@@ -117,7 +116,7 @@ class Comp extends React.Component<{}, CompState> {
                     data={this.state.rowModels}
                     dataRenderer={this.mapRows}
                     width="100%"
-                    height="90%"
+                    height="calc(100% - 43px)"
                 >
                 </ScrollableContainer>
             </div>
@@ -125,5 +124,3 @@ class Comp extends React.Component<{}, CompState> {
     }
 
 }
-
-ReactDOM.render(<Comp />, document.getElementById('app'));

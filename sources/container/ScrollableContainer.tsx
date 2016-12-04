@@ -17,7 +17,9 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
         overflowY: 'auto',
         scrollLeft: 0,
         scrollTop: 0,
-        width: '100%'
+        width: '100%',
+        vertScrollBarReplacerWidth: 0,
+        horzScrollBarReplacerHeight: 0
     };
 
     constructor(props: ScrollableContainerProps) {
@@ -62,8 +64,10 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
                 <div className={addPrefixToClass('container-scrollable')}
                     ref={(ref: HTMLDivElement) => this.ref = ref}
                     style={{
+                        bottom: this.props.horzScrollBarReplacerHeight ? this.props.horzScrollBarReplacerHeight + 'px' : '0px',
                         overflowX: this.props.overflowX,
-                        overflowY: this.props.overflowY
+                        overflowY: this.props.overflowY,
+                        right: this.props.vertScrollBarReplacerWidth ? this.props.vertScrollBarReplacerWidth + 'px' : '0px'
                     }}
                 >
                     <ScrollableContainerContent contentWidth={this.props.contentWidth} contentHeight={this.props.contentHeight}

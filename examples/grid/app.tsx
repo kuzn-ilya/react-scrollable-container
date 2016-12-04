@@ -19,12 +19,14 @@ interface CompState {
     y: number;
     headerCellModels: HeaderCellModel[];
     rowModels: Data[];
+    rowsThumbWidth: number;
 }
 
 class Comp extends React.Component<{}, CompState> {
     constructor(props: {}) {
         super(props);
         this.handleScrollPosChanged = this.handleScrollPosChanged.bind(this);
+        this.handleVerticallScrollVisibilityChanged = this.handleVerticallScrollVisibilityChanged.bind(this);
         this.state = {
             headerCellModels: [
                 { caption: 'id', width: 30 },
@@ -42,14 +44,21 @@ class Comp extends React.Component<{}, CompState> {
                 { caption: 'currency', width: 150 }
             ],
             rowModels: fakeData,
+            rowsThumbWidth: 0,
             x: 0,
-            y: 0
+            y: 0,
         };
 
     }
 
     handleScrollPosChanged: (x: number, y: number) => void = (x, y) => {
-        this.setState( {x, y, headerCellModels: this.state.headerCellModels, rowModels: this.state.rowModels} );
+        this.setState({
+            x,
+            y,
+            headerCellModels: this.state.headerCellModels, 
+            rowModels: this.state.rowModels,
+            rowsThumbWidth: this.state.rowsThumbWidth
+        });
     }
 
     mapHeader(data: HeaderCellModel[]): React.ReactNode {
@@ -58,6 +67,16 @@ class Comp extends React.Component<{}, CompState> {
 
     mapRows(data: Data[]): React.ReactNode {
         return data.map((item: Data, index: number) => (<Row model={item} key={index}/>));
+    }
+
+    handleVerticallScrollVisibilityChanged: (visible: boolean, thumbWidth: number) => void = (visible: boolean, thumbWidth: number) => {
+        this.setState({
+            x: this.state.x,
+            y: this.state.y,
+            headerCellModels: this.state.headerCellModels,
+            rowModels: this.state.rowModels,
+            rowsThumbWidth: thumbWidth
+        })
     }
 
     render(): JSX.Element {
@@ -69,6 +88,7 @@ class Comp extends React.Component<{}, CompState> {
                 <button onClick={(): void => this.setState({
                     headerCellModels: this.state.headerCellModels,
                     rowModels: this.state.rowModels.slice(0, this.state.rowModels.length - 1),
+                    rowsThumbWidth: this.state.rowsThumbWidth,
                     x: this.state.x,
                     y: this.state.y
                 })}>
@@ -77,13 +97,14 @@ class Comp extends React.Component<{}, CompState> {
                 <ScrollableContainer id="container1"
                     contentWidth={2190}
                     contentHeight="auto"
-                    overflowX="auto" overflowY="auto"
+                    overflowX="auto" overflowY="hidden"
                     onScrollPosChanged={this.handleScrollPosChanged}
                     scrollLeft={this.state.x}
                     data={this.state.headerCellModels}
                     dataRenderer={this.mapHeader}
                     width="100%"
                     height="39px"
+                    vertScrollBarReplacerWidth={this.state.rowsThumbWidth}
                 >
                 </ScrollableContainer>
                 <ScrollableContainer id="container2"
@@ -91,6 +112,7 @@ class Comp extends React.Component<{}, CompState> {
                     contentHeight="auto"
                     overflowX="auto" overflowY="auto"
                     onScrollPosChanged={this.handleScrollPosChanged}
+                    onVerticalScrollVisibilityChanged={this.handleVerticallScrollVisibilityChanged}
                     scrollLeft={this.state.x}
                     data={this.state.rowModels}
                     dataRenderer={this.mapRows}

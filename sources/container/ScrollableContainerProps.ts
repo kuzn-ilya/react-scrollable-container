@@ -20,4 +20,7 @@ export interface ScrollableContainerProps {
     readonly data?: any;
     readonly width: string | number;
     readonly height: string | number;
+
+    readonly horzScrollBarReplacerHeight?: number;
+    readonly vertScrollBarReplacerWidth?: number;
 }

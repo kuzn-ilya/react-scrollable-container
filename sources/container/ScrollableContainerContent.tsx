@@ -14,6 +14,7 @@ export class ScrollableContainerContent extends React.PureComponent<ScrollableCo
     };
 
     render(): JSX.Element {
+        console.log('render');
         let wrapper: React.ReactNode = null;
         if (this.props.contentWidth !== 'auto' || this.props.contentHeight !== 'auto') {
             wrapper = (

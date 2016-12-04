@@ -46,18 +46,18 @@ class Comp extends React.Component<{}, CompState> {
             rowModels: fakeData,
             rowsThumbWidth: 0,
             x: 0,
-            y: 0,
+            y: 0
         };
 
     }
 
     handleScrollPosChanged: (x: number, y: number) => void = (x, y) => {
         this.setState({
-            x,
-            y,
-            headerCellModels: this.state.headerCellModels, 
+            headerCellModels: this.state.headerCellModels,
             rowModels: this.state.rowModels,
-            rowsThumbWidth: this.state.rowsThumbWidth
+            rowsThumbWidth: this.state.rowsThumbWidth,
+            x,
+            y
         });
     }
 
@@ -71,12 +71,12 @@ class Comp extends React.Component<{}, CompState> {
 
     handleVerticallScrollVisibilityChanged: (visible: boolean, thumbWidth: number) => void = (visible: boolean, thumbWidth: number) => {
         this.setState({
-            x: this.state.x,
-            y: this.state.y,
             headerCellModels: this.state.headerCellModels,
             rowModels: this.state.rowModels,
-            rowsThumbWidth: thumbWidth
-        })
+            rowsThumbWidth: thumbWidth,
+            x: this.state.x,
+            y: this.state.y
+        });
     }
 
     render(): JSX.Element {

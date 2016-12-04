@@ -13,13 +13,13 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
         contentHeight: 'auto',
         contentWidth: 'auto',
         height: '100%',
+        horzScrollBarReplacerHeight: 0,
         overflowX: 'auto',
         overflowY: 'auto',
         scrollLeft: 0,
         scrollTop: 0,
-        width: '100%',
         vertScrollBarReplacerWidth: 0,
-        horzScrollBarReplacerHeight: 0
+        width: '100%'
     };
 
     constructor(props: ScrollableContainerProps) {

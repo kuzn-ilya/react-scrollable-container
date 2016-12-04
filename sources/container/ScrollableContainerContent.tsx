@@ -31,6 +31,7 @@ export class ScrollableContainerContent extends React.PureComponent<ScrollableCo
                     height: this.props.contentHeight === 'auto' ? '100%' : this.props.contentHeight,
                     width: this.props.contentWidth === 'auto' ? '100%' : this.props.contentWidth
                 }}
+                className={addPrefixToClass('content')}
             >
                 {this.props.dataRenderer ? this.props.dataRenderer(this.props.data) : null}
                 {this.props.children}

@@ -59,11 +59,14 @@ describe('DOM: ScrollableContainer', () => {
         expect(element.offsetLeft).equals(0);
         expect(element.offsetTop).equals(0);
 
-        let scrollable = element.querySelector('.react-container-container-scrollable');
+        let scrollable = element.querySelector('.react-container-container-scrollable') as HTMLElement;
         expect(scrollable).to.exist;
 
         expect(scrollable.scrollWidth).equals(300);
         expect(scrollable.scrollHeight).equals(280);
+
+        let content = element.querySelector('.react-container-content') as HTMLElement;
+        expect(content).to.exist;
     });
 
     it('should fire onScrollPosChanged event when it is scrolled', () => {
@@ -263,9 +266,10 @@ describe('DOM: ScrollableContainer', () => {
         expect(handleVerticalScrollVisibilityChanged).to.have.been.called.once;
     });
 
-    it('should fire onVerticalScrollBarVisibilityChanged if ContentHeight becomes less than height', () => {
-        let handleVerticalScrollVisibilityChanged = chai.spy((visible: boolean, thumbWidth: number) => {
-            return;
+    it('should fire onHorizontalScrollBarVisibilityChanged if ContentWidth greater than width', () => {
+        let handleHorizontalScrollVisibilityChanged = chai.spy((visible: boolean, thumbWidth: number) => {
+            expect(visible).equal(true);
+            expect(thumbWidth).to.be.greaterThan(0);
         });
 
         let container = ReactDOM.render(
@@ -274,7 +278,64 @@ describe('DOM: ScrollableContainer', () => {
                 height="200px"
                 overflowX="auto"
                 overflowY="auto"
-                contentHeight={400}
+                contentWidth={400}
+                onHorizontalScrollVisibilityChanged={handleHorizontalScrollVisibilityChanged}/>,
+            div) as ScrollableContainer;
+
+        expect(container).to.exist;
+
+        let element = document.body.querySelector('#container');
+        let scrollable = element.querySelector('.react-container-container-scrollable');
+
+        expect(scrollable).to.exist;
+
+        expect(handleHorizontalScrollVisibilityChanged).to.have.been.called.once;
+    });
+
+    it('should fire onHorizontalScrollBarVisibilityChanged if ContentWidth becomes less than width', () => {
+        let handleHorizontalScrollVisibilityChanged = chai.spy((visible: boolean, thumbWidth: number) => {
+            return;
+        });
+
+        let container = ReactDOM.render(
+            <ScrollableContainer id="container"
+                width="300px"
+                height="300px"
+                overflowX="auto"
+                overflowY="auto"
+                contentWidth={500}
+                contentHeight={200}
+                onHorizontalScrollVisibilityChanged={handleHorizontalScrollVisibilityChanged}/>,
+            div) as ScrollableContainer;
+
+        expect(container).to.exist;
+
+        let element = document.body.querySelector('#container') as HTMLElement;
+
+        expect(element.offsetWidth).equals(300);
+        expect(element.offsetHeight).equals(300);
+
+        element.style.width = '500px';
+        container.measureScrollbars();
+
+        expect(handleHorizontalScrollVisibilityChanged).to.have.been.called.twice;
+        expect(handleHorizontalScrollVisibilityChanged).to.have.been.called.with(true);
+        expect(handleHorizontalScrollVisibilityChanged).to.have.been.called.with(false, 0);
+    });
+
+    it('should fire onVerticalScrollBarVisibilityChanged if ContentHeight becomes less than height', () => {
+        let handleVerticalScrollVisibilityChanged = chai.spy((visible: boolean, thumbHeight: number) => {
+            return;
+        });
+
+        let container = ReactDOM.render(
+            <ScrollableContainer id="container"
+                width="300px"
+                height="300px"
+                overflowX="auto"
+                overflowY="auto"
+                contentWidth={200}
+                contentHeight={500}
                 onVerticalScrollVisibilityChanged={handleVerticalScrollVisibilityChanged} />,
             div) as ScrollableContainer;
 
@@ -282,7 +343,11 @@ describe('DOM: ScrollableContainer', () => {
 
         let element = document.body.querySelector('#container') as HTMLElement;
 
+        expect(element.offsetWidth).equals(300);
+        expect(element.offsetHeight).equals(300);
+
         element.style.height = '500px';
+        container.measureScrollbars();
 
         expect(handleVerticalScrollVisibilityChanged).to.have.been.called.twice;
         expect(handleVerticalScrollVisibilityChanged).to.have.been.called.with(true);

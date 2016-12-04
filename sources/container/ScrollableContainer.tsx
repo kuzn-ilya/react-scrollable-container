@@ -25,6 +25,7 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
         this.handleWindowResize = this.handleWindowResize.bind(this);
         this.handleScroll = this.handleScroll.bind(this);
         this.state = {
+            horzScrollThumbHeight: 0,
             vertScrollThumbWidth: 0
         };
     }
@@ -94,13 +95,26 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
         }
     }
 
-    private measureScrollbars: () => void = () => {
+    public measureScrollbars: () => void = () => {
         if (this.ref) {
-            let newWidth = this.ref.offsetWidth - this.ref.clientWidth;
-            if (newWidth !== this.state.vertScrollThumbWidth) {
-                this.setState({ vertScrollThumbWidth: newWidth });
-                if (this.props.onVerticalScrollVisibilityChanged) {
-                    this.props.onVerticalScrollVisibilityChanged(newWidth > 0, newWidth);
+            let newState = {
+                horzScrollThumbHeight: this.ref.offsetHeight - this.ref.clientHeight,
+                vertScrollThumbWidth: this.ref.offsetWidth - this.ref.clientWidth
+            };
+            let oldState = this.state;
+
+            if (newState.vertScrollThumbWidth !== oldState.vertScrollThumbWidth ||
+                newState.horzScrollThumbHeight !== oldState.horzScrollThumbHeight) {
+                this.setState(newState);
+
+                if (this.props.onVerticalScrollVisibilityChanged &&
+                    newState.vertScrollThumbWidth !== oldState.vertScrollThumbWidth) {
+                    this.props.onVerticalScrollVisibilityChanged(newState.vertScrollThumbWidth > 0, newState.vertScrollThumbWidth);
+                }
+
+                if (this.props.onHorizontalScrollVisibilityChanged &&
+                    newState.horzScrollThumbHeight !== oldState.horzScrollThumbHeight) {
+                    this.props.onHorizontalScrollVisibilityChanged(newState.horzScrollThumbHeight > 0, newState.horzScrollThumbHeight);
                 }
             }
         }

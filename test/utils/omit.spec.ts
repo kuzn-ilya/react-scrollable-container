@@ -1,12 +1,12 @@
 import * as chai from 'chai';
 import * as chaiSpies from 'chai-spies';
 
-import { omit } from '../sources/utils/object.utils';
+import { omit } from '../../sources/utils/omit';
 
 const expect = chai.expect;
 chai.use(chaiSpies);
 
-describe('object.utils', () => {
+describe('omit', () => {
     it('should be identity if no properties is provided', () => {
         let obj = {
             x: 1

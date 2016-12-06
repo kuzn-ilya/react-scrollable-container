@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { addPrefixToClass } from './../utils/css.utils';
-import { joinClasses } from './../utils/joinClasses';
+import { addCssClassPrefix } from './../utils/addCssClassPrefix';
+import { classNames } from './../utils/classNames';
 
 import { ScrollableContainerProps } from  './ScrollableContainerProps';
 import { ScrollableContainerState } from  './ScrollableContainerState';
@@ -57,14 +57,14 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
     render(): JSX.Element {
         return (
             <div
-                className={joinClasses(addPrefixToClass('container'), this.props.className!)}
+                className={classNames(addCssClassPrefix('container'), this.props.className!)}
                 style={{
                     height: this.props.height,
                     width: this.props.width
                 }}
                 id={this.props.id}
             >
-                <div className={addPrefixToClass('container-scrollable')}
+                <div className={addCssClassPrefix('container-scrollable')}
                     ref={(ref: HTMLDivElement) => this.ref = ref}
                     style={{
                         bottom: this.props.horzScrollBarReplacerHeight ? this.props.horzScrollBarReplacerHeight + 'px' : '0px',

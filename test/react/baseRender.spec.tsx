@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom';
 import * as chai from 'chai';
 import * as chaiSpies from 'chai-spies';
 
-import { renderIntoDocument } from './../test.utils';
+import { renderIntoDocument } from './../TestUtils';
 import * as TestUtils from 'react-addons-test-utils';
 
 import { baseRender } from './../../sources/react/baseRender';

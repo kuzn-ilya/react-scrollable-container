@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom';
 import * as chai from 'chai';
 import * as chaiSpies from 'chai-spies';
 
-import { renderIntoDocument, unmountComponent } from './../test.utils';
+import { renderIntoDocument, unmountComponent } from './../TestUtils';
 import * as TestUtils from 'react-addons-test-utils';
 
 import { mounted } from './../../sources/react/mounted';

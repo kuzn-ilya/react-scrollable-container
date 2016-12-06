@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { addPrefixToClass } from './../utils/css.utils';
+import { addCssClassPrefix } from './../utils/addCssClassPrefix';
 
 import './container.css';
 
@@ -17,7 +17,7 @@ export class ScrollableContainerContent extends React.PureComponent<ScrollableCo
         let wrapper: React.ReactNode = null;
         if (this.props.contentWidth !== 'auto' || this.props.contentHeight !== 'auto') {
             wrapper = (
-                <div className={addPrefixToClass('container-wrapper')}
+                <div className={addCssClassPrefix('container-wrapper')}
                     style={{
                         left: this.props.contentWidth === 'auto' ? 0 : this.props.contentWidth - 1,
                         top: this.props.contentHeight === 'auto' ? 0 : this.props.contentHeight - 1
@@ -31,7 +31,7 @@ export class ScrollableContainerContent extends React.PureComponent<ScrollableCo
                     height: this.props.contentHeight === 'auto' ? '100%' : this.props.contentHeight,
                     width: this.props.contentWidth === 'auto' ? '100%' : this.props.contentWidth
                 }}
-                className={addPrefixToClass('content')}
+                className={addCssClassPrefix('content')}
             >
                 {this.props.dataRenderer ? this.props.dataRenderer(this.props.data) : null}
                 {this.props.children}

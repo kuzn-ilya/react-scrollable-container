@@ -4,7 +4,7 @@
  * @param {...?string} classNames
  * @return {string}
  */
-export function joinClasses(...classNames: string[]): string {
+export function classNames(...classNames: string[]): string {
     let result = '';
     for (let i = 0; i < classNames.length; i++) {
         let nextClass = classNames[i];

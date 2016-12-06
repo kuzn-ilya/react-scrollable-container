@@ -1,3 +1,5 @@
+@import './variables.less';
+
 html, body {
     height: 100%;
     width: 100%;
@@ -15,22 +17,22 @@ html, body {
 }
 
 .navigationPanel {
-    width: 200px;
+    width: @navigation-panel-width;
     height: 100%;
     position: absolute;
 }
 
 .example {
     display: inline-block;
-    width: calc(~'100% - 200px');
+    width: ~'calc(100% - @{navigation-panel-width})';
     height: 100%;
     position: relative;
-    margin-left: 200px;
+    margin-left: @navigation-panel-width;
 }
 
 .exampleHeader {
-    height: 20px;
+    height: @example-header-height;
 }
 .exampleWrapper {
-    height: calc(~'100% - 20px');
+    height: ~'calc(100% - @{example-header-height})';
 }

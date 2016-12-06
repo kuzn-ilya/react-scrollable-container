@@ -1,3 +1,4 @@
+import { CSSProperties } from 'react';
 import { Overflow, Size } from './../utils/types';
 
 export interface ScrollableContainerProps {
@@ -23,4 +24,14 @@ export interface ScrollableContainerProps {
 
     readonly horzScrollBarReplacerHeight?: number;
     readonly vertScrollBarReplacerWidth?: number;
+
+    /**
+     * Applied to the ScrollableContainer's root element.
+     */
+    readonly className?: string;
+
+    /**
+     * Override the inline-styles of the root element.
+     */
+    readonly style?: CSSProperties;
 }

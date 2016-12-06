@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { addPrefixToClass } from './../utils/css.utils';
+import { joinClasses } from './../utils/joinClasses';
 
 import { ScrollableContainerProps } from  './ScrollableContainerProps';
 import { ScrollableContainerState } from  './ScrollableContainerState';
@@ -10,6 +11,7 @@ import './container.less';
 export class ScrollableContainer extends React.PureComponent<ScrollableContainerProps, ScrollableContainerState> {
 
     static defaultProps: ScrollableContainerProps = {
+        className: '',
         contentHeight: 'auto',
         contentWidth: 'auto',
         height: '100%',
@@ -18,6 +20,7 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
         overflowY: 'auto',
         scrollLeft: 0,
         scrollTop: 0,
+        style: {},
         vertScrollBarReplacerWidth: 0,
         width: '100%'
     };
@@ -54,7 +57,7 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
     render(): JSX.Element {
         return (
             <div
-                className={addPrefixToClass('container')}
+                className={joinClasses(addPrefixToClass('container'), this.props.className!)}
                 style={{
                     height: this.props.height,
                     width: this.props.width

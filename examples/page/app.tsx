@@ -8,8 +8,8 @@ import { Example } from './Example';
 import { GridExample } from './../grid/GridExample';
 
 let examples: Example[] = [
-    { name: 'PictureContainer', componentClass: GridExample },
-    { name: 'Grid', componentClass: GridExample }
+    { componentClass: GridExample, name: 'PictureContainer' },
+    { componentClass: GridExample, name: 'Grid' }
 ];
 
 ReactDOM.render(<ExamplesPage examples={examples}/>, document.getElementById('app'));

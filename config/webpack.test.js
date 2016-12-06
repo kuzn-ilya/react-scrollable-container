@@ -41,7 +41,14 @@ var config = merge.smart(common, {
                 ]
             }
         ]
-    }
+    },
+
+    // This section is here to avoid webpack errors while loading useragent lib.
+    node: {
+        fs: 'empty',
+        net: 'empty',
+        tls: 'empty'
+    }    
 });
 
 module.exports = config;

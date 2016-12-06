@@ -2,4 +2,4 @@ interface CssVars {
     [key: string]: string;
 }
 
-export const CSS_VARS: CssVars; 
+export const CSS_VARS: CssVars;

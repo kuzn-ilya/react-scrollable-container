@@ -16,15 +16,6 @@ module.exports = {
                     inlineSourceMap: true
                 }),
                 exclude: ["node_modules"]
-            },
-            {
-                test: /\.css$/,
-                loaders: [
-                    'style-loader', 
-                    'css-loader',
-                    path.join(__dirname, 'cssLoader.js')
-                ],
-                exclude: ["node_modules"]
             }
         ]       
     }

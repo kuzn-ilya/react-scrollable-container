@@ -2,17 +2,18 @@
 
 var postCss = require('postcss');
 var postCssAdvancedVariables = require('postcss-advanced-variables');
-var cssVars = require('../sources/stubs/cssVars');
 
 module.exports = function(content) {
-  if (this && this.cacheable) {
-    // Webpack specific call
-    this.cacheable();
-  }
+    var variables = JSON.parse(this.query.substring(1));
 
-  content = postCss()
-    .use(postCssAdvancedVariables({variables: cssVars.CSS_VARS}))
-    .process(content).css;
+    if (this && this.cacheable) {
+      // Webpack specific call
+      this.cacheable();
+    }
 
-  return content;
+    content = postCss()
+      .use(postCssAdvancedVariables({variables: variables}))
+      .process(content).css;
+
+    return content;
 };

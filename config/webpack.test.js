@@ -3,6 +3,8 @@ var merge = require('webpack-merge');
 var common = require('./webpack.common.js');
 var path = require('path');
 
+var cssVars = require('../sources/stubs/cssVars.js');
+
 var config = merge.smart(common, {
     devtool: 'inline-source-map',
 
@@ -18,6 +20,15 @@ var config = merge.smart(common, {
             {
                 test: /\.json$/,
                 loader: 'json-loader'
+            },
+            {
+                test: /\.css$/,
+                loaders: [
+                    'style-loader', 
+                    'css-loader',
+                    path.join(__dirname, 'cssLoader.js?') + JSON.stringify(cssVars.CSS_VARS)
+                ],
+                exclude: ["node_modules"]
             }
         ],
         postLoaders: [

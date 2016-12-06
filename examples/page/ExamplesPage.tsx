@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import './styles.less';
+import './styles.css';
 
 import { Example } from './Example';
 

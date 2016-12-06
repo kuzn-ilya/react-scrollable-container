@@ -61,8 +61,6 @@
     "karma-source-map-support": "^1.2.0",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^1.8.0",
-    "less": "^2.7.1",
-    "less-loader": "^2.2.3",
     "mocha": "^3.1.2",
     "phantomjs-prebuilt": "^2.1.13",
     "postcss": "^5.2.6",

@@ -2,6 +2,7 @@ var common = require('./webpack.common.js');
 var merge = require('webpack-merge');
 var glob = require('glob');
 var path = require('path');
+var cssVars = require('../sources/stubs/cssVars.js');
 
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
@@ -38,7 +39,7 @@ var config = merge.smart(common, {
                 test: /\.css$/,
                 loader: ExtractTextPlugin.extract(
                     'style-loader',
-                    'css-loader!' + path.join(__dirname, 'cssLoader.js')
+                    'css-loader!' + path.join(__dirname, 'cssLoader.js?') + JSON.stringify(cssVars.CSS_VARS)
                 )
             }
         ]

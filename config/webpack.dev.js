@@ -6,6 +6,11 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var path = require('path');
 var ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
 
+var cssVars1 = require('../sources/stubs/cssVars.js');
+var cssVars2 = require('../examples/page/cssVars.js');
+
+var cssVars = merge(cssVars1, cssVars2);
+
 var config = merge.smart(common, {
     devtool: 'eval-source-map',
     devServer: {
@@ -34,8 +39,12 @@ var config = merge.smart(common, {
                 loaders: ['ejs-loader']
             },
             {
-                test: /\.less$/,
-                loaders: ['style-loader', 'css-loader', 'less-loader'],
+                test: /\.css$/,
+                loaders: [
+                    'style-loader', 
+                    'css-loader',
+                    path.join(__dirname, 'cssLoader.js?') + JSON.stringify(cssVars.CSS_VARS)
+                ],
                 exclude: ["node_modules"]
             }
         ]

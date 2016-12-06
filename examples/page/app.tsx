@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-import './styles.less';
+import './styles.css';
 
 import { ExamplesPage } from './ExamplesPage';
 import { Example } from './Example';

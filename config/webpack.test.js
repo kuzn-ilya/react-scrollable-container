@@ -3,7 +3,7 @@ var merge = require('webpack-merge');
 var common = require('./webpack.common.js');
 var path = require('path');
 
-module.exports = merge(common, {
+var config = merge.smart(common, {
     devtool: 'inline-source-map',
 
     // Externals are necessary for working karma.
@@ -32,3 +32,5 @@ module.exports = merge(common, {
         ]
     }
 });
+
+module.exports = config;

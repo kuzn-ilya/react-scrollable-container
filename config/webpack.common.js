@@ -1,9 +1,6 @@
 var webpack = require('webpack');
 var path = require('path');
 
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
-
 module.exports = {
     resolve: {
         extensions: ['', '.js', '.ts', '.tsx', '.css', '.less', '.html'],
@@ -14,12 +11,10 @@ module.exports = {
         loaders: [
             {
                 test: /\.tsx?$/,
-                loaders: [
-                    'awesome-typescript-loader?' + JSON.stringify({
-                        sourceMap: false,
-                        inlineSourceMap: true
-                    })
-                ],
+                loader: 'awesome-typescript-loader?' + JSON.stringify({
+                    sourceMap: false,
+                    inlineSourceMap: true
+                }),
                 exclude: ["node_modules"]
             },
             {

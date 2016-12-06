@@ -1,7 +1,7 @@
 var common = require('./webpack.common.js');
 var merge = require('webpack-merge');
 
-module.exports = merge(common, {
+var config = merge.smart(common, {
     output: {
         library: 'ReactScrollable',
         libraryTarget: 'umd',
@@ -19,3 +19,5 @@ module.exports = merge(common, {
         ]
     }
 });
+
+module.exports = config;

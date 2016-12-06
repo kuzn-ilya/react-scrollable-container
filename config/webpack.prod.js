@@ -9,12 +9,12 @@ var config = merge.smart(common, {
     output: {
         library: 'ReactScrollable',
         libraryTarget: 'umd',
-        path: 'dist',
+        path: 'build',
         filename: '[name].js',
     },
 
     entry: {
-        components: glob.sync('./sources/**/*.{ts?,css}')
+        components: './sources/container/index.ts'
     },
 
     externals: {

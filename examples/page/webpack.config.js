@@ -4,7 +4,12 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var path = require('path');
 var ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
 
-var common = {
+module.exports = {
+    devtool: 'eval-source-map',
+    devServer: {
+        inline: true,
+        hot: true
+    },
     context: __dirname,
     entry: {
         app: "./app.tsx",
@@ -50,6 +55,13 @@ var common = {
         sourceMapFilename: '[name].js.map',
     },
     plugins: [
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.DefinePlugin({
+            'process.env': {
+                'NODE_ENV': JSON.stringify('development')
+            }
+        }),
+        new webpack.SourceMapDevToolPlugin({ filename: null, test: /\.tsx?$/ }),
         new HtmlWebpackPlugin({
             title: 'react-container',
             template: './index.ejs',
@@ -62,42 +74,3 @@ var common = {
         })
     ]
 };
-
-module.exports = merge(common, {
-    devServer: {
-        inline: true,
-        hot: true
-    },
-    plugins: [
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.DefinePlugin({
-            'process.env': {
-                'NODE_ENV': JSON.stringify('development')
-            }
-        }),
-        new webpack.SourceMapDevToolPlugin({ filename: null, test: /\.tsx?$/ })
-    ],
-    devtool: 'eval-source-map'
-});
-
-// if (process.env.NODE_ENV === 'production') {
-//     module.exports = merge(common, {
-//         devtool: 'cheap-module-source-map',
-//         plugins: [
-//             new webpack.optimize.UglifyJsPlugin({
-//                 compress: {
-//                     warnings: false
-//                 }
-//             }),
-//             new webpack.DefinePlugin({
-//                 'process.env': {
-//                     'NODE_ENV': JSON.stringify('production'),
-//                     loadFakeData: JSON.stringify(loadFakeData),
-//                     standAlone: JSON.stringify(standAlone),
-//                 }
-//             }),
-//             new webpack.optimize.OccurrenceOrderPlugin(true),
-//             new webpack.optimize.DedupePlugin(),
-//         ]
-//     })
-// }

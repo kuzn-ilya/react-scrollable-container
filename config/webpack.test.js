@@ -1,23 +1,31 @@
 var webpack = require('webpack');
 var merge = require('webpack-merge');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
 var path = require('path');
+
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
 
-var common = {
+module.exports = {
     devtool: 'inline-source-map',
 
     resolve: {
-        extensions: ['', '.js', '.ts', '.tsx', '.less', '.html'],
+        extensions: ['', '.js', '.ts', '.tsx', '.css', '.less', '.html'],
         modulesDirectories: ['node_modules', 'sources']
     },
 
-    // Externals are necessary for working enzyme.
+    output: {
+        library: 'ReactScrollable',
+        libraryTarget: 'umd',
+        path: 'dist',
+        filename: '[name].js',
+    },
+
+    // Externals are necessary for working karma.
     externals: {
         'react/addons': 'addons',
         'react/lib/ExecutionEnvironment': 'ExecutionEnvironment',
-        'react/lib/ReactContext': 'ReactContext'
-    },
+        'react/lib/ReactContext': 'ReactContext',
+    },    
 
     module: {
         loaders: [
@@ -41,8 +49,12 @@ var common = {
                 include: path.resolve(__dirname, "client")
             },
             {
-                test: /(\.less$)|(\.css$)/,
-                loaders: ['style-loader', 'css-loader', 'less-loader'],
+                test: /(\.css$)/,
+                loaders: [
+                    'style-loader', 
+                    'css-loader',
+                    path.join(__dirname, 'cssLoader.js')
+                ],
                 exclude: ["node_modules"]
             }
         ],
@@ -56,8 +68,6 @@ var common = {
                     'test'
                 ]
             }
-        ]        
+        ]
     }
 };
-
-module.exports = common;

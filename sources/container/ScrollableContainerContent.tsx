@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { addPrefixToClass } from './../utils/css.utils';
 
-import './container.less';
+import './container.css';
 
 import {ScrollableContainerContentState} from './ScrollableContainerContentState';
 import {ScrollableContainerContentProps} from './ScrollableContainerContentProps';
@@ -14,7 +14,6 @@ export class ScrollableContainerContent extends React.PureComponent<ScrollableCo
     };
 
     render(): JSX.Element {
-        console.log('render');
         let wrapper: React.ReactNode = null;
         if (this.props.contentWidth !== 'auto' || this.props.contentHeight !== 'auto') {
             wrapper = (

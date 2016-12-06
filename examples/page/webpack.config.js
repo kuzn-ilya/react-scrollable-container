@@ -14,7 +14,7 @@ var common = {
         ]
     },
     resolve: {
-        extensions: ['', '.js', '.ts', '.tsx']
+        extensions: ['', '.js', '.ts', '.tsx', '.less', '.css']
     },
     module: {
         loaders: [
@@ -28,7 +28,16 @@ var common = {
                 loaders: ['ejs-loader']
             },
             {
-                test: /(\.less$)|(\.css$)/,
+                test: /\.css$/,
+                loaders: [ 
+                    'style-loader',
+                    'css-loader',
+                    path.join(__dirname, './../../config/cssLoader.js')
+                ],
+                exclude: ["node_modules"]
+            },
+            {
+                test: /\.less$/,
                 loaders: ['style-loader', 'css-loader', 'less-loader'],
                 exclude: ["node_modules"]
             }
@@ -50,7 +59,7 @@ var common = {
         new webpack.optimize.CommonsChunkPlugin({
             name: "libs",
             minChunks: 0
-        }),
+        })
     ]
 };
 

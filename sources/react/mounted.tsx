@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { baseRender } from './BaseRender';
+import { baseRender } from './baseRender';
 
 // tslint:disable-next-line:variable-name */
 export function mounted<P, S>(Comp: new() => Component<P, S>, onMounted: () => void, onUnmounting: () => void): React.ComponentClass<P> {

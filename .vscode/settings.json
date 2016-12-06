@@ -6,5 +6,11 @@
         "npm-debug.*.*": true,
         "npm-debug.*": true,
         ".nyc_output/**": true
+    },
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/bower_components": true,
+        "coverage/**": true,
+        "dist/**": true
     }
 }

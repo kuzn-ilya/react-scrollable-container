@@ -84,7 +84,7 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
         );
     }
 
-    private handleWindowResize: () => void =
+    handleWindowResize: () => void =
         () => this.measureScrollbars();
 
     private handleScroll: (event: UIEvent) => void = (event) => {
@@ -102,7 +102,7 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
         }
     }
 
-    public measureScrollbars: () => void = () => {
+    private measureScrollbars: () => void = () => {
         if (this.ref) {
             let newState = {
                 horzScrollThumbHeight: this.ref.offsetHeight - this.ref.clientHeight,

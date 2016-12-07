@@ -316,7 +316,7 @@ describe('DOM: ScrollableContainer', () => {
         expect(element.offsetHeight).equals(300);
 
         element.style.width = '500px';
-        container.measureScrollbars();
+        container.handleWindowResize();
 
         expect(handleHorizontalScrollVisibilityChanged).to.have.been.called.twice;
         expect(handleHorizontalScrollVisibilityChanged).to.have.been.called.with(true);
@@ -347,7 +347,7 @@ describe('DOM: ScrollableContainer', () => {
         expect(element.offsetHeight).equals(300);
 
         element.style.height = '500px';
-        container.measureScrollbars();
+        container.handleWindowResize();
 
         expect(handleVerticalScrollVisibilityChanged).to.have.been.called.twice;
         expect(handleVerticalScrollVisibilityChanged).to.have.been.called.with(true);

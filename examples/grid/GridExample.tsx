@@ -79,7 +79,7 @@ export class GridExample extends React.Component<{}, CompState> {
 
     render(): JSX.Element {
         return (
-            <Layout height='100%' width='100%'>
+            <Layout>
                 <button
                     onClick={(): void => this.setState({
                         headerCellModels: this.state.headerCellModels,
@@ -90,7 +90,7 @@ export class GridExample extends React.Component<{}, CompState> {
                     })}>
                     Remove
                 </button>
-                <Layout height='100%' width='100%' firstChildHeight="19px">
+                <Layout firstChildHeight="19px">
                     <ScrollableContainer id="container1"
                         contentWidth={2190}
                         contentHeight="auto"

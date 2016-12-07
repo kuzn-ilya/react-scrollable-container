@@ -1,29 +1,13 @@
 .layout-container {
-  display: block;
-  position: relative;
-}
-
-.layout-container-wrapper {
-  position: absolute;
-  top: 0px;
-  bottom: 0px;
-  left: 0px;
-  right: 0px;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .layout-first {
-  float: left;
-  position: relative;
+  overflow: hidden;
 }
 
 .layout-second {
-  position: relative;
-}
-
-.layout-second-wrapper {
-  position: absolute;
-  left: 0px;
-  right: 0px;
+  flex-grow: 1;
   overflow: hidden;
 }

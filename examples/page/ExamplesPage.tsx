@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import './styles.css';
+import { Layout } from '../../sources/container/Layout';
 
 import { Example } from './Example';
 
@@ -33,10 +34,10 @@ export class ExamplesPage extends React.PureComponent<ExamplesPageProps, Example
                     </ul>
                 </aside>
                 <div className="example">
-                    <div className="exampleHeader">{selectedExample.name}</div>
-                    <div className="exampleWrapper">
+                    <Layout>
+                        {selectedExample.name}
                         <Comp />
-                    </div>
+                    </Layout>
                 </div>
             </div>
         );

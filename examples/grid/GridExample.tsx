@@ -79,9 +79,8 @@ export class GridExample extends React.Component<{}, CompState> {
 
     render(): JSX.Element {
         return (
-            <Layout height='100%' width='100%' firstChildHeight="21px">
+            <Layout height='100%' width='100%'>
                 <button
-                    height="100%"
                     onClick={(): void => this.setState({
                         headerCellModels: this.state.headerCellModels,
                         rowModels: this.state.rowModels.slice(0, this.state.rowModels.length - 1),

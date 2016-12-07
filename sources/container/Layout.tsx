@@ -7,9 +7,8 @@ import './layout.css';
 export class Layout extends React.PureComponent<LayoutProps, void> {
 
     static defaultProps: LayoutProps = {
-        firstChildHeight: 0,
-        height: 0,
-        width: 0
+        height: '100%',
+        width: '100%'
     };
 
     constructor(props: LayoutProps) {
@@ -37,27 +36,17 @@ export class Layout extends React.PureComponent<LayoutProps, void> {
                 height: this.props.height,
                 width: this.props.width
             }}>
-                <div className="layout-container-wrapper">
-                    <div className="layout-first" style={{
-                        height: this.props.firstChildHeight,
-                        width: '100%'
-                    }}>
-                        <div className="layout-container-wrapper">
-                            {first}
-                        </div>
-                    </div>
-                    <div className="layout-second" style={{
-                        height: '100%',
-                        paddingTop: this.props.firstChildHeight,
-                        width: '100%'
-                    }}>
-                        <div className="layout-second-wrapper" style={{
-                            bottom: this.props.firstChildHeight,
-                            top: this.props.firstChildHeight
-                        }}>
-                            {second}
-                        </div>
-                    </div>
+                <div className="layout-first" style={{
+                    height: this.props.firstChildHeight,
+                    width: '100%'
+                }}>
+                    {first}
+                </div>
+                <div className="layout-second" style={{
+                    height: '100%',
+                    width: '100%'
+                }}>
+                    {second}
                 </div>
             </div>
         );

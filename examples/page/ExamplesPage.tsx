@@ -21,19 +21,19 @@ export class ExamplesPage extends React.PureComponent<ExamplesPageProps, Example
     }
 
     render(): JSX.Element {
-        let example: Example = this.props.examples[this.state.selectedIndex];
-        let Comp = example.componentClass;
+        let selectedExample: Example = this.props.examples[this.state.selectedIndex];
+        let Comp = selectedExample.componentClass;
         return (
             <div className="examplesPage">
                 <aside className="navigationPanel">
                     <ul>
-                        {this.props.examples.map((example, index) => (
+                        {this.props.examples.map((example: Example, index: number) => (
                             <li>{example.name}</li>
                         ))}
                     </ul>
                 </aside>
                 <div className="example">
-                    <div className="exampleHeader">{example.name}</div>
+                    <div className="exampleHeader">{selectedExample.name}</div>
                     <div className="exampleWrapper">
                         <Comp />
                     </div>

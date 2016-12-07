@@ -5,6 +5,7 @@ import { fakeData } from './data/fake.data';
 import { Row } from './row/row.component';
 import { HeaderCell } from './header-cell/header-cell.component';
 import { ScrollableContainer } from '../../sources/container/ScrollableContainer';
+import { Layout } from '../../sources/container/Layout';
 
 interface HeaderCellModel {
     width: number;
@@ -78,12 +79,9 @@ export class GridExample extends React.Component<{}, CompState> {
 
     render(): JSX.Element {
         return (
-            <div style={{
-                height: '100%',
-                width: '100%'
-            }}>
+            <Layout height='100%' width='100%' firstChildHeight="21px">
                 <button
-                    height="21px"
+                    height="100%"
                     onClick={(): void => this.setState({
                         headerCellModels: this.state.headerCellModels,
                         rowModels: this.state.rowModels.slice(0, this.state.rowModels.length - 1),
@@ -93,33 +91,35 @@ export class GridExample extends React.Component<{}, CompState> {
                     })}>
                     Remove
                 </button>
-                <ScrollableContainer id="container1"
-                    contentWidth={2190}
-                    contentHeight="auto"
-                    overflowX="hidden" overflowY="hidden"
-                    onScrollPosChanged={this.handleScrollPosChanged}
-                    scrollLeft={this.state.x}
-                    data={this.state.headerCellModels}
-                    dataRenderer={this.mapHeader}
-                    width="100%"
-                    height="19px"
-                    vertScrollBarReplacerWidth={this.state.rowsThumbWidth}
-                >
-                </ScrollableContainer>
-                <ScrollableContainer id="container2"
-                    contentWidth={2190}
-                    contentHeight="auto"
-                    overflowX="auto" overflowY="auto"
-                    onScrollPosChanged={this.handleScrollPosChanged}
-                    onVerticalScrollVisibilityChanged={this.handleVerticallScrollVisibilityChanged}
-                    scrollLeft={this.state.x}
-                    data={this.state.rowModels}
-                    dataRenderer={this.mapRows}
-                    width="100%"
-                    height="calc(100% - 43px)"
-                >
-                </ScrollableContainer>
-            </div>
+                <Layout height='100%' width='100%' firstChildHeight="19px">
+                    <ScrollableContainer id="container1"
+                        contentWidth={2190}
+                        contentHeight="auto"
+                        overflowX="hidden" overflowY="hidden"
+                        onScrollPosChanged={this.handleScrollPosChanged}
+                        scrollLeft={this.state.x}
+                        data={this.state.headerCellModels}
+                        dataRenderer={this.mapHeader}
+                        width="100%"
+                        height="100%"
+                        vertScrollBarReplacerWidth={this.state.rowsThumbWidth}
+                    >
+                    </ScrollableContainer>
+                    <ScrollableContainer id="container2"
+                        contentWidth={2190}
+                        contentHeight="auto"
+                        overflowX="auto" overflowY="auto"
+                        onScrollPosChanged={this.handleScrollPosChanged}
+                        onVerticalScrollVisibilityChanged={this.handleVerticallScrollVisibilityChanged}
+                        scrollLeft={this.state.x}
+                        data={this.state.rowModels}
+                        dataRenderer={this.mapRows}
+                        width="100%"
+                        height="100%"
+                    >
+                    </ScrollableContainer>
+                </Layout>
+            </Layout>
         );
     }
 

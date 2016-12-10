@@ -29,7 +29,7 @@ export class ExamplesPage extends React.PureComponent<ExamplesPageProps, Example
                 <aside className="navigationPanel">
                     <ul>
                         {this.props.examples.map((example: Example, index: number) => (
-                            <li>{example.name}</li>
+                            <li key={index}>{example.name}</li>
                         ))}
                     </ul>
                 </aside>

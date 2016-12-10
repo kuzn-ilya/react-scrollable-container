@@ -73,13 +73,14 @@ describe('ScrollableContainer', () => {
         let container = renderIntoDocument(<ScrollableContainer id="container" overflowX="auto"
             overflowY="hidden" height={100} width={100}/>);
         let parentElement = ReactDOM.findDOMNode(container).parentElement;
+        expect(parentElement).to.exist;
 
-        let element = parentElement.querySelector('#container');
+        let element = parentElement!.querySelector('#container');
         expect(element).to.exist;
 
         unmountComponent(container);
 
-        element = parentElement.querySelector('#container');
+        element = parentElement!.querySelector('#container');
         expect(element).to.not.exist;
     });
 

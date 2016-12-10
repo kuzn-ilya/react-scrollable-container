@@ -1,4 +1,5 @@
-import { Size } from './../utils/types';
+import { PropTypes } from 'react';
+import { Size, sizePropType } from './../utils/types';
 
 export interface ScrollableContainerContentProps {
     readonly contentWidth?: Size;
@@ -7,4 +8,11 @@ export interface ScrollableContainerContentProps {
     readonly dataRenderer?: (data: any) => React.ReactNode;
     // tslint:disable-next-line:no-any
     readonly data?: any;
+}
+
+export const scrollableContainerContentPropTypes = {
+    contentWidth: sizePropType,
+    contentHeight: sizePropType,
+    dataRenderer: PropTypes.func,
+    data: PropTypes.any
 }

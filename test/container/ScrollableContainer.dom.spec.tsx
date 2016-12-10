@@ -85,9 +85,12 @@ describe('DOM: ScrollableContainer', () => {
         expect(container).to.exist;
 
         let element = document.body.querySelector('#container');
-        let scrollable = element.querySelector('.react-container-container-scrollable');
+        expect(element).to.exist;
 
-        simulateScroll(scrollable, 20, 10);
+        let scrollable = element!.querySelector('.react-container-container-scrollable');
+        expect(element).to.exist;
+
+        simulateScroll(scrollable!, 20, 10);
 
         expect(handleScrollPosChanged).to.have.been.called.once;
         expect(handleScrollPosChanged).to.have.been.called.with.exactly(20, 10);
@@ -110,11 +113,13 @@ describe('DOM: ScrollableContainer', () => {
         expect(container.props.contentHeight).equals(300);
 
         let element = document.body.querySelector('#container');
-        let scrollable = element.querySelector('.react-container-container-scrollable');
+        expect(element).to.exist;
 
+        let scrollable = element!.querySelector('.react-container-container-scrollable');
         expect(scrollable).to.exist;
-        expect(scrollable.scrollWidth).equals(400);
-        expect(scrollable.scrollHeight).equals(300);
+
+        expect(scrollable!.scrollWidth).equals(400);
+        expect(scrollable!.scrollHeight).equals(300);
     });
 
     it('should have a horizontal scrollbar when contentWidth greater than width', () => {
@@ -129,12 +134,14 @@ describe('DOM: ScrollableContainer', () => {
         expect(container).to.exist;
 
         let element = document.body.querySelector('#container');
-        let scrollable = element.querySelector('.react-container-container-scrollable') as HTMLElement;
+        expect(element).to.exist;
 
+        let scrollable = element!.querySelector('.react-container-container-scrollable') as HTMLElement;
         expect(scrollable).to.exist;
-        expect(scrollable.scrollHeight).equals(scrollable.clientHeight);
-        expect(scrollable.scrollWidth).equals(400);
-        expect(scrollable.offsetHeight).equals(200);
+
+        expect(scrollable!.scrollHeight).equals(scrollable!.clientHeight);
+        expect(scrollable!.scrollWidth).equals(400);
+        expect(scrollable!.offsetHeight).equals(200);
     });
 
     it('should have a vertical scrollbar when contentHeight greater than height', () => {
@@ -149,12 +156,14 @@ describe('DOM: ScrollableContainer', () => {
         expect(container).to.exist;
 
         let element = document.body.querySelector('#container');
-        let scrollable = element.querySelector('.react-container-container-scrollable') as HTMLElement;
+        expect(element).to.exist;
 
+        let scrollable = element!.querySelector('.react-container-container-scrollable') as HTMLElement;
         expect(scrollable).to.exist;
-        expect(scrollable.scrollWidth).equals(scrollable.clientWidth);
-        expect(scrollable.scrollHeight).equals(400);
-        expect(scrollable.offsetWidth).equals(200);
+
+        expect(scrollable!.scrollWidth).equals(scrollable!.clientWidth);
+        expect(scrollable!.scrollHeight).equals(400);
+        expect(scrollable!.offsetWidth).equals(200);
     });
 
     it('should have the same dimensions as its applied in a style attribute', () => {
@@ -167,8 +176,8 @@ describe('DOM: ScrollableContainer', () => {
         let element = document.body.querySelector('#container');
         expect(element).to.exist;
 
-        expect(element.clientWidth).equals(200);
-        expect(element.clientHeight).equals(200);
+        expect(element!.clientWidth).equals(200);
+        expect(element!.clientHeight).equals(200);
     });
 
     // TODO make this test working
@@ -226,18 +235,21 @@ describe('DOM: ScrollableContainer', () => {
         expect(container).to.exist;
 
         let element1 = document.body.querySelector('#container1');
-        let scrollable1 = element1.querySelector('.react-container-container-scrollable');
+        expect(element1).to.exist;
 
+        let scrollable1 = element1!.querySelector('.react-container-container-scrollable');
         expect(scrollable1).to.exist;
 
-        simulateScroll(scrollable1, 20, 10);
+        simulateScroll(scrollable1!, 20, 10);
 
         let element2 = document.body.querySelector('#container2');
-        let scrollable2 = element2.querySelector('.react-container-container-scrollable') as HTMLElement;
+        expect(element2).to.exist;
+
+        let scrollable2 = element2!.querySelector('.react-container-container-scrollable') as HTMLElement;
         expect(scrollable2).to.exist;
 
-        expect(scrollable2.scrollLeft).equals(20);
-        expect(scrollable2.scrollTop).equals(10);
+        expect(scrollable2!.scrollLeft).equals(20);
+        expect(scrollable2!.scrollTop).equals(10);
     });
 
     it('should fire onVerticalScrollBarVisibilityChanged if ContentHeight greater than height', () => {
@@ -259,8 +271,9 @@ describe('DOM: ScrollableContainer', () => {
         expect(container).to.exist;
 
         let element = document.body.querySelector('#container');
-        let scrollable = element.querySelector('.react-container-container-scrollable');
+        expect(element).to.exist;
 
+        let scrollable = element!.querySelector('.react-container-container-scrollable');
         expect(scrollable).to.exist;
 
         expect(handleVerticalScrollVisibilityChanged).to.have.been.called.once;
@@ -285,8 +298,9 @@ describe('DOM: ScrollableContainer', () => {
         expect(container).to.exist;
 
         let element = document.body.querySelector('#container');
-        let scrollable = element.querySelector('.react-container-container-scrollable');
+        expect(element).to.exist;
 
+        let scrollable = element!.querySelector('.react-container-container-scrollable');
         expect(scrollable).to.exist;
 
         expect(handleHorizontalScrollVisibilityChanged).to.have.been.called.once;

@@ -1,5 +1,5 @@
-import { CSSProperties } from 'react';
-import { Overflow, Size } from './../utils/types';
+import { CSSProperties, PropTypes } from 'react';
+import { Overflow, overflowPropType, Size, sizePropType } from './../utils/types';
 
 export interface ScrollableContainerProps {
     readonly id?: string;
@@ -34,4 +34,30 @@ export interface ScrollableContainerProps {
      * Override the inline-styles of the root element.
      */
     readonly style?: CSSProperties;
+}
+
+export const scrollableContainerPropTypes = {
+    id: PropTypes.string,
+    contentWidth: sizePropType,
+    contentHeight: sizePropType,
+    overflowX: overflowPropType.isRequired,
+    overflowY: overflowPropType.isRequired,
+
+    scrollLeft: PropTypes.number,
+    scrollTop: PropTypes.number,
+
+    onScrollPosChanged: PropTypes.func,
+    onHorizontalScrollVisibilityChanged: PropTypes.func,
+    onVerticalScrollVisibilityChanged: PropTypes.func,
+
+    dataRenderer: PropTypes.func,
+    data: PropTypes.any,
+    width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+
+    horzScrollBarReplacerHeight: PropTypes.number,
+    vertScrollBarReplacerWidth: PropTypes.number,
+
+    className: PropTypes.string,
+    style: PropTypes.any
 }

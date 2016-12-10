@@ -2,7 +2,7 @@ import * as React from 'react';
 import { addCssClassPrefix } from './../utils/addCssClassPrefix';
 import { classNames } from './../utils/classNames';
 
-import { ScrollableContainerProps } from  './ScrollableContainerProps';
+import { ScrollableContainerProps, scrollableContainerPropTypes } from  './ScrollableContainerProps';
 import { ScrollableContainerState } from  './ScrollableContainerState';
 import { ScrollableContainerContent } from './ScrollableContainerContent';
 
@@ -24,6 +24,8 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
         vertScrollBarReplacerWidth: 0,
         width: '100%'
     };
+
+    static propTypes = scrollableContainerPropTypes;
 
     constructor(props: ScrollableContainerProps) {
         super(props);

@@ -8,7 +8,9 @@ export function renderIntoDocument<P, S>(element: React.ReactElement<P>): React.
 export function unmountComponent<P, S>(component: React.Component<P, S>): void {
     let element = ReactDOM.findDOMNode(component);
     let parent = element.parentElement;
-    ReactDOM.unmountComponentAtNode(parent);
+    if (parent) {
+        ReactDOM.unmountComponentAtNode(parent);
+    }
 }
 
 export function findRenderedComponentWithType<P, S, P2, S2, T extends React.Component<P2, S2>, C extends React.ComponentClass<P2>>(

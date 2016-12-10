@@ -60,7 +60,7 @@ export class GridExample extends React.Component<{}, CompState> {
     }
 
     mapHeader(data: HeaderCellModel[]): React.ReactNode {
-        return data.map((model: HeaderCellModel) => <HeaderCell width={model.width} caption={model.caption} />);
+        return data.map((model: HeaderCellModel, index: number) => <HeaderCell key={index} width={model.width} caption={model.caption} />);
     }
 
     mapRows(data: Data[]): React.ReactNode {
@@ -92,6 +92,7 @@ export class GridExample extends React.Component<{}, CompState> {
                 </button>
                 <Layout firstChildHeight="19px">
                     <ScrollableContainer id="container1"
+                        key="header"
                         contentWidth={2190}
                         contentHeight="auto"
                         overflowX="hidden" overflowY="hidden"
@@ -105,6 +106,7 @@ export class GridExample extends React.Component<{}, CompState> {
                     >
                     </ScrollableContainer>
                     <ScrollableContainer id="container2"
+                        key="body"
                         contentWidth={2190}
                         contentHeight="auto"
                         overflowX="auto" overflowY="auto"

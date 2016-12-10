@@ -25,21 +25,17 @@ export class ExamplesPage extends React.PureComponent<ExamplesPageProps, Example
         let selectedExample: Example = this.props.examples[this.state.selectedIndex];
         let Comp = selectedExample.componentClass;
         return (
-            <div className="examplesPage">
-                <aside className="navigationPanel">
-                    <ul>
-                        {this.props.examples.map((example: Example, index: number) => (
-                            <li key={index}>{example.name}</li>
-                        ))}
-                    </ul>
-                </aside>
-                <div className="example">
-                    <Layout>
-                        {selectedExample.name}
-                        <Comp />
-                    </Layout>
-                </div>
-            </div>
+            <Layout orientation="horizontal" firstChildHeight="200px">
+                <ul>
+                    {this.props.examples.map((example: Example, index: number) => (
+                        <li key={index}>{example.name}</li>
+                    ))}
+                </ul>
+                <Layout orientation="vertical">
+                    {selectedExample.name}
+                    <Comp />
+                </Layout>
+            </Layout>
         );
     }
 }

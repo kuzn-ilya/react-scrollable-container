@@ -8,6 +8,7 @@ export class Layout extends React.PureComponent<LayoutProps, void> {
 
     static defaultProps: LayoutProps = {
         height: '100%',
+        orientation: 'vertical',
         width: '100%'
     };
 
@@ -33,12 +34,13 @@ export class Layout extends React.PureComponent<LayoutProps, void> {
 
         return (
             <div className="layout-container" style={{
+                flexDirection: this.props.orientation === 'vertical' ? 'column' : 'row',
                 height: this.props.height,
                 width: this.props.width
             }}>
                 <div className="layout-first" style={{
-                    height: this.props.firstChildHeight,
-                    width: '100%'
+                    height: this.props.orientation === 'vertical' ? this.props.firstChildHeight : '100%',
+                    width: this.props.orientation === 'vertical' ? '100%' : this.props.firstChildHeight
                 }}>
                     {first}
                 </div>

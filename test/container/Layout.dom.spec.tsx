@@ -43,6 +43,7 @@ describe('DOM: Layout', () => {
     it('should have children with expected heights', () => {
         ReactDOM.render(
                 <Layout
+                    orientation="vertical"
                     width = "200px"
                     height = "200px"
                     firstChildHeight = "10px"

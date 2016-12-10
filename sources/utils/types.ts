@@ -15,3 +15,10 @@ export const sizePropType = PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number
 ]);
+
+export type Orientation = 'horizontal' | 'vertical';
+
+export const orientationPropType = PropTypes.oneOf([
+    'horizontal',
+    'vertical'
+]);

@@ -37,27 +37,22 @@ export interface ScrollableContainerProps {
 }
 
 export const scrollableContainerPropTypes = {
-    id: PropTypes.string,
-    contentWidth: sizePropType,
+    className: PropTypes.string,
     contentHeight: sizePropType,
+    contentWidth: sizePropType,
+    data: PropTypes.any,
+    dataRenderer: PropTypes.func,
+    height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    horzScrollBarReplacerHeight: PropTypes.number,
+    id: PropTypes.string,
+    onHorizontalScrollVisibilityChanged: PropTypes.func,
+    onScrollPosChanged: PropTypes.func,
+    onVerticalScrollVisibilityChanged: PropTypes.func,
     overflowX: overflowPropType.isRequired,
     overflowY: overflowPropType.isRequired,
-
     scrollLeft: PropTypes.number,
     scrollTop: PropTypes.number,
-
-    onScrollPosChanged: PropTypes.func,
-    onHorizontalScrollVisibilityChanged: PropTypes.func,
-    onVerticalScrollVisibilityChanged: PropTypes.func,
-
-    dataRenderer: PropTypes.func,
-    data: PropTypes.any,
-    width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-    height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-
-    horzScrollBarReplacerHeight: PropTypes.number,
+    style: PropTypes.any,
     vertScrollBarReplacerWidth: PropTypes.number,
-
-    className: PropTypes.string,
-    style: PropTypes.any
-}
+    width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired
+};

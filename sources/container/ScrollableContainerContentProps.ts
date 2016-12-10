@@ -11,8 +11,8 @@ export interface ScrollableContainerContentProps {
 }
 
 export const scrollableContainerContentPropTypes = {
-    contentWidth: sizePropType,
     contentHeight: sizePropType,
-    dataRenderer: PropTypes.func,
-    data: PropTypes.any
-}
+    contentWidth: sizePropType,
+    data: PropTypes.any,
+    dataRenderer: PropTypes.func
+};

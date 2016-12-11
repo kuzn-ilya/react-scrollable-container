@@ -30,7 +30,7 @@
 }
 
 .layout-vert-splitter:hover, .layout-horz-splitter:hover {
-  background-color: red;
+  background-color: gray;
 }
 
 .layout-vert-splitter {

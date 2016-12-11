@@ -15,6 +15,50 @@ export class Layout extends React.PureComponent<LayoutProps, void> {
 
     constructor(props: LayoutProps) {
         super(props);
+        this.handleSplitterMouseDown = this.handleSplitterMouseDown.bind(this);
+        this.handleMouseMove = this.handleMouseMove.bind(this);
+        this.handleMouseUp = this.handleMouseUp.bind(this);
+    }
+
+    dragging: boolean = false;
+    startX: number = 0;
+    startY: number = 0;
+    firstPane: HTMLDivElement | undefined = undefined;
+
+    handleSplitterMouseDown: React.EventHandler<React.MouseEvent<HTMLDivElement>> = (e) => {
+        this.dragging = true;
+        let left = this.firstPane ? this.firstPane.offsetWidth : 0;
+        let top = this.firstPane ? this.firstPane.offsetHeight : 0;
+        this.startX = e.pageX - left;
+        this.startY = e.pageY - top;
+        window.addEventListener('mousemove', this.handleMouseMove);
+    }
+
+    handleMouseMove: (e: MouseEvent) => void = (e) => {
+        if ('vertical' !== this.props.orientation) {
+            let pageX = e.pageX;
+            if (this.firstPane) {
+                this.firstPane.style.width = (pageX - this.startX) + 'px';
+            }
+        }
+        if ('horizontal' !== this.props.orientation) {
+            let pageY = e.pageY;
+            if (this.firstPane) {
+                this.firstPane.style.height = (pageY - this.startY) + 'px';
+            }
+        }
+    }
+
+    handleMouseUp: (e: MouseEvent) => void = (e) => {
+        if (true === this.dragging) {
+            console.log('mouseup', e);
+            this.dragging = false;
+            window.removeEventListener('mousemove', this.handleMouseMove);
+        }
+    }
+
+    componentDidMount() {
+        window.addEventListener('mouseup', this.handleMouseUp);
     }
 
     render(): JSX.Element | null {
@@ -40,7 +84,9 @@ export class Layout extends React.PureComponent<LayoutProps, void> {
             };
 
         let splitter = this.props.showSplitter ? (
-            <div className={this.props.orientation === 'vertical' ? 'layout-vert-splitter' : 'layout-horz-splitter'}></div>
+            <div className={this.props.orientation === 'vertical' ? 'layout-vert-splitter' : 'layout-horz-splitter'}
+                onMouseDown={this.handleSplitterMouseDown}>
+            </div>
         ) : null;
 
         return (
@@ -52,6 +98,7 @@ export class Layout extends React.PureComponent<LayoutProps, void> {
             >
                 <div className={this.props.orientation === 'vertical' ? 'layout-vert-first' : 'layout-horz-first'}
                     style={layoutFirstStyle}
+                    ref={(ref: HTMLDivElement) => this.firstPane = ref}
                 >
                     {first}
                     {splitter}

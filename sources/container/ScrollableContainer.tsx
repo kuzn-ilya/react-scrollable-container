@@ -1,10 +1,12 @@
 import * as React from 'react';
 import { addCssClassPrefix } from './../utils/addCssClassPrefix';
 import { classNames } from './../utils/classNames';
+import { WindowEvents } from './../utils/WindowEvents';
 
 import { ScrollableContainerProps, scrollableContainerPropTypes } from  './ScrollableContainerProps';
 import { ScrollableContainerState } from  './ScrollableContainerState';
 import { ScrollableContainerContent } from './ScrollableContainerContent';
+
 
 import './container.css';
 
@@ -42,7 +44,7 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
         this.updateScrollPositions();
 
         this.ref.addEventListener('scroll', this.handleScroll);
-        window.addEventListener('resize', this.handleWindowResize);
+        WindowEvents.addResizeEventListener(this.handleWindowResize);
     }
 
     componentDidUpdate(): void {
@@ -51,7 +53,7 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
 
     componentWillUnmount(): void {
         this.ref.removeEventListener('scroll', this.handleScroll);
-        window.removeEventListener('resize', this.handleWindowResize);
+        WindowEvents.removeResizeEventListener(this.handleWindowResize);
     }
 
     private ref: HTMLDivElement;

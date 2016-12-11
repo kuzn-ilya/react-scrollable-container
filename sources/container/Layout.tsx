@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { LayoutProps } from  './LayoutProps';
+import { WindowEvents } from  '../utils/WindowEvents';
 
 import './layout.css';
 
@@ -31,7 +32,7 @@ export class Layout extends React.PureComponent<LayoutProps, void> {
         let top = this.firstPane ? this.firstPane.offsetHeight : 0;
         this.startX = e.pageX - left;
         this.startY = e.pageY - top;
-        window.addEventListener('mousemove', this.handleMouseMove);
+        WindowEvents.addMouseMoveEventListener(this.handleMouseMove);
     }
 
     handleMouseMove: (e: MouseEvent) => void = (e) => {
@@ -48,12 +49,16 @@ export class Layout extends React.PureComponent<LayoutProps, void> {
         if (true === this.dragging) {
             console.log('mouseup', e);
             this.dragging = false;
-            window.removeEventListener('mousemove', this.handleMouseMove);
+            WindowEvents.removeMouseMoveEventListener(this.handleMouseMove);
         }
     }
 
     componentDidMount() {
-        window.addEventListener('mouseup', this.handleMouseUp);
+        WindowEvents.addMouseMoveUpEventListener(this.handleMouseUp);
+    }
+
+    componentWillUnmount() {
+        WindowEvents.removeMouseUpEventListener(this.handleMouseUp);
     }
 
     render(): JSX.Element | null {

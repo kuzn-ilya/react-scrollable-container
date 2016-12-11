@@ -35,16 +35,11 @@ export class Layout extends React.PureComponent<LayoutProps, void> {
     }
 
     handleMouseMove: (e: MouseEvent) => void = (e) => {
-        if ('vertical' !== this.props.orientation) {
-            let pageX = e.pageX;
-            if (this.firstPane) {
-                this.firstPane.style.width = (pageX - this.startX) + 'px';
-            }
-        }
-        if ('horizontal' !== this.props.orientation) {
-            let pageY = e.pageY;
-            if (this.firstPane) {
-                this.firstPane.style.height = (pageY - this.startY) + 'px';
+        if (this.firstPane) {
+            if (this.props.orientation === 'vertical') {
+                this.firstPane.style.height = (e.pageY - this.startY) + 'px';
+            } else if (this.props.orientation === 'horizontal') {
+                this.firstPane.style.width = (e.pageX - this.startX) + 'px';
             }
         }
     }

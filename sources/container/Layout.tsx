@@ -9,6 +9,7 @@ export class Layout extends React.PureComponent<LayoutProps, void> {
     static defaultProps: LayoutProps = {
         height: '100%',
         orientation: 'vertical',
+        showSplitter: false,
         width: '100%'
     };
 
@@ -32,22 +33,30 @@ export class Layout extends React.PureComponent<LayoutProps, void> {
             }
         });
 
+        let layoutFirstStyle = this.props.orientation === 'vertical' ? {
+                height: this.props.firstChildHeight
+            } : {
+                width: this.props.firstChildHeight
+            };
+
+        let splitter = this.props.showSplitter ? (
+            <div className={this.props.orientation === 'vertical' ? 'layout-vert-splitter' : 'layout-horz-splitter'}></div>
+        ) : null;
+
         return (
-            <div className="layout-container" style={{
-                flexDirection: this.props.orientation === 'vertical' ? 'column' : 'row',
-                height: this.props.height,
-                width: this.props.width
-            }}>
-                <div className="layout-first" style={{
-                    height: this.props.orientation === 'vertical' ? this.props.firstChildHeight : '100%',
-                    width: this.props.orientation === 'vertical' ? '100%' : this.props.firstChildHeight
-                }}>
+            <div className={this.props.orientation === 'vertical' ? 'layout-vert-container' : 'layout-horz-container'}
+                style={{
+                    height: this.props.height,
+                    width: this.props.width
+                }}
+            >
+                <div className={this.props.orientation === 'vertical' ? 'layout-vert-first' : 'layout-horz-first'}
+                    style={layoutFirstStyle}
+                >
                     {first}
+                    {splitter}
                 </div>
-                <div className="layout-second" style={{
-                    height: '100%',
-                    width: '100%'
-                }}>
+                <div className="layout-second" >
                     {second}
                 </div>
             </div>

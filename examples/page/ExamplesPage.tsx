@@ -25,13 +25,13 @@ export class ExamplesPage extends React.PureComponent<ExamplesPageProps, Example
         let selectedExample: Example = this.props.examples[this.state.selectedIndex];
         let Comp = selectedExample.componentClass;
         return (
-            <Layout orientation="horizontal" firstChildHeight="200px">
+            <Layout orientation="horizontal" firstChildHeight="200px" showSplitter>
                 <ul>
                     {this.props.examples.map((example: Example, index: number) => (
                         <li key={index}>{example.name}</li>
                     ))}
                 </ul>
-                <Layout orientation="vertical">
+                <Layout orientation="vertical" showSplitter>
                     {selectedExample.name}
                     <Comp />
                 </Layout>

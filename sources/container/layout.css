@@ -1,12 +1,50 @@
-.layout-container {
+.layout-vert-container, .layout-horz-container {
   display: flex;
 }
 
-.layout-first {
+.layout-vert-container {
+  flex-direction: column;
+}
+
+.layout-vert-first, .layout-horz-first, .layout-second {
   overflow: hidden;
+  position: relative;
+}
+
+.layout-vert-first {
+  width: 100%;
+}
+
+.layout-horz-first {
+  height: 100%;
 }
 
 .layout-second {
   flex-grow: 1;
-  overflow: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+.layout-vert-splitter, .layout-horz-splitter {
+  position: absolute;
+}
+
+.layout-vert-splitter:hover, .layout-horz-splitter:hover {
+  background-color: red;
+}
+
+.layout-vert-splitter {
+  width: 100%; 
+  height: 6px;
+  bottom: 0px;
+  left: 0px;
+  cursor: row-resize;
+}
+
+.layout-horz-splitter {
+  height: 100%; 
+  width: 6px;
+  right: 0px;
+  top: 0px;
+  cursor: col-resize;
 }

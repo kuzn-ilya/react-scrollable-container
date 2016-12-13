@@ -40,10 +40,9 @@ export class LayoutPane extends React.PureComponent<LayoutPaneProps, void> {
     }
 
     handleMouseUp: (e: MouseEvent) => void = (e) => {
-        if (true === this.dragging) {
+        if (this.dragging) {
             this.dragging = false;
             WindowEvents.removeMouseMoveEventListener(this.handleMouseMove);
-            this.updatePane(e);
         }
     }
 

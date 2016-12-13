@@ -75,9 +75,13 @@ export class LayoutPane extends React.PureComponent<LayoutPaneProps, void> {
             };
         } else {
             className = this.props.width === '100%' ? 'layout-second' : 'layout-horz-first';
-            layoutPaneStyle = {
-                width: this.props.width
-            };
+            if (this.props.width !== '100%') {
+                layoutPaneStyle = {
+                    width: this.props.width
+                };
+            } else {
+                layoutPaneStyle = {};
+            }
         }
 
         let splitter = this.props.showSplitter ? (

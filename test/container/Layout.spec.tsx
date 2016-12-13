@@ -13,7 +13,7 @@ chai.use(chaiSpies);
 describe('Layout', () => {
 
     it('should be defined and have div element in the root', () => {
-        let container = renderIntoDocument(<Layout />);
+        let container = renderIntoDocument(<Layout orientation="horizontal" />);
         let domElement = ReactDOM.findDOMNode(container);
 
         expect(domElement).to.exist;

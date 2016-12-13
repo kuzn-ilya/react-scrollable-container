@@ -28,21 +28,16 @@ export class Layout extends React.PureComponent<LayoutProps, void> {
 
     handleSplitterMouseDown: React.EventHandler<React.MouseEvent<HTMLDivElement>> = (e) => {
         this.dragging = true;
-        let left = this.firstPane ? this.firstPane.offsetWidth : 0;
-        let top = this.firstPane ? this.firstPane.offsetHeight : 0;
-        this.startX = e.pageX - left;
-        this.startY = e.pageY - top;
+        let width = this.firstPane ? this.firstPane.offsetWidth : 0;
+        let height = this.firstPane ? this.firstPane.offsetHeight : 0;
+        this.startX = e.pageX - width;
+        this.startY = e.pageY - height;
+        console.log(e.pageY - this.startY, e.pageX - this.startX, this.firstPane!.style.height, this.firstPane!.style.width);
         WindowEvents.addMouseMoveEventListener(this.handleMouseMove);
     }
 
     handleMouseMove: (e: MouseEvent) => void = (e) => {
-        if (this.firstPane) {
-            if (this.props.orientation === 'vertical') {
-                this.firstPane.style.height = (e.pageY - this.startY) + 'px';
-            } else if (this.props.orientation === 'horizontal') {
-                this.firstPane.style.width = (e.pageX - this.startX) + 'px';
-            }
-        }
+        this.updatePane(e);
     }
 
     handleMouseUp: (e: MouseEvent) => void = (e) => {
@@ -50,6 +45,20 @@ export class Layout extends React.PureComponent<LayoutProps, void> {
             console.log('mouseup', e);
             this.dragging = false;
             WindowEvents.removeMouseMoveEventListener(this.handleMouseMove);
+            this.updatePane(e);
+        }
+    }
+
+    updatePane(e: MouseEvent) {
+        if (this.firstPane) {
+            if (this.props.orientation === 'vertical') {
+                console.log(e.pageY - this.startY);
+                this.firstPane.style.height = (e.pageY - this.startY) + 'px';
+            } else if (this.props.orientation === 'horizontal') {
+                console.log(e.pageX - this.startX);
+                this.firstPane.style.width = (e.pageX - this.startX) + 'px';
+            }
+            console.log(this.firstPane.style.height, this.firstPane.style.width);
         }
     }
 

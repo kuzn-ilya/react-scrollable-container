@@ -32,7 +32,6 @@ export class Layout extends React.PureComponent<LayoutProps, void> {
         let height = this.firstPane ? this.firstPane.offsetHeight : 0;
         this.startX = e.pageX - width;
         this.startY = e.pageY - height;
-        console.log(e.pageY - this.startY, e.pageX - this.startX, this.firstPane!.style.height, this.firstPane!.style.width);
         WindowEvents.addMouseMoveEventListener(this.handleMouseMove);
     }
 
@@ -42,7 +41,6 @@ export class Layout extends React.PureComponent<LayoutProps, void> {
 
     handleMouseUp: (e: MouseEvent) => void = (e) => {
         if (true === this.dragging) {
-            console.log('mouseup', e);
             this.dragging = false;
             WindowEvents.removeMouseMoveEventListener(this.handleMouseMove);
             this.updatePane(e);
@@ -52,13 +50,10 @@ export class Layout extends React.PureComponent<LayoutProps, void> {
     updatePane(e: MouseEvent) {
         if (this.firstPane) {
             if (this.props.orientation === 'vertical') {
-                console.log(e.pageY - this.startY);
                 this.firstPane.style.height = (e.pageY - this.startY) + 'px';
             } else if (this.props.orientation === 'horizontal') {
-                console.log(e.pageX - this.startX);
                 this.firstPane.style.width = (e.pageX - this.startX) + 'px';
             }
-            console.log(this.firstPane.style.height, this.firstPane.style.width);
         }
     }
 

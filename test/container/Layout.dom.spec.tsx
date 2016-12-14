@@ -4,6 +4,7 @@ import * as chai from 'chai';
 import * as chaiSpies from 'chai-spies';
 
 import { Layout } from '../../sources/container/Layout';
+import { LayoutPane } from '../../sources/container/LayoutPane';
 
 const expect = chai.expect;
 chai.use(chaiSpies);
@@ -46,14 +47,13 @@ describe('DOM: Layout', () => {
                     orientation="vertical"
                     width = "200px"
                     height = "200px"
-                    firstChildHeight = "10px"
                 >
-                    <div>
+                    <LayoutPane orientation="vertical" height="10px">
                         <div style= {{display: 'block', height: '100%', width: '100%'}}/>
-                    </div>
-                    <div>
+                    </LayoutPane>
+                    <LayoutPane orientation="vertical" height="100%">
                         <div style= {{display: 'block', height: '100%', width: '100%'}}/>
-                    </div>
+                    </LayoutPane>
                 </Layout>,
             div);
 

@@ -119,7 +119,6 @@ export class GridExample extends React.Component<{}, CompState> {
                                         contentHeight="auto"
                                         overflowX="hidden" overflowY="hidden"
                                         onScrollPosChanged={this.handleHorizontalScrollPosChanged}
-                                        scrollTop={this.state.y}
                                         data={this.state.leftHeaderCellModels}
                                         dataRenderer={this.mapHeader}
                                         width="100%"

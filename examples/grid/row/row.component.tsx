@@ -8,7 +8,7 @@ export class Row extends React.Component<RowProps, void> {
         return (
             <div key={this.props.model.id}>
                 <Cell width={150} value={this.props.model.lastName} align="left"/>
-                <Cell width={250} value={this.props.model.email} align="left"/>
+                <Cell width={150} value={this.props.model.email} align="left"/>
                 <Cell width={80} value={this.props.model.gender} align="center"/>
                 <Cell width={150} value={this.props.model.ipAddress} align="left"/>
                 <Cell width={200} value={this.props.model.creditCardType} align="left"/>

@@ -5,16 +5,20 @@ import { HeaderCellProps } from './header-cell.props';
 export class HeaderCell extends React.Component<HeaderCellProps, void> {
     render(): JSX.Element {
         let style = {
-            borderBottom: 'solid 1px grey',
-            borderRight: 'solid 1px grey',
+            borderBottom: 'solid 1px #d6d6d6',
+            borderRight: 'solid 1px #d6d6d6',
+            borderTop: 'solid 1px #d6d6d6',
             display: 'inline-block',
+            overflow: 'hidden',
             paddingLeft: '5px',
             paddingRight: '5px',
             textAlign: 'center',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
             width: this.props.width.toString() + 'px'
         };
         return (
-            <span style={style}>{this.props.caption}</span>
+            <div style={style}>{this.props.caption}</div>
         );
     }
 }

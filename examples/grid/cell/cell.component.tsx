@@ -5,16 +5,17 @@ import { CellProps } from './cell.props';
 export class Cell extends React.Component<CellProps, void> {
     render(): JSX.Element {
         let style = {
-            borderBottom: 'solid 1px grey',
-            borderRight: 'solid 1px grey',
+            borderBottom: 'solid 1px #d6d6d6',
+            borderRight: 'solid 1px #d6d6d6',
             display: 'inline-block',
             paddingLeft: '5px',
             paddingRight: '5px',
             textAlign: this.props.align,
+            textOverflow: 'ellipsis',
             width: this.props.width.toString() + 'px'
         };
         return (
-            <span style={style}>{this.props.value}</span>
+            <div style={style}>{this.props.value}</div>
         );
     }
 }

@@ -35,7 +35,7 @@ export class GridExample extends React.Component<{}, CompState> {
             ],
             rightHeaderCellModels: [
                 { caption: 'lastName', width: 150 },
-                { caption: 'email', width: 250 },
+                { caption: 'email', width: 150 },
                 { caption: 'gender', width: 80 },
                 { caption: 'ipAddress', width: 150 },
                 { caption: 'creditCardType', width: 200 },
@@ -112,7 +112,7 @@ export class GridExample extends React.Component<{}, CompState> {
                     <Layout orientation="horizontal">
                         <LayoutPane orientation="horizontal" width="210px" showSplitter>
                             <Layout orientation="vertical">
-                                <LayoutPane orientation="vertical" height="19px">
+                                <LayoutPane orientation="vertical" height="20px">
                                     <ScrollableContainer
                                         key="header"
                                         contentWidth={210}
@@ -144,7 +144,7 @@ export class GridExample extends React.Component<{}, CompState> {
                         </LayoutPane>
                         <LayoutPane orientation="horizontal" width="100%">
                             <Layout orientation="vertical">
-                                <LayoutPane orientation="vertical" height="19px">
+                                <LayoutPane orientation="vertical" height="20px">
                                     <ScrollableContainer id="container1"
                                         key="header"
                                         contentWidth={2010}

@@ -75,21 +75,53 @@ describe('DOM: Layout', () => {
         expect(first.children).to.exist;
         expect(first.children.length).to.be.equal(1);
 
-        // let firstDiv = first.children[0] as HTMLElement;
-        // expect(firstDiv).to.exist;
-
-        // expect(firstDiv.offsetHeight).to.be.equal(10);
-
         let second = container.children[1] as HTMLElement;
         expect(second).to.exist;
         expect(second.offsetHeight).to.be.equal(190);
 
         expect(second.children).to.exist;
         expect(second.children.length).to.be.equal(1);
+    });
 
-        // let secondDiv = second.children[0] as HTMLElement;
-        // expect(secondDiv).to.exist;
+    it('should have children with expected widths', () => {
+        ReactDOM.render(
+                <Layout
+                    orientation="horizontal"
+                    width = "200px"
+                    height = "200px"
+                >
+                    <LayoutPane orientation="horizontal" width="10px">
+                        <div style= {{display: 'block', height: '100%', width: '100%'}}/>
+                    </LayoutPane>
+                    <LayoutPane orientation="horizontal" width="100%">
+                        <div style= {{display: 'block', height: '100%', width: '100%'}}/>
+                    </LayoutPane>
+                </Layout>,
+            div);
 
-        // expect(secondDiv.offsetHeight).to.be.equal(190);
+        expect(div.children).to.exist;
+        expect(div.children.length).to.be.equal(1);
+        let container = div.children[0] as HTMLElement;
+        expect(container).to.exist;
+
+        expect(container.offsetWidth).to.be.equal(200);
+        expect(container.offsetHeight).to.be.equal(200);
+
+        expect(container.children).to.exist;
+        expect(container.children.length).to.be.equal(2);
+
+        let first = container.children[0] as HTMLElement;
+        expect(first).to.exist;
+        expect(first.offsetWidth).to.be.equal(10);
+
+        expect(first.children).to.exist;
+        expect(first.children.length).to.be.equal(1);
+
+        let second = container.children[1] as HTMLElement;
+        expect(second).to.exist;
+        expect(second.offsetWidth).to.be.equal(190);
+
+        expect(second.children).to.exist;
+        expect(second.children.length).to.be.equal(1);
     });
 });

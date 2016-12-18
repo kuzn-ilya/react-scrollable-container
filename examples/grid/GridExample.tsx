@@ -6,7 +6,7 @@ import { Row } from './row/row.component';
 import { RowLeft } from './row/row-left.component';
 import { HeaderCell } from './header-cell/header-cell.component';
 import { ScrollableContainer } from '../../sources/container/ScrollableContainer';
-import { Layout } from '../../sources/container/Layout';
+//import { Layout } from '../../sources/container/Layout';
 import { LayoutPane } from '../../sources/container/LayoutPane';
 
 interface HeaderCellModel {
@@ -96,7 +96,7 @@ export class GridExample extends React.Component<{}, CompState> {
 
     render(): JSX.Element {
         return (
-            <Layout orientation="vertical">
+            <LayoutPane width="100%" height="100%" orientation="vertical">
                 <LayoutPane>
                     <button
                         onClick={(): void => this.setState({
@@ -105,79 +105,73 @@ export class GridExample extends React.Component<{}, CompState> {
                         Remove
                     </button>
                 </LayoutPane>
-                <LayoutPane height="100%">
-                    <Layout orientation="horizontal">
-                        <LayoutPane width="210px" showSplitter>
-                            <Layout orientation="vertical">
-                                <LayoutPane height="20px">
-                                    <ScrollableContainer
-                                        key="header"
-                                        contentWidth={210}
-                                        contentHeight="auto"
-                                        overflowX="hidden" overflowY="hidden"
-                                        onScrollPosChanged={this.handleHorizontalScrollPosChanged}
-                                        data={this.state.leftHeaderCellModels}
-                                        dataRenderer={this.mapHeader}
-                                        width="100%"
-                                        height="100%"
-                                    />
-                                </LayoutPane>
-                                <LayoutPane height="100%">
-                                    <ScrollableContainer
-                                        key="body"
-                                        contentWidth={210}
-                                        contentHeight="auto"
-                                        horzScrollBarReplacerHeight={this.state.colsThumbHeight}
-                                        overflowX="hidden" overflowY="hidden"
-                                        onScrollPosChanged={this.handleHorizontalScrollPosChanged}
-                                        onVerticalScrollVisibilityChanged={this.handleVerticallScrollVisibilityChanged}
-                                        scrollTop={this.state.y}
-                                        data={this.state.rowModels}
-                                        dataRenderer={this.mapLeftRows}
-                                        width="100%"
-                                        height="100%"
-                                    />
-                                </LayoutPane>
-                            </Layout>
+                <LayoutPane height="100%" orientation="horizontal">
+                    <LayoutPane width="210px" showSplitter orientation="vertical">
+                        <LayoutPane height="20px">
+                            <ScrollableContainer
+                                key="header"
+                                contentWidth={210}
+                                contentHeight="auto"
+                                overflowX="hidden" overflowY="hidden"
+                                onScrollPosChanged={this.handleHorizontalScrollPosChanged}
+                                data={this.state.leftHeaderCellModels}
+                                dataRenderer={this.mapHeader}
+                                width="100%"
+                                height="100%"
+                            />
                         </LayoutPane>
-                        <LayoutPane width="100%">
-                            <Layout orientation="vertical">
-                                <LayoutPane height="20px">
-                                    <ScrollableContainer id="container1"
-                                        key="header"
-                                        contentWidth={2010}
-                                        contentHeight="auto"
-                                        overflowX="hidden" overflowY="hidden"
-                                        onScrollPosChanged={this.handleHorizontalScrollPosChanged}
-                                        scrollLeft={this.state.x}
-                                        data={this.state.rightHeaderCellModels}
-                                        dataRenderer={this.mapHeader}
-                                        width="100%"
-                                        height="100%"
-                                        vertScrollBarReplacerWidth={this.state.rowsThumbWidth}
-                                    />
-                                </LayoutPane>
-                                <LayoutPane height="100%">
-                                    <ScrollableContainer id="container2"
-                                        key="body"
-                                        contentWidth={2010}
-                                        contentHeight="auto"
-                                        overflowX="auto" overflowY="auto"
-                                        onScrollPosChanged={this.handleHorizontalScrollPosChanged}
-                                        onVerticalScrollVisibilityChanged={this.handleVerticallScrollVisibilityChanged}
-                                        onHorizontalScrollVisibilityChanged={this.handleHorizontalScrollVisibilityChanged}
-                                        scrollLeft={this.state.x}
-                                        data={this.state.rowModels}
-                                        dataRenderer={this.mapRightRows}
-                                        width="100%"
-                                        height="100%"
-                                    />
-                                </LayoutPane>
-                            </Layout>
+                        <LayoutPane height="100%">
+                            <ScrollableContainer
+                                key="body"
+                                contentWidth={210}
+                                contentHeight="auto"
+                                horzScrollBarReplacerHeight={this.state.colsThumbHeight}
+                                overflowX="hidden" overflowY="hidden"
+                                onScrollPosChanged={this.handleHorizontalScrollPosChanged}
+                                onVerticalScrollVisibilityChanged={this.handleVerticallScrollVisibilityChanged}
+                                scrollTop={this.state.y}
+                                data={this.state.rowModels}
+                                dataRenderer={this.mapLeftRows}
+                                width="100%"
+                                height="100%"
+                            />
                         </LayoutPane>
-                    </Layout>
+                    </LayoutPane>
+                    <LayoutPane width="100%" orientation="vertical">
+                        <LayoutPane height="20px">
+                            <ScrollableContainer id="container1"
+                                key="header"
+                                contentWidth={2010}
+                                contentHeight="auto"
+                                overflowX="hidden" overflowY="hidden"
+                                onScrollPosChanged={this.handleHorizontalScrollPosChanged}
+                                scrollLeft={this.state.x}
+                                data={this.state.rightHeaderCellModels}
+                                dataRenderer={this.mapHeader}
+                                width="100%"
+                                height="100%"
+                                vertScrollBarReplacerWidth={this.state.rowsThumbWidth}
+                            />
+                        </LayoutPane>
+                        <LayoutPane height="100%">
+                            <ScrollableContainer id="container2"
+                                key="body"
+                                contentWidth={2010}
+                                contentHeight="auto"
+                                overflowX="auto" overflowY="auto"
+                                onScrollPosChanged={this.handleHorizontalScrollPosChanged}
+                                onVerticalScrollVisibilityChanged={this.handleVerticallScrollVisibilityChanged}
+                                onHorizontalScrollVisibilityChanged={this.handleHorizontalScrollVisibilityChanged}
+                                scrollLeft={this.state.x}
+                                data={this.state.rowModels}
+                                dataRenderer={this.mapRightRows}
+                                width="100%"
+                                height="100%"
+                            />
+                        </LayoutPane>
+                    </LayoutPane>
                 </LayoutPane>
-            </Layout>
+            </LayoutPane>
         );
     }
 }

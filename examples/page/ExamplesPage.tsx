@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import './styles.css';
-import { Layout } from '../../sources/container/Layout';
+//import { Layout } from '../../sources/container/Layout';
 import { LayoutPane } from '../../sources/container/LayoutPane';
 
 import { Example } from './Example';
@@ -26,7 +26,7 @@ export class ExamplesPage extends React.PureComponent<ExamplesPageProps, Example
         let selectedExample: Example = this.props.examples[this.state.selectedIndex];
         let Comp = selectedExample.componentClass;
         return (
-            <Layout orientation="horizontal">
+            <LayoutPane orientation="horizontal">
                 <LayoutPane width="200px" showSplitter>
                     <ul>
                         {this.props.examples.map((example: Example, index: number) => (
@@ -34,17 +34,15 @@ export class ExamplesPage extends React.PureComponent<ExamplesPageProps, Example
                         ))}
                     </ul>
                 </LayoutPane>
-                <LayoutPane width="100%">
-                    <Layout orientation="vertical">
-                        <LayoutPane showSplitter>
-                            {selectedExample.name}
-                        </LayoutPane>
-                        <LayoutPane height="100%" >
-                            <Comp />
-                        </LayoutPane>
-                    </Layout>
+                <LayoutPane width="100%" orientation="vertical">
+                    <LayoutPane showSplitter>
+                        {selectedExample.name}
+                    </LayoutPane>
+                    <LayoutPane height="100%" >
+                        <Comp />
+                    </LayoutPane>
                 </LayoutPane>
-            </Layout>
+            </LayoutPane>
         );
     }
 }

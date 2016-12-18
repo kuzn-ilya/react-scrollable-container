@@ -10,17 +10,26 @@ export class LayoutPane extends React.PureComponent<LayoutPaneProps, void> {
 
     static defaultProps: LayoutPaneProps = {
         height: undefined,
+        orientation: undefined,
         showSplitter: false,
         width: undefined
     };
 
     static contextTypes = layoutChildContextTypes;
+    static childContextTypes = layoutChildContextTypes;
 
     constructor(props: LayoutPaneProps, context: LayoutChildContext) {
         super(props, context);
         this.handleSplitterMouseDown = this.handleSplitterMouseDown.bind(this);
         this.handleMouseMove = this.handleMouseMove.bind(this);
         this.handleMouseUp = this.handleMouseUp.bind(this);
+    }
+
+    getChildContext(): LayoutChildContext {
+        return {
+            orientation: this.props.orientation ? this.props.orientation : this.context.orientation,
+            parent: this
+        };
     }
 
     dragging: boolean = false;
@@ -91,14 +100,27 @@ export class LayoutPane extends React.PureComponent<LayoutPaneProps, void> {
             </div>
         ) : null;
 
-        return (
+        let child = this.props.orientation ? (
+            <div className={this.props.orientation === 'vertical' ? 'layout-vert-container' : 'layout-horz-container'}
+                style={{
+                    height: '100%',
+                    width: '100%'
+                }}
+            >
+                {this.props.children}
+            </div>
+        ) : null;
+
+        let component = this.props.orientation && !this.context.parent ? child : (
             <div className={className}
                 style={layoutPaneStyle}
                 ref={(ref: HTMLDivElement) => this.ref = ref}
             >
-                {this.props.children}
+                {this.props.orientation ? child : this.props.children}
                 {splitter}
             </div>
         );
+
+        return component;
     }
 }

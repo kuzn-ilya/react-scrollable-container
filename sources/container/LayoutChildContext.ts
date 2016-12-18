@@ -1,10 +1,10 @@
 import { Orientation } from './../utils/types';
 import { PropTypes } from 'react';
-import { LayoutPane } from './LayoutPane';
+import { Layout } from './Layout';
 
 export interface LayoutChildContext {
     orientation?: Orientation;
-    parent?: LayoutPane;
+    parent?: Layout;
 }
 
 export const layoutChildContextTypes = {

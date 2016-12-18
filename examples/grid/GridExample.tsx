@@ -6,8 +6,7 @@ import { Row } from './row/row.component';
 import { RowLeft } from './row/row-left.component';
 import { HeaderCell } from './header-cell/header-cell.component';
 import { ScrollableContainer } from '../../sources/container/ScrollableContainer';
-//import { Layout } from '../../sources/container/Layout';
-import { LayoutPane } from '../../sources/container/LayoutPane';
+import { Layout } from '../../sources/container/Layout';
 
 interface HeaderCellModel {
     width: number;
@@ -96,18 +95,18 @@ export class GridExample extends React.Component<{}, CompState> {
 
     render(): JSX.Element {
         return (
-            <LayoutPane width="100%" height="100%" orientation="vertical">
-                <LayoutPane>
+            <Layout width="100%" height="100%" orientation="vertical">
+                <Layout>
                     <button
                         onClick={(): void => this.setState({
                             rowModels: this.state.rowModels!.slice(0, this.state.rowModels!.length - 1)
                         })}>
                         Remove
                     </button>
-                </LayoutPane>
-                <LayoutPane height="100%" orientation="horizontal">
-                    <LayoutPane width="210px" showSplitter orientation="vertical">
-                        <LayoutPane height="20px">
+                </Layout>
+                <Layout height="100%" orientation="horizontal">
+                    <Layout width="210px" showSplitter orientation="vertical">
+                        <Layout height="20px">
                             <ScrollableContainer
                                 key="header"
                                 contentWidth={210}
@@ -119,8 +118,8 @@ export class GridExample extends React.Component<{}, CompState> {
                                 width="100%"
                                 height="100%"
                             />
-                        </LayoutPane>
-                        <LayoutPane height="100%">
+                        </Layout>
+                        <Layout height="100%">
                             <ScrollableContainer
                                 key="body"
                                 contentWidth={210}
@@ -135,10 +134,10 @@ export class GridExample extends React.Component<{}, CompState> {
                                 width="100%"
                                 height="100%"
                             />
-                        </LayoutPane>
-                    </LayoutPane>
-                    <LayoutPane width="100%" orientation="vertical">
-                        <LayoutPane height="20px">
+                        </Layout>
+                    </Layout>
+                    <Layout width="100%" orientation="vertical">
+                        <Layout height="20px">
                             <ScrollableContainer id="container1"
                                 key="header"
                                 contentWidth={2010}
@@ -152,8 +151,8 @@ export class GridExample extends React.Component<{}, CompState> {
                                 height="100%"
                                 vertScrollBarReplacerWidth={this.state.rowsThumbWidth}
                             />
-                        </LayoutPane>
-                        <LayoutPane height="100%">
+                        </Layout>
+                        <Layout height="100%">
                             <ScrollableContainer id="container2"
                                 key="body"
                                 contentWidth={2010}
@@ -163,15 +162,16 @@ export class GridExample extends React.Component<{}, CompState> {
                                 onVerticalScrollVisibilityChanged={this.handleVerticallScrollVisibilityChanged}
                                 onHorizontalScrollVisibilityChanged={this.handleHorizontalScrollVisibilityChanged}
                                 scrollLeft={this.state.x}
+                                scrollTop={this.state.y}
                                 data={this.state.rowModels}
                                 dataRenderer={this.mapRightRows}
                                 width="100%"
                                 height="100%"
                             />
-                        </LayoutPane>
-                    </LayoutPane>
-                </LayoutPane>
-            </LayoutPane>
+                        </Layout>
+                    </Layout>
+                </Layout>
+            </Layout>
         );
     }
 }

@@ -1,8 +1,7 @@
 import * as React from 'react';
 
 import './styles.css';
-//import { Layout } from '../../sources/container/Layout';
-import { LayoutPane } from '../../sources/container/LayoutPane';
+import { Layout } from '../../sources/container/Layout';
 
 import { Example } from './Example';
 
@@ -26,23 +25,23 @@ export class ExamplesPage extends React.PureComponent<ExamplesPageProps, Example
         let selectedExample: Example = this.props.examples[this.state.selectedIndex];
         let Comp = selectedExample.componentClass;
         return (
-            <LayoutPane orientation="horizontal">
-                <LayoutPane width="200px" showSplitter>
+            <Layout orientation="horizontal">
+                <Layout width="200px" showSplitter>
                     <ul>
                         {this.props.examples.map((example: Example, index: number) => (
                             <li key={index}>{example.name}</li>
                         ))}
                     </ul>
-                </LayoutPane>
-                <LayoutPane width="100%" orientation="vertical">
-                    <LayoutPane showSplitter>
+                </Layout>
+                <Layout width="100%" orientation="vertical">
+                    <Layout showSplitter>
                         {selectedExample.name}
-                    </LayoutPane>
-                    <LayoutPane height="100%" >
+                    </Layout>
+                    <Layout height="100%" >
                         <Comp />
-                    </LayoutPane>
-                </LayoutPane>
-            </LayoutPane>
+                    </Layout>
+                </Layout>
+            </Layout>
         );
     }
 }

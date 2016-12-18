@@ -4,7 +4,6 @@ import * as chai from 'chai';
 import * as chaiSpies from 'chai-spies';
 
 import { Layout } from '../../sources/container/Layout';
-import { LayoutPane } from '../../sources/container/LayoutPane';
 
 const expect = chai.expect;
 chai.use(chaiSpies);
@@ -48,12 +47,12 @@ describe('DOM: Layout', () => {
                     width = "200px"
                     height = "200px"
                 >
-                    <LayoutPane height="10px">
+                    <Layout height="10px">
                         <div style= {{display: 'block', height: '100%', width: '100%'}}/>
-                    </LayoutPane>
-                    <LayoutPane height="100%">
+                    </Layout>
+                    <Layout height="100%">
                         <div style= {{display: 'block', height: '100%', width: '100%'}}/>
-                    </LayoutPane>
+                    </Layout>
                 </Layout>,
             div);
 
@@ -90,12 +89,12 @@ describe('DOM: Layout', () => {
                     width = "200px"
                     height = "200px"
                 >
-                    <LayoutPane width="10px">
+                    <Layout width="10px">
                         <div style= {{display: 'block', height: '100%', width: '100%'}}/>
-                    </LayoutPane>
-                    <LayoutPane width="100%">
+                    </Layout>
+                    <Layout width="100%">
                         <div style= {{display: 'block', height: '100%', width: '100%'}}/>
-                    </LayoutPane>
+                    </Layout>
                 </Layout>,
             div);
 

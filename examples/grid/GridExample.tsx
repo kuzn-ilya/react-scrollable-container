@@ -15,13 +15,13 @@ interface HeaderCellModel {
 }
 
 interface CompState {
-    x: number;
-    y: number;
-    leftHeaderCellModels: HeaderCellModel[];
-    rightHeaderCellModels: HeaderCellModel[];
-    rowModels: Data[];
-    rowsThumbWidth: number;
-    colsThumbHeight: number;
+    x?: number;
+    y?: number;
+    leftHeaderCellModels?: HeaderCellModel[];
+    rightHeaderCellModels?: HeaderCellModel[];
+    rowModels?: Data[];
+    rowsThumbWidth?: number;
+    colsThumbHeight?: number;
 }
 
 export class GridExample extends React.Component<{}, CompState> {
@@ -60,11 +60,6 @@ export class GridExample extends React.Component<{}, CompState> {
     handleHorizontalScrollPosChanged: (x: number, y: number) => void = (x, y) => {
         if (this.state.x !== x || this.state.y !== y) {
             this.setState({
-                colsThumbHeight: this.state.colsThumbHeight,
-                leftHeaderCellModels: this.state.leftHeaderCellModels,
-                rightHeaderCellModels: this.state.rightHeaderCellModels,
-                rowModels: this.state.rowModels,
-                rowsThumbWidth: this.state.rowsThumbWidth,
                 x,
                 y
             });
@@ -84,15 +79,9 @@ export class GridExample extends React.Component<{}, CompState> {
     }
 
     handleHorizontalScrollVisibilityChanged: (visible: boolean, thumbWidth: number) => void = (visible: boolean, thumbHeight: number) => {
-        if (this.state.rowsThumbWidth !== thumbHeight) {
+        if (this.state.colsThumbHeight !== thumbHeight) {
             this.setState({
-                colsThumbHeight: thumbHeight,
-                leftHeaderCellModels: this.state.leftHeaderCellModels,
-                rightHeaderCellModels: this.state.rightHeaderCellModels,
-                rowModels: this.state.rowModels,
-                rowsThumbWidth: this.state.rowsThumbWidth,
-                x: this.state.x,
-                y: this.state.y
+                colsThumbHeight: thumbHeight
             });
         }
     }
@@ -100,13 +89,7 @@ export class GridExample extends React.Component<{}, CompState> {
     handleVerticallScrollVisibilityChanged: (visible: boolean, thumbWidth: number) => void = (visible: boolean, thumbWidth: number) => {
         if (this.state.rowsThumbWidth !== thumbWidth) {
             this.setState({
-                colsThumbHeight: this.state.colsThumbHeight,
-                leftHeaderCellModels: this.state.leftHeaderCellModels,
-                rightHeaderCellModels: this.state.rightHeaderCellModels,
-                rowModels: this.state.rowModels,
-                rowsThumbWidth: thumbWidth,
-                x: this.state.x,
-                y: this.state.y
+                rowsThumbWidth: thumbWidth
             });
         }
     }
@@ -117,13 +100,7 @@ export class GridExample extends React.Component<{}, CompState> {
                 <LayoutPane>
                     <button
                         onClick={(): void => this.setState({
-                            colsThumbHeight: this.state.colsThumbHeight,
-                            leftHeaderCellModels: this.state.leftHeaderCellModels,
-                            rightHeaderCellModels: this.state.rightHeaderCellModels,
-                            rowModels: this.state.rowModels.slice(0, this.state.rowModels.length - 1),
-                            rowsThumbWidth: this.state.rowsThumbWidth,
-                            x: this.state.x,
-                            y: this.state.y
+                            rowModels: this.state.rowModels!.slice(0, this.state.rowModels!.length - 1)
                         })}>
                         Remove
                     </button>

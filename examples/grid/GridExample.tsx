@@ -21,6 +21,7 @@ interface CompState {
     rightHeaderCellModels: HeaderCellModel[];
     rowModels: Data[];
     rowsThumbWidth: number;
+    colsThumbHeight: number;
 }
 
 export class GridExample extends React.Component<{}, CompState> {
@@ -28,7 +29,9 @@ export class GridExample extends React.Component<{}, CompState> {
         super(props);
         this.handleHorizontalScrollPosChanged = this.handleHorizontalScrollPosChanged.bind(this);
         this.handleVerticallScrollVisibilityChanged = this.handleVerticallScrollVisibilityChanged.bind(this);
+        this.handleHorizontalScrollVisibilityChanged = this.handleHorizontalScrollVisibilityChanged.bind(this);
         this.state = {
+            colsThumbHeight: 0,
             leftHeaderCellModels: [
                 { caption: 'id', width: 30 },
                 { caption: 'firstName', width: 150 }
@@ -57,6 +60,7 @@ export class GridExample extends React.Component<{}, CompState> {
     handleHorizontalScrollPosChanged: (x: number, y: number) => void = (x, y) => {
         if (this.state.x !== x || this.state.y !== y) {
             this.setState({
+                colsThumbHeight: this.state.colsThumbHeight,
                 leftHeaderCellModels: this.state.leftHeaderCellModels,
                 rightHeaderCellModels: this.state.rightHeaderCellModels,
                 rowModels: this.state.rowModels,
@@ -79,9 +83,24 @@ export class GridExample extends React.Component<{}, CompState> {
         return data.map((item: Data, index: number) => (<RowLeft model={item} key={index}/>));
     }
 
+    handleHorizontalScrollVisibilityChanged: (visible: boolean, thumbWidth: number) => void = (visible: boolean, thumbHeight: number) => {
+        if (this.state.rowsThumbWidth !== thumbHeight) {
+            this.setState({
+                colsThumbHeight: thumbHeight,
+                leftHeaderCellModels: this.state.leftHeaderCellModels,
+                rightHeaderCellModels: this.state.rightHeaderCellModels,
+                rowModels: this.state.rowModels,
+                rowsThumbWidth: this.state.rowsThumbWidth,
+                x: this.state.x,
+                y: this.state.y
+            });
+        }
+    }
+
     handleVerticallScrollVisibilityChanged: (visible: boolean, thumbWidth: number) => void = (visible: boolean, thumbWidth: number) => {
         if (this.state.rowsThumbWidth !== thumbWidth) {
             this.setState({
+                colsThumbHeight: this.state.colsThumbHeight,
                 leftHeaderCellModels: this.state.leftHeaderCellModels,
                 rightHeaderCellModels: this.state.rightHeaderCellModels,
                 rowModels: this.state.rowModels,
@@ -98,6 +117,7 @@ export class GridExample extends React.Component<{}, CompState> {
                 <LayoutPane>
                     <button
                         onClick={(): void => this.setState({
+                            colsThumbHeight: this.state.colsThumbHeight,
                             leftHeaderCellModels: this.state.leftHeaderCellModels,
                             rightHeaderCellModels: this.state.rightHeaderCellModels,
                             rowModels: this.state.rowModels.slice(0, this.state.rowModels.length - 1),
@@ -130,6 +150,7 @@ export class GridExample extends React.Component<{}, CompState> {
                                         key="body"
                                         contentWidth={210}
                                         contentHeight="auto"
+                                        horzScrollBarReplacerHeight={this.state.colsThumbHeight}
                                         overflowX="hidden" overflowY="hidden"
                                         onScrollPosChanged={this.handleHorizontalScrollPosChanged}
                                         onVerticalScrollVisibilityChanged={this.handleVerticallScrollVisibilityChanged}
@@ -167,6 +188,7 @@ export class GridExample extends React.Component<{}, CompState> {
                                         overflowX="auto" overflowY="auto"
                                         onScrollPosChanged={this.handleHorizontalScrollPosChanged}
                                         onVerticalScrollVisibilityChanged={this.handleVerticallScrollVisibilityChanged}
+                                        onHorizontalScrollVisibilityChanged={this.handleHorizontalScrollVisibilityChanged}
                                         scrollLeft={this.state.x}
                                         data={this.state.rowModels}
                                         dataRenderer={this.mapRightRows}

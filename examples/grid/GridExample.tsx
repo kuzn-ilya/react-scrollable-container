@@ -113,7 +113,6 @@ export class GridExample extends React.Component<{}, CompState> {
                                 contentWidth={210}
                                 contentHeight="auto"
                                 overflowX="hidden" overflowY="hidden"
-                                onScrollPosChanged={this.handleHorizontalScrollPosChanged}
                                 data={this.state.leftHeaderCellModels}
                                 dataRenderer={this.mapHeader}
                                 width="100%"
@@ -127,7 +126,6 @@ export class GridExample extends React.Component<{}, CompState> {
                                 contentHeight="auto"
                                 horzScrollBarReplacerHeight={this.state.colsThumbHeight}
                                 overflowX="hidden" overflowY="hidden"
-                                onScrollPosChanged={this.handleHorizontalScrollPosChanged}
                                 onVerticalScrollVisibilityChanged={this.handleVerticallScrollVisibilityChanged}
                                 scrollTop={this.state.y}
                                 data={this.state.rowModels}
@@ -144,7 +142,6 @@ export class GridExample extends React.Component<{}, CompState> {
                                 contentWidth={2010}
                                 contentHeight="auto"
                                 overflowX="hidden" overflowY="hidden"
-                                onScrollPosChanged={this.handleHorizontalScrollPosChanged}
                                 scrollLeft={this.state.x}
                                 data={this.state.rightHeaderCellModels}
                                 dataRenderer={this.mapHeader}

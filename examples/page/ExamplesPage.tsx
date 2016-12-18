@@ -25,7 +25,7 @@ export class ExamplesPage extends React.PureComponent<ExamplesPageProps, Example
         let selectedExample: Example = this.props.examples[this.state.selectedIndex];
         let Comp = selectedExample.componentClass;
         return (
-            <Layout orientation="horizontal">
+            <Layout orientation="horizontal" width="100%" height="100%">
                 <Layout width="200px" showSplitter>
                     <ul>
                         {this.props.examples.map((example: Example, index: number) => (

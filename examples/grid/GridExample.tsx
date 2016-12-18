@@ -57,11 +57,12 @@ export class GridExample extends React.Component<{}, CompState> {
     }
 
     handleHorizontalScrollPosChanged: (x: number, y: number) => void = (x, y) => {
-        if (this.state.x !== x || this.state.y !== y) {
-            this.setState({
-                x,
-                y
-            });
+        if (this.state.x !== x) {
+            this.setState({ x });
+        }
+
+        if (this.state.y !== y) {
+            this.setState({ y });
         }
     }
 

@@ -48,10 +48,10 @@ describe('DOM: Layout', () => {
                     width = "200px"
                     height = "200px"
                 >
-                    <LayoutPane orientation="vertical" height="10px">
+                    <LayoutPane height="10px">
                         <div style= {{display: 'block', height: '100%', width: '100%'}}/>
                     </LayoutPane>
-                    <LayoutPane orientation="vertical" height="100%">
+                    <LayoutPane height="100%">
                         <div style= {{display: 'block', height: '100%', width: '100%'}}/>
                     </LayoutPane>
                 </Layout>,
@@ -90,10 +90,10 @@ describe('DOM: Layout', () => {
                     width = "200px"
                     height = "200px"
                 >
-                    <LayoutPane orientation="horizontal" width="10px">
+                    <LayoutPane width="10px">
                         <div style= {{display: 'block', height: '100%', width: '100%'}}/>
                     </LayoutPane>
-                    <LayoutPane orientation="horizontal" width="100%">
+                    <LayoutPane width="100%">
                         <div style= {{display: 'block', height: '100%', width: '100%'}}/>
                     </LayoutPane>
                 </Layout>,

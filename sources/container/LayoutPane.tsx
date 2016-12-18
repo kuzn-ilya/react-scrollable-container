@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import { LayoutPaneProps } from  './LayoutPaneProps';
 import { WindowEvents } from  '../utils/WindowEvents';
+import { LayoutChildContext, layoutChildContextTypes } from './LayoutChildContext';
 
 import './layout.css';
 
@@ -9,13 +10,14 @@ export class LayoutPane extends React.PureComponent<LayoutPaneProps, void> {
 
     static defaultProps: LayoutPaneProps = {
         height: undefined,
-        orientation: 'horizontal',
         showSplitter: false,
         width: undefined
     };
 
-    constructor(props: LayoutPaneProps) {
-        super(props);
+    static contextTypes = layoutChildContextTypes;
+
+    constructor(props: LayoutPaneProps, context: LayoutChildContext) {
+        super(props, context);
         this.handleSplitterMouseDown = this.handleSplitterMouseDown.bind(this);
         this.handleMouseMove = this.handleMouseMove.bind(this);
         this.handleMouseUp = this.handleMouseUp.bind(this);
@@ -46,28 +48,28 @@ export class LayoutPane extends React.PureComponent<LayoutPaneProps, void> {
         }
     }
 
-    updatePane(e: MouseEvent) {
+    updatePane(e: MouseEvent): void {
         if (this.ref) {
-            if (this.props.orientation === 'vertical') {
+            if (this.context.orientation === 'vertical') {
                 this.ref.style.height = (e.pageY - this.startY) + 'px';
-            } else if (this.props.orientation === 'horizontal') {
+            } else if (this.context.orientation === 'horizontal') {
                 this.ref.style.width = (e.pageX - this.startX) + 'px';
             }
         }
     }
 
-    componentDidMount() {
+    componentDidMount(): void {
         WindowEvents.addMouseMoveUpEventListener(this.handleMouseUp);
     }
 
-    componentWillUnmount() {
+    componentWillUnmount(): void {
         WindowEvents.removeMouseUpEventListener(this.handleMouseUp);
     }
 
     render(): JSX.Element | null {
         let layoutPaneStyle: {};
         let className: string;
-        if (this.props.orientation === 'vertical') {
+        if (this.context.orientation === 'vertical') {
             className = this.props.height === '100%' ? 'layout-second' : 'layout-vert-first';
             layoutPaneStyle = {
                 height: this.props.height
@@ -84,7 +86,7 @@ export class LayoutPane extends React.PureComponent<LayoutPaneProps, void> {
         }
 
         let splitter = this.props.showSplitter ? (
-            <div className={this.props.orientation === 'vertical' ? 'layout-vert-splitter' : 'layout-horz-splitter'}
+            <div className={this.context.orientation === 'vertical' ? 'layout-vert-splitter' : 'layout-horz-splitter'}
                 onMouseDown={this.handleSplitterMouseDown}>
             </div>
         ) : null;

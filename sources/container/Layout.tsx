@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { LayoutProps } from  './LayoutProps';
+import { LayoutChildContext, layoutChildContextTypes } from  './LayoutChildContext';
 
 import './layout.css';
 
@@ -11,6 +12,14 @@ export class Layout extends React.PureComponent<LayoutProps, void> {
         orientation: 'horizontal',
         width: '100%'
     };
+
+    static childContextTypes = layoutChildContextTypes;
+
+    getChildContext(): LayoutChildContext {
+        return {
+            orientation: this.props.orientation
+        };
+    }
 
     render(): JSX.Element | null {
         return (

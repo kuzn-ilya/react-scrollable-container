@@ -95,7 +95,7 @@ export class GridExample extends React.Component<{}, CompState> {
     render(): JSX.Element {
         return (
             <Layout orientation="vertical">
-                <LayoutPane orientation="vertical">
+                <LayoutPane>
                     <button
                         onClick={(): void => this.setState({
                             leftHeaderCellModels: this.state.leftHeaderCellModels,
@@ -108,11 +108,11 @@ export class GridExample extends React.Component<{}, CompState> {
                         Remove
                     </button>
                 </LayoutPane>
-                <LayoutPane orientation="vertical" height="100%">
+                <LayoutPane height="100%">
                     <Layout orientation="horizontal">
-                        <LayoutPane orientation="horizontal" width="210px" showSplitter>
+                        <LayoutPane width="210px" showSplitter>
                             <Layout orientation="vertical">
-                                <LayoutPane orientation="vertical" height="20px">
+                                <LayoutPane height="20px">
                                     <ScrollableContainer
                                         key="header"
                                         contentWidth={210}
@@ -125,7 +125,7 @@ export class GridExample extends React.Component<{}, CompState> {
                                         height="100%"
                                     />
                                 </LayoutPane>
-                                <LayoutPane orientation="vertical" height="100%">
+                                <LayoutPane height="100%">
                                     <ScrollableContainer
                                         key="body"
                                         contentWidth={210}
@@ -142,9 +142,9 @@ export class GridExample extends React.Component<{}, CompState> {
                                 </LayoutPane>
                             </Layout>
                         </LayoutPane>
-                        <LayoutPane orientation="horizontal" width="100%">
+                        <LayoutPane width="100%">
                             <Layout orientation="vertical">
-                                <LayoutPane orientation="vertical" height="20px">
+                                <LayoutPane height="20px">
                                     <ScrollableContainer id="container1"
                                         key="header"
                                         contentWidth={2010}
@@ -159,7 +159,7 @@ export class GridExample extends React.Component<{}, CompState> {
                                         vertScrollBarReplacerWidth={this.state.rowsThumbWidth}
                                     />
                                 </LayoutPane>
-                                <LayoutPane orientation="vertical" height="100%">
+                                <LayoutPane height="100%">
                                     <ScrollableContainer id="container2"
                                         key="body"
                                         contentWidth={2010}
@@ -181,5 +181,4 @@ export class GridExample extends React.Component<{}, CompState> {
             </Layout>
         );
     }
-
 }

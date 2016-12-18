@@ -27,19 +27,19 @@ export class ExamplesPage extends React.PureComponent<ExamplesPageProps, Example
         let Comp = selectedExample.componentClass;
         return (
             <Layout orientation="horizontal">
-                <LayoutPane orientation="horizontal" width="200px" showSplitter>
+                <LayoutPane width="200px" showSplitter>
                     <ul>
                         {this.props.examples.map((example: Example, index: number) => (
                             <li key={index}>{example.name}</li>
                         ))}
                     </ul>
                 </LayoutPane>
-                <LayoutPane orientation="horizontal" width="100%">
+                <LayoutPane width="100%">
                     <Layout orientation="vertical">
-                        <LayoutPane orientation="vertical" showSplitter>
+                        <LayoutPane showSplitter>
                             {selectedExample.name}
                         </LayoutPane>
-                        <LayoutPane orientation="vertical" height="100%" >
+                        <LayoutPane height="100%" >
                             <Comp />
                         </LayoutPane>
                     </Layout>

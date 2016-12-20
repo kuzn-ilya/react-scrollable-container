@@ -6,7 +6,7 @@ import { LayoutChildContext, layoutChildContextTypes } from './LayoutChildContex
 
 import './layout.css';
 
-export class Layout extends React.PureComponent<LayoutProps, void> {
+export class Layout extends React.PureComponent<LayoutProps, {}> {
 
     static defaultProps: LayoutProps = {
         height: undefined,
@@ -18,7 +18,7 @@ export class Layout extends React.PureComponent<LayoutProps, void> {
     static contextTypes = layoutChildContextTypes;
     static childContextTypes = layoutChildContextTypes;
 
-    constructor(props: LayoutProps, context: LayoutChildContext) {
+    constructor(props?: LayoutProps, context?: LayoutChildContext) {
         super(props, context);
         this.handleSplitterMouseDown = this.handleSplitterMouseDown.bind(this);
         this.handleMouseMove = this.handleMouseMove.bind(this);

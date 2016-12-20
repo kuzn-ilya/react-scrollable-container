@@ -1,12 +1,13 @@
 import * as React from 'react';
 
 import { LayoutProps } from  './LayoutProps';
-import { WindowEvents } from  '../utils/WindowEvents';
+import { LayoutState } from  './LayoutState';
 import { LayoutChildContext, layoutChildContextTypes } from './LayoutChildContext';
+import { LayoutSplitter } from  './LayoutSplitter';
 
 import './layout.css';
 
-export class Layout extends React.PureComponent<LayoutProps, {}> {
+export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
 
     static defaultProps: LayoutProps = {
         height: undefined,
@@ -20,9 +21,11 @@ export class Layout extends React.PureComponent<LayoutProps, {}> {
 
     constructor(props?: LayoutProps, context?: LayoutChildContext) {
         super(props, context);
-        this.handleSplitterMouseDown = this.handleSplitterMouseDown.bind(this);
-        this.handleMouseMove = this.handleMouseMove.bind(this);
-        this.handleMouseUp = this.handleMouseUp.bind(this);
+        this.handleSplitterResizing = this.handleSplitterResizing.bind(this);
+        this.handleSplitterResizeEnd = this.handleSplitterResizeEnd.bind(this);
+        this.state = {
+            splitterCoord: this.getInitialSplitterCoord()
+        }
     }
 
     getChildContext(): LayoutChildContext {
@@ -32,47 +35,44 @@ export class Layout extends React.PureComponent<LayoutProps, {}> {
         };
     }
 
-    dragging: boolean = false;
-    startX: number = 0;
-    startY: number = 0;
     ref: HTMLDivElement | undefined = undefined;
 
-    handleSplitterMouseDown: React.EventHandler<React.MouseEvent<HTMLDivElement>> = (e) => {
-        this.dragging = true;
-        let width = this.ref ? this.ref.offsetWidth : 0;
-        let height = this.ref ? this.ref.offsetHeight : 0;
-        this.startX = e.pageX - width;
-        this.startY = e.pageY - height;
-        WindowEvents.addMouseMoveEventListener(this.handleMouseMove);
-    }
-
-    handleMouseMove: (e: MouseEvent) => void = (e) => {
-        this.updatePane(e);
-    }
-
-    handleMouseUp: (e: MouseEvent) => void = (e) => {
-        if (this.dragging) {
-            this.dragging = false;
-            WindowEvents.removeMouseMoveEventListener(this.handleMouseMove);
-        }
-    }
-
-    updatePane(e: MouseEvent): void {
+    handleSplitterResizing: (newCoord: number) => void = (newCoord) => {
         if (this.ref) {
             if (this.context.orientation === 'vertical') {
-                this.ref.style.height = (e.pageY - this.startY) + 'px';
+                this.ref.style.height = newCoord + 'px';
             } else if (this.context.orientation === 'horizontal') {
-                this.ref.style.width = (e.pageX - this.startX) + 'px';
+                this.ref.style.width = newCoord + 'px';
             }
+            this.setState({
+                splitterCoord: this.context.orientation === 'vertical' ? this.ref.offsetHeight : this.ref.offsetWidth
+            });
         }
+    }
+
+    handleSplitterResizeEnd: () => void = () => {
+        if (this.ref) {
+            this.setState({
+                splitterCoord: this.context.orientation === 'vertical' ? this.ref.offsetHeight : this.ref.offsetWidth
+            });
+        }
+    }
+
+    getInitialSplitterCoord(): number {
+        if (this.context.orientation === 'vertical' && typeof this.props.height === 'number') {
+            return this.props.height;
+        } else if (this.context.orientation === 'horizontal' && typeof this.props.width === 'number') {
+            return this.props.width;
+        }
+        return 0;
     }
 
     componentDidMount(): void {
-        WindowEvents.addMouseMoveUpEventListener(this.handleMouseUp);
-    }
-
-    componentWillUnmount(): void {
-        WindowEvents.removeMouseUpEventListener(this.handleMouseUp);
+        if (this.props.showSplitter && this.ref) {
+            this.setState({
+                splitterCoord: this.context.orientation === 'vertical' ? this.ref.offsetHeight : this.ref.offsetWidth
+            });
+        }
     }
 
     render(): JSX.Element | null {
@@ -95,9 +95,10 @@ export class Layout extends React.PureComponent<LayoutProps, {}> {
         }
 
         let splitter = this.props.showSplitter ? (
-            <div className={this.context.orientation === 'vertical' ? 'layout-vert-splitter' : 'layout-horz-splitter'}
-                onMouseDown={this.handleSplitterMouseDown}>
-            </div>
+            <LayoutSplitter orientation={this.context.orientation}
+                onResizing={this.handleSplitterResizing}
+                onResizeEnd={this.handleSplitterResizeEnd}
+                coord={this.state.splitterCoord} />
         ) : null;
 
         let child = this.props.orientation ? (

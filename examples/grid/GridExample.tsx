@@ -5,8 +5,7 @@ import { fakeData } from './data/fake.data';
 import { Row } from './row/row.component';
 import { RowLeft } from './row/row-left.component';
 import { HeaderCell } from './header-cell/header-cell.component';
-import { ScrollableContainer } from '../../sources/container/ScrollableContainer';
-import { Layout } from '../../sources/container/Layout';
+import { Layout, ScrollableContainer } from '../../sources/components';
 
 interface HeaderCellModel {
     width: number;

@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import './styles.css';
-import { Layout } from '../../sources/container/Layout';
+import { Layout } from '../../sources/components';
 
 import { Example } from './Example';
 

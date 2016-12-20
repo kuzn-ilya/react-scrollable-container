@@ -1,9 +1,9 @@
 import * as React from 'react';
 
 import { LayoutSplitterProps } from  './LayoutSplitterProps';
-import { WindowEvents } from  '../utils/WindowEvents';
+import { MouseCapture } from  '../utils/MouseCapture';
 
-import './layout.css';
+import '../styles/layout-splitter.css';
 
 export class LayoutSplitter extends React.PureComponent<LayoutSplitterProps, {}> {
 
@@ -23,9 +23,8 @@ export class LayoutSplitter extends React.PureComponent<LayoutSplitterProps, {}>
     startCoord: number = 0;
 
     handleMouseDown: React.EventHandler<React.MouseEvent<HTMLDivElement>> = (e) => {
+        MouseCapture.captureMouseEvents(e.nativeEvent, this.handleWindowMouseMove, this.handleWindowMouseUp);
         this.isMoving = true;
-        WindowEvents.addMouseMoveEventListener(this.handleWindowMouseMove);
-        WindowEvents.addMouseMoveUpEventListener(this.handleWindowMouseUp);
         this.startCoord = (this.props.orientation === 'vertical' ? e.pageY : e.pageX) - this.props.coord;
     }
 
@@ -39,8 +38,6 @@ export class LayoutSplitter extends React.PureComponent<LayoutSplitterProps, {}>
     handleWindowMouseUp: (e: MouseEvent) => void = (e) => {
         if (this.isMoving) {
             this.isMoving = false;
-            WindowEvents.removeMouseMoveEventListener(this.handleWindowMouseMove);
-            WindowEvents.removeMouseUpEventListener(this.handleWindowMouseUp);
             if (this.props.onResizeEnd) {
                 this.props.onResizeEnd();
             }

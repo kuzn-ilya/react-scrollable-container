@@ -2,10 +2,10 @@ import * as React from 'react';
 
 import { LayoutProps } from  './LayoutProps';
 import { LayoutState } from  './LayoutState';
-import { LayoutChildContext, layoutChildContextTypes } from './LayoutChildContext';
+import { LayoutChildContext, layoutChildContextTypes } from './LayoutContext';
 import { LayoutSplitter } from  './LayoutSplitter';
 
-import './layout.css';
+import '../styles/layout.css';
 
 export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
 

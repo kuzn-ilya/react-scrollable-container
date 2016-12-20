@@ -1,0 +1,25 @@
+.layout-vert-container, .layout-horz-container {
+  display: flex;
+}
+
+.layout-vert-container {
+  flex-direction: column;
+}
+
+.layout-vert-first, .layout-horz-first, .layout-second {
+  overflow: hidden;
+  position: relative;
+}
+
+.layout-vert-first {
+  width: 100%;
+}
+
+.layout-horz-first {
+  height: 100%;
+}
+
+.layout-second {
+  flex-grow: 1;
+  height: 100%;
+}

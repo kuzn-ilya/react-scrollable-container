@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { addCssClassPrefix } from './../utils/addCssClassPrefix';
 
-import './container.css';
+import '../styles/container.css';
 
 import {ScrollableContainerContentState} from './ScrollableContainerContentState';
 import {ScrollableContainerContentProps, scrollableContainerContentPropTypes } from './ScrollableContainerContentProps';

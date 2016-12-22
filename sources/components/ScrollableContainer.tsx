@@ -7,7 +7,6 @@ import { ScrollableContainerProps, scrollableContainerPropTypes } from  './Scrol
 import { ScrollableContainerState } from  './ScrollableContainerState';
 import { ScrollableContainerContent } from './ScrollableContainerContent';
 
-
 import '../styles/container.css';
 
 export class ScrollableContainer extends React.PureComponent<ScrollableContainerProps, ScrollableContainerState> {

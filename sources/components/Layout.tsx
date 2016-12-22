@@ -25,7 +25,7 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
         this.handleSplitterResizeEnd = this.handleSplitterResizeEnd.bind(this);
         this.state = {
             splitterCoord: this.getInitialSplitterCoord()
-        }
+        };
     }
 
     getChildContext(): LayoutChildContext {

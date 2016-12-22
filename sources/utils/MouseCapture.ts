@@ -54,7 +54,7 @@ export class MouseCapture {
         }
     }
 
-    static captureMouseEvents(e: Event, mouseMoveHandler?: (e: MouseEvent) => void, 
+    static captureMouseEvents(e: Event, mouseMoveHandler?: (e: MouseEvent) => void,
         releaseCaptureHandler?: () => void): MouseCapture {
         return new MouseCapture(e, mouseMoveHandler, releaseCaptureHandler);
     }

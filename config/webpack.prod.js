@@ -15,7 +15,7 @@ var config = merge.smart(common, {
     },
 
     entry: {
-        components: './sources/container/index.ts'
+        components: './sources/components/index.ts'
     },
 
     externals: {

@@ -28,7 +28,7 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
 
     static propTypes = scrollableContainerPropTypes;
 
-    constructor(props: ScrollableContainerProps) {
+    constructor(props?: ScrollableContainerProps) {
         super(props);
         this.handleWindowResize = this.handleWindowResize.bind(this);
         this.handleScroll = this.handleScroll.bind(this);

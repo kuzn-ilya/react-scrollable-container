@@ -1,5 +1,5 @@
 import { CSSProperties, PropTypes } from 'react';
-import { Overflow, overflowPropType, Size, sizePropType } from './../utils/types';
+import { Overflow, overflowPropType, Size, sizePropType } from '../../utils/types';
 
 export interface ScrollableContainerProps {
     readonly id?: string;

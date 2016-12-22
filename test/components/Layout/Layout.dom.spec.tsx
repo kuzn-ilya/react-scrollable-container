@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom';
 import * as chai from 'chai';
 import * as chaiSpies from 'chai-spies';
 
-import { Layout } from '../../sources/components';
+import { Layout } from '../../../sources/components';
 
 const expect = chai.expect;
 chai.use(chaiSpies);

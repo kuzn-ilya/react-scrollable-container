@@ -1,5 +1,5 @@
 import { PropTypes } from 'react';
-import { Size, sizePropType } from './../utils/types';
+import { Size, sizePropType } from '../../utils/types';
 
 export interface ScrollableContainerContentProps {
     readonly contentWidth?: Size;

@@ -1,4 +1,4 @@
-import { Orientation } from './../utils/types';
+import { Orientation } from '../../utils/types';
 
 export interface LayoutProps {
     height?: number | string;

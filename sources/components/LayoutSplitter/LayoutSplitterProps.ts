@@ -1,4 +1,4 @@
-import { Orientation } from './../utils/types';
+import { Orientation } from '../../utils/types';
 
 // TODO come up with more appropriate names for coord, minCoord and maxCoord
 export interface LayoutSplitterProps {

@@ -1,4 +1,4 @@
-import { Orientation } from './../utils/types';
+import { Orientation } from '../../utils/types';
 import { PropTypes } from 'react';
 import { Layout } from './Layout';
 

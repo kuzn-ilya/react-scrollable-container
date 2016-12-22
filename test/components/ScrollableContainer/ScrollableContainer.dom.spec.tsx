@@ -3,8 +3,8 @@ import * as ReactDOM from 'react-dom';
 import * as chai from 'chai';
 import * as chaiSpies from 'chai-spies';
 
-import { ScrollableContainer } from '../../sources/components';
-import { simulateScroll } from './../TestUtils';
+import { ScrollableContainer } from '../../../sources/components';
+import { simulateScroll } from '../../TestUtils';
 
 const expect = chai.expect;
 chai.use(chaiSpies);

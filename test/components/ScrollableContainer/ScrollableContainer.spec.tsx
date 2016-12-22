@@ -4,10 +4,10 @@ import * as chai from 'chai';
 import * as chaiSpies from 'chai-spies';
 import { is } from 'useragent';
 
-import { renderIntoDocument, unmountComponent, findRenderedComponentWithType } from './../TestUtils';
+import { renderIntoDocument, unmountComponent, findRenderedComponentWithType } from '../../TestUtils';
 
-import { Overflow } from '../../sources/utils/types';
-import { ScrollableContainer, ScrollableContainerContent } from '../../sources/components';
+import { Overflow } from '../../../sources/utils/types';
+import { ScrollableContainer, ScrollableContainerContent } from '../../../sources/components';
 
 const expect = chai.expect;
 chai.use(chaiSpies);

@@ -75,7 +75,6 @@
             true,
             "spaces"
         ],
-        "linebreak-style": [true, "CRLF"],
         "max-line-length": [true, 140],
         "no-default-export": true,
         "no-mergeable-namespace": true,

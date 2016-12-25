@@ -5,7 +5,7 @@ import { WindowEvents } from '../../utils/WindowEvents';
 
 import { ScrollableContainerProps, scrollableContainerPropTypes } from  './ScrollableContainerProps';
 import { ScrollableContainerState } from  './ScrollableContainerState';
-import { ScrollableContent } from '../ScrollableContainerContent';
+import { ScrollableContent } from '../ScrollableContent';
 
 import '../../styles/container.css';
 

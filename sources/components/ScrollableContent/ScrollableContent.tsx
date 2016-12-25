@@ -3,7 +3,7 @@ import { addCssClassPrefix } from '../../utils/addCssClassPrefix';
 
 import '../../styles/container.css';
 
-import {ScrollableContentProps, scrollableContentPropTypes } from './ScrollableContainerContentProps';
+import {ScrollableContentProps, scrollableContentPropTypes } from './ScrollableContentProps';
 
 export class ScrollableContent extends React.PureComponent<ScrollableContentProps, {}> {
 

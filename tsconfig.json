@@ -19,7 +19,8 @@
             "es7"
         ],
         "types": [
-            "mocha"
+            "mocha",
+            "node"
         ],
         "noUnusedLocals": true,
         "noFallthroughCasesInSwitch": true

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { LayoutProps } from  './LayoutProps';
+import { LayoutProps, layoutPropTypes } from  './LayoutProps';
 import { LayoutState } from  './LayoutState';
 import { LayoutChildContext, layoutChildContextTypes } from './LayoutContext';
 import { LayoutSplitter } from  '../LayoutSplitter';
@@ -15,6 +15,8 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
         showSplitter: false,
         width: undefined
     };
+
+    static propTypes = layoutPropTypes;
 
     static contextTypes = layoutChildContextTypes;
     static childContextTypes = layoutChildContextTypes;

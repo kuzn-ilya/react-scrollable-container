@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { LayoutSplitterProps } from  './LayoutSplitterProps';
+import { LayoutSplitterProps, layoutSplitterPropTypes } from  './LayoutSplitterProps';
 import { MouseCapture } from  '../../utils/MouseCapture';
 
 import '../../styles/layout-splitter.css';
@@ -11,6 +11,8 @@ export class LayoutSplitter extends React.PureComponent<LayoutSplitterProps, {}>
         coord: 0,
         orientation: 'horizontal'
     };
+
+    static propTypes = layoutSplitterPropTypes;
 
     constructor(props?: LayoutSplitterProps) {
         super(props);

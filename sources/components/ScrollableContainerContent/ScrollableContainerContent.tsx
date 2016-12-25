@@ -3,17 +3,16 @@ import { addCssClassPrefix } from '../../utils/addCssClassPrefix';
 
 import '../../styles/container.css';
 
-import {ScrollableContainerContentState} from './ScrollableContainerContentState';
-import {ScrollableContainerContentProps, scrollableContainerContentPropTypes } from './ScrollableContainerContentProps';
+import {ScrollableContentProps, scrollableContentPropTypes } from './ScrollableContainerContentProps';
 
-export class ScrollableContainerContent extends React.PureComponent<ScrollableContainerContentProps, ScrollableContainerContentState> {
+export class ScrollableContent extends React.PureComponent<ScrollableContentProps, {}> {
 
-    static defaultProps: ScrollableContainerContentProps = {
+    static defaultProps: ScrollableContentProps = {
         contentHeight: 'auto',
         contentWidth: 'auto'
     };
 
-    static propTypes = scrollableContainerContentPropTypes;
+    static propTypes = scrollableContentPropTypes;
 
     render(): JSX.Element {
         let wrapper: React.ReactNode = null;

@@ -1,7 +1,7 @@
 import { PropTypes } from 'react';
 import { Size, sizePropType } from '../../utils/types';
 
-export interface ScrollableContainerContentProps {
+export interface ScrollableContentProps {
     readonly contentWidth?: Size;
     readonly contentHeight?: Size;
     // tslint:disable-next-line:no-any
@@ -10,7 +10,7 @@ export interface ScrollableContainerContentProps {
     readonly data?: any;
 }
 
-export const scrollableContainerContentPropTypes = {
+export const scrollableContentPropTypes = {
     contentHeight: sizePropType,
     contentWidth: sizePropType,
     data: PropTypes.any,

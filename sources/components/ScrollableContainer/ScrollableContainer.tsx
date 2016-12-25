@@ -5,7 +5,7 @@ import { WindowEvents } from '../../utils/WindowEvents';
 
 import { ScrollableContainerProps, scrollableContainerPropTypes } from  './ScrollableContainerProps';
 import { ScrollableContainerState } from  './ScrollableContainerState';
-import { ScrollableContainerContent } from '../ScrollableContainerContent';
+import { ScrollableContent } from '../ScrollableContainerContent';
 
 import '../../styles/container.css';
 
@@ -76,12 +76,12 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
                         right: this.props.vertScrollBarReplacerWidth ? this.props.vertScrollBarReplacerWidth + 'px' : '0px'
                     }}
                 >
-                    <ScrollableContainerContent contentWidth={this.props.contentWidth} contentHeight={this.props.contentHeight}
+                    <ScrollableContent contentWidth={this.props.contentWidth} contentHeight={this.props.contentHeight}
                         dataRenderer={this.props.dataRenderer}
                         data={this.props.data}
                     >
                         {this.props.children}
-                    </ScrollableContainerContent>
+                    </ScrollableContent>
                 </div>
             </div>
         );

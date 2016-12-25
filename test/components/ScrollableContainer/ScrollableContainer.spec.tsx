@@ -7,7 +7,7 @@ import { is } from 'useragent';
 import { renderIntoDocument, unmountComponent, findRenderedComponentWithType } from '../../TestUtils';
 
 import { Overflow } from '../../../sources/utils/types';
-import { ScrollableContainer, ScrollableContainerContent } from '../../../sources/components';
+import { ScrollableContainer, ScrollableContent } from '../../../sources/components';
 
 const expect = chai.expect;
 chai.use(chaiSpies);
@@ -101,7 +101,7 @@ describe('ScrollableContainer', () => {
 
     it('should have a child of type ScrollableContainerContent', () => {
         let container = renderIntoDocument(<ScrollableContainer overflowX="auto" overflowY="auto" height={100} width={100}/>);
-        let child = findRenderedComponentWithType(container, ScrollableContainerContent);
+        let child = findRenderedComponentWithType(container, ScrollableContent);
 
         expect(child).to.exist;
     });

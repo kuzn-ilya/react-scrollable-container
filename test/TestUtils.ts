@@ -1,8 +1,8 @@
 import * as ReactDOM from 'react-dom';
 import * as TestUtils from 'react-addons-test-utils';
 
-export function renderIntoDocument<P, S>(element: React.ReactElement<P>): React.Component<P, S> {
-    return TestUtils.renderIntoDocument<P>(element) as React.Component<P, S>;
+export function renderIntoDocument<P, S, T extends React.Component<P, S>>(element: React.ReactElement<P>): T {
+    return TestUtils.renderIntoDocument<P>(element) as T;
 }
 
 export function unmountComponent<P, S>(component: React.Component<P, S>): void {

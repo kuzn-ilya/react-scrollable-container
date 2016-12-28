@@ -30,7 +30,8 @@ describe('mounted', () => {
     it('should have same states', () => {
         // tslint:disable-next-line:variable-name
         let Cmp = mounted(Comp, () => { return; }, () => { return; });
-        let container = renderIntoDocument<{prop: number}, {state: number}>(<Cmp prop={42} />);
+        let container = renderIntoDocument<{prop: number}, {state: number},
+            React.Component<{prop: number}, {state: number}>>(<Cmp prop={42} />);
 
         expect(container.props.prop).equal(42);
 

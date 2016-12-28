@@ -12,6 +12,8 @@ chai.use(chaiSpies);
 
 describe('Grid', () => {
     it('should be defined and have default props', () => {
+        let error = chai.spy.on(console, 'error');
+
         let container = renderIntoDocument(<Grid />) as Grid;
 
         expect(container).to.exist;
@@ -21,5 +23,8 @@ describe('Grid', () => {
         let domElement = ReactDOM.findDOMNode(container);
 
         expect(domElement).to.exist;
+
+        expect(error).to.have.been.called.once;
+        expect(error).to.have.been.called.with.exactly('Component <Grid />: Either getRowCount or rowCount should be defined');
     });
 });

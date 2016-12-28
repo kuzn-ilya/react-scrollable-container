@@ -1,9 +1,11 @@
 import { PropTypes, ValidationMap } from 'react';
 
 export interface GridProps {
+    // tslint:disable-next-line:no-any
     data?: any;
     fixedColumnCount?: number;
     fixedRowCount?: number;
+    // tslint:disable-next-line:no-any
     getRowCount?: (data: any) => number;
     rowCount?: number;
 }

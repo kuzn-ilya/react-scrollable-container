@@ -2,18 +2,13 @@ import { PropTypes, ValidationMap } from 'react';
 
 export interface GridProps {
     // tslint:disable-next-line:no-any
-    data?: any;
+    rowData: any[];
     fixedColumnCount?: number;
     fixedRowCount?: number;
-    // tslint:disable-next-line:no-any
-    getRowCount?: (data: any) => number;
-    rowCount?: number;
 }
 
 export const gridPropTypes: ValidationMap<GridProps> = {
-    data: PropTypes.any,
+    data: PropTypes.arrayOf(PropTypes.any).isRequired,
     fixedColumnCount: PropTypes.number,
-    fixedRowCount: PropTypes.number,
-    getRowCount: PropTypes.func,
-    rowCount: PropTypes.number
+    fixedRowCount: PropTypes.number
 };

@@ -14,7 +14,7 @@ describe('Grid', () => {
     it('should be defined and have default props', () => {
         let error = chai.spy.on(console, 'error');
 
-        let container = renderIntoDocument(<Grid />) as Grid;
+        let container = renderIntoDocument(<Grid rowData={[]}/>) as Grid;
 
         expect(container).to.exist;
         expect(container.props.fixedColumnCount).to.be.equal(0);
@@ -24,24 +24,25 @@ describe('Grid', () => {
 
         expect(domElement).to.exist;
 
-        expect(error).to.have.been.called.once;
-        expect(error).to.have.been.called.with.exactly('Component <Grid />: Either getRowCount or rowCount should be defined');
+        expect(error).to.have.been.not.called;
     });
 
-    it('should calculate fixedColumnsWidth', () => {
+    it('should calculate fixedColumnsWidth and scrollableColumnsWidth', () => {
         let error = chai.spy.on(console, 'error');
 
         let container = renderIntoDocument(
-            <Grid fixedColumnCount={2} rowCount={10}>
-                <Column width={20}/>
-                <Column width={40}/>
-                <Column width={60}/>
+            <Grid fixedColumnCount={2} rowData={[]}>
+                <Column width={20} propName="dummy"/>
+                <Column width={40} propName="dummy"/>
+                <Column width={60} propName="dummy"/>
+                <Column width={80} propName="dummy"/>
             </Grid>
         ) as Grid;
 
         expect(container).to.exist;
         expect(container.props.fixedColumnCount).to.be.equal(2);
         expect(container.state.fixedColumnsWidth).to.be.equal(60);
+        expect(container.state.scrollableColumnsWidth).to.be.equal(140);
         expect(error).to.have.been.not.called;
     });
 });

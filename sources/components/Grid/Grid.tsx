@@ -12,6 +12,7 @@ import { Row } from './Row';
 export class Grid extends React.PureComponent<GridProps, GridState> {
 
     static propTypes = gridPropTypes;
+
     static defaultProps: GridProps = {
         fixedColumnCount: 0,
         fixedRowCount: 0,
@@ -20,11 +21,32 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
 
     constructor(props?: GridProps) {
         super(props);
+
+        this.handleHorizontalScrollPosChanged = this.handleHorizontalScrollPosChanged.bind(this);
         this.state = this.calculateState();
     }
 
+    handleHorizontalScrollPosChanged: (scrollLeft: number, scrollTop: number) => void = (scrollLeft, scrollTop) => {
+        if (this.state.scrollLeft !== scrollLeft) {
+            this.setState({
+                scrollLeft
+            });
+        }
+
+        if (this.state.scrollTop !== scrollTop) {
+            this.setState({
+                scrollTop
+            });
+        }
+    }
+
     render(): JSX.Element {
-        return <Layout orientation="horizontal" />;
+        return (
+            <Layout orientation="horizontal" height="100%">
+                {this.renderFixedColumns()}
+                {this.renderScrollableColumns()}
+            </Layout>
+        );
     }
 
     renderHeader(data: ColumnProps[]): React.ReactNode {
@@ -56,7 +78,7 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
                         data={fixedColumns}
                         dataRenderer={this.renderHeader}
                         width="100%"
-                        height="100%"
+                        height="20px"
                     />
                 </Layout>
                 <Layout height="100%">
@@ -65,17 +87,17 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
                         contentWidth={fixedColumnsWidth}
                         contentHeight="auto"
                         overflowX="hidden" overflowY="hidden"
-                        data={{rowData, fixedColumns}}
+                        data={{columnProps: fixedColumns, data: rowData}}
                         dataRenderer={this.renderRows}
                         width="100%"
                         height="100%"
+                        scrollTop={this.state.scrollTop}
                     />
                 </Layout>
             </Layout>;
 
-                        // horzScrollBarReplacerHeight={this.state.colsThumbHeight}
-                        // onVerticalScrollVisibilityChanged={this.handleVerticallScrollVisibilityChanged}
-                        // scrollTop={this.state.y}
+            // horzScrollBarReplacerHeight={this.state.colsThumbHeight}
+            // onVerticalScrollVisibilityChanged={this.handleVerticallScrollVisibilityChanged}
     }
 
     renderScrollableColumns(): JSX.Element {
@@ -93,7 +115,8 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
                         data={scrollableColumns}
                         dataRenderer={this.renderHeader}
                         width="100%"
-                        height="100%"
+                        height="20px"
+                        scrollLeft={this.state.scrollLeft}
                     />
                 </Layout>
                 <Layout height="100%">
@@ -102,21 +125,21 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
                         contentWidth={scrollableColumnsWidth}
                         contentHeight="auto"
                         overflowX="auto" overflowY="auto"
-                        data={{rowData, scrollableColumns}}
+                        data={{columnProps: scrollableColumns, data: rowData}}
                         dataRenderer={this.renderRows}
                         width="100%"
                         height="100%"
+                        onScrollPosChanged={this.handleHorizontalScrollPosChanged}
+                        scrollLeft={this.state.scrollLeft}
+                        scrollTop={this.state.scrollTop}
                     />
                 </Layout>
             </Layout>
-                        // scrollLeft={this.state.x}
-                        // vertScrollBarReplacerWidth={this.state.rowsThumbWidth}
-                        //
-                        // onScrollPosChanged={this.handleHorizontalScrollPosChanged}
-                        // onVerticalScrollVisibilityChanged={this.handleVerticallScrollVisibilityChanged}
-                        // onHorizontalScrollVisibilityChanged={this.handleHorizontalScrollVisibilityChanged}
-                        // scrollLeft={this.state.x}
-                        // scrollTop={this.state.y}
+
+            // vertScrollBarReplacerWidth={this.state.rowsThumbWidth}
+            //
+            // onVerticalScrollVisibilityChanged={this.handleVerticallScrollVisibilityChanged}
+            // onHorizontalScrollVisibilityChanged={this.handleHorizontalScrollVisibilityChanged}
         );
     }
 

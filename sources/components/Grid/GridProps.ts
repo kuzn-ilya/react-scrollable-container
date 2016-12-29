@@ -8,7 +8,7 @@ export interface GridProps {
 }
 
 export const gridPropTypes: ValidationMap<GridProps> = {
-    data: PropTypes.arrayOf(PropTypes.any).isRequired,
     fixedColumnCount: PropTypes.number,
-    fixedRowCount: PropTypes.number
+    fixedRowCount: PropTypes.number,
+    rowData: PropTypes.arrayOf(PropTypes.any).isRequired
 };

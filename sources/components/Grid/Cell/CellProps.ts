@@ -2,12 +2,13 @@ import { PropTypes, ValidationMap } from 'react';
 
 export interface CellProps {
     align?: 'left' | 'right' | 'center';
-    value: string;
+    // tslint:disable-next-line:no-any
+    value: any;
     width: number;
 }
 
 export const cellPropTypes: ValidationMap<CellProps> = {
     align: PropTypes.oneOf(['left', 'right', 'center']),
-    value: PropTypes.string.isRequired,
+    value: PropTypes.any.isRequired,
     width: PropTypes.number.isRequired
 };

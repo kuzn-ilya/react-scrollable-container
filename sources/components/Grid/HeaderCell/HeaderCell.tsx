@@ -7,12 +7,12 @@ export class HeaderCell extends React.PureComponent<HeaderCellProps, {}> {
     render(): JSX.Element {
         let style = {
             borderBottom: 'solid 1px #d6d6d6',
-            borderRight: 'solid 1px #d6d6d6',
+            // borderRight: 'solid 1px #d6d6d6',
             borderTop: 'solid 1px #d6d6d6',
             display: 'inline-block',
             overflow: 'hidden',
-            paddingLeft: '5px',
-            paddingRight: '5px',
+            // paddingLeft: '5px',
+            // paddingRight: '5px',
             textAlign: 'center',
             textOverflow: 'ellipsis',
             whiteSpace: 'nowrap',

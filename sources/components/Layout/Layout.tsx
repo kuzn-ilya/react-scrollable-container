@@ -10,10 +10,7 @@ import '../../styles/layout.css';
 export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
 
     static defaultProps: LayoutProps = {
-        height: undefined,
-        orientation: undefined,
-        showSplitter: false,
-        width: undefined
+        showSplitter: false
     };
 
     static propTypes = layoutPropTypes;

@@ -4,7 +4,6 @@ var common = require('./webpack.common.js');
 
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var path = require('path');
-var ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
 
 var cssVars1 = require('../sources/stubs/cssVars.js');
 var cssVars2 = require('../examples/page/cssVars.js');
@@ -68,7 +67,6 @@ var config = merge.smart(common, {
             template: './index.ejs',
             inject: 'body'
         }),
-        new ForkCheckerPlugin(),
         new webpack.optimize.CommonsChunkPlugin({
             name: "libs",
             minChunks: 0

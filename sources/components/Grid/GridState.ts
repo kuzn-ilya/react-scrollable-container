@@ -6,6 +6,8 @@ export interface GridState {
     scrollableColumnsWidth?: number;
     scrollableColumns?: ColumnProps[];
     headerHeight?: number;
+    rowsThumbWidth?: number;
+    colsThumbHeight?: number;
     scrollLeft?: number;
     scrollTop?: number;
 }

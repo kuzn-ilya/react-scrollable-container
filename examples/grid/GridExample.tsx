@@ -30,6 +30,7 @@ export class GridExample extends React.Component<{}, CompState> {
                 <Grid rowData={this.state.data} fixedColumnCount={2}>
                     <Column caption="id" propName="id" width={30} />
                     <Column caption="firstName" propName="firstName" width={150} />
+                    <Column caption="id" propName="id" width={30} />
                     <Column caption="lastName" propName="lastName" width={150} />
                     <Column caption="email" propName="email" width={150} />
                     <Column caption="gender" propName="gender" width={80} />

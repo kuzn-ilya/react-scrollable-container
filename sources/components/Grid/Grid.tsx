@@ -23,6 +23,8 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
         super(props);
 
         this.handleHorizontalScrollPosChanged = this.handleHorizontalScrollPosChanged.bind(this);
+        this.handleHorizontalScrollVisibilityChanged = this.handleHorizontalScrollVisibilityChanged.bind(this);
+        this.handleVerticalScrollVisibilityChanged = this.handleVerticalScrollVisibilityChanged.bind(this);
         this.state = this.calculateState();
     }
 
@@ -92,12 +94,10 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
                         width="100%"
                         height="100%"
                         scrollTop={this.state.scrollTop}
+                        horzScrollBarReplacerHeight={this.state.colsThumbHeight}
                     />
                 </Layout>
             </Layout>;
-
-            // horzScrollBarReplacerHeight={this.state.colsThumbHeight}
-            // onVerticalScrollVisibilityChanged={this.handleVerticallScrollVisibilityChanged}
     }
 
     renderScrollableColumns(): JSX.Element {
@@ -117,6 +117,7 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
                         width="100%"
                         height="20px"
                         scrollLeft={this.state.scrollLeft}
+                        vertScrollBarReplacerWidth={this.state.rowsThumbWidth}
                     />
                 </Layout>
                 <Layout height="100%">
@@ -130,17 +131,26 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
                         width="100%"
                         height="100%"
                         onScrollPosChanged={this.handleHorizontalScrollPosChanged}
+                        onVerticalScrollVisibilityChanged={this.handleVerticalScrollVisibilityChanged}
+                        onHorizontalScrollVisibilityChanged={this.handleHorizontalScrollVisibilityChanged}
                         scrollLeft={this.state.scrollLeft}
                         scrollTop={this.state.scrollTop}
                     />
                 </Layout>
             </Layout>
-
-            // vertScrollBarReplacerWidth={this.state.rowsThumbWidth}
-            //
-            // onVerticalScrollVisibilityChanged={this.handleVerticallScrollVisibilityChanged}
-            // onHorizontalScrollVisibilityChanged={this.handleHorizontalScrollVisibilityChanged}
         );
+    }
+
+    handleVerticalScrollVisibilityChanged: (visible: boolean, thumbWidth: number) => void = (visible: boolean, thumbWidth: number) => {
+        this.setState({
+            rowsThumbWidth: thumbWidth
+        });
+    }
+
+    handleHorizontalScrollVisibilityChanged: (visible: boolean, thumbHeight: number) => void = (visible: boolean, thumbHeight: number) => {
+        this.setState({
+            colsThumbHeight: thumbHeight
+        });
     }
 
     calculateState(): GridState {

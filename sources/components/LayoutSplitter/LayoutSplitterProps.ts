@@ -1,17 +1,18 @@
 import { PropTypes } from 'react';
 import { Orientation, orientationPropType } from '../../utils/types';
+import { ValidationMap } from '../../react/ValidationMap';
 
 // TODO come up with more appropriate names for coord, minCoord and maxCoord
 export interface LayoutSplitterProps {
-    orientation: Orientation;
-    coord: number;
-    minCoord?: number;
-    maxCoord?: number;
-    onResizing?: (newCoord: number) => void;
-    onResizeEnd?: () => void;
+    readonly orientation: Orientation;
+    readonly coord: number;
+    readonly minCoord?: number;
+    readonly maxCoord?: number;
+    readonly onResizing?: (newCoord: number) => void;
+    readonly onResizeEnd?: () => void;
 }
 
-export const layoutSplitterPropTypes = {
+export const layoutSplitterPropTypes: ValidationMap<LayoutSplitterProps> = {
     coord: PropTypes.number.isRequired,
     maxCoord: PropTypes.number,
     minCoord: PropTypes.number,

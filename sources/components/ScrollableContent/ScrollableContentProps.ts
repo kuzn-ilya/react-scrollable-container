@@ -1,5 +1,6 @@
 import { PropTypes } from 'react';
 import { Size, sizePropType } from '../../utils/types';
+import { ValidationMap } from '../../react/ValidationMap';
 
 export interface ScrollableContentProps {
     readonly contentWidth?: Size;
@@ -10,7 +11,7 @@ export interface ScrollableContentProps {
     readonly data?: any;
 }
 
-export const scrollableContentPropTypes = {
+export const scrollableContentPropTypes: ValidationMap<ScrollableContentProps> = {
     contentHeight: sizePropType,
     contentWidth: sizePropType,
     data: PropTypes.any,

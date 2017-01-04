@@ -1,5 +1,6 @@
 import { CSSProperties, PropTypes } from 'react';
 import { Overflow, overflowPropType, Size, sizePropType } from '../../utils/types';
+import { ValidationMap } from '../../react/ValidationMap';
 
 export interface ScrollableContainerProps {
     readonly id?: string;
@@ -36,7 +37,7 @@ export interface ScrollableContainerProps {
     readonly style?: CSSProperties;
 }
 
-export const scrollableContainerPropTypes = {
+export const scrollableContainerPropTypes: ValidationMap<ScrollableContainerProps> = {
     className: PropTypes.string,
     contentHeight: sizePropType,
     contentWidth: sizePropType,

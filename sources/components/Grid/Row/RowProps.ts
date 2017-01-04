@@ -1,4 +1,5 @@
-import { PropTypes, ValidationMap } from 'react';
+import { PropTypes } from 'react';
+import { ValidationMap } from '../../../react/ValidationMap';
 import { ColumnProps } from '../Column/ColumnProps';
 
 export interface RowProps {
@@ -9,7 +10,7 @@ export interface RowProps {
 }
 
 export const rowPropTypes: ValidationMap<RowProps> = {
-    columnProps: PropTypes.arrayOf(PropTypes.any),
+    columnProps: PropTypes.arrayOf(PropTypes.any).isRequired,
     data: PropTypes.any.isRequired,
     rowIndex: PropTypes.number.isRequired
 };

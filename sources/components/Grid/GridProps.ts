@@ -1,4 +1,5 @@
-import { PropTypes, ValidationMap } from 'react';
+import { PropTypes } from 'react';
+import { ValidationMap } from '../../react/ValidationMap';
 
 export interface GridProps {
     // tslint:disable-next-line:no-any

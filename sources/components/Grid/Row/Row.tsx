@@ -8,7 +8,7 @@ export class Row extends React.PureComponent<RowProps, {}> {
 
     render(): JSX.Element {
         return (
-            <div key={this.props.rowIndex}>
+            <div key={this.props.rowIndex} style={{height: this.props.height}}>
                 {this.renderCells()}
             </div>
         );
@@ -16,7 +16,11 @@ export class Row extends React.PureComponent<RowProps, {}> {
 
     renderCells(): React.ReactNode {
         return this.props.columnProps.map((value: ColumnProps, index: number) =>
-            <Cell key={index} width={value.width} value={this.props.data[value.propName]} align={value.align}/>
+            <Cell key={index} width={value.width}
+                value={this.props.data[value.propName]}
+                align={value.align}
+                firstCell={index === 0}
+                height={this.props.height}/>
         );
     }
 }

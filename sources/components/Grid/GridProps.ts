@@ -6,10 +6,12 @@ export interface GridProps {
     rowData: any[];
     fixedColumnCount?: number;
     fixedRowCount?: number;
+    rowHeight: number;
 }
 
 export const gridPropTypes: ValidationMap<GridProps> = {
     fixedColumnCount: PropTypes.number,
     fixedRowCount: PropTypes.number,
-    rowData: PropTypes.arrayOf(PropTypes.any).isRequired
+    rowData: PropTypes.arrayOf(PropTypes.any).isRequired,
+    rowHeight: PropTypes.number.isRequired
 };

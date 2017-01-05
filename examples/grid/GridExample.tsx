@@ -27,7 +27,7 @@ export class GridExample extends React.Component<{}, CompState> {
                         Remove Last
                     </button>
                 </Layout>
-                <Grid rowData={this.state.data} fixedColumnCount={2}>
+                <Grid rowData={this.state.data} fixedColumnCount={2} rowHeight={20}>
                     <Column caption="id" propName="id" width={30} />
                     <Column caption="firstName" propName="firstName" width={150} />
                     <Column caption="id" propName="id" width={30} />

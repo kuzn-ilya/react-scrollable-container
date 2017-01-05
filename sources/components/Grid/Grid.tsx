@@ -16,7 +16,8 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
     static defaultProps: GridProps = {
         fixedColumnCount: 0,
         fixedRowCount: 0,
-        rowData: []
+        rowData: [],
+        rowHeight: 0
     };
 
     constructor(props?: GridProps) {
@@ -25,6 +26,7 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
         this.handleHorizontalScrollPosChanged = this.handleHorizontalScrollPosChanged.bind(this);
         this.handleHorizontalScrollVisibilityChanged = this.handleHorizontalScrollVisibilityChanged.bind(this);
         this.handleVerticalScrollVisibilityChanged = this.handleVerticalScrollVisibilityChanged.bind(this);
+        this.renderRows = this.renderRows.bind(this);
         this.state = this.calculateState();
     }
 
@@ -53,15 +55,16 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
 
     renderHeader(data: ColumnProps[]): React.ReactNode {
         return data.map((columnProps: ColumnProps, index: number) =>
-            <HeaderCell key={index} width={columnProps.width} caption={columnProps.caption} />
+            <HeaderCell key={index} width={columnProps.width} caption={columnProps.caption} firstCell={index === 0}/>
         );
     }
 
     // tslint:disable-next-line:no-any
-    renderRows(rowData: {data: any[], columnProps: ColumnProps[]}): React.ReactNode {
+    renderRows: (rowData: {data: any[], columnProps: ColumnProps[]}) => React.ReactNode =
+        (rowData: {data: any[], columnProps: ColumnProps[]}) => {
         // tslint:disable-next-line:no-any
         return rowData.data.map((value: any, index: number) =>
-            <Row data={value} key={index} rowIndex={index} columnProps={rowData.columnProps}/>
+            <Row data={value} key={index} rowIndex={index} columnProps={rowData.columnProps} height={this.props.rowHeight}/>
         );
     }
 

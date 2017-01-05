@@ -19,7 +19,7 @@ export class Row extends React.PureComponent<RowProps, {}> {
             <Cell key={index} width={value.width}
                 value={this.props.data[value.propName]}
                 align={value.align}
-                firstCell={index === 0 && this.props.showEdgeForTheFirstCell}
+                firstCell={index === 0 && this.props.showEdgeForTheLeftCell}
                 height={this.props.height}/>
         );
     }

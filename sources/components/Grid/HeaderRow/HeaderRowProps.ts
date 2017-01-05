@@ -6,11 +6,11 @@ export interface HeaderRowProps {
     columnProps: ColumnProps[];
     // tslint:disable-next-line:no-any
     height: number;
-    showEdgeForTheFirstCell?: boolean;
+    showEdgeForTheLeftCell?: boolean;
 }
 
 export const headerRowPropTypes: ValidationMap<HeaderRowProps> = {
     columnProps: PropTypes.arrayOf(PropTypes.any).isRequired,
     height: PropTypes.number.isRequired,
-    showEdgeForTheFirstCell: PropTypes.bool
+    showEdgeForTheLeftCell: PropTypes.bool
 };

@@ -18,7 +18,7 @@ export class HeaderRow extends React.PureComponent<HeaderRowProps, {}> {
         return this.props.columnProps.map((value: ColumnProps, index: number) =>
             <HeaderCell key={index} width={value.width}
                 caption={value.caption}
-                firstCell={index === 0 && this.props.showEdgeForTheFirstCell}
+                firstCell={index === 0 && this.props.showEdgeForTheLeftCell}
                 height={this.props.height}/>
         );
     }

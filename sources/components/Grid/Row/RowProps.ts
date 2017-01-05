@@ -8,7 +8,7 @@ export interface RowProps {
     data: any;
     rowIndex: number;
     height: number;
-    showEdgeForTheFirstCell?: boolean;
+    showEdgeForTheLeftCell?: boolean;
 }
 
 export const rowPropTypes: ValidationMap<RowProps> = {
@@ -16,5 +16,5 @@ export const rowPropTypes: ValidationMap<RowProps> = {
     data: PropTypes.any.isRequired,
     height: PropTypes.number.isRequired,
     rowIndex: PropTypes.number.isRequired,
-    showEdgeForTheFirstCell: PropTypes.bool
+    showEdgeForTheLeftCell: PropTypes.bool
 };

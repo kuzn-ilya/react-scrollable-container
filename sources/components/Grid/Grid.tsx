@@ -12,7 +12,7 @@ import { Row } from './Row';
 interface HeaderRowData {
     columnProps: ColumnProps[];
     height: number;
-    showEdgeForTheFirstCell: boolean;
+    showEdgeForTheLeftCell: boolean;
 }
 
 interface RowData extends HeaderRowData {
@@ -68,7 +68,7 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
 
     renderHeader: (data: HeaderRowData) => React.ReactNode = (data: HeaderRowData) => {
         return <HeaderRow columnProps={data.columnProps}
-            showEdgeForTheFirstCell={data.showEdgeForTheFirstCell}
+            showEdgeForTheLeftCell={data.showEdgeForTheLeftCell}
             height={data.height}
         />;
     }
@@ -81,7 +81,7 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
                 rowIndex={index}
                 columnProps={rowData.columnProps}
                 height={this.props.rowHeight}
-                showEdgeForTheFirstCell={rowData.showEdgeForTheFirstCell}
+                showEdgeForTheLeftCell={rowData.showEdgeForTheLeftCell}
             />
         );
     }
@@ -98,7 +98,7 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
                         contentWidth={fixedColumnsWidth}
                         contentHeight={this.props.headerHeight}
                         overflowX="hidden" overflowY="hidden"
-                        data={{columnProps: fixedColumns, height: headerHeight, showEdgeForTheFirstCell: true}}
+                        data={{columnProps: fixedColumns, height: headerHeight, showEdgeForTheLeftCell: true}}
                         dataRenderer={this.renderHeader}
                         width="100%"
                         height={this.props.headerHeight}
@@ -110,7 +110,7 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
                         contentWidth={fixedColumnsWidth}
                         contentHeight="auto"
                         overflowX="hidden" overflowY="hidden"
-                        data={{columnProps: fixedColumns, data: rowData, showEdgeForTheFirstCell: true}}
+                        data={{columnProps: fixedColumns, data: rowData, showEdgeForTheLeftCell: true}}
                         dataRenderer={this.renderRows}
                         width="100%"
                         height="100%"
@@ -133,7 +133,7 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
                         contentWidth={scrollableColumnsWidth}
                         contentHeight={this.props.headerHeight}
                         overflowX="hidden" overflowY="hidden"
-                        data={{columnProps: scrollableColumns, height: headerHeight, showEdgeForTheFirstCell: false}}
+                        data={{columnProps: scrollableColumns, height: headerHeight, showEdgeForTheLeftCell: false}}
                         dataRenderer={this.renderHeader}
                         width="100%"
                         height={this.props.headerHeight}

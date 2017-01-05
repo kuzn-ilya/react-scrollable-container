@@ -61,6 +61,7 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
 
     // tslint:disable-next-line:no-any
     renderRows: (rowData: {data: any[], columnProps: ColumnProps[]}) => React.ReactNode =
+        // tslint:disable-next-line:no-any
         (rowData: {data: any[], columnProps: ColumnProps[]}) => {
         // tslint:disable-next-line:no-any
         return rowData.data.map((value: any, index: number) =>

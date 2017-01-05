@@ -5,6 +5,7 @@ import { Layout } from '../../sources/components';
 import { Grid, Column } from '../../sources/components';
 
 interface CompState {
+    // tslint:disable-next-line:no-any
     data: any[];
 }
 

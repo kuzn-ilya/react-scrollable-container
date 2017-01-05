@@ -8,6 +8,7 @@ export class HeaderCell extends React.PureComponent<HeaderCellProps, {}> {
 
     render(): JSX.Element {
         let style = {
+            height: this.props.height.toString() + 'px',
             width: this.props.width.toString() + 'px'
         };
 

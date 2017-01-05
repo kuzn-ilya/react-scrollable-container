@@ -6,11 +6,12 @@ import { Column } from './Column';
 import { ColumnProps } from './Column/ColumnProps';
 import { Layout } from '../Layout';
 import { ScrollableContainer } from '../ScrollableContainer';
-import { HeaderCell } from './HeaderCell';
+import { HeaderRow } from './HeaderRow';
 import { Row } from './Row';
 
 interface HeaderRowData {
     columnProps: ColumnProps[];
+    height: number;
     showEdgeForTheFirstCell: boolean;
 }
 
@@ -26,6 +27,7 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
     static defaultProps: GridProps = {
         fixedColumnCount: 0,
         fixedRowCount: 0,
+        headerHeight: 0,
         rowData: [],
         rowHeight: 0
     };
@@ -36,6 +38,7 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
         this.handleHorizontalScrollPosChanged = this.handleHorizontalScrollPosChanged.bind(this);
         this.handleHorizontalScrollVisibilityChanged = this.handleHorizontalScrollVisibilityChanged.bind(this);
         this.handleVerticalScrollVisibilityChanged = this.handleVerticalScrollVisibilityChanged.bind(this);
+        this.renderHeader = this.renderHeader.bind(this);
         this.renderRows = this.renderRows.bind(this);
         this.state = this.calculateState();
     }
@@ -63,14 +66,11 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
         );
     }
 
-    renderHeader(data: HeaderRowData): React.ReactNode {
-        return data.columnProps.map((columnProps: ColumnProps, index: number) =>
-            <HeaderCell key={index}
-                width={columnProps.width}
-                caption={columnProps.caption}
-                firstCell={index === 0 && data.showEdgeForTheFirstCell}
-            />
-        );
+    renderHeader: (data: HeaderRowData) => React.ReactNode = (data: HeaderRowData) => {
+        return <HeaderRow columnProps={data.columnProps}
+            showEdgeForTheFirstCell={data.showEdgeForTheFirstCell}
+            height={data.height}
+        />;
     }
 
     renderRows: (rowData: RowData) => React.ReactNode = (rowData: RowData) => {
@@ -88,20 +88,20 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
 
     renderFixedColumns(): JSX.Element | null {
         let { fixedColumnsWidth, fixedColumns } = this.state;
-        let { rowData } = this.props;
+        let { rowData, headerHeight } = this.props;
 
         return !fixedColumnsWidth ? null :
             <Layout width={fixedColumnsWidth} showSplitter orientation="vertical">
-                <Layout height="20px">
+                <Layout height={this.props.headerHeight}>
                     <ScrollableContainer
                         key="header"
                         contentWidth={fixedColumnsWidth}
-                        contentHeight="auto"
+                        contentHeight={this.props.headerHeight}
                         overflowX="hidden" overflowY="hidden"
-                        data={{columnProps: fixedColumns, showEdgeForTheFirstCell: true}}
+                        data={{columnProps: fixedColumns, height: headerHeight, showEdgeForTheFirstCell: true}}
                         dataRenderer={this.renderHeader}
                         width="100%"
-                        height="20px"
+                        height={this.props.headerHeight}
                     />
                 </Layout>
                 <Layout height="100%">
@@ -123,20 +123,20 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
 
     renderScrollableColumns(): JSX.Element {
         let { scrollableColumnsWidth, scrollableColumns } = this.state;
-        let { rowData } = this.props;
+        let { headerHeight, rowData } = this.props;
 
         return (
             <Layout width="100%" orientation="vertical">
-                <Layout height="20px">
+                <Layout height={this.props.headerHeight}>
                     <ScrollableContainer
                         key="header"
                         contentWidth={scrollableColumnsWidth}
-                        contentHeight="auto"
+                        contentHeight={this.props.headerHeight}
                         overflowX="hidden" overflowY="hidden"
-                        data={{columnProps: scrollableColumns, showEdgeForTheFirstCell: false}}
+                        data={{columnProps: scrollableColumns, height: headerHeight, showEdgeForTheFirstCell: false}}
                         dataRenderer={this.renderHeader}
                         width="100%"
-                        height="20px"
+                        height={this.props.headerHeight}
                         scrollLeft={this.state.scrollLeft}
                         vertScrollBarReplacerWidth={this.state.rowsThumbWidth}
                     />

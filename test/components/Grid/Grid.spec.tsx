@@ -14,7 +14,7 @@ describe('Grid', () => {
     it('should be defined and have default props', () => {
         let error = chai.spy.on(console, 'error');
 
-        let container = renderIntoDocument(<Grid rowData={[]} rowHeight={20}/>) as Grid;
+        let container = renderIntoDocument(<Grid rowData={[]} rowHeight={20} headerHeight={20}/>) as Grid;
 
         expect(container).to.exist;
         expect(container.props.fixedColumnCount).to.be.equal(0);
@@ -31,7 +31,7 @@ describe('Grid', () => {
         let error = chai.spy.on(console, 'error');
 
         let container = renderIntoDocument(
-            <Grid fixedColumnCount={2} rowData={[]} rowHeight={20}>
+            <Grid fixedColumnCount={2} rowData={[]} rowHeight={20} headerHeight={20}>
                 <Column width={20} propName="dummy"/>
                 <Column width={40} propName="dummy"/>
                 <Column width={60} propName="dummy"/>

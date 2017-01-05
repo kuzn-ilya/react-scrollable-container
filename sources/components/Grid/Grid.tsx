@@ -9,6 +9,16 @@ import { ScrollableContainer } from '../ScrollableContainer';
 import { HeaderCell } from './HeaderCell';
 import { Row } from './Row';
 
+interface HeaderRowData {
+    columnProps: ColumnProps[];
+    showEdgeForTheFirstCell: boolean;
+}
+
+interface RowData extends HeaderRowData {
+    // tslint:disable-next-line:no-any
+    data: any[];
+}
+
 export class Grid extends React.PureComponent<GridProps, GridState> {
 
     static propTypes = gridPropTypes;
@@ -53,19 +63,26 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
         );
     }
 
-    renderHeader(data: ColumnProps[]): React.ReactNode {
-        return data.map((columnProps: ColumnProps, index: number) =>
-            <HeaderCell key={index} width={columnProps.width} caption={columnProps.caption} firstCell={index === 0}/>
+    renderHeader(data: HeaderRowData): React.ReactNode {
+        return data.columnProps.map((columnProps: ColumnProps, index: number) =>
+            <HeaderCell key={index}
+                width={columnProps.width}
+                caption={columnProps.caption}
+                firstCell={index === 0 && data.showEdgeForTheFirstCell}
+            />
         );
     }
 
-    // tslint:disable-next-line:no-any
-    renderRows: (rowData: {data: any[], columnProps: ColumnProps[]}) => React.ReactNode =
-        // tslint:disable-next-line:no-any
-        (rowData: {data: any[], columnProps: ColumnProps[]}) => {
+    renderRows: (rowData: RowData) => React.ReactNode = (rowData: RowData) => {
         // tslint:disable-next-line:no-any
         return rowData.data.map((value: any, index: number) =>
-            <Row data={value} key={index} rowIndex={index} columnProps={rowData.columnProps} height={this.props.rowHeight}/>
+            <Row data={value}
+                key={index}
+                rowIndex={index}
+                columnProps={rowData.columnProps}
+                height={this.props.rowHeight}
+                showEdgeForTheFirstCell={rowData.showEdgeForTheFirstCell}
+            />
         );
     }
 
@@ -81,7 +98,7 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
                         contentWidth={fixedColumnsWidth}
                         contentHeight="auto"
                         overflowX="hidden" overflowY="hidden"
-                        data={fixedColumns}
+                        data={{columnProps: fixedColumns, showEdgeForTheFirstCell: true}}
                         dataRenderer={this.renderHeader}
                         width="100%"
                         height="20px"
@@ -93,7 +110,7 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
                         contentWidth={fixedColumnsWidth}
                         contentHeight="auto"
                         overflowX="hidden" overflowY="hidden"
-                        data={{columnProps: fixedColumns, data: rowData}}
+                        data={{columnProps: fixedColumns, data: rowData, showEdgeForTheFirstCell: true}}
                         dataRenderer={this.renderRows}
                         width="100%"
                         height="100%"
@@ -116,7 +133,7 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
                         contentWidth={scrollableColumnsWidth}
                         contentHeight="auto"
                         overflowX="hidden" overflowY="hidden"
-                        data={scrollableColumns}
+                        data={{columnProps: scrollableColumns, showEdgeForTheFirstCell: false}}
                         dataRenderer={this.renderHeader}
                         width="100%"
                         height="20px"

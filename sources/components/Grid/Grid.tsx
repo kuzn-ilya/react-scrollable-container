@@ -9,15 +9,17 @@ import { ScrollableContainer } from '../ScrollableContainer';
 import { HeaderRow } from './HeaderRow';
 import { Row } from './Row';
 
-interface HeaderRowData {
+interface HeaderData {
     columnProps: ColumnProps[];
     height: number;
     showEdgeForTheLeftCell: boolean;
 }
 
-interface RowData extends HeaderRowData {
+interface RowData {
+    columnProps: ColumnProps[];
     // tslint:disable-next-line:no-any
     data: any[];
+    showEdgeForTheLeftCell: boolean;
 }
 
 export class Grid extends React.PureComponent<GridProps, GridState> {
@@ -43,6 +45,11 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
         this.state = this.calculateState();
     }
 
+    fixedColumnsHeaderData?: HeaderData;
+    fixedColumnsRowData?: RowData;
+    scrollableColumnsHeaderData?: HeaderData;
+    scrollableColumnsRowData?: RowData;
+
     handleHorizontalScrollPosChanged: (scrollLeft: number, scrollTop: number) => void = (scrollLeft, scrollTop) => {
         if (this.state.scrollLeft !== scrollLeft) {
             this.setState({
@@ -66,7 +73,7 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
         );
     }
 
-    renderHeader: (data: HeaderRowData) => React.ReactNode = (data: HeaderRowData) => {
+    renderHeader: (data: HeaderData) => React.ReactNode = (data: HeaderData) => {
         return <HeaderRow columnProps={data.columnProps}
             showEdgeForTheLeftCell={data.showEdgeForTheLeftCell}
             height={data.height}
@@ -90,6 +97,24 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
         let { fixedColumnsWidth, fixedColumns } = this.state;
         let { rowData, headerHeight } = this.props;
 
+        if (!this.fixedColumnsHeaderData || this.fixedColumnsHeaderData.columnProps !== fixedColumns
+            || this.fixedColumnsHeaderData.height !== headerHeight) {
+            this.fixedColumnsHeaderData = {
+                columnProps: fixedColumns!,
+                height: headerHeight,
+                showEdgeForTheLeftCell: true
+            };
+        }
+
+        if (!this.fixedColumnsRowData || this.fixedColumnsRowData.columnProps !== fixedColumns
+            || this.fixedColumnsRowData.data !== rowData) {
+            this.fixedColumnsRowData = {
+                columnProps: fixedColumns!,
+                data: rowData,
+                showEdgeForTheLeftCell: true
+            };
+        }
+
         return !fixedColumnsWidth ? null :
             <Layout width={fixedColumnsWidth} showSplitter orientation="vertical">
                 <Layout height={this.props.headerHeight}>
@@ -98,7 +123,7 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
                         contentWidth={fixedColumnsWidth}
                         contentHeight={this.props.headerHeight}
                         overflowX="hidden" overflowY="hidden"
-                        data={{columnProps: fixedColumns, height: headerHeight, showEdgeForTheLeftCell: true}}
+                        data={this.fixedColumnsHeaderData}
                         dataRenderer={this.renderHeader}
                         width="100%"
                         height={this.props.headerHeight}
@@ -110,7 +135,7 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
                         contentWidth={fixedColumnsWidth}
                         contentHeight="auto"
                         overflowX="hidden" overflowY="hidden"
-                        data={{columnProps: fixedColumns, data: rowData, showEdgeForTheLeftCell: true}}
+                        data={this.fixedColumnsRowData}
                         dataRenderer={this.renderRows}
                         width="100%"
                         height="100%"
@@ -125,6 +150,24 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
         let { scrollableColumnsWidth, scrollableColumns } = this.state;
         let { headerHeight, rowData } = this.props;
 
+        if (!this.scrollableColumnsHeaderData || this.scrollableColumnsHeaderData.columnProps !== scrollableColumns
+            || this.scrollableColumnsHeaderData.height !== headerHeight) {
+            this.scrollableColumnsHeaderData = {
+                columnProps: scrollableColumns!,
+                height: headerHeight,
+                showEdgeForTheLeftCell: true
+            };
+        }
+
+        if (!this.scrollableColumnsRowData || this.scrollableColumnsRowData.columnProps !== scrollableColumns
+            || this.scrollableColumnsRowData.data !== rowData) {
+            this.scrollableColumnsRowData = {
+                columnProps: scrollableColumns!,
+                data: rowData,
+                showEdgeForTheLeftCell: true
+            };
+        }
+
         return (
             <Layout width="100%" orientation="vertical">
                 <Layout height={this.props.headerHeight}>
@@ -133,7 +176,7 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
                         contentWidth={scrollableColumnsWidth}
                         contentHeight={this.props.headerHeight}
                         overflowX="hidden" overflowY="hidden"
-                        data={{columnProps: scrollableColumns, height: headerHeight, showEdgeForTheLeftCell: false}}
+                        data={this.scrollableColumnsHeaderData}
                         dataRenderer={this.renderHeader}
                         width="100%"
                         height={this.props.headerHeight}
@@ -147,7 +190,7 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
                         contentWidth={scrollableColumnsWidth}
                         contentHeight="auto"
                         overflowX="auto" overflowY="auto"
-                        data={{columnProps: scrollableColumns, data: rowData}}
+                        data={this.scrollableColumnsRowData}
                         dataRenderer={this.renderRows}
                         width="100%"
                         height="100%"

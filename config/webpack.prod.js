@@ -47,6 +47,9 @@ var config = merge.smart(common, {
     },
     plugins: [
         new ExtractTextPlugin('[name].css'),
+        new webpack.optimize.UglifyJsPlugin({
+            sourceMap: false
+        }),
         new webpack.DefinePlugin({
             "process.env": { 
                 NODE_ENV: JSON.stringify("production") 

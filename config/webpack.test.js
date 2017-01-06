@@ -43,6 +43,14 @@ var config = merge.smart(common, {
         ]
     },
 
+    plugins: [
+        new webpack.DefinePlugin({
+            "process.env": { 
+                NODE_ENV: JSON.stringify("test") 
+            }
+        })        
+    ],
+
     // This section is here to avoid webpack errors while loading useragent lib.
     node: {
         fs: 'empty',

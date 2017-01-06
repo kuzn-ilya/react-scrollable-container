@@ -4,12 +4,12 @@
   "description": "React Scrollable Container",
   "scripts": {
     "build": "npm run tslint && npm run test && npm run build:prod",
-    "build:prod": "cross-env NODE_ENV=production webpack --config ./config/webpack.prod.js",
+    "build:prod": "webpack --config ./config/webpack.prod.js",
     "clean": "rimraf ./node_modules ./build ./coverage",
     "coverage": "npm run coverage:remap && npm run coverage:report",
     "coverage:remap": "remap-istanbul -i coverage/coverage.json -o coverage/coverage.json -t json -e node_modules,test,app.ts",
     "coverage:report": "istanbul report",
-    "examples": "cross-env NODE_ENV=development webpack-dev-server --config ./config/webpack.dev.js",
+    "examples": "webpack-dev-server --config ./config/webpack.dev.js",
     "test": "karma start",
     "posttest": "npm run coverage",
     "tslint": "tslint sources/**/*.ts{,x}"
@@ -42,7 +42,6 @@
     "awesome-typescript-loader": "^3.0.0-beta.9",
     "chai": "^3.5.0",
     "chai-spies": "^0.7.1",
-    "cross-env": "^3.1.3",
     "css-loader": "^0.25.0",
     "ejs-loader": "^0.3.0",
     "extract-text-webpack-plugin": "^1.0.1",

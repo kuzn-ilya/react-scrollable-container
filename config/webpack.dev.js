@@ -56,11 +56,6 @@ var config = merge.smart(common, {
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
-        new webpack.DefinePlugin({
-            'process.env': {
-                'NODE_ENV': JSON.stringify('development')
-            }
-        }),
         new webpack.SourceMapDevToolPlugin({ filename: null, test: /\.tsx?$/ }),
         new HtmlWebpackPlugin({
             title: 'react-container',
@@ -70,7 +65,12 @@ var config = merge.smart(common, {
         new webpack.optimize.CommonsChunkPlugin({
             name: "libs",
             minChunks: 0
-        })
+        }),
+        new webpack.DefinePlugin({
+            "process.env": { 
+                NODE_ENV: JSON.stringify("development") 
+            }
+        })        
     ]
 });
 

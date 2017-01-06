@@ -116,7 +116,7 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
         }
 
         return !fixedColumnsWidth ? null :
-            <Layout width={fixedColumnsWidth} showSplitter orientation="vertical">
+            <Layout width={fixedColumnsWidth} orientation="vertical">
                 <Layout height={this.props.headerHeight}>
                     <ScrollableContainer
                         key="header"
@@ -197,8 +197,6 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
                         onScrollPosChanged={this.handleHorizontalScrollPosChanged}
                         onVerticalScrollVisibilityChanged={this.handleVerticalScrollVisibilityChanged}
                         onHorizontalScrollVisibilityChanged={this.handleHorizontalScrollVisibilityChanged}
-                        scrollLeft={this.state.scrollLeft}
-                        scrollTop={this.state.scrollTop}
                     />
                 </Layout>
             </Layout>
@@ -243,7 +241,9 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
             fixedColumns,
             headerHeight,
             scrollableColumnsWidth,
-            scrollableColumns
+            scrollableColumns,
+            scrollLeft: 0,
+            scrollTop: 0
         };
     }
 }

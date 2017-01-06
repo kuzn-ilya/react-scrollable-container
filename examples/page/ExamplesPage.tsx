@@ -4,6 +4,7 @@ import './styles.css';
 import { Layout } from '../../sources/components';
 
 import { Example } from './Example';
+import { ExamplesList } from './ExamplesList';
 
 export interface ExamplesPageProps {
     examples: Example[];
@@ -27,11 +28,7 @@ export class ExamplesPage extends React.PureComponent<ExamplesPageProps, Example
         return (
             <Layout orientation="horizontal" width="100%" height="100%">
                 <Layout width="200px" showSplitter>
-                    <ul>
-                        {this.props.examples.map((example: Example, index: number) => (
-                            <li key={index}>{example.name}</li>
-                        ))}
-                    </ul>
+                    <ExamplesList examples={this.props.examples}/>
                 </Layout>
                 <Layout width="100%" orientation="vertical">
                     <Layout showSplitter>

@@ -48,7 +48,7 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
 
     componentDidUpdate(): void {
         this.updateScrollPositions();
-}
+    }
 
     componentWillUnmount(): void {
         this.ref.removeEventListener('scroll', this.handleScroll);
@@ -90,18 +90,32 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
     handleWindowResize: () => void =
         () => this.measureScrollbars();
 
+    private scrollLeft: number = 0;
+    private scrollTop: number = 0;
+
     private handleScroll: (event: UIEvent) => void = (event) => {
         let scrollLeft = (event.target as Element).scrollLeft;
         let scrollTop = (event.target as Element).scrollTop;
-        if (this.props.onScrollPosChanged) {
-            this.props.onScrollPosChanged(scrollLeft, scrollTop);
+        if (scrollLeft !== this.scrollLeft || scrollTop !== this.scrollTop) {
+            console.log('handleScroll', 'ScrollableContainer');
+            this.scrollTop = scrollTop;
+            this.scrollLeft = scrollLeft;
+            if (this.props.onScrollPosChanged) {
+                this.props.onScrollPosChanged(scrollLeft, scrollTop);
+            }
         }
     }
 
     private updateScrollPositions(): void {
         if (this.ref) {
-            this.ref.scrollLeft = this.props.scrollLeft!;
-            this.ref.scrollTop = this.props.scrollTop!;
+            if (typeof this.props.scrollLeft !== 'undefined' && this.scrollLeft !== this.props.scrollLeft) {
+                this.ref.scrollLeft = this.props.scrollLeft;
+                this.scrollLeft = this.props.scrollLeft;
+            }
+            if (typeof this.props.scrollTop !== 'undefined' && this.scrollTop !== this.props.scrollTop) {
+                this.ref.scrollTop = this.props.scrollTop;
+                this.scrollTop = this.props.scrollTop;
+            }
         }
     }
 

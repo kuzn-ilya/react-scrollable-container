@@ -41,8 +41,6 @@ describe('Grid', () => {
 
         expect(container).to.exist;
         expect(container.props.fixedColumnCount).to.be.equal(2);
-        expect(container.state.fixedColumnsWidth).to.be.equal(60);
-        expect(container.state.scrollableColumnsWidth).to.be.equal(140);
         expect(error).to.have.been.not.called;
     });
 });

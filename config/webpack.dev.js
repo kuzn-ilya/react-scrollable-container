@@ -45,7 +45,11 @@ var config = merge.smart(common, {
                     path.join(__dirname, 'cssLoader.js?') + JSON.stringify(cssVars.CSS_VARS)
                 ],
                 exclude: ["node_modules"]
-            }
+            },
+            {
+                test: require.resolve('react'),
+                loader: 'expose-loader?React'
+            }            
         ]
     },
     output: {

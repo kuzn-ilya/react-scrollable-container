@@ -13,3 +13,8 @@ let examples: Example[] = [
 ];
 
 ReactDOM.render(<ExamplesPage examples={examples}/>, document.getElementById('app'));
+
+if (process.env.NODE_ENV !== 'production') {
+    // tslint:disable-next-line:no-any no-require-imports no-var-requires
+    (React as any).Perf = require('react-addons-perf');
+}

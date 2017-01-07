@@ -3,7 +3,6 @@ import * as React from 'react';
 import { fakeData } from './data/fake.data';
 import { Layout } from '../../sources/components';
 import { Grid, Column } from '../../sources/components';
-import * as Perf from 'react-addons-perf';
 
 interface CompState {
     // tslint:disable-next-line:no-any
@@ -17,31 +16,6 @@ export class GridExample extends React.Component<{}, CompState> {
             data: fakeData
         };
         this.removeLastItem = this.removeLastItem.bind(this);
-        this.startPerf = this.startPerf.bind(this);
-        this.stopPerf = this.stopPerf.bind(this);
-    }
-
-    startPerf: () => void = () => {
-        Perf.start();
-    }
-
-    stopPerf: () => void = () => {
-        Perf.stop();
-        if (console.table) {
-            Perf.printInclusive();
-            Perf.printExclusive();
-            Perf.printWasted();
-            Perf.printOperations();
-        }
-
-        let inclusive = Perf.getInclusive();
-        console.log(inclusive);
-        let exclusive = Perf.getExclusive();
-        console.log(exclusive);
-        let wasted = Perf.getWasted();
-        console.log(wasted);
-        let operations = Perf.getOperations();
-        console.log(operations);
     }
 
     removeLastItem: () => void = () => {
@@ -56,8 +30,6 @@ export class GridExample extends React.Component<{}, CompState> {
             <Layout width="100%" height="100%" orientation="vertical">
                 <Layout>
                     <button onClick={this.removeLastItem}>Remove Last</button>
-                    <button onClick={this.startPerf}>Start Perf</button>
-                    <button onClick={this.stopPerf}>Stop Perf</button>
                 </Layout>
                 <Grid rowData={this.state.data} fixedColumnCount={2} rowHeight={20} headerHeight={30}>
                     <Column caption="id" propName="id" width={30} />

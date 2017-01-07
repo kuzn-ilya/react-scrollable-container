@@ -10,7 +10,31 @@ var cssVars2 = require('../examples/page/cssVars.js');
 
 var cssVars = merge(cssVars1, cssVars2);
 
-var config = merge.smart(common, {
+var reactMinConfig = {
+    module: {
+        loaders: [
+            {
+                test: /react-dom\.min\.js$/,
+                loader: 'imports?React=react'
+            }        
+        ],
+        noParse: [
+            path.join(__dirname, '..', 'node_modules', 'react', 'dist', 'react.min.js'),
+            path.join(__dirname, '..', 'node_modules', 'react-dom', 'dist', 'react-dom.min.js')
+        ]        
+    },
+    resolve: {
+        alias: {
+            'react$': path.join(__dirname, '..', 'node_modules', 'react', 'dist', 'react.min.js'),
+            'react-dom$': path.join(__dirname, '..', 'node_modules', 'react-dom', 'dist', 'react-dom.min.js')
+        }
+    }
+};
+
+var config = merge.smart(common, 
+    // Uncomment the next line for react.min.js and react-dom.min.js usage
+    // reactMinConfig,
+{
     devtool: 'eval-source-map',
     devServer: {
         inline: true,
@@ -49,7 +73,7 @@ var config = merge.smart(common, {
             {
                 test: require.resolve('react'),
                 loader: 'expose-loader?React'
-            }            
+            }
         ]
     },
     output: {

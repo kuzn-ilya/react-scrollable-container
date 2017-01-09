@@ -9,6 +9,8 @@
     left: 0px;
     right: 0px;
     top: 0px;
+    transform: translateZ(0);
+    will-change: transform;
 }
 
 .$(base-css-name)-content {

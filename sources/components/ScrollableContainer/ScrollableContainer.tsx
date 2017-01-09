@@ -42,7 +42,6 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
         this.measureScrollbars();
         this.updateScrollPositions();
 
-        this.ref.addEventListener('scroll', this.handleScroll);
         WindowEvents.addResizeEventListener(this.handleWindowResize);
     }
 
@@ -51,7 +50,6 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
     }
 
     componentWillUnmount(): void {
-        this.ref.removeEventListener('scroll', this.handleScroll);
         WindowEvents.removeResizeEventListener(this.handleWindowResize);
     }
 
@@ -69,6 +67,7 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
             >
                 <div className={addCssClassPrefix('container-scrollable')}
                     ref={(ref: HTMLDivElement) => this.ref = ref}
+                    onScroll={this.handleScroll}
                     style={{
                         bottom: this.props.horzScrollBarReplacerHeight ? this.props.horzScrollBarReplacerHeight + 'px' : '0px',
                         overflowX: this.props.overflowX,
@@ -93,11 +92,10 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
     private scrollLeft: number = 0;
     private scrollTop: number = 0;
 
-    private handleScroll: (event: UIEvent) => void = (event) => {
+    private handleScroll: (event: React.UIEvent<HTMLDivElement>) => void = (event) => {
         let scrollLeft = (event.target as Element).scrollLeft;
         let scrollTop = (event.target as Element).scrollTop;
         if (scrollLeft !== this.scrollLeft || scrollTop !== this.scrollTop) {
-            console.log('handleScroll', 'ScrollableContainer');
             this.scrollTop = scrollTop;
             this.scrollLeft = scrollLeft;
             if (this.props.onScrollPosChanged) {
@@ -141,6 +139,12 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
                     this.props.onHorizontalScrollVisibilityChanged(newState.horzScrollThumbHeight > 0, newState.horzScrollThumbHeight);
                 }
             }
+        }
+    }
+
+    setScrollLeft(position: number): void {
+        if (this.ref) {
+            this.ref.scrollLeft = position;
         }
     }
 }

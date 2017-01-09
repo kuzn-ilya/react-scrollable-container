@@ -5,8 +5,9 @@ import { ColumnGroupState } from './ColumnGroupState';
 import { ColumnProps } from '../Column/ColumnProps';
 import { HeaderRow } from '../HeaderRow';
 import { Row } from '../Row';
-import { Layout } from '../../Layout';
 import { ScrollableContainer } from '../../ScrollableContainer';
+
+import '../../../styles/layout2.css';
 
 export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGroupState> {
     static propTypes = columnGroupPropTypes;
@@ -23,8 +24,7 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
         this.state = {
             columnsWidth: this.props.columnProps
                 .map((value: ColumnProps): number => value.width)
-                .reduce((prevValue: number, currValue: number) => prevValue + currValue, 0),
-            scrollLeft: 0
+                .reduce((prevValue: number, currValue: number) => prevValue + currValue, 0)
         };
     }
 
@@ -53,18 +53,17 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
         this.setState({
             columnsWidth: this.state.columnsWidth,
             rowsThumbWidth: thumbWidth,
-            scrollLeft: this.state.scrollLeft
         });
     }
 
     scrollTop: number = 0;
+    scrollLeft: number = 0;
+    header: ScrollableContainer;
 
     handleHorizontalScrollPosChanged: (scrollLeft: number, scrollTop: number) => void = (scrollLeft, scrollTop) => {
-        if (this.state.scrollLeft !== scrollLeft) {
-            this.setState({
-                columnsWidth: this.state.columnsWidth,
-                scrollLeft
-            });
+        if (this.scrollLeft !== scrollLeft) {
+            this.scrollLeft = scrollLeft;
+            this.header.setScrollLeft(scrollLeft);
         }
 
         if (this.scrollTop !== scrollTop && this.props.onScrollPosChanged) {
@@ -75,8 +74,13 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
 
     render(): JSX.Element | null {
         return this.state.columnsWidth ?
-            <Layout width={this.props.width === 'auto' ? this.state.columnsWidth : this.props.width} orientation="vertical">
-                <Layout height={this.props.headerHeight}>
+            <div className="layout2-container" style={{
+                height: '100%',
+                width: this.props.width === 'auto' ? this.state.columnsWidth + 'px' : this.props.width
+            }}>
+                <div className="layout2-vert-first" style={{
+                    height: this.props.headerHeight
+                }}>
                     <ScrollableContainer
                         key="header"
                         contentWidth={this.state.columnsWidth}
@@ -87,10 +91,12 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
                         width="100%"
                         height={this.props.headerHeight}
                         vertScrollBarReplacerWidth={this.state.rowsThumbWidth}
-                        scrollLeft={this.state.scrollLeft}
+                        ref={(ref: ScrollableContainer) => this.header = ref}
                     />
-                </Layout>
-                <Layout height="100%">
+                </div>
+                <div className="layout2-vert-second"  style={{
+                    top: this.props.headerHeight
+                }}>
                     <ScrollableContainer
                         key="body"
                         contentWidth={this.state.columnsWidth}
@@ -107,8 +113,8 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
                         onHorizontalScrollVisibilityChanged={this.props.onHorizontalScrollVisibilityChanged}
                         onVerticalScrollVisibilityChanged={this.handleVerticalScrollVisibilityChanged}
                     />
-                </Layout>
-            </Layout>
+                </div>
+            </div>
             : null;
     }
 }

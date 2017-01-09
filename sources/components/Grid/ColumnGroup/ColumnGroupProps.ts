@@ -17,10 +17,9 @@ export interface ColumnGroupProps {
     // tslint:disable-next-line:no-any
     readonly rowData: any[];
     readonly rowHeight: number;
-    readonly scrollLeft?: number;
     readonly scrollTop?: number;
     readonly showEdgeForTheLeftCell?: boolean;
-    readonly width: number | string;
+    readonly width: number | '100%';
 }
 
 export const columnGroupPropTypes: ValidationMap<ColumnGroupProps> = {

@@ -5,7 +5,6 @@ import { GridState } from './GridState';
 import { Column } from './Column';
 import { ColumnGroup } from './ColumnGroup';
 import { ColumnProps } from './Column/ColumnProps';
-import { Layout } from '../Layout';
 
 export class Grid extends React.PureComponent<GridProps, GridState> {
 
@@ -37,29 +36,40 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
 
     render(): JSX.Element {
         return (
-            <Layout orientation="horizontal" height="100%">
-                <ColumnGroup width="auto"
-                    headerHeight={this.props.headerHeight}
-                    showEdgeForTheLeftCell
-                    rowData={this.props.rowData}
-                    columnProps={this.state.fixedColumns ? this.state.fixedColumns : []}
-                    rowHeight={this.props.rowHeight}
-                    scrollTop={this.state.scrollTop}
-                    colsThumbHeight={this.state.colsThumbHeight}
-                    overflowX="hidden"
-                    overflowY="hidden"
-                />
-                <ColumnGroup width="100%"
-                    headerHeight={this.props.headerHeight}
-                    rowData={this.props.rowData}
-                    columnProps={this.state.scrollableColumns ? this.state.scrollableColumns : []}
-                    rowHeight={this.props.rowHeight}
-                    overflowX="auto"
-                    overflowY="auto"
-                    onScrollPosChanged={this.handleVerticalScrollPosChanged}
-                    onHorizontalScrollVisibilityChanged={this.handleHorizontalScrollVisibilityChanged}
-                />
-            </Layout>
+            <div className="layout2-container" style={{
+                height: '100%',
+                width: '100%'
+            }}>
+                <div className="layout2-horz-first" style={{
+                    width: this.state.fixedColumnsWidth || 0
+                }}>
+                    <ColumnGroup width={this.state.fixedColumnsWidth || 0}
+                        headerHeight={this.props.headerHeight}
+                        showEdgeForTheLeftCell
+                        rowData={this.props.rowData}
+                        columnProps={this.state.fixedColumns ? this.state.fixedColumns : []}
+                        rowHeight={this.props.rowHeight}
+                        scrollTop={this.state.scrollTop}
+                        colsThumbHeight={this.state.colsThumbHeight}
+                        overflowX="hidden"
+                        overflowY="hidden"
+                    />
+                </div>
+                <div className="layout2-horz-second" style={{
+                    left: this.state.fixedColumnsWidth || 0
+                }}>
+                    <ColumnGroup width="100%"
+                        headerHeight={this.props.headerHeight}
+                        rowData={this.props.rowData}
+                        columnProps={this.state.scrollableColumns ? this.state.scrollableColumns : []}
+                        rowHeight={this.props.rowHeight}
+                        overflowX="auto"
+                        overflowY="auto"
+                        onScrollPosChanged={this.handleVerticalScrollPosChanged}
+                        onHorizontalScrollVisibilityChanged={this.handleHorizontalScrollVisibilityChanged}
+                    />
+                </div>
+            </div>
         );
     }
 
@@ -81,8 +91,14 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
         let fixedColumns = columns.slice(0, this.props.fixedColumnCount);
         let scrollableColumns = columns.slice(this.props.fixedColumnCount);
 
+        // TODO calculate columnsWidth whether columnProps is changed
+        let fixedColumnsWidth = fixedColumns
+            .map((value: ColumnProps): number => value.width)
+            .reduce((prevValue: number, currValue: number) => prevValue + currValue, 0);
+
         return {
             fixedColumns,
+            fixedColumnsWidth,
             scrollableColumns
         };
     }

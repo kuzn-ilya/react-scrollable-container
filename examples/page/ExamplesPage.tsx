@@ -31,7 +31,7 @@ export class ExamplesPage extends React.PureComponent<ExamplesPageProps, Example
                     <ExamplesList examples={this.props.examples}/>
                 </Layout>
                 <Layout width="100%" orientation="vertical">
-                    <Layout showSplitter>
+                    <Layout height="30px" showSplitter>
                         {selectedExample.name}
                     </Layout>
                     <Layout height="100%" >

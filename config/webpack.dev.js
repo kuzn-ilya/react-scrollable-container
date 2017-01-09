@@ -38,7 +38,8 @@ var config = merge.smart(common,
     devtool: 'eval-source-map',
     devServer: {
         inline: true,
-        hot: true
+        hot: true,
+        port: 8081
     },
     context: path.join(__dirname, '../examples/page'),
     entry: {

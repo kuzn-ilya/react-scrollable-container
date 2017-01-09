@@ -74,15 +74,6 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
         }
     }
 
-    componentWillUpdate(nextProps: LayoutProps, nextState: LayoutState): void {
-        console.log({
-            nextProps,
-            nextState,
-            props: this.props,
-            state: this.state
-        });
-    }
-
     render(): JSX.Element | null {
         let layoutPaneStyle: {};
         let className: string;

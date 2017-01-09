@@ -1,0 +1,34 @@
+.layout2-container {
+  position: relative;
+  display: inline-block;
+}
+
+.layout2-vert-first {
+  vertical-align: top;
+  overflow: hidden;
+}
+
+.layout2-vert-second {
+  vertical-align: top;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+}
+
+.layout2-horz-first {
+  display: inline-block;
+  vertical-align: top;
+  height: 100%;
+  overflow: hidden;
+}
+
+.layout2-horz-second {
+  display: inline-block;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  overflow: hidden;
+}

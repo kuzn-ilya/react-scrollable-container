@@ -51,7 +51,7 @@ export class Layout2 extends React.PureComponent<Layout2Props, {}> {
         console.log(this.props.orientation, this.size);
 
         let layoutPaneStyle: {} = {};
-        let layoutPaneClassName: string = '';
+        let layoutPaneClassName = '';
 
         if (this.context.orientation === 'vertical') {
             if (typeof this.props.height === 'number') {

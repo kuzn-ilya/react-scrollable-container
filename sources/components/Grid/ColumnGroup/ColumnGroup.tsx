@@ -52,7 +52,7 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
     handleVerticalScrollVisibilityChanged: (visible: boolean, thumbWidth: number) => void = (visible: boolean, thumbWidth: number) => {
         this.setState({
             columnsWidth: this.state.columnsWidth,
-            rowsThumbWidth: thumbWidth,
+            rowsThumbWidth: thumbWidth
         });
     }
 

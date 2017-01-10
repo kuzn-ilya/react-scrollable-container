@@ -31,8 +31,8 @@ export class GridExample extends React.Component<{}, CompState> {
             //     <Layout height="50px">
             //         <button onClick={this.removeLastItem}>Remove Last</button>
             //     </Layout>
-                <Grid rowData={this.state.data} fixedColumnCount={2} rowHeight={20} headerHeight={30}>
-                    <Column caption="id" propName="id" width={30} />
+                <Grid rowData={this.state.data} fixedColumnCount={2} rowHeight={20} headerHeight={20}>
+                    <Column caption="id" propName="id" width={30} align="right" />
                     <Column caption="firstName" propName="firstName" width={150} />
                     <Column caption="id" propName="id" width={30} />
                     <Column caption="lastName" propName="lastName" width={150} />

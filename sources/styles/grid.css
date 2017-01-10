@@ -2,6 +2,11 @@
     display: inline-block;
     overflow: hidden;
     position: relative;
+    font-size: 11px;
+    font-family: 'Roboto', sans-serif;
+    line-height: 18px;
+    height: 18px;
+    vertical-align: middle;
 }
 
 .cell, .cell-first {
@@ -22,6 +27,12 @@
     display: inline-block;
     overflow: hidden;
     position: relative;
+    font-size: 11px;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+    line-height: 18px;
+    height: 18px;
+    vertical-align: middle;
 }
 
 .header-cell, .header-cell-first {
@@ -30,9 +41,10 @@
     bottom: 0;
     right: 0;
     left: 0;
-    border-bottom: solid 1px #d6d6d6;
-    border-right: solid 1px #d6d6d6;
-    border-top: solid 1px #d6d6d6;
+    background-color: #d6d6d6;
+    border-bottom: solid 1px #6C7A89;
+    border-right: solid 1px #6C7A89;
+    border-top: solid 1px #6C7A89;
     display: inline-block;
     overflow: hidden;
     padding-left: 5px;
@@ -43,5 +55,5 @@
 }
 
 .header-cell-first, .cell-first {
-    border-left: solid 1px #d6d6d6;
+    border-left: solid 1px #6C7A89;
 }

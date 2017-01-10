@@ -2,6 +2,7 @@ import { PropTypes } from 'react';
 import { ValidationMap } from '../../../react/ValidationMap';
 import { ColumnProps } from '../Column/ColumnProps';
 import { Overflow, overflowPropType } from '../../../utils/types';
+import { RowData } from '../RowData';
 
 export interface ColumnGroupProps {
     readonly colsThumbHeight?: number;
@@ -15,7 +16,7 @@ export interface ColumnGroupProps {
     readonly overflowY: Overflow;
 
     // tslint:disable-next-line:no-any
-    readonly rowData: any[];
+    readonly rowData: RowData<any>;
     readonly rowHeight: number;
     readonly scrollTop?: number;
     readonly showEdgeForTheLeftCell?: boolean;
@@ -33,7 +34,7 @@ export const columnGroupPropTypes: ValidationMap<ColumnGroupProps> = {
     overflowX: overflowPropType.isRequired,
     overflowY: overflowPropType.isRequired,
 
-    rowData: PropTypes.arrayOf(PropTypes.any).isRequired,
+    rowData: PropTypes.object.isRequired,
     rowHeight: PropTypes.number.isRequired,
     scrollLeft: PropTypes.number,
     scrollTop: PropTypes.number,

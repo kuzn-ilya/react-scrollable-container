@@ -7,7 +7,7 @@ export class Cell extends React.PureComponent<CellProps, {}> {
     static propTypes = cellPropTypes;
 
     render(): JSX.Element {
-        let style = {
+        let style: React.CSSProperties = {
             height: this.props.height.toString() + 'px',
             textAlign: this.props.align,
             width: this.props.width.toString() + 'px'

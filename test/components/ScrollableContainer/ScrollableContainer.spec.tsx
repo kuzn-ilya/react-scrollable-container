@@ -83,20 +83,19 @@ describe('ScrollableContainer', () => {
         expect(element).to.not.exist;
     });
 
-    it('should have a class "react-container-container"', () => {
+    it('should have a class "scrollable-container"', () => {
         let container = renderIntoDocument(<ScrollableContainer overflowX="auto" overflowY="auto" height={100} width={100}/>);
         let domElement = ReactDOM.findDOMNode(container);
 
         expect(domElement.classList).to.have.length(1);
-        expect(domElement.classList[0]).equals('react-container-container');
+        expect(domElement.classList[0]).equals('scrollable-container');
     });
 
-    it('should have a class "react-container-container-scrollable"', () => {
+    it('should have a class "scrollable-container-scrollable"', () => {
         let container = renderIntoDocument(<ScrollableContainer overflowX="auto" overflowY="auto" height={100} width={100}/>);
         let domElement = ReactDOM.findDOMNode(container).firstChild as HTMLElement;
 
-        expect(domElement.classList).to.have.length(1);
-        expect(domElement.classList[0]).equals('react-container-container-scrollable');
+        expect(domElement.classList.contains('scrollable-container-scrollable')).to.be.true;
     });
 
     it('should have a child of type ScrollableContainerContent', () => {

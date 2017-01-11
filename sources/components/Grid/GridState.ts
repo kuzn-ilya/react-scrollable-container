@@ -5,5 +5,6 @@ export interface GridState {
     fixedColumnsWidth?: number;
     scrollableColumns?: ColumnProps[];
     colsThumbHeight?: number;
+    scrollLeft?: number;
     scrollTop?: number;
 }

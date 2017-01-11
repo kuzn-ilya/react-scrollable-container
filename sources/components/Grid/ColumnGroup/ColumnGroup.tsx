@@ -18,7 +18,7 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
 
         this.renderHeader = this.renderHeader.bind(this);
         this.renderRows = this.renderRows.bind(this);
-        this.handleHorizontalScrollPosChanged = this.handleHorizontalScrollPosChanged.bind(this);
+        this.handleScrollPosChanged = this.handleScrollPosChanged.bind(this);
         this.handleVerticalScrollVisibilityChanged = this.handleVerticalScrollVisibilityChanged.bind(this);
 
         // TODO calculate columnsWidth whether columnProps is changed
@@ -61,16 +61,20 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
     scrollLeft: number = 0;
     header: ScrollableContainer;
 
-    handleHorizontalScrollPosChanged: (scrollLeft: number, scrollTop: number) => void = (scrollLeft, scrollTop) => {
-        if (this.scrollLeft !== scrollLeft) {
-            this.scrollLeft = scrollLeft;
-            this.header.setScrollLeft(scrollLeft);
+    handleScrollPosChanged: (scrollLeft: number, scrollTop: number) => void = (scrollLeft, scrollTop) => {
+        if (this.scrollLeft !== scrollLeft || this.scrollTop !== scrollTop) {
+            if (this.scrollLeft !== scrollLeft) {
+                this.scrollLeft = scrollLeft;
+                this.header.setScrollLeft(scrollLeft);
+            }
+
+            this.scrollTop = scrollTop;
+
+            if (this.props.onScrollPosChanged) {
+                this.props.onScrollPosChanged(scrollLeft, scrollTop);
+            }
         }
 
-        if (this.scrollTop !== scrollTop && this.props.onScrollPosChanged) {
-            this.scrollTop = scrollTop;
-            this.props.onScrollPosChanged(scrollTop);
-        }
     }
 
     render(): JSX.Element | null {
@@ -110,7 +114,7 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
                         height="100%"
                         scrollTop={this.props.scrollTop}
                         horzScrollBarReplacerHeight={this.props.colsThumbHeight}
-                        onScrollPosChanged={this.handleHorizontalScrollPosChanged}
+                        onScrollPosChanged={this.handleScrollPosChanged}
                         onHorizontalScrollVisibilityChanged={this.props.onHorizontalScrollVisibilityChanged}
                         onVerticalScrollVisibilityChanged={this.handleVerticalScrollVisibilityChanged}
                     />

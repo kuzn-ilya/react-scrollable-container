@@ -6,6 +6,10 @@ import { Column } from './Column';
 import { ColumnGroup } from './ColumnGroup';
 import { ColumnProps } from './Column/ColumnProps';
 
+import { classNames } from '../../utils/classNames';
+
+import '../../styles/common.css';
+
 export class Grid extends React.PureComponent<GridProps, GridState> {
 
     static propTypes = gridPropTypes;
@@ -26,9 +30,10 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
         this.state = this.calculateState();
     }
 
-    handleVerticalScrollPosChanged: (scrollTop: number) => void = (scrollTop) => {
-        if (this.state.scrollTop !== scrollTop) {
+    handleVerticalScrollPosChanged: (scrollLeft: number, scrollTop: number) => void = (scrollLeft, scrollTop) => {
+        if (this.state.scrollTop !== scrollTop || this.state.scrollLeft !== scrollLeft) {
             this.setState({
+                scrollLeft,
                 scrollTop
             });
         }
@@ -36,13 +41,22 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
 
     render(): JSX.Element {
         return (
-            <div className="layout2-container" style={{
-                height: '100%',
-                width: '100%'
-            }}>
-                <div className="layout2-horz-first" style={{
-                    width: this.state.fixedColumnsWidth || 0
-                }}>
+            <div
+                className="layout2-container"
+                style={{
+                    height: '100%',
+                    width: '100%'
+                }}
+            >
+                <div
+                    className={classNames({
+                        'layout2-horz-first': true,
+                        'right-shadow': this.state.scrollLeft > 0
+                    })}
+                    style={{
+                        width: this.state.fixedColumnsWidth || 0
+                    }}
+                >
                     <ColumnGroup width={this.state.fixedColumnsWidth || 0}
                         headerHeight={this.props.headerHeight}
                         showEdgeForTheLeftCell

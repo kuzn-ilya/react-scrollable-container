@@ -10,7 +10,7 @@ export interface ColumnGroupProps {
     readonly headerHeight: number;
 
     readonly onHorizontalScrollVisibilityChanged?: (visible: boolean, thumbHeight: number) => void;
-    readonly onScrollPosChanged?: (top: number) => void;
+    readonly onScrollPosChanged?: (left: number, top: number) => void;
 
     readonly overflowX: Overflow;
     readonly overflowY: Overflow;

@@ -57,11 +57,3 @@
 .header-cell-first, .cell-first {
     border-left: solid 1px #6C7A89;
 }
-
-.right-shadow {
-    background: 0 0 url(../../assets/images/vert-shadow.png) repeat-y;
-    border-left: 1px solid #d3d3d3;
-    width: 4px;
-    position: absolute;
-    top: 0;
-}

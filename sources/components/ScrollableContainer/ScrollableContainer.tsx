@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { addCssClassPrefix } from '../../utils/addCssClassPrefix';
 import { classNames } from '../../utils/classNames';
 import { WindowEvents } from '../../utils/WindowEvents';
 
@@ -58,14 +57,17 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
     render(): JSX.Element {
         return (
             <div
-                className={classNames(addCssClassPrefix('container'), this.props.className!)}
+                className={classNames('scrollable-container', this.props.className!)}
                 style={{
                     height: this.props.height,
                     width: this.props.width
                 }}
                 id={this.props.id}
             >
-                <div className={addCssClassPrefix('container-scrollable')}
+                <div className={classNames({
+                        'scrollable-container-scrollable': true,
+                        'scrollable-container-scrollable-boost': this.props.overflowX !== 'hidden' || this.props.overflowY !== 'hidden'
+                    })}
                     ref={(ref: HTMLDivElement) => this.ref = ref}
                     onScroll={this.handleScroll}
                     style={{

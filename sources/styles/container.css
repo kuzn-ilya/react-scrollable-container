@@ -1,22 +1,25 @@
-.$(base-css-name)-container {
+.scrollable-container {
     position: relative;
     overflow: hidden;
 }
         
-.$(base-css-name)-container-scrollable {
+.scrollable-container-scrollable {
     position: absolute;
     bottom: 0px;
     left: 0px;
     right: 0px;
     top: 0px;
+}
+
+.scrollable-container-scrollable-boost {
     transform: translateZ(0);
     will-change: transform;
 }
 
-.$(base-css-name)-content {
+.scrollable-content {
 }
 
-.$(base-css-name)-wrapper {
+.scrollable-wrapper {
     overflow: hidden;
     position: absolute;
     display: inline-block;

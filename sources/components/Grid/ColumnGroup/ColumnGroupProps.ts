@@ -34,7 +34,7 @@ export const columnGroupPropTypes: ValidationMap<ColumnGroupProps> = {
     overflowX: overflowPropType.isRequired,
     overflowY: overflowPropType.isRequired,
 
-    rowData: PropTypes.object.isRequired,
+    rowData: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
     rowHeight: PropTypes.number.isRequired,
     scrollLeft: PropTypes.number,
     scrollTop: PropTypes.number,

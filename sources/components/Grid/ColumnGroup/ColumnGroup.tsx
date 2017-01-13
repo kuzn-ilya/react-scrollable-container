@@ -99,7 +99,7 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
                         ref={(ref: ScrollableContainer) => this.header = ref}
                     />
                 </div>
-                <div className="layout2-vert-second"  style={{
+                <div className="layout2-vert-second" style={{
                     top: this.props.headerHeight
                 }}>
                     <ScrollableContainer

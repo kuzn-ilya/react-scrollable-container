@@ -29,7 +29,7 @@ export class Layout2 extends React.PureComponent<Layout2Props, {}> {
     updateSize(children: React.ReactNode): void {
         let size = undefined;
         React.Children.forEach(children, (child: React.ReactChild) => {
-            if (typeof child !== 'string' && typeof child !== 'number' && child.type instanceof Layout2) {
+            if (typeof child !== 'string' && typeof child !== 'number' && child.type === Layout2) {
                 if (this.props.orientation === 'vertical' && typeof child.props.height === 'number') {
                     size = child.props.height;
                 } else if (this.props.orientation === 'horizontal' && typeof child.props.width === 'number') {
@@ -48,7 +48,6 @@ export class Layout2 extends React.PureComponent<Layout2Props, {}> {
 
     render(): JSX.Element | null {
         console.log('render Layout2');
-        console.log(this.props.orientation, this.size);
 
         let layoutPaneStyle: {} = {};
         let layoutPaneClassName = '';
@@ -90,7 +89,7 @@ export class Layout2 extends React.PureComponent<Layout2Props, {}> {
             </div>
         ) : null;
 
-        let component = this.props.orientation ? child : (
+        let component = !layoutPaneClassName ? child : (
             <div className={layoutPaneClassName}
                 style={layoutPaneStyle}
             >

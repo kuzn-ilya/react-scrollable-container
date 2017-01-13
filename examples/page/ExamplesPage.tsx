@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import './styles.css';
-import { Layout } from '../../sources/components';
+import { Layout2 } from '../../sources/components';
 
 import { Example } from './Example';
 import { ExamplesList } from './ExamplesList';
@@ -26,19 +26,19 @@ export class ExamplesPage extends React.PureComponent<ExamplesPageProps, Example
         let selectedExample: Example = this.props.examples[this.state.selectedIndex];
         let Comp = selectedExample.componentClass;
         return (
-            <Layout orientation="horizontal" width="100%" height="100%">
-                <Layout width="200px" showSplitter>
+            <Layout2 orientation="horizontal" width="100%" height="100%">
+                <Layout2 width={200}>
                     <ExamplesList examples={this.props.examples}/>
-                </Layout>
-                <Layout width="100%" orientation="vertical">
-                    <Layout height="30px" showSplitter>
+                </Layout2>
+                <Layout2 orientation="vertical" height="100%">
+                    <Layout2 height={30}>
                         {selectedExample.name}
-                    </Layout>
-                    <Layout height="100%" >
+                    </Layout2>
+                    <Layout2 height="100%" >
                         <Comp />
-                    </Layout>
-                </Layout>
-            </Layout>
+                    </Layout2>
+                </Layout2>
+            </Layout2>
         );
     }
 }

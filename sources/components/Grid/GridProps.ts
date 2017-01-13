@@ -15,6 +15,6 @@ export const gridPropTypes: ValidationMap<GridProps> = {
     fixedColumnCount: PropTypes.number,
     fixedRowCount: PropTypes.number,
     headerHeight: PropTypes.number.isRequired,
-    rowData: PropTypes.object.isRequired,
+    rowData: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
     rowHeight: PropTypes.number.isRequired
 };

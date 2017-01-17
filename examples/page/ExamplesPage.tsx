@@ -30,11 +30,11 @@ export class ExamplesPage extends React.PureComponent<ExamplesPageProps, Example
                 <Layout2 width={200}>
                     <ExamplesList examples={this.props.examples}/>
                 </Layout2>
-                <Layout2 orientation="vertical" height="100%">
-                    <Layout2 height={30}>
+                <Layout2 orientation="vertical" width="100%" height="100%">
+                    <Layout2 width="100%" height={30}>
                         {selectedExample.name}
                     </Layout2>
-                    <Layout2 height="100%" >
+                    <Layout2 width="100%" height="100%" >
                         <Comp />
                     </Layout2>
                 </Layout2>

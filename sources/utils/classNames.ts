@@ -4,7 +4,7 @@
  * @param {...?string} classNames
  * @return {string}
  */
-export function classNames(...classNames: (string | {[key: string]: boolean} | undefined)[]): string {
+export function classNames(...classNames: (string | {[key: string]: boolean} | undefined)[]): string | undefined {
     let result = '';
     for (let i = 0; i < classNames.length; i++) {
         let nextClass = classNames[i];
@@ -20,5 +20,5 @@ export function classNames(...classNames: (string | {[key: string]: boolean} | u
             }
         }
     }
-    return result;
+    return result === '' ? undefined : result;
 }

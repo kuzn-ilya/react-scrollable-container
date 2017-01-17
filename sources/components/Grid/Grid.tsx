@@ -5,8 +5,9 @@ import { GridState } from './GridState';
 import { Column } from './Column';
 import { ColumnGroup } from './ColumnGroup';
 import { ColumnProps } from './Column/ColumnProps';
+import { Layout2 } from '../Layout2';
 
-import { classNames } from '../../utils/classNames';
+// import { classNames } from '../../utils/classNames';
 
 import '../../styles/common.css';
 
@@ -41,21 +42,12 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
 
     render(): JSX.Element {
         return (
-            <div
-                className="layout2-container"
-                style={{
-                    height: '100%',
-                    width: '100%'
-                }}
+            <Layout2 orientation="horizontal"
+                    height="100%"
+                    width="100%"
             >
-                <div
-                    className={classNames({
-                        'layout2-horz-first': true,
-                        'right-shadow': this.state.scrollLeft > 0
-                    })}
-                    style={{
-                        width: this.state.fixedColumnsWidth || 0
-                    }}
+                <Layout2 width={this.state.fixedColumnsWidth || 0}
+                    showRightShadow={this.state.scrollLeft > 0}
                 >
                     <ColumnGroup width={this.state.fixedColumnsWidth || 0}
                         headerHeight={this.props.headerHeight}
@@ -68,10 +60,8 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
                         overflowX="hidden"
                         overflowY="hidden"
                     />
-                </div>
-                <div className="layout2-horz-second" style={{
-                    left: this.state.fixedColumnsWidth || 0
-                }}>
+                </Layout2>
+                <Layout2 width="100%">
                     <ColumnGroup width="100%"
                         headerHeight={this.props.headerHeight}
                         rowData={this.props.rowData}
@@ -82,8 +72,8 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
                         onScrollPosChanged={this.handleVerticalScrollPosChanged}
                         onHorizontalScrollVisibilityChanged={this.handleHorizontalScrollVisibilityChanged}
                     />
-                </div>
-            </div>
+                </Layout2>
+            </Layout2>
         );
     }
 

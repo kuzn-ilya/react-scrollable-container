@@ -1,11 +1,11 @@
 import { Orientation } from '../../utils/types';
 import { PropTypes } from 'react';
-import { BaseLayout } from './Layout';
+import { Layout } from './Layout';
 import { ValidationMap } from '../../react/ValidationMap';
 
 export interface LayoutChildContext {
     orientation?: Orientation;
-    parent?: BaseLayout;
+    parent?: Layout;
 }
 
 export const layoutChildContextTypes: ValidationMap<LayoutChildContext> = {

@@ -4,7 +4,7 @@ export function omit<T, K extends keyof T>(obj: T, ...omitKeys: K[]): Partial<T>
         if (omitKeys.every((omitKey: K) => omitKey !== key)) {
             result[key] = obj[key];
         }
-    };
+    }
 
     return result;
 }

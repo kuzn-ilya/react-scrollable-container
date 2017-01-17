@@ -6,11 +6,10 @@ import { LayoutChildContext, layoutChildContextTypes } from './LayoutContext';
 import { LayoutSplitter } from  '../LayoutSplitter';
 
 import { classNames } from '../../utils/classNames';
-import { shadowable, HasShowShadowProps } from '../Shadowable/shadowable';
 
 import '../../styles/layout.css';
 
-export class BaseLayout extends React.PureComponent<LayoutProps, LayoutState> {
+export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
 
     static defaultProps: LayoutProps = {
         showSplitter: false
@@ -127,5 +126,3 @@ export class BaseLayout extends React.PureComponent<LayoutProps, LayoutState> {
         return component;
     }
 }
-
-export const Layout: React.ComponentClass<LayoutProps & HasShowShadowProps> = shadowable(BaseLayout);

@@ -7,6 +7,7 @@ import { ScrollableContainerState } from  './ScrollableContainerState';
 import { ScrollableContent } from '../ScrollableContent';
 
 import '../../styles/container.css';
+import '../../styles/common.css';
 
 export class ScrollableContainer extends React.PureComponent<ScrollableContainerProps, ScrollableContainerState> {
 
@@ -66,7 +67,9 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
             >
                 <div className={classNames({
                         'scrollable-container-scrollable': true,
-                        'scrollable-container-scrollable-boost': this.props.overflowX !== 'hidden' || this.props.overflowY !== 'hidden'
+                        'scrollable-container-scrollable-boost': this.props.overflowX !== 'hidden' || this.props.overflowY !== 'hidden',
+                        'right-shadow': Boolean(this.props.showShadowForReplacer && this.props.vertScrollBarReplacerWidth),
+                        'bottom-shadow': Boolean(this.props.showShadowForReplacer && this.props.horzScrollBarReplacerHeight)
                     })}
                     ref={(ref: HTMLDivElement) => this.ref = ref}
                     onScroll={this.handleScroll}

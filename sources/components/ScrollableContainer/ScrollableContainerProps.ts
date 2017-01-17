@@ -35,6 +35,7 @@ export interface ScrollableContainerProps {
      * Override the inline-styles of the root element.
      */
     readonly style?: CSSProperties;
+    readonly showShadowForReplacer?: boolean;
 }
 
 export const scrollableContainerPropTypes: ValidationMap<ScrollableContainerProps> = {
@@ -53,6 +54,7 @@ export const scrollableContainerPropTypes: ValidationMap<ScrollableContainerProp
     overflowY: overflowPropType.isRequired,
     scrollLeft: PropTypes.number,
     scrollTop: PropTypes.number,
+    showShadowForReplacer: PropTypes.bool,
     style: PropTypes.any,
     vertScrollBarReplacerWidth: PropTypes.number,
     width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired

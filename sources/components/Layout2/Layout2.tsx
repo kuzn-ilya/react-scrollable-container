@@ -2,8 +2,10 @@ import * as React from 'react';
 
 import { Layout2Props, layout2PropTypes } from  './Layout2Props';
 import { Layout2ChildContext, layout2ChildContextTypes } from './Layout2Context';
+import { classNames } from '../../utils/classNames';
 
 import '../../styles/layout2.css';
+import '../../styles/common.css';
 
 export class Layout2 extends React.PureComponent<Layout2Props, {}> {
 
@@ -39,7 +41,6 @@ export class Layout2 extends React.PureComponent<Layout2Props, {}> {
         });
 
         this.size = size;
-        console.log('updateSize Layout2', size);
     }
 
     componentWillReceiveProps(nextProps: { children?: React.ReactNode }): void {
@@ -47,8 +48,6 @@ export class Layout2 extends React.PureComponent<Layout2Props, {}> {
     }
 
     render(): JSX.Element | null {
-        console.log('render Layout2');
-
         let layoutPaneStyle: {} = {};
         let layoutPaneClassName = '';
 
@@ -58,7 +57,7 @@ export class Layout2 extends React.PureComponent<Layout2Props, {}> {
                 layoutPaneStyle = {
                     height: this.props.height + 'px'
                 };
-            } else if (this.context.parent) {
+            } else if (this.context.parent && this.context.parent.size) {
                 layoutPaneClassName = 'layout2-vert-second';
                 layoutPaneStyle = {
                     top: this.context.parent.size + 'px'
@@ -70,7 +69,7 @@ export class Layout2 extends React.PureComponent<Layout2Props, {}> {
                 layoutPaneStyle = {
                     width: this.props.width + 'px'
                 };
-            } else if (this.context.parent) {
+            } else if (this.context.parent && this.context.parent.size) {
                 layoutPaneClassName = 'layout2-horz-second';
                 layoutPaneStyle = {
                     left: this.context.parent.size + 'px'
@@ -78,8 +77,14 @@ export class Layout2 extends React.PureComponent<Layout2Props, {}> {
             }
         }
 
+        let wrapChild = Boolean(layoutPaneClassName);
+
         let child = this.props.orientation ? (
-            <div className="layout2-container"
+            <div
+                className={classNames('layout2-container', !wrapChild ? this.props.className : '', {
+                    'right-shadow': wrapChild ? false : Boolean(this.props.showRightShadow),
+                    'bottom-shadow': wrapChild ? false : Boolean(this.props.showBottomShadow)
+                })}
                 style={{
                     height: this.props.height,
                     width: this.props.width
@@ -89,8 +94,12 @@ export class Layout2 extends React.PureComponent<Layout2Props, {}> {
             </div>
         ) : null;
 
-        let component = !layoutPaneClassName ? child : (
-            <div className={layoutPaneClassName}
+        let component = !wrapChild ? child : (
+            <div className={classNames(layoutPaneClassName,
+                    wrapChild ? this.props.className : '', {
+                        'right-shadow': Boolean(this.props.showRightShadow),
+                        'bottom-shadow': Boolean(this.props.showBottomShadow)
+                    })}
                 style={layoutPaneStyle}
             >
                 {this.props.orientation ? child : this.props.children}

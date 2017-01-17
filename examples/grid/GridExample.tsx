@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { fakeData } from './data/fake.data';
-import { Layout } from '../../sources/components';
+import { Layout2 } from '../../sources/components';
 import { Grid, Column } from '../../sources/components';
 
 interface CompState {
@@ -26,11 +26,11 @@ export class GridExample extends React.Component<{}, CompState> {
 
     render(): JSX.Element {
         return (
-            <Layout width="100%" height="100%" orientation="vertical">
-                <Layout height="50px">
+            <Layout2 width="100%" height="100%" orientation="vertical">
+                <Layout2 height={50}>
                     <button onClick={this.removeLastItem}>Remove Last</button>
-                </Layout>
-                <Layout>
+                </Layout2>
+                <Layout2 height="100%">
                     <Grid rowData={this.state.data} fixedColumnCount={2} rowHeight={20} headerHeight={20}>
                         <Column caption="id" propName="id" width={30} align="right" />
                         <Column caption="firstName" propName="firstName" width={150} />
@@ -47,8 +47,8 @@ export class GridExample extends React.Component<{}, CompState> {
                         <Column caption="department" propName="department" width={250} />
                         <Column caption="currency" propName="currency" width={150} />
                     </Grid>
-                </Layout>
-            </Layout>
+                </Layout2>
+            </Layout2>
         );
     }
 }

@@ -6,6 +6,7 @@ import { ColumnProps } from '../Column/ColumnProps';
 import { HeaderRow } from '../HeaderRow';
 import { Row } from '../Row';
 import { ScrollableContainer } from '../../ScrollableContainer';
+import { Layout2 } from '../../Layout2';
 import { RowData } from '../RowData';
 
 import '../../../styles/layout2.css';
@@ -79,13 +80,11 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
 
     render(): JSX.Element | null {
         return this.state.columnsWidth ?
-            <div className="layout2-container" style={{
-                height: '100%',
-                width: this.props.width === 'auto' ? this.state.columnsWidth + 'px' : this.props.width
-            }}>
-                <div className="layout2-vert-first" style={{
-                    height: this.props.headerHeight
-                }}>
+            <Layout2 orientation="vertical"
+                height="100%"
+                width={this.props.width === 'auto' ? this.state.columnsWidth : this.props.width}
+            >
+                <Layout2 height={this.props.headerHeight}>
                     <ScrollableContainer
                         key="header"
                         contentWidth={this.state.columnsWidth}
@@ -97,11 +96,10 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
                         height={this.props.headerHeight}
                         vertScrollBarReplacerWidth={this.state.rowsThumbWidth}
                         ref={(ref: ScrollableContainer) => this.header = ref}
+                        showShadowForReplacer
                     />
-                </div>
-                <div className="layout2-vert-second" style={{
-                    top: this.props.headerHeight
-                }}>
+                </Layout2>
+                <Layout2 height="100%">
                     <ScrollableContainer
                         key="body"
                         contentWidth={this.state.columnsWidth}
@@ -117,9 +115,10 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
                         onScrollPosChanged={this.handleScrollPosChanged}
                         onHorizontalScrollVisibilityChanged={this.props.onHorizontalScrollVisibilityChanged}
                         onVerticalScrollVisibilityChanged={this.handleVerticalScrollVisibilityChanged}
+                        showShadowForReplacer
                     />
-                </div>
-            </div>
+                </Layout2>
+            </Layout2>
             : null;
     }
 }

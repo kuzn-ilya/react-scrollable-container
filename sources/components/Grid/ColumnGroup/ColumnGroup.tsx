@@ -8,6 +8,7 @@ import { Row } from '../Row';
 import { ScrollableContainer } from '../../ScrollableContainer';
 import { Layout } from '../../Layout';
 import { RowData } from '../RowData';
+import { classNames } from '../../../utils/classNames';
 
 export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGroupState> {
     static propTypes = columnGroupPropTypes;
@@ -80,42 +81,42 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
         return this.state.columnsWidth ?
             <Layout orientation="vertical"
                 height="100%"
-                width={this.props.width === 'auto' ? this.state.columnsWidth : this.props.width}
+                width={this.props.width}
+                childrenProps={[{size: this.props.headerHeight}, {size: '100%'}]}
+                className={classNames({
+                    'right-shadow': Boolean(this.props.showRightShadow)
+                })}
             >
-                <Layout height={this.props.headerHeight}>
-                    <ScrollableContainer
-                        key="header"
-                        contentWidth={this.state.columnsWidth}
-                        contentHeight={this.props.headerHeight}
-                        overflowX="hidden" overflowY="hidden"
-                        data={undefined}
-                        dataRenderer={this.renderHeader}
-                        width="100%"
-                        height={this.props.headerHeight}
-                        vertScrollBarReplacerWidth={this.state.rowsThumbWidth}
-                        ref={(ref: ScrollableContainer) => this.header = ref}
-                        showShadowForReplacer
-                    />
-                </Layout>
-                <Layout height="100%">
-                    <ScrollableContainer
-                        key="body"
-                        contentWidth={this.state.columnsWidth}
-                        contentHeight="auto"
-                        overflowX={this.props.overflowX}
-                        overflowY={this.props.overflowY}
-                        data={this.props.rowData}
-                        dataRenderer={this.renderRows}
-                        width="100%"
-                        height="100%"
-                        scrollTop={this.props.scrollTop}
-                        horzScrollBarReplacerHeight={this.props.colsThumbHeight}
-                        onScrollPosChanged={this.handleScrollPosChanged}
-                        onHorizontalScrollVisibilityChanged={this.props.onHorizontalScrollVisibilityChanged}
-                        onVerticalScrollVisibilityChanged={this.handleVerticalScrollVisibilityChanged}
-                        showShadowForReplacer
-                    />
-                </Layout>
+                <ScrollableContainer
+                    key="header"
+                    contentWidth={this.state.columnsWidth}
+                    contentHeight={this.props.headerHeight}
+                    overflowX="hidden" overflowY="hidden"
+                    data={undefined}
+                    dataRenderer={this.renderHeader}
+                    width="100%"
+                    height={this.props.headerHeight}
+                    vertScrollBarReplacerWidth={this.state.rowsThumbWidth}
+                    ref={(ref: ScrollableContainer) => this.header = ref}
+                    showShadowForReplacer
+                />
+                <ScrollableContainer
+                    key="body"
+                    contentWidth={this.state.columnsWidth}
+                    contentHeight="auto"
+                    overflowX={this.props.overflowX}
+                    overflowY={this.props.overflowY}
+                    data={this.props.rowData}
+                    dataRenderer={this.renderRows}
+                    width="100%"
+                    height="100%"
+                    scrollTop={this.props.scrollTop}
+                    horzScrollBarReplacerHeight={this.props.colsThumbHeight}
+                    onScrollPosChanged={this.handleScrollPosChanged}
+                    onHorizontalScrollVisibilityChanged={this.props.onHorizontalScrollVisibilityChanged}
+                    onVerticalScrollVisibilityChanged={this.handleVerticalScrollVisibilityChanged}
+                    showShadowForReplacer
+                />
             </Layout>
             : null;
     }

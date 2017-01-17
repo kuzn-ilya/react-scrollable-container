@@ -8,6 +8,7 @@
   display: inline-block;
   overflow: hidden;
   width: 100%;
+  z-index: 0.5;
 }
 
 .layout2-vert-second {
@@ -18,6 +19,7 @@
   right: 0;
   bottom: 0;
   overflow: hidden;
+  z-index: 0.5;
 }
 
 .layout2-horz-first {
@@ -25,6 +27,7 @@
   vertical-align: middle;
   height: 100%;
   overflow: hidden;
+  z-index: 0.5;
 }
 
 .layout2-horz-second {
@@ -35,4 +38,5 @@
   top: 0;
   bottom: 0;
   overflow: hidden;
+  z-index: 0.5;
 }

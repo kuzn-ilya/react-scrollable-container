@@ -26,17 +26,11 @@ export class ExamplesPage extends React.PureComponent<ExamplesPageProps, Example
         let selectedExample: Example = this.props.examples[this.state.selectedIndex];
         let Comp = selectedExample.componentClass;
         return (
-            <Layout orientation="horizontal" width="100%" height="100%">
-                <Layout width={200}>
-                    <ExamplesList examples={this.props.examples}/>
-                </Layout>
-                <Layout orientation="vertical" width="100%" height="100%">
-                    <Layout width="100%" height={30}>
-                        {selectedExample.name}
-                    </Layout>
-                    <Layout width="100%" height="100%" >
-                        <Comp />
-                    </Layout>
+            <Layout orientation="horizontal" width="100%" height="100%" childrenProps={[{size: 200}, {size: '100%'}]}>
+                <ExamplesList examples={this.props.examples}/>
+                <Layout orientation="vertical" width="100%" height="100%" childrenProps={[{size: 30}, {size: '100%'}]}>
+                    {selectedExample.name}
+                    <Comp />
                 </Layout>
             </Layout>
         );

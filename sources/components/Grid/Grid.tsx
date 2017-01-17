@@ -45,35 +45,30 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
             <Layout orientation="horizontal"
                     height="100%"
                     width="100%"
+                    childrenProps={[{size: this.state.fixedColumnsWidth || 0}, {size: '100%'}]}
             >
-                <Layout width={this.state.fixedColumnsWidth || 0}
+                <ColumnGroup width={this.state.fixedColumnsWidth || 0}
+                    headerHeight={this.props.headerHeight}
+                    showEdgeForTheLeftCell
+                    rowData={this.props.rowData}
+                    columnProps={this.state.fixedColumns ? this.state.fixedColumns : []}
+                    rowHeight={this.props.rowHeight}
+                    scrollTop={this.state.scrollTop}
+                    colsThumbHeight={this.state.colsThumbHeight}
+                    overflowX="hidden"
+                    overflowY="hidden"
                     showRightShadow={this.state.scrollLeft > 0}
-                    showSplitter
-                >
-                    <ColumnGroup width={this.state.fixedColumnsWidth || 0}
-                        headerHeight={this.props.headerHeight}
-                        showEdgeForTheLeftCell
-                        rowData={this.props.rowData}
-                        columnProps={this.state.fixedColumns ? this.state.fixedColumns : []}
-                        rowHeight={this.props.rowHeight}
-                        scrollTop={this.state.scrollTop}
-                        colsThumbHeight={this.state.colsThumbHeight}
-                        overflowX="hidden"
-                        overflowY="hidden"
-                    />
-                </Layout>
-                <Layout width="100%">
-                    <ColumnGroup width="100%"
-                        headerHeight={this.props.headerHeight}
-                        rowData={this.props.rowData}
-                        columnProps={this.state.scrollableColumns ? this.state.scrollableColumns : []}
-                        rowHeight={this.props.rowHeight}
-                        overflowX="auto"
-                        overflowY="auto"
-                        onScrollPosChanged={this.handleVerticalScrollPosChanged}
-                        onHorizontalScrollVisibilityChanged={this.handleHorizontalScrollVisibilityChanged}
-                    />
-                </Layout>
+                />
+                <ColumnGroup width="100%"
+                    headerHeight={this.props.headerHeight}
+                    rowData={this.props.rowData}
+                    columnProps={this.state.scrollableColumns ? this.state.scrollableColumns : []}
+                    rowHeight={this.props.rowHeight}
+                    overflowX="auto"
+                    overflowY="auto"
+                    onScrollPosChanged={this.handleVerticalScrollPosChanged}
+                    onHorizontalScrollVisibilityChanged={this.handleHorizontalScrollVisibilityChanged}
+                />
             </Layout>
         );
     }

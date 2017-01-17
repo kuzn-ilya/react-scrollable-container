@@ -20,6 +20,8 @@ export interface ColumnGroupProps {
     readonly rowHeight: number;
     readonly scrollTop?: number;
     readonly showEdgeForTheLeftCell?: boolean;
+    readonly showRightShadow?: boolean;
+
     readonly width: number | '100%';
 }
 
@@ -39,5 +41,6 @@ export const columnGroupPropTypes: ValidationMap<ColumnGroupProps> = {
     scrollLeft: PropTypes.number,
     scrollTop: PropTypes.number,
     showEdgeForTheLeftCell: PropTypes.bool,
+    showRightShadow: PropTypes.bool,
     width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired
 };

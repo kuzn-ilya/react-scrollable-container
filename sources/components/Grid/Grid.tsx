@@ -48,6 +48,7 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
             >
                 <Layout width={this.state.fixedColumnsWidth || 0}
                     showRightShadow={this.state.scrollLeft > 0}
+                    showSplitter
                 >
                     <ColumnGroup width={this.state.fixedColumnsWidth || 0}
                         headerHeight={this.props.headerHeight}

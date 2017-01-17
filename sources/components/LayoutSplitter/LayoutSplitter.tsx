@@ -49,9 +49,14 @@ export class LayoutSplitter extends React.PureComponent<LayoutSplitterProps, {}>
         return this.props.orientation === 'vertical' ? 'layout-vert-splitter' : 'layout-horz-splitter';
     }
 
+    getStyle(): React.CSSProperties {
+        return this.props.orientation === 'vertical' ? {top: this.props.coord} : {left: this.props.coord};
+    }
+
     render(): JSX.Element {
         return (
             <div className={this.getClassName()}
+                style={this.getStyle()}
                 onMouseDown={this.handleMouseDown}>
             </div>
         );

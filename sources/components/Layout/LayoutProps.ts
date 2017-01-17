@@ -9,6 +9,7 @@ export interface LayoutProps {
     readonly width?: number | '100%';
     readonly showBottomShadow?: boolean;
     readonly showRightShadow?: boolean;
+    readonly showSplitter?: boolean;
 }
 
 export const layoutPropTypes: ValidationMap<LayoutProps> = {
@@ -17,5 +18,6 @@ export const layoutPropTypes: ValidationMap<LayoutProps> = {
     orientation: orientationPropType,
     showBottomShadow: PropTypes.bool,
     showRightShadow: PropTypes.bool,
+    showSplitter: PropTypes.bool,
     width: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 };

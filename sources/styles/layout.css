@@ -1,27 +1,38 @@
-.layout-vert-container, .layout-horz-container {
-  display: flex;
-}
-
-.layout-vert-container {
-  flex-direction: column;
-}
-
-.layout-vert-first, .layout-horz-first, .layout-second {
-  overflow: hidden;
+.layout2-container {
   position: relative;
+  display: inline-block;
 }
 
-.layout-vert-first {
+.layout2-vert-first {
+  vertical-align: top;
+  display: inline-block;
+  overflow: hidden;
   width: 100%;
-  flex-shrink: 0;
 }
 
-.layout-horz-first {
-  height: 100%;
+.layout2-vert-second {
+  vertical-align: top;
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
 }
 
-.layout-second {
-  flex-grow: 1;
+.layout2-horz-first {
+  display: inline-block;
+  vertical-align: middle;
   height: 100%;
-  flex-shrink: 1;
+  overflow: hidden;
+}
+
+.layout2-horz-second {
+  display: inline-block;
+  vertical-align: middle;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  overflow: hidden;
 }

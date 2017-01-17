@@ -44,10 +44,10 @@ describe('DOM: Layout', () => {
         ReactDOM.render(
                 <Layout
                     orientation="vertical"
-                    width = "200px"
-                    height = "200px"
+                    width={200}
+                    height={200}
                 >
-                    <Layout height="10px">
+                    <Layout height={10}>
                         <div style= {{display: 'block', height: '100%', width: '100%'}}/>
                     </Layout>
                     <Layout height="100%">
@@ -86,10 +86,10 @@ describe('DOM: Layout', () => {
         ReactDOM.render(
                 <Layout
                     orientation="horizontal"
-                    width = "200px"
-                    height = "200px"
+                    width={200}
+                    height={200}
                 >
-                    <Layout width="10px">
+                    <Layout width={10}>
                         <div style= {{display: 'block', height: '100%', width: '100%'}}/>
                     </Layout>
                     <Layout width="100%">

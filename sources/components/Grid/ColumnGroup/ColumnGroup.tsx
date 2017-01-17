@@ -6,10 +6,8 @@ import { ColumnProps } from '../Column/ColumnProps';
 import { HeaderRow } from '../HeaderRow';
 import { Row } from '../Row';
 import { ScrollableContainer } from '../../ScrollableContainer';
-import { Layout2 } from '../../Layout2';
+import { Layout } from '../../Layout';
 import { RowData } from '../RowData';
-
-import '../../../styles/layout2.css';
 
 export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGroupState> {
     static propTypes = columnGroupPropTypes;
@@ -80,11 +78,11 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
 
     render(): JSX.Element | null {
         return this.state.columnsWidth ?
-            <Layout2 orientation="vertical"
+            <Layout orientation="vertical"
                 height="100%"
                 width={this.props.width === 'auto' ? this.state.columnsWidth : this.props.width}
             >
-                <Layout2 height={this.props.headerHeight}>
+                <Layout height={this.props.headerHeight}>
                     <ScrollableContainer
                         key="header"
                         contentWidth={this.state.columnsWidth}
@@ -98,8 +96,8 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
                         ref={(ref: ScrollableContainer) => this.header = ref}
                         showShadowForReplacer
                     />
-                </Layout2>
-                <Layout2 height="100%">
+                </Layout>
+                <Layout height="100%">
                     <ScrollableContainer
                         key="body"
                         contentWidth={this.state.columnsWidth}
@@ -117,8 +115,8 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
                         onVerticalScrollVisibilityChanged={this.handleVerticalScrollVisibilityChanged}
                         showShadowForReplacer
                     />
-                </Layout2>
-            </Layout2>
+                </Layout>
+            </Layout>
             : null;
     }
 }

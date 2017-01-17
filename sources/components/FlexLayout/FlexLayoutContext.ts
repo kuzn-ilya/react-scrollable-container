@@ -1,15 +1,14 @@
 import { Orientation } from '../../utils/types';
 import { PropTypes } from 'react';
+import { Layout } from './FlexLayout';
 import { ValidationMap } from '../../react/ValidationMap';
 
-import { Layout2 } from './Layout2';
-
-export interface Layout2ChildContext {
+export interface LayoutChildContext {
     orientation?: Orientation;
-    parent?: Layout2;
+    parent?: Layout;
 }
 
-export const layout2ChildContextTypes: ValidationMap<Layout2ChildContext> = {
+export const layoutChildContextTypes: ValidationMap<LayoutChildContext> = {
     orientation: PropTypes.oneOf(['horizontal', 'vertical']),
-    parent: PropTypes.object
+    parent: PropTypes.any // TODO chose more appropriate type
 };

@@ -112,7 +112,7 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                             showRightShadow={panelProps.showRightShadow}
                         >
                             {panelProps.children}
-                        </Internal.LayoutPanel>
+                        </Internal.LayoutPanel>;
                         left += panelProps.width;
                         break;
                     case 'right':
@@ -125,7 +125,7 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                             showRightShadow={panelProps.showRightShadow}
                         >
                             {panelProps.children}
-                        </Internal.LayoutPanel>
+                        </Internal.LayoutPanel>;
                         right += panelProps.width;
                         break;
                     case 'top':
@@ -138,7 +138,7 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                             showRightShadow={panelProps.showRightShadow}
                         >
                             {panelProps.children}
-                        </Internal.LayoutPanel>
+                        </Internal.LayoutPanel>;
                         top += panelProps.height;
                         break;
                     case 'bottom':
@@ -151,7 +151,7 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                             showRightShadow={panelProps.showRightShadow}
                         >
                             {panelProps.children}
-                        </Internal.LayoutPanel>
+                        </Internal.LayoutPanel>;
                         bottom += panelProps.height;
                         break;
                     case 'client':
@@ -164,7 +164,7 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                             showRightShadow={panelProps.showRightShadow}
                         >
                             {panelProps.children}
-                        </Internal.LayoutPanel>
+                        </Internal.LayoutPanel>;
                         bottom += panelProps.height;
                         break;
                     default:

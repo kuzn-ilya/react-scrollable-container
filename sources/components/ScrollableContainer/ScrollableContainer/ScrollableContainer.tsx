@@ -1,13 +1,12 @@
 import * as React from 'react';
-import { classNames } from '../../utils/classNames';
-import { WindowEvents } from '../../utils/WindowEvents';
+import { classNames, WindowEvents } from '../../../utils';
 
 import { ScrollableContainerProps, scrollableContainerPropTypes } from  './ScrollableContainerProps';
 import { ScrollableContainerState } from  './ScrollableContainerState';
 import { ScrollableContent } from '../ScrollableContent';
 
-import '../../styles/container.css';
-import '../../styles/common.css';
+import '../../../styles/container.css';
+import '../../../styles/common.css';
 
 export class ScrollableContainer extends React.PureComponent<ScrollableContainerProps, ScrollableContainerState> {
 

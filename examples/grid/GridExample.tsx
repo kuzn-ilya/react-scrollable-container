@@ -1,8 +1,7 @@
 import * as React from 'react';
 
 import { fakeData } from './data/fake.data';
-import { Layout } from '../../sources/components';
-import { Grid, Column } from '../../sources/components';
+import { Layout, Grid, Column } from '../../sources/components';
 
 interface CompState {
     // tslint:disable-next-line:no-any

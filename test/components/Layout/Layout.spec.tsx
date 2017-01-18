@@ -5,7 +5,7 @@ import * as chaiSpies from 'chai-spies';
 
 // import { renderIntoDocument } from '../../TestUtils';
 
-// import { Layout } from '../../../sources/components';
+// import { Layout } from '../../../sources';
 
 // const expect = chai.expect;
 chai.use(chaiSpies);

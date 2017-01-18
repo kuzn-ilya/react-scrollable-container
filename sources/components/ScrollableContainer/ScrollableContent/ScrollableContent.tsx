@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import '../../styles/container.css';
+import '../../../styles/container.css';
 
 import {ScrollableContentProps, scrollableContentPropTypes } from './ScrollableContentProps';
 

@@ -1,7 +1,7 @@
 import { PropTypes } from 'react';
-import { ValidationMap } from '../../../react/ValidationMap';
+import { ValidationMap } from '../../../react';
 import { ColumnProps } from '../Column/ColumnProps';
-import { Overflow, overflowPropType } from '../../../utils/types';
+import { Overflow, overflowPropType } from '../../../utils';
 import { RowData } from '../RowData';
 
 export interface ColumnGroupProps {

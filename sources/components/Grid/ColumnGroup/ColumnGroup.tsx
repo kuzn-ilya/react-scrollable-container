@@ -8,7 +8,7 @@ import { Row } from '../Row';
 import { ScrollableContainer } from '../../ScrollableContainer';
 import { Layout } from '../../Layout';
 import { RowData } from '../RowData';
-import { classNames } from '../../../utils/classNames';
+import { classNames } from '../../../utils';
 
 export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGroupState> {
     static propTypes = columnGroupPropTypes;

@@ -3,10 +3,10 @@ import * as React from 'react';
 import { LayoutProps, layoutPropTypes } from  './LayoutProps';
 import { LayoutState } from  './LayoutState';
 // import { LayoutSplitter } from  '../LayoutSplitter';
-import { classNames } from '../../utils/classNames';
+import { classNames } from '../../../utils';
 
-import '../../styles/layout.css';
-import '../../styles/common.css';
+import '../../../styles/layout.css';
+import '../../../styles/common.css';
 
 export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
 
@@ -105,10 +105,10 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                 layoutPaneClassName = this.props.orientation === 'vertical' ? 'layout2-vert-second' : 'layout2-horz-second';
                 let prevSize = this.props.childrenProps
                     .slice(0, index)
-                    .reduce((prev, curr) => prev + (curr.size === '100%' ? 0 : curr.size), 0);
+                    .reduce((prev: number, curr: { size: '100%' | number }) => prev + (curr.size === '100%' ? 0 : curr.size), 0);
                 layoutPaneStyle = {
-                    top: this.props.orientation === 'vertical' ? prevSize + 'px' : undefined,
-                    left: this.props.orientation === 'horizontal' ? prevSize + 'px' : undefined
+                    left: this.props.orientation === 'horizontal' ? prevSize + 'px' : undefined,
+                    top: this.props.orientation === 'vertical' ? prevSize + 'px' : undefined
                 };
             }
 

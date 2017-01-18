@@ -1,6 +1,6 @@
 import { PropTypes } from 'react';
-import { Orientation, orientationPropType } from '../../utils/types';
-import { ValidationMap } from '../../react/ValidationMap';
+import { Orientation, orientationPropType } from '../../../utils';
+import { ValidationMap } from '../../../react';
 
 // TODO come up with more appropriate names for coord, minCoord and maxCoord
 export interface LayoutSplitterProps {

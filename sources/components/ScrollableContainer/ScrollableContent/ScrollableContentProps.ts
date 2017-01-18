@@ -1,6 +1,6 @@
 import { PropTypes } from 'react';
-import { Size, sizePropType } from '../../utils/types';
-import { ValidationMap } from '../../react/ValidationMap';
+import { Size, sizePropType } from '../../../utils';
+import { ValidationMap } from '../../../react';
 
 export interface ScrollableContentProps {
     readonly contentWidth?: Size;

@@ -1,6 +1,8 @@
+import { Data } from './Data';
+
 /* tslint:disable:object-literal-sort-keys */
 
-export const fakeData =
+export const fakeData: Array<Data> =
     [{
       id: 1,
       firstName: 'Louis',

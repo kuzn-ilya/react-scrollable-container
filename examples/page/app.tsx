@@ -11,7 +11,7 @@ let examples: Example[] = [
     { componentClass: GridExample, name: 'Grid' }
 ];
 
-//ReactDOM.render(<GridExample />, document.getElementById('app'));
+// ReactDOM.render(<GridExample />, document.getElementById('app'));
 ReactDOM.render(<ExamplesPage examples={examples}/>, document.getElementById('app'));
 
 if (process.env.NODE_ENV !== 'production') {

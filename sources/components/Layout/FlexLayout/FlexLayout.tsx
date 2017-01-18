@@ -5,9 +5,9 @@ import { LayoutState } from  './FlexLayoutState';
 import { LayoutChildContext, layoutChildContextTypes } from './FlexLayoutContext';
 import { LayoutSplitter } from  '../LayoutSplitter';
 
-import { classNames } from '../../utils/classNames';
+import { classNames } from '../../../utils';
 
-import '../../styles/flex-layout.css';
+import '../../../styles/flex-layout.css';
 
 export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
 

@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom';
 import * as chai from 'chai';
 import * as chaiSpies from 'chai-spies';
 
-import { ScrollableContainer } from '../../../sources/components';
+import { ScrollableContainer } from '../../../sources';
 import { simulateScroll } from '../../TestUtils';
 
 const expect = chai.expect;

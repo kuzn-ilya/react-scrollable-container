@@ -1,5 +1,5 @@
 import { PropTypes } from 'react';
-import { ValidationMap } from '../../react/ValidationMap';
+import { ValidationMap } from '../../react';
 import { RowData } from './RowData';
 
 export interface GridProps {

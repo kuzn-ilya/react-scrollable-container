@@ -1,6 +1,6 @@
 import { PropTypes } from 'react';
-import { Orientation, orientationPropType } from '../../utils/types';
-import { ValidationMap } from '../../react/ValidationMap';
+import { Orientation, orientationPropType } from '../../../utils';
+import { ValidationMap } from '../../../react';
 
 type ChildProps = {
     size: number | '100%',

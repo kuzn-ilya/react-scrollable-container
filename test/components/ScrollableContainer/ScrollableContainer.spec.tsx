@@ -6,8 +6,7 @@ import { is } from 'useragent';
 
 import { renderIntoDocument, unmountComponent, findRenderedComponentWithType } from '../../TestUtils';
 
-import { Overflow } from '../../../sources/utils/types';
-import { ScrollableContainer, ScrollableContent } from '../../../sources/components';
+import { Overflow, ScrollableContainer, ScrollableContent } from '../../../sources';
 
 const expect = chai.expect;
 chai.use(chaiSpies);

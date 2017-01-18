@@ -5,7 +5,7 @@ import { GridState } from './GridState';
 import { Column } from './Column';
 import { ColumnGroup } from './ColumnGroup';
 import { ColumnProps } from './Column/ColumnProps';
-import { Layout } from '../Layout';
+import { Layout, LayoutPanel } from '../Layout';
 
 // import { classNames } from '../../utils/classNames';
 
@@ -42,33 +42,32 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
 
     render(): JSX.Element {
         return (
-            <Layout orientation="horizontal"
-                    height="100%"
-                    width="100%"
-                    childrenProps={[{size: this.state.fixedColumnsWidth || 0}, {size: '100%'}]}
-            >
-                <ColumnGroup width={this.state.fixedColumnsWidth || 0}
-                    headerHeight={this.props.headerHeight}
-                    showEdgeForTheLeftCell
-                    rowData={this.props.rowData}
-                    columnProps={this.state.fixedColumns ? this.state.fixedColumns : []}
-                    rowHeight={this.props.rowHeight}
-                    scrollTop={this.state.scrollTop}
-                    colsThumbHeight={this.state.colsThumbHeight}
-                    overflowX="hidden"
-                    overflowY="hidden"
-                    showRightShadow={this.state.scrollLeft > 0}
-                />
-                <ColumnGroup width="100%"
-                    headerHeight={this.props.headerHeight}
-                    rowData={this.props.rowData}
-                    columnProps={this.state.scrollableColumns ? this.state.scrollableColumns : []}
-                    rowHeight={this.props.rowHeight}
-                    overflowX="auto"
-                    overflowY="auto"
-                    onScrollPosChanged={this.handleVerticalScrollPosChanged}
-                    onHorizontalScrollVisibilityChanged={this.handleHorizontalScrollVisibilityChanged}
-                />
+            <Layout height="100%" width="100%">
+                <LayoutPanel align="left" width={this.state.fixedColumnsWidth || 0} showRightShadow={this.state.scrollLeft > 0}>
+                    <ColumnGroup width={this.state.fixedColumnsWidth || 0}
+                        headerHeight={this.props.headerHeight}
+                        showEdgeForTheLeftCell
+                        rowData={this.props.rowData}
+                        columnProps={this.state.fixedColumns!}
+                        rowHeight={this.props.rowHeight}
+                        scrollTop={this.state.scrollTop}
+                        colsThumbHeight={this.state.colsThumbHeight}
+                        overflowX="hidden"
+                        overflowY="hidden"
+                    />
+                </LayoutPanel>
+                <LayoutPanel align="client">
+                    <ColumnGroup width="100%"
+                        headerHeight={this.props.headerHeight}
+                        rowData={this.props.rowData}
+                        columnProps={this.state.scrollableColumns!}
+                        rowHeight={this.props.rowHeight}
+                        overflowX="auto"
+                        overflowY="auto"
+                        onScrollPosChanged={this.handleVerticalScrollPosChanged}
+                        onHorizontalScrollVisibilityChanged={this.handleHorizontalScrollVisibilityChanged}
+                    />
+                </LayoutPanel>
             </Layout>
         );
     }

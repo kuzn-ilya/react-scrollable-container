@@ -1,42 +1,12 @@
 .layout2-container {
   position: relative;
   display: inline-block;
-}
-
-.layout2-vert-first {
-  vertical-align: top;
-  display: inline-block;
-  overflow: hidden;
-  width: 100%;
-  z-index: 0.5;
-}
-
-.layout2-vert-second {
-  vertical-align: top;
-  display: inline-block;
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  overflow: hidden;
-  z-index: 0.5;
-}
-
-.layout2-horz-first {
-  display: inline-block;
   vertical-align: middle;
-  height: 100%;
-  overflow: hidden;
-  z-index: 0.5;
 }
 
-.layout2-horz-second {
+.layout-panel {
   display: inline-block;
   vertical-align: middle;
   position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
   overflow: hidden;
-  z-index: 0.5;
 }

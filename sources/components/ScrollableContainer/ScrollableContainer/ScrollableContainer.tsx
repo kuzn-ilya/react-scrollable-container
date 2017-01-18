@@ -66,7 +66,8 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
             >
                 <div className={classNames({
                         'scrollable-container-scrollable': true,
-                        'scrollable-container-scrollable-boost': this.props.overflowX !== 'hidden' || this.props.overflowY !== 'hidden',
+                        'scrollable-container-scrollable-boost': this.props.overflowX !== 'hidden' || this.props.overflowY !== 'hidden' 
+                            || Boolean(this.props.scrollLeft || this.props.scrollTop),
                         'right-shadow': Boolean(this.props.showShadowForReplacer && this.props.vertScrollBarReplacerWidth),
                         'bottom-shadow': Boolean(this.props.showShadowForReplacer && this.props.horzScrollBarReplacerHeight)
                     })}

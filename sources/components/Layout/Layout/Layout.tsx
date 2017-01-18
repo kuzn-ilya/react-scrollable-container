@@ -2,17 +2,16 @@ import * as React from 'react';
 
 import { LayoutProps, layoutPropTypes } from  './LayoutProps';
 import { LayoutState } from  './LayoutState';
+import { LayoutPanel } from  '../LayoutPanel';
+import { LayoutPanelProps } from  '../LayoutPanel/LayoutPanelProps';
+import { Internal } from  '../InternalLayoutPanel';
 // import { LayoutSplitter } from  '../LayoutSplitter';
-import { classNames } from '../../../utils';
+import { classNames, warning } from '../../../utils';
 
 import '../../../styles/layout.css';
 import '../../../styles/common.css';
 
 export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
-
-    static defaultProps: Partial<LayoutProps> = {
-        showSplitter: false
-    };
 
     static propTypes = layoutPropTypes;
 
@@ -88,37 +87,92 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
         this.updateSize(nextProps.children);
     }
 
-    render(): JSX.Element | null {
+    render(): JSX.Element {
+        let left = 0;
+        let top = 0;
+        let bottom = 0;
+        let right = 0;
 
         let children = React.Children.map(this.props.children, (child: React.ReactChild, index: number) => {
-            let childProps = this.props.childrenProps[index];
-            let layoutPaneStyle: {} = {};
-            let layoutPaneClassName = '';
-
-            if (typeof childProps.size === 'number') {
-                layoutPaneClassName = this.props.orientation === 'vertical' ? 'layout2-vert-first' : 'layout2-horz-first';
-                layoutPaneStyle = {
-                    height: this.props.orientation === 'vertical' ? childProps.size + 'px' : undefined,
-                    width: this.props.orientation === 'horizontal' ? childProps.size + 'px' : undefined
-                };
+            if (typeof child === 'string' || typeof child === 'number' || child.type !== LayoutPanel) {
+                warning('<Layout />: Children should have a type of <LayoutPanel /> .');
+                return child;
             } else {
-                layoutPaneClassName = this.props.orientation === 'vertical' ? 'layout2-vert-second' : 'layout2-horz-second';
-                let prevSize = this.props.childrenProps
-                    .slice(0, index)
-                    .reduce((prev: number, curr: { size: '100%' | number }) => prev + (curr.size === '100%' ? 0 : curr.size), 0);
-                layoutPaneStyle = {
-                    left: this.props.orientation === 'horizontal' ? prevSize + 'px' : undefined,
-                    top: this.props.orientation === 'vertical' ? prevSize + 'px' : undefined
-                };
-            }
+                let panelProps = child.props as LayoutPanelProps & { children?: React.ReactNode };
+                let component = null;
 
-            return (
-                <div className={classNames(layoutPaneClassName)}
-                    style={layoutPaneStyle}
-                >
-                    {child}
-                </div>
-            );
+                switch (panelProps.align) {
+                    case 'left':
+                        component = <Internal.LayoutPanel
+                            top={top}
+                            bottom={bottom}
+                            left={left}
+                            width={panelProps.width}
+                            showBottomShadow={panelProps.showBottomShadow}
+                            showRightShadow={panelProps.showRightShadow}
+                        >
+                            {panelProps.children}
+                        </Internal.LayoutPanel>
+                        left += panelProps.width;
+                        break;
+                    case 'right':
+                        component = <Internal.LayoutPanel
+                            top={top}
+                            bottom={bottom}
+                            right={right}
+                            width={panelProps.width}
+                            showBottomShadow={panelProps.showBottomShadow}
+                            showRightShadow={panelProps.showRightShadow}
+                        >
+                            {panelProps.children}
+                        </Internal.LayoutPanel>
+                        right += panelProps.width;
+                        break;
+                    case 'top':
+                        component = <Internal.LayoutPanel
+                            left={left}
+                            right={right}
+                            top={top}
+                            height={panelProps.height}
+                            showBottomShadow={panelProps.showBottomShadow}
+                            showRightShadow={panelProps.showRightShadow}
+                        >
+                            {panelProps.children}
+                        </Internal.LayoutPanel>
+                        top += panelProps.height;
+                        break;
+                    case 'bottom':
+                        component = <Internal.LayoutPanel
+                            left={left}
+                            right={right}
+                            bottom={bottom}
+                            height={panelProps.height}
+                            showBottomShadow={panelProps.showBottomShadow}
+                            showRightShadow={panelProps.showRightShadow}
+                        >
+                            {panelProps.children}
+                        </Internal.LayoutPanel>
+                        bottom += panelProps.height;
+                        break;
+                    case 'client':
+                        component = <Internal.LayoutPanel
+                            left={left}
+                            right={right}
+                            top={top}
+                            bottom={bottom}
+                            showBottomShadow={panelProps.showBottomShadow}
+                            showRightShadow={panelProps.showRightShadow}
+                        >
+                            {panelProps.children}
+                        </Internal.LayoutPanel>
+                        bottom += panelProps.height;
+                        break;
+                    default:
+                        break;
+                }
+
+                return component;
+            }
         });
 
                     // splitter = this.props.showSplitter ? (

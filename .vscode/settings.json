@@ -11,7 +11,7 @@
         "**/bower_components": true,
         "coverage/**": true,
         "build/**": true
-    }
-,
-"typescript.tsdk": "./node_modules/typescript/lib"
+    },
+    "typescript.tsdk": "./node_modules/typescript/lib",
+    "todoScanRegex":   "\\W{1}(?:TODO|FIXME)\\s*\\W{0,1}(\\s+.*|(?:\\w|\\d).*)$"
 }

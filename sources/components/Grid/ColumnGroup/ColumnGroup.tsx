@@ -57,24 +57,14 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
         });
     }
 
-    scrollTop: number = 0;
-    scrollLeft: number = 0;
     header: ScrollableContainer;
+    rows: ScrollableContainer;
 
     handleScrollPosChanged: (scrollLeft: number, scrollTop: number) => void = (scrollLeft, scrollTop) => {
-        if (this.scrollLeft !== scrollLeft || this.scrollTop !== scrollTop) {
-            if (this.scrollLeft !== scrollLeft) {
-                this.scrollLeft = scrollLeft;
-                this.header.setScrollLeft(scrollLeft);
-            }
-
-            this.scrollTop = scrollTop;
-
-            if (this.props.onScrollPosChanged) {
-                this.props.onScrollPosChanged(scrollLeft, scrollTop);
-            }
+        this.header.setScrollLeft(scrollLeft);
+        if (this.props.onScrollPosChanged) {
+            this.props.onScrollPosChanged(scrollLeft, scrollTop);
         }
-
     }
 
     render(): JSX.Element | null {
@@ -111,15 +101,21 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
                         dataRenderer={this.renderRows}
                         width="100%"
                         height="100%"
-                        scrollTop={this.props.scrollTop}
                         horzScrollBarReplacerHeight={this.props.colsThumbHeight}
                         onScrollPosChanged={this.handleScrollPosChanged}
                         onHorizontalScrollVisibilityChanged={this.props.onHorizontalScrollVisibilityChanged}
                         onVerticalScrollVisibilityChanged={this.handleVerticalScrollVisibilityChanged}
+                        ref={(ref: ScrollableContainer) => this.rows = ref}
                         showShadowForReplacer
                     />
                 </LayoutPanel>
             </Layout>
             : null;
+    }
+
+    setScrollTop(position: number): void {
+        if (this.rows) {
+            this.rows.setScrollTop(position);
+        }
     }
 }

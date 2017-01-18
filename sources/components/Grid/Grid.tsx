@@ -32,6 +32,9 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
     }
 
     handleVerticalScrollPosChanged: (scrollLeft: number, scrollTop: number) => void = (scrollLeft, scrollTop) => {
+        if (this.fixedColumnGroup) {
+            this.fixedColumnGroup.setScrollTop(scrollTop);
+        }
         if (this.state.scrollTop !== scrollTop || this.state.scrollLeft !== scrollLeft) {
             this.setState({
                 scrollLeft,
@@ -40,17 +43,19 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
         }
     }
 
+    fixedColumnGroup: ColumnGroup;
+
     render(): JSX.Element {
         return (
             <Layout height="100%" width="100%">
                 <LayoutPanel align="left" width={this.state.fixedColumnsWidth || 0} showRightShadow={this.state.scrollLeft > 0}>
                     <ColumnGroup width={this.state.fixedColumnsWidth || 0}
+                        ref={(ref: ColumnGroup) => this.fixedColumnGroup = ref }
                         headerHeight={this.props.headerHeight}
                         showEdgeForTheLeftCell
                         rowData={this.props.rowData}
                         columnProps={this.state.fixedColumns!}
                         rowHeight={this.props.rowHeight}
-                        scrollTop={this.state.scrollTop}
                         colsThumbHeight={this.state.colsThumbHeight}
                         overflowX="hidden"
                         overflowY="hidden"

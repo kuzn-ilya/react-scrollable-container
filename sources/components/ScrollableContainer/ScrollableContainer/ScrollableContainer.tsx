@@ -64,6 +64,7 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
                 }}
                 id={this.props.id}
             >
+                // TODO implement class for both shadows.
                 <div className={classNames({
                         'scrollable-container-scrollable': true,
                         'scrollable-container-scrollable-boost': this.props.overflowX !== 'hidden' || this.props.overflowY !== 'hidden',
@@ -93,30 +94,21 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
     handleWindowResize: () => void =
         () => this.measureScrollbars();
 
-    private scrollLeft: number = 0;
-    private scrollTop: number = 0;
-
     private handleScroll: (event: React.UIEvent<HTMLDivElement>) => void = (event) => {
-        let scrollLeft = (event.target as Element).scrollLeft;
-        let scrollTop = (event.target as Element).scrollTop;
-        if (scrollLeft !== this.scrollLeft || scrollTop !== this.scrollTop) {
-            this.scrollTop = scrollTop;
-            this.scrollLeft = scrollLeft;
-            if (this.props.onScrollPosChanged) {
-                this.props.onScrollPosChanged(scrollLeft, scrollTop);
-            }
+        if (this.props.onScrollPosChanged) {
+            let scrollLeft = (event.target as Element).scrollLeft;
+            let scrollTop = (event.target as Element).scrollTop;
+            this.props.onScrollPosChanged(scrollLeft, scrollTop);
         }
     }
 
     private updateScrollPositions(): void {
         if (this.ref) {
-            if (typeof this.props.scrollLeft !== 'undefined' && this.scrollLeft !== this.props.scrollLeft) {
+            if (this.props.scrollLeft !== undefined) {
                 this.ref.scrollLeft = this.props.scrollLeft;
-                this.scrollLeft = this.props.scrollLeft;
             }
-            if (typeof this.props.scrollTop !== 'undefined' && this.scrollTop !== this.props.scrollTop) {
+            if (this.props.scrollTop !== undefined) {
                 this.ref.scrollTop = this.props.scrollTop;
-                this.scrollTop = this.props.scrollTop;
             }
         }
     }
@@ -149,6 +141,12 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
     setScrollLeft(position: number): void {
         if (this.ref) {
             this.ref.scrollLeft = position;
+        }
+    }
+
+    setScrollTop(position: number): void {
+        if (this.ref) {
+            this.ref.scrollTop = position;
         }
     }
 }

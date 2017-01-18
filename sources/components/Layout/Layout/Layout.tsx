@@ -184,7 +184,7 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
 
         let component = (
             <div
-                className={classNames('layout2-container', this.props.className)}
+                className={classNames('layout-container', this.props.className)}
                 style={{
                     height: this.props.height,
                     width: this.props.width

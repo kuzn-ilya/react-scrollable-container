@@ -54,6 +54,7 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
 
     private ref: HTMLDivElement;
 
+    // TODO: implement class for both shadows.
     render(): JSX.Element {
         return (
             <div
@@ -64,7 +65,6 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
                 }}
                 id={this.props.id}
             >
-                // TODO implement class for both shadows.
                 <div className={classNames({
                         'scrollable-container-scrollable': true,
                         'scrollable-container-scrollable-boost': this.props.overflowX !== 'hidden' || this.props.overflowY !== 'hidden',

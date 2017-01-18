@@ -49,14 +49,7 @@ var config = merge.smart(common, {
                 NODE_ENV: JSON.stringify("test") 
             }
         })        
-    ],
-
-    // This section is here to avoid webpack errors while loading useragent lib.
-    node: {
-        fs: 'empty',
-        net: 'empty',
-        tls: 'empty'
-    }    
+    ]
 });
 
 module.exports = config;

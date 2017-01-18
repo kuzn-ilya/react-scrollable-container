@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as chai from 'chai';
 import * as chaiSpies from 'chai-spies';
-import { is } from 'useragent';
+import { UAParser } from 'ua-parser-js';
 
 import { renderIntoDocument, unmountComponent, findRenderedComponentWithType } from '../../TestUtils';
 
@@ -11,7 +11,9 @@ import { Overflow, ScrollableContainer, ScrollableContent } from '../../../sourc
 const expect = chai.expect;
 chai.use(chaiSpies);
 
-// TODO How can test window reisize? Is it possible?
+const isIE = new UAParser().getBrowser().name === 'IE';
+
+// TODO: How can test window resize? Is it possible?
 describe('ScrollableContainer', () => {
 
     it('should be defined', () => {
@@ -48,8 +50,7 @@ describe('ScrollableContainer', () => {
             it(`should have overflow "${value}" attribute if both overflowX and overflowY properties have "${value}" values`, () => {
                 let container = renderIntoDocument(<ScrollableContainer overflowX={value} overflowY={value} height={100} width={100}/>);
                 let domElement = ReactDOM.findDOMNode(container).firstChild as HTMLElement;
-
-                if (is('IE')) {
+                if (isIE) {
                     expect(domElement.style.overflowX).equals(value);
                     expect(domElement.style.overflowY).equals(value);
                 } else {

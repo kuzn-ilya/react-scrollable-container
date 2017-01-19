@@ -13,5 +13,6 @@
         "build/**": true
     },
     "typescript.tsdk": "./node_modules/typescript/lib",
-    "todoScanRegex":   "\\W{1}(?:TODO|FIXME)\\s*\\W{0,1}(\\s+.*|(?:\\w|\\d).*)$"
+    "todoScanRegex":   "\\W{1}(?:TODO|FIXME)\\s*\\W{0,1}(\\s+.*|(?:\\w|\\d).*)$",
+    "todoIgnore":   ["./node_modules/**"]
 }

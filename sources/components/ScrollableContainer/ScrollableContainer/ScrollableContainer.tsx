@@ -54,7 +54,7 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
 
     private ref: HTMLDivElement;
 
-    // TODO: implement class for both shadows.
+    // TODO: Implement class for both shadows.
     render(): JSX.Element {
         return (
             <div

@@ -10,5 +10,5 @@ export interface LayoutChildContext {
 
 export const layoutChildContextTypes: ValidationMap<LayoutChildContext> = {
     orientation: PropTypes.oneOf(['horizontal', 'vertical']),
-    parent: PropTypes.any // TODO chose more appropriate type
+    parent: PropTypes.any // TODO: Choose more appropriate type
 };

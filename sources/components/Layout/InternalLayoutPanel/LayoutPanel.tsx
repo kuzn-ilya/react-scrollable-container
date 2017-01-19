@@ -13,7 +13,7 @@ export namespace Internal {
 
         render(): JSX.Element {
             if (React.Children.count(this.props.children) !== 1) {
-                warning('<LayoutPanel /> should have only one children.');
+                warning('<LayoutPanel /> should have only one child.');
             }
 
             let layoutPaneStyle: React.CSSProperties = {

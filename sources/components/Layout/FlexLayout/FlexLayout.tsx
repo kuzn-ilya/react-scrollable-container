@@ -3,7 +3,7 @@ import * as React from 'react';
 import { LayoutProps, layoutPropTypes } from  './FlexLayoutProps';
 import { LayoutState } from  './FlexLayoutState';
 import { LayoutChildContext, layoutChildContextTypes } from './FlexLayoutContext';
-import { LayoutSplitter } from  '../LayoutSplitter';
+// import { LayoutSplitter } from  '../LayoutSplitter';
 
 import { classNames } from '../../../utils';
 
@@ -95,12 +95,12 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
             }
         }
 
-        let splitter = this.props.showSplitter ? (
-            <LayoutSplitter orientation={this.context.orientation}
-                onResizing={this.handleSplitterResizing}
-                onResizeEnd={this.handleSplitterResizeEnd}
-                coord={this.state.splitterCoord} />
-        ) : null;
+        // let splitter = this.props.showSplitter ? (
+        //     <LayoutSplitter orientation={this.context.orientation}
+        //         onResizing={this.handleSplitterResizing}
+        //         onResizeEnd={this.handleSplitterResizeEnd}
+        //         coord={this.state.splitterCoord} />
+        // ) : null;
 
         let child = this.props.orientation ? (
             <div className={this.props.orientation === 'vertical' ? 'layout-vert-container' : 'layout-horz-container'}
@@ -119,7 +119,6 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                 ref={(ref: HTMLDivElement) => this.ref = ref}
             >
                 {this.props.orientation ? child : this.props.children}
-                {splitter}
             </div>
         );
 

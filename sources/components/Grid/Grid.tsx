@@ -5,7 +5,7 @@ import { GridState } from './GridState';
 import { Column } from './Column';
 import { ColumnGroup } from './ColumnGroup';
 import { ColumnProps } from './Column/ColumnProps';
-import { Layout, LayoutPanel } from '../Layout';
+import { Layout, LayoutPanel, LayoutSplitter } from '../Layout';
 
 // import { classNames } from '../../utils/classNames';
 
@@ -61,6 +61,7 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
                         overflowY="hidden"
                     />
                 </LayoutPanel>
+                <LayoutSplitter />
                 <LayoutPanel align="client">
                     <ColumnGroup width="100%"
                         headerHeight={this.props.headerHeight}

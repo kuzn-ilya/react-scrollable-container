@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { fakeData } from './data/fake.data';
-import { Layout, LayoutPanel, Grid, Column } from '../../sources/components';
+import { Layout, LayoutPanel, LayoutSplitter, Grid, Column } from '../../sources/components';
 
 interface CompState {
     // tslint:disable-next-line:no-any
@@ -29,6 +29,7 @@ export class GridExample extends React.Component<{}, CompState> {
                 <LayoutPanel align="top" height={50}>
                     <button onClick={this.removeLastItem}>Remove Last</button>
                 </LayoutPanel>
+                <LayoutSplitter />
                 <LayoutPanel align="client">
                     <Grid rowData={this.state.data} fixedColumnCount={2} rowHeight={20} headerHeight={20}>
                         <Column caption="id" propName="id" width={30} align="right" />

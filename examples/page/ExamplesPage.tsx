@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import './styles.css';
-import { Layout, LayoutPanel } from '../../sources/components';
+import { Layout, LayoutPanel, LayoutSplitter } from '../../sources/components';
 
 import { Example } from './Example';
 import { ExamplesList } from './ExamplesList';
@@ -30,9 +30,11 @@ export class ExamplesPage extends React.PureComponent<ExamplesPageProps, Example
                 <LayoutPanel align="left" width={200}>
                     <ExamplesList examples={this.props.examples}/>
                 </LayoutPanel>
+                <LayoutSplitter />
                 <LayoutPanel align="top" height={30}>
                     {selectedExample.name}
                 </LayoutPanel>
+                <LayoutSplitter />
                 <LayoutPanel align="client">
                     <Comp />
                 </LayoutPanel>

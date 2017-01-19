@@ -20,6 +20,21 @@ export class LayoutExample extends React.Component<{}, CompState> {
                     </div>
                 </LayoutPanel>
                 <LayoutSplitter />
+                <LayoutPanel align="top" height={50}>
+                    <div style={{backgroundColor: 'lightgray', height: '100%', width: '100%'}}>
+                    </div>
+                </LayoutPanel>
+                <LayoutSplitter />
+                <LayoutPanel align="left" width={50}>
+                    <div style={{backgroundColor: 'yellow', height: '100%', width: '100%'}}>
+                    </div>
+                </LayoutPanel>
+                <LayoutSplitter />
+                <LayoutPanel align="left" width={50}>
+                    <div style={{backgroundColor: 'white', height: '100%', width: '100%'}}>
+                    </div>
+                </LayoutPanel>
+                <LayoutSplitter />
                 <LayoutPanel align="client">
                     <div style={{backgroundColor: 'pink', height: '100%', width: '100%'}}>
                     </div>

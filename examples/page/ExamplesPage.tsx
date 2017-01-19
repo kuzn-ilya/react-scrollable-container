@@ -35,7 +35,7 @@ export class ExamplesPage extends React.PureComponent<ExamplesPageProps, Example
         let Comp = selectedExample.componentClass;
         return (
             <Layout width="100%" height="100%">
-                <LayoutPanel align="left" width={200}>
+                <LayoutPanel align="left" width={100}>
                     <ExamplesList examples={this.props.examples} onSelectedIndexChanged={this.handleSelectedIndexChanged}/>
                 </LayoutPanel>
                 <LayoutSplitter />

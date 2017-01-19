@@ -15,7 +15,6 @@
             true,
             "call-signature",
             "parameter",
-            "arrow-parameter",
             "property-declaration"
         ],
         "typedef-whitespace": [

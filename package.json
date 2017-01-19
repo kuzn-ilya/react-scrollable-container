@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/kuzn-ilya/react-scrollable-container.git#readme",
   "dependencies": {
+    "immutable": "^3.8.1",
     "react": "^15.4.0",
     "react-dom": "^15.4.0"
   },
@@ -33,7 +34,6 @@
     "@types/chai-spies": "0.0.0",
     "@types/mocha": "^2.2.32",
     "@types/node": "^6.0.53",
-    "@types/object-assign": "^4.0.30",
     "@types/react": "^0.14.44",
     "@types/react-addons-perf": "^0.14.18",
     "@types/react-addons-test-utils": "^0.14.15",

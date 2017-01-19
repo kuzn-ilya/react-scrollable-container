@@ -20,6 +20,14 @@ export class ExamplesPage extends React.PureComponent<ExamplesPageProps, Example
         this.state = {
             selectedIndex: 0
         };
+
+        this.handleSelectedIndexChanged = this.handleSelectedIndexChanged.bind(this);
+    }
+
+    handleSelectedIndexChanged: (index: number) => void = (index) => {
+        this.setState({
+            selectedIndex: index
+        });
     }
 
     render(): JSX.Element {
@@ -28,7 +36,7 @@ export class ExamplesPage extends React.PureComponent<ExamplesPageProps, Example
         return (
             <Layout width="100%" height="100%">
                 <LayoutPanel align="left" width={200}>
-                    <ExamplesList examples={this.props.examples}/>
+                    <ExamplesList examples={this.props.examples} onSelectedIndexChanged={this.handleSelectedIndexChanged}/>
                 </LayoutPanel>
                 <LayoutSplitter />
                 <LayoutPanel align="top" height={30}>

@@ -5,10 +5,12 @@ import './styles.css';
 
 import { ExamplesPage } from './ExamplesPage';
 import { Example } from './Example';
-import { GridExample } from './../grid/GridExample';
+import { GridExample } from './../GridExample/GridExample';
+import { LayoutExample } from './../LayoutExample/LayoutExample';
 
 let examples: Example[] = [
-    { componentClass: GridExample, name: 'Grid' }
+    { componentClass: GridExample, name: 'Grid' },
+    { componentClass: LayoutExample, name: 'Layout' }
 ];
 
 // ReactDOM.render(<GridExample />, document.getElementById('app'));

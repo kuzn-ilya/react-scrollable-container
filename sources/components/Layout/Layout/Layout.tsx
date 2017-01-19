@@ -22,71 +22,24 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
 
         this.handleSplitterResizing = this.handleSplitterResizing.bind(this);
         this.handleSplitterResizeEnd = this.handleSplitterResizeEnd.bind(this);
-        // this.state = {
-        //     splitterCoord: this.getInitialSplitterCoord()
-        // };
 
-        this.updateSize(this.props.children);
+        this.state = this.calculateState(this.props);
+    }
+
+    calculateState(props: { children?: React.ReactNode }): LayoutState {
+        return {};
     }
 
     handleSplitterResizing: (newCoord: number) => void = (newCoord) => {
-        // if (this.ref) {
-        //     if (this.context.orientation === 'vertical') {
-        //         this.ref.style.height = newCoord + 'px';
-        //     } else if (this.context.orientation === 'horizontal') {
-        //         this.ref.style.width = newCoord + 'px';
-        //     }
-        //     this.setState({
-        //         splitterCoord: this.context.orientation === 'vertical' ? this.ref.offsetHeight : this.ref.offsetWidth
-        //     });
-        // }
+        return;
     }
 
     handleSplitterResizeEnd: () => void = () => {
-        // if (this.ref) {
-        //     this.setState({
-        //         splitterCoord: this.context.orientation === 'vertical' ? this.ref.offsetHeight : this.ref.offsetWidth
-        //     });
-        // }
-    }
-
-    // getInitialSplitterCoord(): number {
-    //     if (this.context.orientation === 'vertical' && typeof this.props.height === 'number') {
-    //         return this.props.height;
-    //     } else if (this.context.orientation === 'horizontal' && typeof this.props.width === 'number') {
-    //         return this.props.width;
-    //     }
-    //     return 0;
-    // }
-
-    componentDidMount(): void {
-        // if (this.props.showSplitter && this.ref) {
-        //     this.setState({
-        //         splitterCoord: this.context.orientation === 'vertical' ? this.ref.offsetHeight : this.ref.offsetWidth
-        //     });
-        // }
-    }
-
-    // size?: number;
-    ref: HTMLDivElement;
-
-    updateSize(children: React.ReactNode): void {
-        // let size = undefined;
-        // React.Children.forEach(children, (child: React.ReactChild) => {
-        //     if (typeof child !== 'string' && typeof child !== 'number' && child.type === Layout) {
-        //         if (this.props.orientation === 'vertical' && typeof child.props.height === 'number') {
-        //             size = child.props.height;
-        //         } else if (this.props.orientation === 'horizontal' && typeof child.props.width === 'number') {
-        //             size = child.props.width;
-        //         }
-        //     }
-        // });
-
-        // this.size = size;
+        return;
     }
 
     componentWillReceiveProps(nextProps: { children?: React.ReactNode }): void {
-        this.updateSize(nextProps.children);
+        this.setState(this.calculateState(nextProps));
     }
 
     render(): JSX.Element {

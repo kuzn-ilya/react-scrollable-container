@@ -2,7 +2,7 @@ import * as React from 'react';
 import { List } from 'immutable';
 
 import { LayoutProps, layoutPropTypes } from  './LayoutProps';
-import { LayoutState, LayoutChildState } from  './LayoutState';
+import { LayoutState, LayoutChildState, LayoutPanelChildState, LayoutSplitterChildState } from  './LayoutState';
 import { LayoutPanel } from  '../LayoutPanel';
 import { LayoutPanelProps } from  '../LayoutPanel/LayoutPanelProps';
 import { Internal } from  '../InternalLayoutPanel';
@@ -35,20 +35,15 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
         let right = 0;
         let orientation: Orientation | undefined = undefined;
 
-        function calculateDefaultState(index: number): LayoutChildState {
-            return {
-                index
-            };
-        }
-
-        function calculatePanelState(index: number, panelProps: LayoutPanelProps): LayoutChildState {
+        function calculatePanelState(index: number, panelProps: LayoutPanelProps): LayoutPanelChildState | undefined {
             let { align, height, width } = panelProps;
-            let state: LayoutChildState;
+
+            let state: LayoutPanelChildState | undefined = undefined;
+
             switch (align) {
                 case 'left':
                     state = {
                         bottom,
-                        index,
                         left,
                         top,
                         type: 'panel',
@@ -60,7 +55,6 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                 case 'right':
                     state = {
                         bottom,
-                        index,
                         right,
                         top,
                         type: 'panel',
@@ -72,7 +66,6 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                 case 'top':
                     state = {
                         height,
-                        index,
                         left,
                         right,
                         top,
@@ -85,7 +78,6 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                     state = {
                         bottom,
                         height,
-                        index,
                         left,
                         right,
                         type: 'panel'
@@ -97,7 +89,6 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                     // TODO: Warning should be here in case of the second attempt to render a client aligned panel.
                     state = {
                         bottom,
-                        index,
                         left,
                         right,
                         top,
@@ -106,20 +97,17 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                     orientation = undefined;
                     break;
                 default:
-                    state = calculateDefaultState(index);
                     break;
             }
-
             return state;
-        }
+       }
 
-        function calculateSplitterState(index: number, splitterProps: LayoutSplitterProps): LayoutChildState {
+        function calculateSplitterState(index: number, splitterProps: LayoutSplitterProps): LayoutSplitterChildState | undefined {
             switch (orientation)  {
                 // TODO: Only align left and top cases
                 case 'vertical':
                     return {
                         bottom: top + 3,
-                        index,
                         top: top - 3,
                         left,
                         orientation,
@@ -128,7 +116,6 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                     };
                 case 'horizontal':
                     return {
-                        index,
                         left: left - 3,
                         orientation,
                         right: left + 3,
@@ -137,19 +124,19 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                         bottom
                     };
                 default:
-                    return calculateDefaultState(index);
+                    return undefined;
             }
         }
 
         let childrenStates: LayoutChildState[] = React.Children.map(props.children, (child, index) => {
             if (typeof child === 'string' || typeof child === 'number') {
-                return calculateDefaultState(index);
+                return undefined;
             } else if (child.type === LayoutPanel ) {
                 return calculatePanelState(index, child.props as LayoutPanelProps);
             } else if (child.type === LayoutSplitter) {
                 return calculateSplitterState(index, child.props as LayoutSplitterProps);
             } else {
-                return calculateDefaultState(index);
+                return undefined;
             }
         });
 
@@ -173,37 +160,40 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
     render(): JSX.Element {
         let children: React.ReactNode = React.Children.map(this.props.children, (child, index) => {
             let childState = this.state.childrenStates.get(index);
-            switch (childState.type) {
-                case 'panel':
-                    let panelProps = (child as React.ReactElement<LayoutPanelProps & {children?: React.ReactChildren}>).props;
-                    return (
-                        <Internal.LayoutPanel
-                            top={childState.top}
-                            bottom={childState.bottom}
-                            left={childState.left}
-                            right={childState.right}
-                            width={childState.width}
-                            height={childState.height}
-                            showBottomShadow={panelProps.showBottomShadow}
-                            showRightShadow={panelProps.showRightShadow}
-                        >
-                            {panelProps.children}
-                        </Internal.LayoutPanel>
-                    );
-                case 'splitter':
-                    return (
-                        <Internal2.LayoutSplitter orientation={childState.orientation!}
-                            top={childState.top}
-                            left={childState.left}
-                            bottom={childState.bottom}
-                            right={childState.right}
-                            onResizing={this.handleSplitterResizing}
-                            onResizeEnd={this.handleSplitterResizeEnd}
-                        />
-                    );
-                default:
-                    return child;
+            if (childState) {
+                switch (childState.type) {
+                    case 'panel':
+                        let panelProps = (child as React.ReactElement<LayoutPanelProps & {children?: React.ReactChildren}>).props;
+                        return (
+                            <Internal.LayoutPanel
+                                top={childState.top}
+                                bottom={childState.bottom}
+                                left={childState.left}
+                                right={childState.right}
+                                width={childState.width}
+                                height={childState.height}
+                                showBottomShadow={panelProps.showBottomShadow}
+                                showRightShadow={panelProps.showRightShadow}
+                            >
+                                {panelProps.children}
+                            </Internal.LayoutPanel>
+                        );
+                    case 'splitter':
+                        return (
+                            <Internal2.LayoutSplitter orientation={childState.orientation!}
+                                top={childState.top}
+                                left={childState.left}
+                                bottom={childState.bottom}
+                                right={childState.right}
+                                onResizing={this.handleSplitterResizing}
+                                onResizeEnd={this.handleSplitterResizeEnd}
+                            />
+                        );
+                    default:
+                        break;
+                }
             }
+            return child;
         });
 
         let component = (

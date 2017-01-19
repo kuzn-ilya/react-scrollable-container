@@ -21,11 +21,12 @@ export namespace Internal {
 
         handleMouseDown: React.EventHandler<React.MouseEvent<HTMLDivElement>> = (e) => {
             this.mouseCapture = MouseCapture.captureMouseEvents(e.nativeEvent, this.handleWindowMouseMove, this.handleReleaseMouseCapture);
-            this.startCoord = this.props.orientation === 'vertical' ? e.pageY  - this.props.top : e.pageX - this.props.left;
+            this.startCoord = this.props.orientation === 'top' || this.props.orientation === 'bottom'
+                ? e.pageY  - this.props.top : e.pageX - this.props.left;
         }
 
         handleWindowMouseMove: (e: MouseEvent) => void = (e) => {
-            let newCoord = (this.props.orientation === 'vertical' ? e.pageY : e.pageX) - this.startCoord;
+            let newCoord = (this.props.orientation === 'top' || this.props.orientation === 'bottom' ? e.pageY : e.pageX) - this.startCoord;
             if (this.props.onResizing) {
                 this.props.onResizing(newCoord);
             }
@@ -41,7 +42,8 @@ export namespace Internal {
         }
 
         getClassName(): string {
-            return this.props.orientation === 'vertical' ? 'layout-vert-splitter' : 'layout-horz-splitter';
+            return this.props.orientation === 'top' || this.props.orientation === 'bottom'
+                ? 'layout-vert-splitter' : 'layout-horz-splitter';
         }
 
         getStyle(): React.CSSProperties {

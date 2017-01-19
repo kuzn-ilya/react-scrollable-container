@@ -10,7 +10,7 @@ import { Internal } from  '../InternalLayoutPanel';
 import { Internal as Internal2} from  '../InternalLayoutSplitter';
 import { LayoutSplitter } from  '../LayoutSplitter';
 import { LayoutSplitterProps } from  '../LayoutSplitter/LayoutSplitterProps';
-import { classNames, Orientation } from '../../../utils';
+import { classNames } from '../../../utils';
 
 import '../../../styles/layout.css';
 import '../../../styles/common.css';
@@ -33,12 +33,14 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
         let top = 0;
         let bottom = 0;
         let right = 0;
-        let orientation: Orientation | undefined = undefined;
+        let prevAlign: 'left' | 'right' | 'top' | 'bottom' | undefined = undefined;
 
         function calculatePanelState(index: number, panelProps: LayoutPanelProps): LayoutPanelChildState | undefined {
             let { align, height, width } = panelProps;
 
             let state: LayoutPanelChildState | undefined = undefined;
+
+            prevAlign = align === 'client' ? undefined : align;
 
             switch (align) {
                 case 'left':
@@ -50,7 +52,6 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                         width
                     };
                     left += width;
-                    orientation = 'horizontal';
                     break;
                 case 'right':
                     state = {
@@ -61,7 +62,6 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                         width
                     };
                     right += width;
-                    orientation = 'horizontal';
                     break;
                 case 'top':
                     state = {
@@ -72,7 +72,6 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                         type: 'panel'
                     };
                     top += height;
-                    orientation = 'vertical';
                     break;
                 case 'bottom':
                     state = {
@@ -83,7 +82,6 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                         type: 'panel'
                     };
                     bottom += height;
-                    orientation = 'vertical';
                     break;
                 case 'client':
                     // TODO: Warning should be here in case of the second attempt to render a client aligned panel.
@@ -94,7 +92,6 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                         top,
                         type: 'panel'
                     };
-                    orientation = undefined;
                     break;
                 default:
                     break;
@@ -103,21 +100,23 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
        }
 
         function calculateSplitterState(index: number, splitterProps: LayoutSplitterProps): LayoutSplitterChildState | undefined {
-            switch (orientation)  {
+            switch (prevAlign)  {
                 // TODO: Only align left and top cases
-                case 'vertical':
+                case 'top':
+                case 'bottom':
                     return {
                         bottom: top + 3,
-                        top: top - 3,
                         left,
-                        orientation,
+                        orientation: prevAlign,
                         right,
+                        top: top - 3,
                         type: 'splitter'
                     };
-                case 'horizontal':
+                case 'left':
+                case 'right':
                     return {
                         left: left - 3,
-                        orientation,
+                        orientation: prevAlign,
                         right: left + 3,
                         top,
                         type: 'splitter',
@@ -139,6 +138,24 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                 return undefined;
             }
         });
+
+        // for (let i = 0; i < childrenStates.length; i++) {
+        //     let state = childrenStates[i];
+        //     let before = [];
+        //     let after = [];
+        //     if (state && state.type === 'splitter') {
+        //         for (let j = i - 1; j >= 0; j--) {
+        //             let beforeState = childrenStates[j];
+        //             if (beforeState) {
+        //                 if (beforeState.type === 'panel') {
+        //                     if (beforeState.)
+        //                 } else {
+        //                     break;
+        //                 }
+        //             } 
+        //         }
+        //     }
+        // }
 
         return {
             childrenStates: List(childrenStates)

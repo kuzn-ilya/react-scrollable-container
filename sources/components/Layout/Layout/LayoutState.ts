@@ -1,7 +1,5 @@
 import { List } from 'immutable';
 
-import { Orientation } from '../../../utils';
-
 export interface LayoutPanelChildState {
     type: 'panel';
     bottom?: number;
@@ -14,11 +12,11 @@ export interface LayoutPanelChildState {
 
 export interface LayoutSplitterChildState {
     type: 'splitter';
-    bottom?: number;
-    top?: number;
-    left?: number;
-    right?: number;
-    orientation?: Orientation;
+    bottom: number;
+    top: number;
+    left: number;
+    right: number;
+    orientation: 'left' | 'right' | 'top' | 'bottom';
 }
 
 export type LayoutChildState = LayoutPanelChildState | LayoutSplitterChildState | undefined;

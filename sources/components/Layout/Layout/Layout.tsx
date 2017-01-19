@@ -189,6 +189,8 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                             left={left}
                             bottom={top + 3}
                             right={right}
+                            onResizing={this.handleSplitterResizing}
+                            onResizeEnd={this.handleSplitterResizeEnd}
                         />;
                     case 'horizontal':
                         return <Internal2.LayoutSplitter orientation={orientation}
@@ -196,10 +198,12 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                             right={left + 3}
                             top={top}
                             bottom={bottom}
+                            onResizing={this.handleSplitterResizing}
+                            onResizeEnd={this.handleSplitterResizeEnd}
                         />;
                     default:
                         warning('Cannot determine orientation of <LayoutSplitter />.'
-                            + 'It seems like either is the first child or is used after a client aligned panel.');
+                            + 'It seems like either <LayoutSplitter /> is the first child or it is used after a client aligned panel.');
                         return null;
                 }
             }

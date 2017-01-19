@@ -144,8 +144,6 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
             }
         }
 
-        console.log(childrenStates);
-
         return {
             childrenStates: List(childrenStates)
         };

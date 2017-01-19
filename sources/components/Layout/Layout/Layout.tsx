@@ -40,60 +40,34 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
 
             let state: LayoutPanelChildState | undefined = undefined;
 
+            state = {
+                align,
+                bottom,
+                height,
+                left,
+                right,
+                top,
+                type: 'panel',
+                width
+            };
+
             prevAlign = align === 'client' ? undefined : align;
 
             switch (align) {
                 case 'left':
-                    state = {
-                        bottom,
-                        left,
-                        top,
-                        type: 'panel',
-                        width
-                    };
                     left += width;
                     break;
                 case 'right':
-                    state = {
-                        bottom,
-                        right,
-                        top,
-                        type: 'panel',
-                        width
-                    };
                     right += width;
                     break;
                 case 'top':
-                    state = {
-                        height,
-                        left,
-                        right,
-                        top,
-                        type: 'panel'
-                    };
                     top += height;
                     break;
                 case 'bottom':
-                    state = {
-                        bottom,
-                        height,
-                        left,
-                        right,
-                        type: 'panel'
-                    };
                     bottom += height;
                     break;
-                case 'client':
-                    // TODO: Warning should be here in case of the second attempt to render a client aligned panel.
-                    state = {
-                        bottom,
-                        left,
-                        right,
-                        top,
-                        type: 'panel'
-                    };
-                    break;
                 default:
+                    // TODO: Warning should be here in case of the second attempt to render a client aligned panel.
                     break;
             }
             return state;
@@ -105,19 +79,23 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                 case 'top':
                 case 'bottom':
                     return {
-                        bottom: top + 3,
+                        bottom: top,
                         left,
+                        nextIndexes: [],
                         orientation: prevAlign,
+                        prevIndexes: [],
                         right,
-                        top: top - 3,
+                        top,
                         type: 'splitter'
                     };
                 case 'left':
                 case 'right':
                     return {
-                        left: left - 3,
+                        left,
+                        nextIndexes: [],
                         orientation: prevAlign,
-                        right: left + 3,
+                        prevIndexes: [],
+                        right: left,
                         top,
                         type: 'splitter',
                         bottom
@@ -139,23 +117,34 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
             }
         });
 
-        // for (let i = 0; i < childrenStates.length; i++) {
-        //     let state = childrenStates[i];
-        //     let before = [];
-        //     let after = [];
-        //     if (state && state.type === 'splitter') {
-        //         for (let j = i - 1; j >= 0; j--) {
-        //             let beforeState = childrenStates[j];
-        //             if (beforeState) {
-        //                 if (beforeState.type === 'panel') {
-        //                     if (beforeState.)
-        //                 } else {
-        //                     break;
-        //                 }
-        //             } 
-        //         }
-        //     }
-        // }
+        for (let i = 0; i < childrenStates.length; i++) {
+            let state = childrenStates[i];
+            if (state && state.type === 'splitter') {
+                for (let j = i - 1; j >= 0; j--) {
+                    let panelState = childrenStates[j];
+                    if (panelState && panelState.type === 'panel') {
+                        if (isPanelPreviousForSplitter(panelState, state)) {
+                            state.prevIndexes.push(j);
+                        } else {
+                            break;
+                        }
+                    }
+                }
+
+                for (let j = i + 1; j < childrenStates.length; j++) {
+                    let panelState = childrenStates[j];
+                    if (panelState && panelState.type === 'panel') {
+                        if (isPanelNextForSplitter(panelState, state)) {
+                            state.nextIndexes.push(j);
+                        } else {
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        console.log(childrenStates);
 
         return {
             childrenStates: List(childrenStates)
@@ -226,5 +215,35 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
         );
 
         return component;
+    }
+}
+
+function isPanelPreviousForSplitter(panel: LayoutPanelChildState, splitter: LayoutSplitterChildState): boolean {
+    switch (splitter.orientation) {
+        case 'left':
+            return splitter.left === (panel.left + panel.width || 0);
+        case 'right':
+            return splitter.right === panel.left;
+        case 'top':
+            return splitter.top === (panel.top + panel.height || 0);
+        case 'bottom':
+            return splitter.bottom === panel.top;
+        default:
+            return false;
+    }
+}
+
+function isPanelNextForSplitter(panel: LayoutPanelChildState, splitter: LayoutSplitterChildState): boolean {
+    switch (splitter.orientation) {
+        case 'left':
+            return splitter.left === panel.left;
+        case 'right':
+            return splitter.right === (panel.left + panel.width || 0);
+        case 'top':
+            return splitter.bottom === panel.top;
+        case 'bottom':
+            return splitter.top === (panel.top + panel.height || 0);
+        default:
+            return false;
     }
 }

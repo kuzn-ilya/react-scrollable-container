@@ -47,12 +47,21 @@ export namespace Internal {
         }
 
         getStyle(): React.CSSProperties {
-            return {
-                bottom: this.props.bottom,
-                left: this.props.left,
-                right: this.props.right,
-                top: this.props.top
-            };
+            if (this.props.orientation === 'top' || this.props.orientation === 'bottom') {
+                return {
+                    bottom: this.props.bottom + 3,
+                    left: this.props.left,
+                    right: this.props.right,
+                    top: this.props.top - 3
+                };
+            } else {
+                return {
+                    bottom: this.props.bottom,
+                    left: this.props.left - 3,
+                    right: this.props.right + 3,
+                    top: this.props.top
+                };
+            }
         }
 
         render(): JSX.Element {

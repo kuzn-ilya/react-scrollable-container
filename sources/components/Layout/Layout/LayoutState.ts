@@ -1,6 +1,7 @@
 import { List } from 'immutable';
 
 export interface LayoutPanelChildState {
+    align: 'left' | 'right' | 'top' | 'bottom' | 'client';
     type: 'panel';
     bottom?: number;
     top?: number;
@@ -16,6 +17,8 @@ export interface LayoutSplitterChildState {
     top: number;
     left: number;
     right: number;
+    prevIndexes: Array<number>;
+    nextIndexes: Array<number>;
     orientation: 'left' | 'right' | 'top' | 'bottom';
 }
 

@@ -158,6 +158,7 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
 
     handleSplitterResizeEnd: (splitterIndex: number, prevIndexes: Array<number>, nextIndexes: Array<number>) => void =
         (splitterIndex, prevIndexes, nextIndexes) => {
+        return;
     }
 
     componentWillReceiveProps(nextProps: { children?: React.ReactNode }): void {

@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-import './styles.css';
 import { Layout, LayoutPanel, LayoutSplitter } from '../../sources/components';
 
 import { Example } from './Example';

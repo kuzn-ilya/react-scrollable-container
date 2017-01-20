@@ -42,11 +42,11 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
 
             state = {
                 align,
-                bottom,
+                bottom: align !== 'top' ? bottom : undefined,
                 height,
-                left,
-                right,
-                top,
+                left: align !== 'right' ? left : undefined,
+                right: align !== 'left' ? right : undefined,
+                top: align !== 'bottom' ? top : undefined,
                 type: 'panel',
                 width
             };
@@ -77,9 +77,7 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
             switch (prevAlign)  {
                 // TODO: Only align left and top cases
                 case 'top':
-                case 'bottom':
                     return {
-                        bottom: top,
                         left,
                         nextIndexes: [],
                         orientation: prevAlign,
@@ -88,14 +86,32 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                         top,
                         type: 'splitter'
                     };
+                case 'bottom':
+                    return {
+                        bottom,
+                        left,
+                        nextIndexes: [],
+                        orientation: prevAlign,
+                        prevIndexes: [],
+                        right,
+                        type: 'splitter'
+                    };
                 case 'left':
-                case 'right':
                     return {
                         left,
                         nextIndexes: [],
                         orientation: prevAlign,
                         prevIndexes: [],
-                        right: left,
+                        top,
+                        type: 'splitter',
+                        bottom
+                    };
+                case 'right':
+                    return {
+                        nextIndexes: [],
+                        orientation: prevAlign,
+                        prevIndexes: [],
+                        right,
                         top,
                         type: 'splitter',
                         bottom

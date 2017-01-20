@@ -47,20 +47,38 @@ export namespace Internal {
         }
 
         getStyle(): React.CSSProperties {
-            if (this.props.orientation === 'top' || this.props.orientation === 'bottom') {
-                return {
-                    bottom: this.props.bottom + 3,
-                    left: this.props.left,
-                    right: this.props.right,
-                    top: this.props.top - 3
-                };
-            } else {
-                return {
-                    bottom: this.props.bottom,
-                    left: this.props.left - 3,
-                    right: this.props.right + 3,
-                    top: this.props.top
-                };
+            switch(this.props.orientation) {
+                case 'top':
+                    return {
+                        heigth: 6,
+                        left: this.props.left,
+                        right: this.props.right,
+                        top: this.props.top - 3
+                    };
+                case 'bottom':
+                    return {
+                        bottom: this.props.bottom - 3,
+                        heigth: 6,
+                        left: this.props.left,
+                        right: this.props.right
+                    };
+                case 'left':
+                    return {
+                        bottom: this.props.bottom,
+                        left: this.props.left - 3,
+                        top: this.props.top,
+                        width: 6
+                    };
+                case 'right':
+                    return {
+                        bottom: this.props.bottom,
+                        right: this.props.right - 3,
+                        top: this.props.top,
+                        width: 6
+                    };
+                default:
+                    return {
+                    };
             }
         }
 

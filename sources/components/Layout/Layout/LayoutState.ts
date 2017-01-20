@@ -12,11 +12,11 @@ export interface LayoutPanelChildState {
 }
 
 export interface LayoutSplitterChildState {
-    type: 'splitter';
-    bottom: number;
-    top: number;
-    left: number;
-    right: number;
+    type?: 'splitter';
+    bottom?: number;
+    top?: number;
+    left?: number;
+    right?: number;
     prevIndexes: Array<number>;
     nextIndexes: Array<number>;
     orientation: 'left' | 'right' | 'top' | 'bottom';

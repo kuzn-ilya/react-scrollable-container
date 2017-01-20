@@ -128,29 +128,21 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                 let prevIndexes = [];
                 for (let j = i - 1; j >= 0; j--) {
                     let panelState = childrenStates[j];
-                    if (panelState && panelState.type === 'panel') {
-                        if (isPanelPreviousForSplitter(panelState, state)) {
-                            prevIndexes.push(j);
-                        } else {
-                            break;
-                        }
+                    if (panelState && panelState.type === 'panel' && isPanelPreviousForSplitter(panelState, state)) {
+                        prevIndexes.push(j);
                     }
                 }
 
                 let nextIndexes = [];
                 for (let j = i + 1; j < childrenStates.length; j++) {
                     let panelState = childrenStates[j];
-                    if (panelState && panelState.type === 'panel') {
-                        if (isPanelNextForSplitter(panelState, state)) {
-                            nextIndexes.push(j);
-                        } else {
-                            break;
-                        }
+                    if (panelState && panelState.type === 'panel' && isPanelNextForSplitter(panelState, state)) {
+                        nextIndexes.push(j);
                     }
                 }
 
-                state.onResizing = this.handleSplitterResizing.bind(this, prevIndexes, nextIndexes);
-                state.onResizeEnd = this.handleSplitterResizeEnd.bind(this, prevIndexes, nextIndexes);
+                state.onResizing = this.handleSplitterResizing.bind(this, i, prevIndexes, nextIndexes);
+                state.onResizeEnd = this.handleSplitterResizeEnd.bind(this, i, prevIndexes, nextIndexes);
             }
         }
 
@@ -159,13 +151,14 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
         };
     }
 
-    handleSplitterResizing: (prevIndexes: Array<number>, nextIndexes: Array<number>, newCoord: number) => void =
-        (prevIndexes, nextIndexes, newCoord) => {
+    handleSplitterResizing: (splitterIndex: number, prevIndexes: Array<number>, nextIndexes: Array<number>, newCoord: number) => void =
+        (splitterIndex, prevIndexes, nextIndexes, newCoord) => {
         return;
     }
 
-    handleSplitterResizeEnd: (prevIndexes: Array<number>, nextIndexes: Array<number>) => void = (prevIndexes, nextIndexes) => {
-        return;
+    handleSplitterResizeEnd: (splitterIndex: number, prevIndexes: Array<number>, nextIndexes: Array<number>) => void =
+        (splitterIndex, prevIndexes, nextIndexes) => {
+        console.log(splitterIndex, prevIndexes, nextIndexes);
     }
 
     componentWillReceiveProps(nextProps: { children?: React.ReactNode }): void {
@@ -230,13 +223,13 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
 function isPanelPreviousForSplitter(panel: LayoutPanelChildState, splitter: LayoutSplitterChildState): boolean {
     switch (splitter.orientation) {
         case 'left':
-            return splitter.left === (panel.left + panel.width || 0);
+            return splitter.left === panel.left + panel.width;
         case 'right':
-            return splitter.right === panel.left;
+            return splitter.right === panel.right + panel.width;
         case 'top':
-            return splitter.top === (panel.top + panel.height || 0);
+            return splitter.top === panel.top + panel.height;
         case 'bottom':
-            return splitter.bottom === panel.top;
+            return splitter.bottom === panel.bottom + panel.height;
         default:
             return false;
     }
@@ -247,11 +240,11 @@ function isPanelNextForSplitter(panel: LayoutPanelChildState, splitter: LayoutSp
         case 'left':
             return splitter.left === panel.left;
         case 'right':
-            return splitter.right === (panel.left + panel.width || 0);
+            return splitter.right === panel.right;
         case 'top':
-            return splitter.bottom === panel.top;
+            return splitter.top === panel.top;
         case 'bottom':
-            return splitter.top === (panel.top + panel.height || 0);
+            return splitter.bottom === panel.bottom;
         default:
             return false;
     }

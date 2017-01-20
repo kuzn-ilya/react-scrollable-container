@@ -22,9 +22,6 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
     constructor(props?: LayoutProps) {
         super(props);
 
-        this.handleSplitterResizing = this.handleSplitterResizing.bind(this);
-        this.handleSplitterResizeEnd = this.handleSplitterResizeEnd.bind(this);
-
         this.state = this.calculateState(this.props);
     }
 
@@ -79,9 +76,7 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                 case 'top':
                     return {
                         left,
-                        nextIndexes: [],
                         orientation: prevAlign,
-                        prevIndexes: [],
                         right,
                         top,
                         type: 'splitter'
@@ -90,27 +85,21 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                     return {
                         bottom,
                         left,
-                        nextIndexes: [],
                         orientation: prevAlign,
-                        prevIndexes: [],
                         right,
                         type: 'splitter'
                     };
                 case 'left':
                     return {
                         left,
-                        nextIndexes: [],
                         orientation: prevAlign,
-                        prevIndexes: [],
                         top,
                         type: 'splitter',
                         bottom
                     };
                 case 'right':
                     return {
-                        nextIndexes: [],
                         orientation: prevAlign,
-                        prevIndexes: [],
                         right,
                         top,
                         type: 'splitter',
@@ -136,27 +125,32 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
         for (let i = 0; i < childrenStates.length; i++) {
             let state = childrenStates[i];
             if (state && state.type === 'splitter') {
+                let prevIndexes = [];
                 for (let j = i - 1; j >= 0; j--) {
                     let panelState = childrenStates[j];
                     if (panelState && panelState.type === 'panel') {
                         if (isPanelPreviousForSplitter(panelState, state)) {
-                            state.prevIndexes.push(j);
+                            prevIndexes.push(j);
                         } else {
                             break;
                         }
                     }
                 }
 
+                let nextIndexes = [];
                 for (let j = i + 1; j < childrenStates.length; j++) {
                     let panelState = childrenStates[j];
                     if (panelState && panelState.type === 'panel') {
                         if (isPanelNextForSplitter(panelState, state)) {
-                            state.nextIndexes.push(j);
+                            nextIndexes.push(j);
                         } else {
                             break;
                         }
                     }
                 }
+
+                state.onResizing = this.handleSplitterResizing.bind(this, prevIndexes, nextIndexes);
+                state.onResizeEnd = this.handleSplitterResizeEnd.bind(this, prevIndexes, nextIndexes);
             }
         }
 
@@ -165,11 +159,12 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
         };
     }
 
-    handleSplitterResizing: (newCoord: number) => void = (newCoord) => {
+    handleSplitterResizing: (prevIndexes: Array<number>, nextIndexes: Array<number>, newCoord: number) => void =
+        (prevIndexes, nextIndexes, newCoord) => {
         return;
     }
 
-    handleSplitterResizeEnd: () => void = () => {
+    handleSplitterResizeEnd: (prevIndexes: Array<number>, nextIndexes: Array<number>) => void = (prevIndexes, nextIndexes) => {
         return;
     }
 
@@ -205,8 +200,8 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                                 left={childState.left}
                                 bottom={childState.bottom}
                                 right={childState.right}
-                                onResizing={this.handleSplitterResizing}
-                                onResizeEnd={this.handleSplitterResizeEnd}
+                                onResizing={childState.onResizing}
+                                onResizeEnd={childState.onResizeEnd}
                             />
                         );
                     default:

@@ -17,9 +17,9 @@ export interface LayoutSplitterChildState {
     top?: number;
     left?: number;
     right?: number;
-    prevIndexes: Array<number>;
-    nextIndexes: Array<number>;
     orientation: 'left' | 'right' | 'top' | 'bottom';
+    onResizing?: (newCoord: number) => void;
+    onResizeEnd?: () => void;
 }
 
 export type LayoutChildState = LayoutPanelChildState | LayoutSplitterChildState | undefined;

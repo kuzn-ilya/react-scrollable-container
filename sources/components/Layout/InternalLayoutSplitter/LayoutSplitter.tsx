@@ -47,7 +47,7 @@ export namespace Internal {
         }
 
         getStyle(): React.CSSProperties {
-            switch(this.props.orientation) {
+            switch (this.props.orientation) {
                 case 'top':
                     return {
                         heigth: 6,

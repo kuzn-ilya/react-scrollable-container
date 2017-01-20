@@ -125,6 +125,7 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
         for (let i = 0; i < childrenStates.length; i++) {
             let state = childrenStates[i];
             if (state && state.type === 'splitter') {
+                // TODO: Splitters must be processed as siblings as well as panels.
                 let prevIndexes = [];
                 for (let j = i - 1; j >= 0; j--) {
                     let panelState = childrenStates[j];
@@ -153,7 +154,50 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
 
     handleSplitterResizing: (splitterIndex: number, prevIndexes: Array<number>, nextIndexes: Array<number>, newCoord: number) => void =
         (splitterIndex, prevIndexes, nextIndexes, newCoord) => {
-        return;
+
+        function clone(state: LayoutChildState): LayoutChildState {
+            let result = { ...state };
+            return result;
+        }
+
+        let states = this.state.childrenStates;
+        let splitterState = clone(states.get(splitterIndex));
+        if (splitterState && splitterState.type === 'splitter') {
+            // console.log('source', states.toJS());
+
+            if (splitterState.orientation === 'left') {
+                prevIndexes.forEach((value) => {
+                    let panelState = clone(states.get(value));
+                    if (panelState && panelState.type === 'panel') {
+                        // Prev for left splitter must be left panel
+                        panelState.width = newCoord;
+                        states = states.set(value, panelState);
+                    }
+                });
+
+                nextIndexes.forEach((value) => {
+                    let panelState = clone(states.get(value));
+                    if (panelState && panelState.type === 'panel') {
+                        switch (panelState.align) {
+                            case 'left':
+                            case 'bottom':
+                            case 'client':
+                                console.log(newCoord);
+                                panelState.left = newCoord;
+                                states = states.set(value, panelState);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                });
+
+                splitterState.left = newCoord;
+                states = states.set(splitterIndex, splitterState);
+            }
+            // console.log('dest', states.toJS());
+        }
+        this.setState({childrenStates: states});
     }
 
     handleSplitterResizeEnd: (splitterIndex: number, prevIndexes: Array<number>, nextIndexes: Array<number>) => void =

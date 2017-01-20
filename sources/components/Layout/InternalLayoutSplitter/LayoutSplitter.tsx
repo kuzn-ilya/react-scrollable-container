@@ -21,12 +21,14 @@ export namespace Internal {
 
         handleMouseDown: React.EventHandler<React.MouseEvent<HTMLDivElement>> = (e) => {
             this.mouseCapture = MouseCapture.captureMouseEvents(e.nativeEvent, this.handleWindowMouseMove, this.handleReleaseMouseCapture);
-            this.startCoord = this.props.orientation === 'top' || this.props.orientation === 'bottom'
-                ? e.pageY  - this.props.top : e.pageX - this.props.left;
+            this.startCoord = isVertical(this.props.orientation) ? e.pageY : e.pageX;
         }
 
         handleWindowMouseMove: (e: MouseEvent) => void = (e) => {
-            let newCoord = (this.props.orientation === 'top' || this.props.orientation === 'bottom' ? e.pageY : e.pageX) - this.startCoord;
+            // tslint:disable-next-line:no-use-before-declare
+            let newCoord = MULTIPLIER[this.props.orientation]
+                * ((isVertical(this.props.orientation) ? e.pageY : e.pageX) - this.startCoord)
+                + this.props[this.props.orientation];
             if (this.props.onResizing) {
                 this.props.onResizing(newCoord);
             }
@@ -42,8 +44,7 @@ export namespace Internal {
         }
 
         getClassName(): string {
-            return this.props.orientation === 'top' || this.props.orientation === 'bottom'
-                ? 'layout-vert-splitter' : 'layout-horz-splitter';
+            return isVertical(this.props.orientation) ? 'layout-vert-splitter' : 'layout-horz-splitter';
         }
 
         getStyle(): React.CSSProperties {
@@ -92,3 +93,14 @@ export namespace Internal {
         }
     }
 }
+
+function isVertical(align: 'left' | 'right' | 'top' | 'bottom'): boolean {
+    return align === 'top' || align === 'bottom';
+}
+
+const MULTIPLIER = {
+    bottom: -1,
+    left: 1,
+    right: -1,
+    top: 1
+};

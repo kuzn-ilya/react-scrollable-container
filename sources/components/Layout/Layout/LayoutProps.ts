@@ -1,14 +1,15 @@
 import { PropTypes } from 'react';
 import { ValidationMap } from '../../../react';
+import { Size, sizePropType } from '../../../utils';
 
 export interface LayoutProps {
     readonly className?: string;
-    readonly height?: number | '100%';
-    readonly width?: number | '100%';
+    readonly height?: Size;
+    readonly width?: Size;
 }
 
 export const layoutPropTypes: ValidationMap<LayoutProps> = {
     className: PropTypes.string,
-    height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    width: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+    height: sizePropType,
+    width: sizePropType
 };

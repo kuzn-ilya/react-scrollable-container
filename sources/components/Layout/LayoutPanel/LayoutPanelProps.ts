@@ -1,8 +1,9 @@
 import { PropTypes } from 'react';
 import { ValidationMap } from '../../../react';
+import { Align, alignPropType } from '../../../utils';
 
 export interface LayoutPanelProps {
-    readonly align: 'left' | 'right' | 'top' | 'bottom' | 'client';
+    readonly align: Align;
     readonly height?: number;
     readonly showBottomShadow?: boolean;
     readonly showRightShadow?: boolean;
@@ -10,7 +11,7 @@ export interface LayoutPanelProps {
 }
 
 export const layoutPanelPropTypes: ValidationMap<LayoutPanelProps> = {
-    align: PropTypes.oneOf(['left', 'right', 'top', 'bottom', 'client']).isRequired,
+    align: alignPropType.isRequired,
     height: PropTypes.number,
     showBottomShadow: PropTypes.bool,
     showRightShadow: PropTypes.bool,

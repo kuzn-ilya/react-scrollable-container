@@ -9,7 +9,7 @@ import { Internal } from  '../InternalLayoutPanel';
 // TODO: How to avoid alias for namespace here
 import { Internal as Internal2} from  '../InternalLayoutSplitter';
 import { LayoutSplitter } from  '../LayoutSplitter';
-import { classNames } from '../../../utils';
+import { classNames, Edge } from '../../../utils';
 
 import '../../../styles/layout.css';
 import '../../../styles/common.css';
@@ -192,7 +192,7 @@ function isPanelNextForSplitter(sibling: LayoutChildState, splitter: LayoutSplit
     }
 }
 
-function getOppositeAlign(align: 'left' | 'right' | 'top' | 'bottom'): 'left' | 'right' | 'top' | 'bottom' {
+function getOppositeAlign(align: Edge): Edge {
     switch (align) {
         case 'left':
             return 'right';
@@ -207,7 +207,7 @@ function getOppositeAlign(align: 'left' | 'right' | 'top' | 'bottom'): 'left' | 
     }
 }
 
-function getMeasurementByAlign(align: 'left' | 'right' | 'top' | 'bottom'): 'height' | 'width' {
+function getMeasurementByAlign(align: Edge): 'height' | 'width' {
     switch (align) {
         case 'left':
         case 'right':
@@ -220,16 +220,16 @@ function getMeasurementByAlign(align: 'left' | 'right' | 'top' | 'bottom'): 'hei
     }
 }
 
-function isHorizontal(align: 'left' | 'right' | 'top' | 'bottom'): boolean {
+function isHorizontal(align: Edge): boolean {
     return align === 'left' || align === 'right';
 }
 
-// function isVertical(align: 'left' | 'right' | 'top' | 'bottom'): boolean {
+// function isVertical(align: Edge): boolean {
 //     return align === 'top' || align === 'bottom';
 // }
 
 type Coords = {
-    align?: 'left' | 'right' | 'bottom' | 'top';
+    align?: Edge;
     bottom?: number;
     left?: number;
     right?: number;

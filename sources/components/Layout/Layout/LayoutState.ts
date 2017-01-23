@@ -1,7 +1,8 @@
 import { List } from 'immutable';
+import { Align, Edge } from '../../../utils';
 
 export interface LayoutPanelChildState {
-    align: 'left' | 'right' | 'top' | 'bottom' | 'client';
+    align: Align;
     type: 'panel';
     bottom?: number;
     top?: number;
@@ -17,7 +18,7 @@ export interface LayoutSplitterChildState {
     top?: number;
     left?: number;
     right?: number;
-    align: 'left' | 'right' | 'top' | 'bottom';
+    align: Edge;
     onResizing?: (newCoord: number) => void;
     onResizeEnd?: () => void;
 }

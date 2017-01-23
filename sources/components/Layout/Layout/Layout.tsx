@@ -163,7 +163,8 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
         let states = this.state.childrenStates;
         let splitterState = clone(states.get(splitterIndex));
         if (splitterState && splitterState.type === 'splitter') {
-            switch (splitterState.orientation) {
+            let splitterOrientation = splitterState.orientation;
+            switch (splitterOrientation) {
                 case 'left':
                     prevIndexes.forEach((value) => {
                         let panelState = clone(states.get(value));
@@ -177,19 +178,12 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                     nextIndexes.forEach((value) => {
                         let panelState = clone(states.get(value));
                         if (panelState && panelState.type === 'panel') {
-                            switch (panelState.align) {
-                                case 'left':
-                                case 'top':
-                                case 'bottom':
-                                case 'client':
-                                    if (panelState.align === 'left') {
-                                        panelState.width = panelState.width - newCoord + panelState.left;
-                                    }
-                                    panelState.left = newCoord;
-                                    states = states.set(value, panelState);
-                                    break;
-                                default:
-                                    break;
+                            if (panelState.align !== getOppositeAlign(splitterOrientation)) {
+                                if (panelState.align === 'left') {
+                                    panelState.width = panelState.width - newCoord + panelState.left;
+                                }
+                                panelState.left = newCoord;
+                                states = states.set(value, panelState);
                             }
                         }
                     });
@@ -209,19 +203,12 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                     nextIndexes.forEach((value) => {
                         let panelState = clone(states.get(value));
                         if (panelState && panelState.type === 'panel') {
-                            switch (panelState.align) {
-                                case 'right':
-                                case 'top':
-                                case 'bottom':
-                                case 'client':
-                                    if (panelState.align === 'right') {
-                                        panelState.width = panelState.width - newCoord + panelState.right;
-                                    }
-                                    panelState.right = newCoord;
-                                    states = states.set(value, panelState);
-                                    break;
-                                default:
-                                    break;
+                            if (panelState.align !== getOppositeAlign(splitterOrientation)) {
+                                if (panelState.align === 'right') {
+                                    panelState.width = panelState.width - newCoord + panelState.right;
+                                }
+                                panelState.right = newCoord;
+                                states = states.set(value, panelState);
                             }
                         }
                     });
@@ -241,19 +228,12 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                     nextIndexes.forEach((value) => {
                         let panelState = clone(states.get(value));
                         if (panelState && panelState.type === 'panel') {
-                            switch (panelState.align) {
-                                case 'top':
-                                case 'left':
-                                case 'right':
-                                case 'client':
-                                    if (panelState.align === 'top') {
-                                        panelState.height = panelState.height - newCoord + panelState.top;
-                                    }
-                                    panelState.top = newCoord;
-                                    states = states.set(value, panelState);
-                                    break;
-                                default:
-                                    break;
+                            if (panelState.align !== getOppositeAlign(splitterOrientation)) {
+                                if (panelState.align === 'top') {
+                                    panelState.height = panelState.height - newCoord + panelState.top;
+                                }
+                                panelState.top = newCoord;
+                                states = states.set(value, panelState);
                             }
                         }
                     });
@@ -273,19 +253,12 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                     nextIndexes.forEach((value) => {
                         let panelState = clone(states.get(value));
                         if (panelState && panelState.type === 'panel') {
-                            switch (panelState.align) {
-                                case 'left':
-                                case 'right':
-                                case 'bottom':
-                                case 'client':
-                                    if (panelState.align === 'bottom') {
-                                        panelState.height = panelState.height - newCoord + panelState.bottom;
-                                    }
-                                    panelState.bottom = newCoord;
-                                    states = states.set(value, panelState);
-                                    break;
-                                default:
-                                    break;
+                            if (panelState.align !== getOppositeAlign(splitterOrientation)) {
+                                if (panelState.align === 'bottom') {
+                                    panelState.height = panelState.height - newCoord + panelState.bottom;
+                                }
+                                panelState.bottom = newCoord;
+                                states = states.set(value, panelState);
                             }
                         }
                     });
@@ -364,31 +337,37 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
 }
 
 function isPanelPreviousForSplitter(panel: LayoutPanelChildState, splitter: LayoutSplitterChildState): boolean {
-    switch (splitter.orientation) {
-        case 'left':
-            return splitter.left === panel.left + panel.width;
-        case 'right':
-            return splitter.right === panel.right + panel.width;
-        case 'top':
-            return splitter.top === panel.top + panel.height;
-        case 'bottom':
-            return splitter.bottom === panel.bottom + panel.height;
-        default:
-            return false;
-    }
+    return splitter[splitter.orientation] === panel[splitter.orientation] + panel[getMeasurementByAlign(splitter.orientation)];
 }
 
 function isPanelNextForSplitter(panel: LayoutPanelChildState, splitter: LayoutSplitterChildState): boolean {
-    switch (splitter.orientation) {
+    return splitter[splitter.orientation] === panel[splitter.orientation];
+}
+
+function getOppositeAlign(align: 'left' | 'right' | 'top' | 'bottom'): 'left' | 'right' | 'top' | 'bottom' {
+    switch(align) {
         case 'left':
-            return splitter.left === panel.left;
+            return 'right';
         case 'right':
-            return splitter.right === panel.right;
-        case 'top':
-            return splitter.top === panel.top;
+            return 'left';
         case 'bottom':
-            return splitter.bottom === panel.bottom;
+            return 'top';
+        case 'top':
+            return 'bottom';
         default:
-            return false;
+            throw new Error('Unexpected error');
+    }
+}
+
+function getMeasurementByAlign(align: 'left' | 'right' | 'top' | 'bottom'): 'height' | 'width' {
+    switch(align) {
+        case 'left':
+        case 'right':
+            return 'width';
+        case 'bottom':
+        case 'top':
+            return 'height';
+        default:
+            throw new Error('Unexpected error');
     }
 }

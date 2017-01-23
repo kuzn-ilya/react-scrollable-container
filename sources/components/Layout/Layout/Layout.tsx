@@ -9,7 +9,6 @@ import { Internal } from  '../InternalLayoutPanel';
 // TODO: How to avoid alias for namespace here
 import { Internal as Internal2} from  '../InternalLayoutSplitter';
 import { LayoutSplitter } from  '../LayoutSplitter';
-import { LayoutSplitterProps } from  '../LayoutSplitter/LayoutSplitterProps';
 import { classNames } from '../../../utils';
 
 import '../../../styles/layout.css';
@@ -26,97 +25,55 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
     }
 
     calculateState(props: { children?: React.ReactNode }): LayoutState {
-        let left = 0;
-        let top = 0;
-        let bottom = 0;
-        let right = 0;
+        let newCoords = {
+            bottom: 0,
+            left: 0,
+            right: 0,
+            top: 0
+        };
+
         let prevAlign: 'left' | 'right' | 'top' | 'bottom' | undefined = undefined;
 
-        function calculatePanelState(index: number, panelProps: LayoutPanelProps): LayoutPanelChildState | undefined {
-            let { align, height, width } = panelProps;
+        function calculatePanelState(panelProps: LayoutPanelProps): LayoutPanelChildState | undefined {
+            let { align } = panelProps;
 
-            let state: LayoutPanelChildState | undefined = undefined;
-
-            state = {
+            let state: LayoutPanelChildState = {
                 align,
-                bottom: align !== 'top' ? bottom : undefined,
-                height,
-                left: align !== 'right' ? left : undefined,
-                right: align !== 'left' ? right : undefined,
-                top: align !== 'bottom' ? top : undefined,
+                bottom: align !== 'top' ? newCoords.bottom : undefined,
+                height: panelProps.height,
+                left: align !== 'right' ? newCoords.left : undefined,
+                right: align !== 'left' ? newCoords.right : undefined,
+                top: align !== 'bottom' ? newCoords.top : undefined,
                 type: 'panel',
-                width
+                width: panelProps.width
             };
 
             prevAlign = align === 'client' ? undefined : align;
-
-            switch (align) {
-                case 'left':
-                    left += width;
-                    break;
-                case 'right':
-                    right += width;
-                    break;
-                case 'top':
-                    top += height;
-                    break;
-                case 'bottom':
-                    bottom += height;
-                    break;
-                default:
-                    // TODO: Warning should be here in case of the second attempt to render a client aligned panel.
-                    break;
+            if (align !== 'client') {
+                newCoords[align] += panelProps[getMeasurementByAlign(align)];
             }
+
             return state;
        }
 
-        function calculateSplitterState(index: number, splitterProps: LayoutSplitterProps): LayoutSplitterChildState | undefined {
-            switch (prevAlign)  {
-                // TODO: Only align left and top cases
-                case 'top':
-                    return {
-                        left,
-                        orientation: prevAlign,
-                        right,
-                        top,
-                        type: 'splitter'
-                    };
-                case 'bottom':
-                    return {
-                        bottom,
-                        left,
-                        orientation: prevAlign,
-                        right,
-                        type: 'splitter'
-                    };
-                case 'left':
-                    return {
-                        left,
-                        orientation: prevAlign,
-                        top,
-                        type: 'splitter',
-                        bottom
-                    };
-                case 'right':
-                    return {
-                        orientation: prevAlign,
-                        right,
-                        top,
-                        type: 'splitter',
-                        bottom
-                    };
-                default:
-                    return undefined;
-            }
+        function calculateSplitterState(align: 'left' | 'right' | 'bottom' | 'top'): LayoutSplitterChildState {
+            return {
+                bottom: align === 'top' ? undefined : newCoords.bottom,
+                left: align === 'right' ? undefined : newCoords.left,
+                orientation: align,
+                right: align === 'left' ? undefined : newCoords.right,
+                top: align === 'bottom' ? undefined : newCoords.top,
+                type: 'splitter'
+            };
         }
 
         let childrenStates: LayoutChildState[] = React.Children.map(props.children, (child, index) => {
             if (typeof child === 'string' || typeof child === 'number') {
                 return undefined;
             } else if (child.type === LayoutPanel ) {
-                return calculatePanelState(index, child.props as LayoutPanelProps);
-            } else if (child.type === LayoutSplitter) {
-                return calculateSplitterState(index, child.props as LayoutSplitterProps);
+                return calculatePanelState(child.props as LayoutPanelProps);
+            } else if (child.type === LayoutSplitter && prevAlign !== undefined) {
+                return calculateSplitterState(prevAlign);
             } else {
                 return undefined;
             }
@@ -264,7 +221,7 @@ function isPanelNextForSplitter(panel: LayoutPanelChildState, splitter: LayoutSp
 }
 
 function getOppositeAlign(align: 'left' | 'right' | 'top' | 'bottom'): 'left' | 'right' | 'top' | 'bottom' {
-    switch(align) {
+    switch (align) {
         case 'left':
             return 'right';
         case 'right':
@@ -279,7 +236,7 @@ function getOppositeAlign(align: 'left' | 'right' | 'top' | 'bottom'): 'left' | 
 }
 
 function getMeasurementByAlign(align: 'left' | 'right' | 'top' | 'bottom'): 'height' | 'width' {
-    switch(align) {
+    switch (align) {
         case 'left':
         case 'right':
             return 'width';

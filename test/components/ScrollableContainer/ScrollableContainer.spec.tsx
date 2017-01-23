@@ -41,8 +41,8 @@ describe('ScrollableContainer', () => {
     it('should have default values for contentWidth and contentHeight if they are not passed', () => {
         let container = renderIntoDocument(<ScrollableContainer overflowX="auto" overflowY="hidden" height={100} width={100}/>);
 
-        expect(container.props.contentWidth).equals('auto');
-        expect(container.props.contentHeight).equals('auto');
+        expect(container.props.contentWidth).equals('100%');
+        expect(container.props.contentHeight).equals('100%');
     });
 
     ['auto', 'hidden', 'scroll', 'visible']

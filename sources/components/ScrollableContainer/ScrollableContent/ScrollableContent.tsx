@@ -7,20 +7,20 @@ import {ScrollableContentProps, scrollableContentPropTypes } from './ScrollableC
 export class ScrollableContent extends React.PureComponent<ScrollableContentProps, {}> {
 
     static defaultProps: ScrollableContentProps = {
-        contentHeight: 'auto',
-        contentWidth: 'auto'
+        contentHeight: '100%',
+        contentWidth: '100%'
     };
 
     static propTypes = scrollableContentPropTypes;
 
     render(): JSX.Element {
         let wrapper: React.ReactNode = null;
-        if (this.props.contentWidth !== 'auto' || this.props.contentHeight !== 'auto') {
+        if (this.props.contentWidth !== '100%' || this.props.contentHeight !== '100%') {
             wrapper = (
                 <div className="scrollable-container-wrapper"
                     style={{
-                        left: this.props.contentWidth === 'auto' ? 0 : this.props.contentWidth - 1,
-                        top: this.props.contentHeight === 'auto' ? 0 : this.props.contentHeight - 1
+                        left: this.props.contentWidth === '100%' ? 0 : this.props.contentWidth - 1,
+                        top: this.props.contentHeight === '100%' ? 0 : this.props.contentHeight - 1
                     }}
                 />
             );
@@ -28,8 +28,8 @@ export class ScrollableContent extends React.PureComponent<ScrollableContentProp
 
         return (
             <div style={{
-                    height: this.props.contentHeight === 'auto' ? '100%' : this.props.contentHeight,
-                    width: this.props.contentWidth === 'auto' ? '100%' : this.props.contentWidth
+                    height: this.props.contentHeight,
+                    width: this.props.contentWidth
                 }}
                 className="scrollable-content"
             >

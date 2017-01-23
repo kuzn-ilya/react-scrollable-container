@@ -94,7 +94,7 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
                     <ScrollableContainer
                         key="body"
                         contentWidth={this.state.columnsWidth}
-                        contentHeight="auto"
+                        contentHeight="100%"
                         overflowX={this.props.overflowX}
                         overflowY={this.props.overflowY}
                         data={this.props.rowData}

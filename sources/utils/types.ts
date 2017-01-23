@@ -9,16 +9,9 @@ export const overflowPropType = PropTypes.oneOf([
     'visible'
 ]);
 
-export type Size = 'auto' | number;
+export type Size = '100%' | number;
 
 export const sizePropType = PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number
-]);
-
-export type Orientation = 'horizontal' | 'vertical';
-
-export const orientationPropType = PropTypes.oneOf([
-    'horizontal',
-    'vertical'
 ]);

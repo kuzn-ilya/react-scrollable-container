@@ -12,8 +12,8 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
 
     static defaultProps: ScrollableContainerProps = {
         className: '',
-        contentHeight: 'auto',
-        contentWidth: 'auto',
+        contentHeight: '100%',
+        contentWidth: '100%',
         height: '100%',
         horzScrollBarReplacerHeight: 0,
         overflowX: 'auto',

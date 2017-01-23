@@ -170,21 +170,20 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                         let panelState = clone(states.get(value));
                         if (panelState && panelState.type === 'panel') {
                             // Prev for left splitter must be left panel
-                            panelState.width = newCoord - panelState[splitterOrientation];
+                            panelState[getMeasurementByAlign(splitterOrientation)] = newCoord - panelState[splitterOrientation];
                             states = states.set(value, panelState);
                         }
                     });
 
                     nextIndexes.forEach((value) => {
                         let panelState = clone(states.get(value));
-                        if (panelState && panelState.type === 'panel') {
-                            if (panelState.align !== getOppositeAlign(splitterOrientation)) {
-                                if (panelState.align === splitterOrientation) {
-                                    panelState.width = panelState.width - newCoord + panelState[splitterOrientation];
-                                }
-                                panelState[splitterOrientation] = newCoord;
-                                states = states.set(value, panelState);
+                        if (panelState && panelState.type === 'panel' && panelState.align !== getOppositeAlign(splitterOrientation)) {
+                            if (panelState.align === splitterOrientation) {
+                                panelState[getMeasurementByAlign(splitterOrientation)] =
+                                    panelState[getMeasurementByAlign(splitterOrientation)] - newCoord + panelState[splitterOrientation];
                             }
+                            panelState[splitterOrientation] = newCoord;
+                            states = states.set(value, panelState);
                         }
                     });
                     splitterState[splitterOrientation] = newCoord;
@@ -195,21 +194,20 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                         let panelState = clone(states.get(value));
                         if (panelState && panelState.type === 'panel') {
                             // Prev for right splitter must be right panel
-                            panelState.width = newCoord - panelState[splitterOrientation];
+                            panelState[getMeasurementByAlign(splitterOrientation)] = newCoord - panelState[splitterOrientation];
                             states = states.set(value, panelState);
                         }
                     });
 
                     nextIndexes.forEach((value) => {
                         let panelState = clone(states.get(value));
-                        if (panelState && panelState.type === 'panel') {
-                            if (panelState.align !== getOppositeAlign(splitterOrientation)) {
-                                if (panelState.align === splitterOrientation) {
-                                    panelState.width = panelState.width - newCoord + panelState[splitterOrientation];
-                                }
-                                panelState[splitterOrientation] = newCoord;
-                                states = states.set(value, panelState);
+                        if (panelState && panelState.type === 'panel' && panelState.align !== getOppositeAlign(splitterOrientation)) {
+                            if (panelState.align === splitterOrientation) {
+                                panelState[getMeasurementByAlign(splitterOrientation)] =
+                                    panelState[getMeasurementByAlign(splitterOrientation)] - newCoord + panelState[splitterOrientation];
                             }
+                            panelState[splitterOrientation] = newCoord;
+                            states = states.set(value, panelState);
                         }
                     });
                     splitterState[splitterOrientation] = newCoord;
@@ -220,21 +218,20 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                         let panelState = clone(states.get(value));
                         if (panelState && panelState.type === 'panel') {
                             // Prev for top splitter must be top panel
-                            panelState.height = newCoord - panelState[splitterOrientation];
+                            panelState[getMeasurementByAlign(splitterOrientation)] = newCoord - panelState[splitterOrientation];
                             states = states.set(value, panelState);
                         }
                     });
 
                     nextIndexes.forEach((value) => {
                         let panelState = clone(states.get(value));
-                        if (panelState && panelState.type === 'panel') {
-                            if (panelState.align !== getOppositeAlign(splitterOrientation)) {
-                                if (panelState.align === splitterOrientation) {
-                                    panelState.height = panelState.height - newCoord + panelState[splitterOrientation];
-                                }
-                                panelState[splitterOrientation] = newCoord;
-                                states = states.set(value, panelState);
+                        if (panelState && panelState.type === 'panel' && panelState.align !== getOppositeAlign(splitterOrientation)) {
+                            if (panelState.align === splitterOrientation) {
+                                panelState[getMeasurementByAlign(splitterOrientation)]
+                                    = panelState[getMeasurementByAlign(splitterOrientation)] - newCoord + panelState[splitterOrientation];
                             }
+                            panelState[splitterOrientation] = newCoord;
+                            states = states.set(value, panelState);
                         }
                     });
                     splitterState[splitterOrientation] = newCoord;
@@ -245,21 +242,20 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                         let panelState = clone(states.get(value));
                         if (panelState && panelState.type === 'panel') {
                             // Prev for bottom splitter must be bottom panel
-                            panelState.height = newCoord - panelState[splitterOrientation];
+                            panelState[getMeasurementByAlign(splitterOrientation)] = newCoord - panelState[splitterOrientation];
                             states = states.set(value, panelState);
                         }
                     });
 
                     nextIndexes.forEach((value) => {
                         let panelState = clone(states.get(value));
-                        if (panelState && panelState.type === 'panel') {
-                            if (panelState.align !== getOppositeAlign(splitterOrientation)) {
-                                if (panelState.align === splitterOrientation) {
-                                    panelState.height = panelState.height - newCoord + panelState[splitterOrientation];
-                                }
-                                panelState[splitterOrientation] = newCoord;
-                                states = states.set(value, panelState);
+                        if (panelState && panelState.type === 'panel' && panelState.align !== getOppositeAlign(splitterOrientation)) {
+                            if (panelState.align === splitterOrientation) {
+                                panelState[getMeasurementByAlign(splitterOrientation)]
+                                    = panelState[getMeasurementByAlign(splitterOrientation)] - newCoord + panelState[splitterOrientation];
                             }
+                            panelState[splitterOrientation] = newCoord;
+                            states = states.set(value, panelState);
                         }
                     });
                     splitterState[splitterOrientation] = newCoord;

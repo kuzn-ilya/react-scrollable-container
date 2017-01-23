@@ -17,7 +17,7 @@ export interface LayoutSplitterChildState {
     top?: number;
     left?: number;
     right?: number;
-    orientation: 'left' | 'right' | 'top' | 'bottom';
+    align: 'left' | 'right' | 'top' | 'bottom';
     onResizing?: (newCoord: number) => void;
     onResizeEnd?: () => void;
 }

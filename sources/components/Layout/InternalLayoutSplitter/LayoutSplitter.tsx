@@ -21,15 +21,15 @@ export namespace Internal {
 
         handleMouseDown: React.EventHandler<React.MouseEvent<HTMLDivElement>> = (e) => {
             this.mouseCapture = MouseCapture.captureMouseEvents(e.nativeEvent, this.handleWindowMouseMove, this.handleReleaseMouseCapture);
-            let pageCoord = isVertical(this.props.orientation) ? e.pageY : e.pageX;
+            let pageCoord = isVertical(this.props.align) ? e.pageY : e.pageX;
             // tslint:disable-next-line:no-use-before-declare
-            this.startCoord = MULTIPLIER[this.props.orientation] * pageCoord - this.props[this.props.orientation];
+            this.startCoord = MULTIPLIER[this.props.align] * pageCoord - this.props[this.props.align];
         }
 
         handleWindowMouseMove: (e: MouseEvent) => void = (e) => {
-            let pageCoord = isVertical(this.props.orientation) ? e.pageY : e.pageX;
+            let pageCoord = isVertical(this.props.align) ? e.pageY : e.pageX;
             // tslint:disable-next-line:no-use-before-declare
-            let newCoord = MULTIPLIER[this.props.orientation] * pageCoord - this.startCoord;
+            let newCoord = MULTIPLIER[this.props.align] * pageCoord - this.startCoord;
             if (this.props.onResizing) {
                 this.props.onResizing(newCoord);
             }
@@ -45,11 +45,11 @@ export namespace Internal {
         }
 
         getClassName(): string {
-            return isVertical(this.props.orientation) ? 'layout-vert-splitter' : 'layout-horz-splitter';
+            return isVertical(this.props.align) ? 'layout-vert-splitter' : 'layout-horz-splitter';
         }
 
         getStyle(): React.CSSProperties {
-            switch (this.props.orientation) {
+            switch (this.props.align) {
                 case 'top':
                     return {
                         heigth: 6,

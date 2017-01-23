@@ -7,17 +7,17 @@ export interface LayoutSplitterProps {
     readonly left?: number;
     readonly onResizing?: (newCoord: number) => void;
     readonly onResizeEnd?: () => void;
-    readonly orientation: 'left' | 'right' | 'top' | 'bottom';
+    readonly align: 'left' | 'right' | 'top' | 'bottom';
     readonly right?: number;
     readonly top?: number;
 }
 
 export const layoutSplitterPropTypes: ValidationMap<LayoutSplitterProps> = {
+    align: PropTypes.oneOf(['left', 'right', 'top', 'bottom']).isRequired,
     bottom: PropTypes.number,
     left: PropTypes.number,
     onResizeEnd: PropTypes.func,
     onResizing: PropTypes.func,
-    orientation: PropTypes.oneOf(['left', 'right', 'top', 'bottom']).isRequired,
     right: PropTypes.number,
     top: PropTypes.number
 };

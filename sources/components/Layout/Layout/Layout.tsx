@@ -58,9 +58,9 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
 
         function calculateSplitterState(align: 'left' | 'right' | 'bottom' | 'top'): LayoutSplitterChildState {
             return {
+                align,
                 bottom: align === 'top' ? undefined : newCoords.bottom,
                 left: align === 'right' ? undefined : newCoords.left,
-                orientation: align,
                 right: align === 'left' ? undefined : newCoords.right,
                 top: align === 'bottom' ? undefined : newCoords.top,
                 type: 'splitter'
@@ -82,19 +82,18 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
         for (let i = 0; i < childrenStates.length; i++) {
             let state = childrenStates[i];
             if (state && state.type === 'splitter') {
-                // TODO: Splitters must be processed as siblings as well as panels.
                 let prevIndexes = [];
                 for (let j = i - 1; j >= 0; j--) {
-                    let panelState = childrenStates[j];
-                    if (panelState && panelState.type === 'panel' && isPanelPreviousForSplitter(panelState, state)) {
+                    let siblingState = childrenStates[j];
+                    if (isPanelPreviousForSplitter(siblingState, state)) {
                         prevIndexes.push(j);
                     }
                 }
 
                 let nextIndexes = [];
                 for (let j = i + 1; j < childrenStates.length; j++) {
-                    let panelState = childrenStates[j];
-                    if (panelState && panelState.type === 'panel' && isPanelNextForSplitter(panelState, state)) {
+                    let siblingState = childrenStates[j];
+                    if (isPanelNextForSplitter(siblingState, state)) {
                         nextIndexes.push(j);
                     }
                 }
@@ -120,29 +119,30 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
         let states = this.state.childrenStates;
         let splitterState = clone(states.get(splitterIndex));
         if (splitterState && splitterState.type === 'splitter') {
-            let splitterOrientation = splitterState.orientation;
+            let splitterAlign = splitterState.align;
 
             prevIndexes.forEach((value) => {
                 let panelState = clone(states.get(value));
                 if (panelState && panelState.type === 'panel') {
                     // Prev for left splitter must be left panel
-                    panelState[getMeasurementByAlign(splitterOrientation)] = newCoord - panelState[splitterOrientation];
+                    panelState[getMeasurementByAlign(splitterAlign)] = newCoord - panelState[splitterAlign];
                     states = states.set(value, panelState);
                 }
             });
 
             nextIndexes.forEach((value) => {
                 let panelState = clone(states.get(value));
-                if (panelState && panelState.type === 'panel' && panelState.align !== getOppositeAlign(splitterOrientation)) {
-                    if (panelState.align === splitterOrientation) {
-                        panelState[getMeasurementByAlign(splitterOrientation)] =
-                            panelState[getMeasurementByAlign(splitterOrientation)] - newCoord + panelState[splitterOrientation];
+                if (panelState) {
+                    if (panelState.type === 'panel' && panelState.align !== getOppositeAlign(splitterAlign)
+                        && panelState.align === splitterAlign) {
+                        panelState[getMeasurementByAlign(splitterAlign)] =
+                            panelState[getMeasurementByAlign(splitterAlign)] - newCoord + panelState[splitterAlign];
                     }
-                    panelState[splitterOrientation] = newCoord;
+                    panelState[splitterAlign] = newCoord;
                     states = states.set(value, panelState);
                 }
             });
-            splitterState[splitterOrientation] = newCoord;
+            splitterState[splitterAlign] = newCoord;
             states = states.set(splitterIndex, splitterState);
         }
         this.setState({childrenStates: states});
@@ -180,7 +180,7 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                         );
                     case 'splitter':
                         return (
-                            <Internal2.LayoutSplitter orientation={childState.orientation!}
+                            <Internal2.LayoutSplitter align={childState.align!}
                                 top={childState.top}
                                 left={childState.left}
                                 bottom={childState.bottom}
@@ -212,12 +212,26 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
     }
 }
 
-function isPanelPreviousForSplitter(panel: LayoutPanelChildState, splitter: LayoutSplitterChildState): boolean {
-    return splitter[splitter.orientation] === panel[splitter.orientation] + panel[getMeasurementByAlign(splitter.orientation)];
+function isPanelPreviousForSplitter(sibling: LayoutChildState, splitter: LayoutSplitterChildState): boolean {
+    // Only panel can be previous sibling of splitter
+    if (sibling === undefined) {
+        return false;
+    } else if (sibling.type === 'panel') {
+        return splitter[splitter.align] === sibling[splitter.align] + sibling[getMeasurementByAlign(splitter.align)];
+    } else {
+        return false;
+    }
 }
 
-function isPanelNextForSplitter(panel: LayoutPanelChildState, splitter: LayoutSplitterChildState): boolean {
-    return splitter[splitter.orientation] === panel[splitter.orientation];
+function isPanelNextForSplitter(sibling: LayoutChildState, splitter: LayoutSplitterChildState): boolean {
+    if (sibling === undefined) {
+        return false;
+    } else if (sibling.type === 'panel') {
+        return splitter[splitter.align] === sibling[splitter.align];
+    } else {
+        return isHorizontal(splitter.align) !== isHorizontal(sibling.align)
+            && splitter[splitter.align] === sibling[splitter.align];
+    }
 }
 
 function getOppositeAlign(align: 'left' | 'right' | 'top' | 'bottom'): 'left' | 'right' | 'top' | 'bottom' {
@@ -247,3 +261,11 @@ function getMeasurementByAlign(align: 'left' | 'right' | 'top' | 'bottom'): 'hei
             throw new Error('Unexpected error');
     }
 }
+
+function isHorizontal(align: 'left' | 'right' | 'top' | 'bottom'): boolean {
+    return align === 'left' || align === 'right';
+}
+
+// function isVertical(align: 'left' | 'right' | 'top' | 'bottom'): boolean {
+//     return align === 'top' || align === 'bottom';
+// }

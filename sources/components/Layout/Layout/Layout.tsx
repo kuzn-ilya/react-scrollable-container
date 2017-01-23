@@ -25,59 +25,17 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
     }
 
     calculateState(props: { children?: React.ReactNode }): LayoutState {
-        let newCoords = {
+        let newCoords: Coords = {
+            align: undefined,
             bottom: 0,
             left: 0,
             right: 0,
             top: 0
         };
 
-        let prevAlign: 'left' | 'right' | 'top' | 'bottom' | undefined = undefined;
-
-        function calculatePanelState(panelProps: LayoutPanelProps): LayoutPanelChildState | undefined {
-            let { align } = panelProps;
-
-            let state: LayoutPanelChildState = {
-                align,
-                bottom: align !== 'top' ? newCoords.bottom : undefined,
-                height: panelProps.height,
-                left: align !== 'right' ? newCoords.left : undefined,
-                right: align !== 'left' ? newCoords.right : undefined,
-                top: align !== 'bottom' ? newCoords.top : undefined,
-                type: 'panel',
-                width: panelProps.width
-            };
-
-            prevAlign = align === 'client' ? undefined : align;
-            if (align !== 'client') {
-                newCoords[align] += panelProps[getMeasurementByAlign(align)];
-            }
-
-            return state;
-       }
-
-        function calculateSplitterState(align: 'left' | 'right' | 'bottom' | 'top'): LayoutSplitterChildState {
-            return {
-                align,
-                bottom: align === 'top' ? undefined : newCoords.bottom,
-                left: align === 'right' ? undefined : newCoords.left,
-                right: align === 'left' ? undefined : newCoords.right,
-                top: align === 'bottom' ? undefined : newCoords.top,
-                type: 'splitter'
-            };
-        }
-
-        let childrenStates: LayoutChildState[] = React.Children.map(props.children, (child, index) => {
-            if (typeof child === 'string' || typeof child === 'number') {
-                return undefined;
-            } else if (child.type === LayoutPanel ) {
-                return calculatePanelState(child.props as LayoutPanelProps);
-            } else if (child.type === LayoutSplitter && prevAlign !== undefined) {
-                return calculateSplitterState(prevAlign);
-            } else {
-                return undefined;
-            }
-        });
+        let childrenStates: LayoutChildState[] = React.Children.map(props.children, (child) =>
+            calculateChildState(child, newCoords)
+        );
 
         for (let i = 0; i < childrenStates.length; i++) {
             let state = childrenStates[i];
@@ -124,7 +82,7 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
             prevIndexes.forEach((value) => {
                 let panelState = clone(states.get(value));
                 if (panelState && panelState.type === 'panel') {
-                    // Prev for left splitter must be left panel
+                    // TODO: Asserting: prev for splitter must be a panel and have the same align
                     panelState[getMeasurementByAlign(splitterAlign)] = newCoord - panelState[splitterAlign];
                     states = states.set(value, panelState);
                 }
@@ -269,3 +227,60 @@ function isHorizontal(align: 'left' | 'right' | 'top' | 'bottom'): boolean {
 // function isVertical(align: 'left' | 'right' | 'top' | 'bottom'): boolean {
 //     return align === 'top' || align === 'bottom';
 // }
+
+type Coords = {
+    align?: 'left' | 'right' | 'bottom' | 'top';
+    bottom?: number;
+    left?: number;
+    right?: number;
+    top?: number;
+};
+
+function calculateSplitterState(newCoords: Coords): LayoutSplitterChildState | undefined {
+    if (newCoords.align === undefined) {
+        return undefined;
+    } else {
+        return {
+            align: newCoords.align,
+            bottom: newCoords.align === 'top' ? undefined : newCoords.bottom,
+            left: newCoords.align === 'right' ? undefined : newCoords.left,
+            right: newCoords.align === 'left' ? undefined : newCoords.right,
+            top: newCoords.align === 'bottom' ? undefined : newCoords.top,
+            type: 'splitter'
+        };
+    }
+}
+
+function calculatePanelState(newCoords: Coords, panelProps: LayoutPanelProps): LayoutPanelChildState | undefined {
+    let align = panelProps.align;
+
+    let state: LayoutPanelChildState = {
+        align,
+        bottom: align !== 'top' ? newCoords.bottom : undefined,
+        height: panelProps.height,
+        left: align !== 'right' ? newCoords.left : undefined,
+        right: align !== 'left' ? newCoords.right : undefined,
+        top: align !== 'bottom' ? newCoords.top : undefined,
+        type: 'panel',
+        width: panelProps.width
+    };
+
+    newCoords.align = align === 'client' ? undefined : align;
+    if (align !== 'client') {
+        newCoords[align] += panelProps[getMeasurementByAlign(align)];
+    }
+
+    return state;
+}
+
+function calculateChildState(child: React.ReactChild, newCoords: Coords): LayoutChildState {
+    if (typeof child === 'string' || typeof child === 'number') {
+        return undefined;
+    } else if (child.type === LayoutPanel ) {
+        return calculatePanelState(newCoords, child.props as LayoutPanelProps);
+    } else if (child.type === LayoutSplitter) {
+        return calculateSplitterState(newCoords);
+    } else {
+        return undefined;
+    }
+}

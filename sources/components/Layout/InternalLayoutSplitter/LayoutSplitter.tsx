@@ -21,14 +21,15 @@ export namespace Internal {
 
         handleMouseDown: React.EventHandler<React.MouseEvent<HTMLDivElement>> = (e) => {
             this.mouseCapture = MouseCapture.captureMouseEvents(e.nativeEvent, this.handleWindowMouseMove, this.handleReleaseMouseCapture);
-            this.startCoord = isVertical(this.props.orientation) ? e.pageY : e.pageX;
+            let pageCoord = isVertical(this.props.orientation) ? e.pageY : e.pageX;
+            // tslint:disable-next-line:no-use-before-declare
+            this.startCoord = MULTIPLIER[this.props.orientation] * pageCoord - this.props[this.props.orientation];
         }
 
         handleWindowMouseMove: (e: MouseEvent) => void = (e) => {
+            let pageCoord = isVertical(this.props.orientation) ? e.pageY : e.pageX;
             // tslint:disable-next-line:no-use-before-declare
-            let newCoord = MULTIPLIER[this.props.orientation]
-                * ((isVertical(this.props.orientation) ? e.pageY : e.pageX) - this.startCoord)
-                + this.props[this.props.orientation];
+            let newCoord = MULTIPLIER[this.props.orientation] * pageCoord - this.startCoord;
             if (this.props.onResizing) {
                 this.props.onResizing(newCoord);
             }

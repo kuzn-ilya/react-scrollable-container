@@ -22,6 +22,11 @@ export class LayoutExample extends React.Component<{}, CompState> {
                 </LayoutPanel>
                 <LayoutSplitter />
                 <LayoutPanel align="right" width={50}>
+                    <div className="div-text" style={{backgroundColor: 'white'}}>
+                    </div>
+                </LayoutPanel>
+                <LayoutSplitter />
+                <LayoutPanel align="right" width={60}>
                     <div className="div-text" style={{backgroundColor: 'lightgray'}}>
                     </div>
                 </LayoutPanel>

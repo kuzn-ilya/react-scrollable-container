@@ -163,39 +163,138 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
         let states = this.state.childrenStates;
         let splitterState = clone(states.get(splitterIndex));
         if (splitterState && splitterState.type === 'splitter') {
-            // console.log('source', states.toJS());
-
-            if (splitterState.orientation === 'left') {
-                prevIndexes.forEach((value) => {
-                    let panelState = clone(states.get(value));
-                    if (panelState && panelState.type === 'panel') {
-                        // Prev for left splitter must be left panel
-                        panelState.width = newCoord;
-                        states = states.set(value, panelState);
-                    }
-                });
-
-                nextIndexes.forEach((value) => {
-                    let panelState = clone(states.get(value));
-                    if (panelState && panelState.type === 'panel') {
-                        switch (panelState.align) {
-                            case 'left':
-                            case 'bottom':
-                            case 'client':
-                                console.log(newCoord);
-                                panelState.left = newCoord;
-                                states = states.set(value, panelState);
-                                break;
-                            default:
-                                break;
+            switch (splitterState.orientation) {
+                case 'left':
+                    prevIndexes.forEach((value) => {
+                        let panelState = clone(states.get(value));
+                        if (panelState && panelState.type === 'panel') {
+                            // Prev for left splitter must be left panel
+                            panelState.width = newCoord - panelState.left;
+                            states = states.set(value, panelState);
                         }
-                    }
-                });
+                    });
 
-                splitterState.left = newCoord;
-                states = states.set(splitterIndex, splitterState);
+                    nextIndexes.forEach((value) => {
+                        let panelState = clone(states.get(value));
+                        if (panelState && panelState.type === 'panel') {
+                            switch (panelState.align) {
+                                case 'left':
+                                case 'top':
+                                case 'bottom':
+                                case 'client':
+                                    if (panelState.align === 'left') {
+                                        panelState.width = panelState.width - newCoord + panelState.left;
+                                    }
+                                    panelState.left = newCoord;
+                                    states = states.set(value, panelState);
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                    });
+                    splitterState.left = newCoord;
+                    states = states.set(splitterIndex, splitterState);
+                    break;
+                case 'right':
+                    prevIndexes.forEach((value) => {
+                        let panelState = clone(states.get(value));
+                        if (panelState && panelState.type === 'panel') {
+                            // Prev for right splitter must be right panel
+                            panelState.width = newCoord - panelState.right;
+                            states = states.set(value, panelState);
+                        }
+                    });
+
+                    nextIndexes.forEach((value) => {
+                        let panelState = clone(states.get(value));
+                        if (panelState && panelState.type === 'panel') {
+                            switch (panelState.align) {
+                                case 'right':
+                                case 'top':
+                                case 'bottom':
+                                case 'client':
+                                    if (panelState.align === 'right') {
+                                        panelState.width = panelState.width - newCoord + panelState.right;
+                                    }
+                                    panelState.right = newCoord;
+                                    states = states.set(value, panelState);
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                    });
+                    splitterState.right = newCoord;
+                    states = states.set(splitterIndex, splitterState);
+                    break;
+                case 'top':
+                    prevIndexes.forEach((value) => {
+                        let panelState = clone(states.get(value));
+                        if (panelState && panelState.type === 'panel') {
+                            // Prev for top splitter must be top panel
+                            panelState.height = newCoord - panelState.top;
+                            states = states.set(value, panelState);
+                        }
+                    });
+
+                    nextIndexes.forEach((value) => {
+                        let panelState = clone(states.get(value));
+                        if (panelState && panelState.type === 'panel') {
+                            switch (panelState.align) {
+                                case 'top':
+                                case 'left':
+                                case 'right':
+                                case 'client':
+                                    if (panelState.align === 'top') {
+                                        panelState.height = panelState.height - newCoord + panelState.top;
+                                    }
+                                    panelState.top = newCoord;
+                                    states = states.set(value, panelState);
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                    });
+                    splitterState.top = newCoord;
+                    states = states.set(splitterIndex, splitterState);
+                    break;
+                case 'bottom':
+                    prevIndexes.forEach((value) => {
+                        let panelState = clone(states.get(value));
+                        if (panelState && panelState.type === 'panel') {
+                            // Prev for bottom splitter must be bottom panel
+                            panelState.height = newCoord - panelState.bottom;
+                            states = states.set(value, panelState);
+                        }
+                    });
+
+                    nextIndexes.forEach((value) => {
+                        let panelState = clone(states.get(value));
+                        if (panelState && panelState.type === 'panel') {
+                            switch (panelState.align) {
+                                case 'left':
+                                case 'right':
+                                case 'bottom':
+                                case 'client':
+                                    if (panelState.align === 'bottom') {
+                                        panelState.height = panelState.height - newCoord + panelState.bottom;
+                                    }
+                                    panelState.bottom = newCoord;
+                                    states = states.set(value, panelState);
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                    });
+                    splitterState.bottom = newCoord;
+                    states = states.set(splitterIndex, splitterState);
+                    break;
+                default:
+                    break;
             }
-            // console.log('dest', states.toJS());
         }
         this.setState({childrenStates: states});
     }

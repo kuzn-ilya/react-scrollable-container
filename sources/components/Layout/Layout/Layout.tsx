@@ -164,106 +164,29 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
         let splitterState = clone(states.get(splitterIndex));
         if (splitterState && splitterState.type === 'splitter') {
             let splitterOrientation = splitterState.orientation;
-            switch (splitterOrientation) {
-                case 'left':
-                    prevIndexes.forEach((value) => {
-                        let panelState = clone(states.get(value));
-                        if (panelState && panelState.type === 'panel') {
-                            // Prev for left splitter must be left panel
-                            panelState[getMeasurementByAlign(splitterOrientation)] = newCoord - panelState[splitterOrientation];
-                            states = states.set(value, panelState);
-                        }
-                    });
 
-                    nextIndexes.forEach((value) => {
-                        let panelState = clone(states.get(value));
-                        if (panelState && panelState.type === 'panel' && panelState.align !== getOppositeAlign(splitterOrientation)) {
-                            if (panelState.align === splitterOrientation) {
-                                panelState[getMeasurementByAlign(splitterOrientation)] =
-                                    panelState[getMeasurementByAlign(splitterOrientation)] - newCoord + panelState[splitterOrientation];
-                            }
-                            panelState[splitterOrientation] = newCoord;
-                            states = states.set(value, panelState);
-                        }
-                    });
-                    splitterState[splitterOrientation] = newCoord;
-                    states = states.set(splitterIndex, splitterState);
-                    break;
-                case 'right':
-                    prevIndexes.forEach((value) => {
-                        let panelState = clone(states.get(value));
-                        if (panelState && panelState.type === 'panel') {
-                            // Prev for right splitter must be right panel
-                            panelState[getMeasurementByAlign(splitterOrientation)] = newCoord - panelState[splitterOrientation];
-                            states = states.set(value, panelState);
-                        }
-                    });
+            prevIndexes.forEach((value) => {
+                let panelState = clone(states.get(value));
+                if (panelState && panelState.type === 'panel') {
+                    // Prev for left splitter must be left panel
+                    panelState[getMeasurementByAlign(splitterOrientation)] = newCoord - panelState[splitterOrientation];
+                    states = states.set(value, panelState);
+                }
+            });
 
-                    nextIndexes.forEach((value) => {
-                        let panelState = clone(states.get(value));
-                        if (panelState && panelState.type === 'panel' && panelState.align !== getOppositeAlign(splitterOrientation)) {
-                            if (panelState.align === splitterOrientation) {
-                                panelState[getMeasurementByAlign(splitterOrientation)] =
-                                    panelState[getMeasurementByAlign(splitterOrientation)] - newCoord + panelState[splitterOrientation];
-                            }
-                            panelState[splitterOrientation] = newCoord;
-                            states = states.set(value, panelState);
-                        }
-                    });
-                    splitterState[splitterOrientation] = newCoord;
-                    states = states.set(splitterIndex, splitterState);
-                    break;
-                case 'top':
-                    prevIndexes.forEach((value) => {
-                        let panelState = clone(states.get(value));
-                        if (panelState && panelState.type === 'panel') {
-                            // Prev for top splitter must be top panel
-                            panelState[getMeasurementByAlign(splitterOrientation)] = newCoord - panelState[splitterOrientation];
-                            states = states.set(value, panelState);
-                        }
-                    });
-
-                    nextIndexes.forEach((value) => {
-                        let panelState = clone(states.get(value));
-                        if (panelState && panelState.type === 'panel' && panelState.align !== getOppositeAlign(splitterOrientation)) {
-                            if (panelState.align === splitterOrientation) {
-                                panelState[getMeasurementByAlign(splitterOrientation)]
-                                    = panelState[getMeasurementByAlign(splitterOrientation)] - newCoord + panelState[splitterOrientation];
-                            }
-                            panelState[splitterOrientation] = newCoord;
-                            states = states.set(value, panelState);
-                        }
-                    });
-                    splitterState[splitterOrientation] = newCoord;
-                    states = states.set(splitterIndex, splitterState);
-                    break;
-                case 'bottom':
-                    prevIndexes.forEach((value) => {
-                        let panelState = clone(states.get(value));
-                        if (panelState && panelState.type === 'panel') {
-                            // Prev for bottom splitter must be bottom panel
-                            panelState[getMeasurementByAlign(splitterOrientation)] = newCoord - panelState[splitterOrientation];
-                            states = states.set(value, panelState);
-                        }
-                    });
-
-                    nextIndexes.forEach((value) => {
-                        let panelState = clone(states.get(value));
-                        if (panelState && panelState.type === 'panel' && panelState.align !== getOppositeAlign(splitterOrientation)) {
-                            if (panelState.align === splitterOrientation) {
-                                panelState[getMeasurementByAlign(splitterOrientation)]
-                                    = panelState[getMeasurementByAlign(splitterOrientation)] - newCoord + panelState[splitterOrientation];
-                            }
-                            panelState[splitterOrientation] = newCoord;
-                            states = states.set(value, panelState);
-                        }
-                    });
-                    splitterState[splitterOrientation] = newCoord;
-                    states = states.set(splitterIndex, splitterState);
-                    break;
-                default:
-                    break;
-            }
+            nextIndexes.forEach((value) => {
+                let panelState = clone(states.get(value));
+                if (panelState && panelState.type === 'panel' && panelState.align !== getOppositeAlign(splitterOrientation)) {
+                    if (panelState.align === splitterOrientation) {
+                        panelState[getMeasurementByAlign(splitterOrientation)] =
+                            panelState[getMeasurementByAlign(splitterOrientation)] - newCoord + panelState[splitterOrientation];
+                    }
+                    panelState[splitterOrientation] = newCoord;
+                    states = states.set(value, panelState);
+                }
+            });
+            splitterState[splitterOrientation] = newCoord;
+            states = states.set(splitterIndex, splitterState);
         }
         this.setState({childrenStates: states});
     }

@@ -31,3 +31,26 @@ export const alignPropType = PropTypes.oneOfType([
     edgePropType,
     PropTypes.oneOf(['client'])
 ]);
+
+export function getOppositeEdge(align: Edge): Edge {
+    switch (align) {
+        case 'left':
+            return 'right';
+        case 'right':
+            return 'left';
+        case 'bottom':
+            return 'top';
+        case 'top':
+            return 'bottom';
+        default:
+            throw new Error('Unexpected error');
+    }
+}
+
+export function isHorizontal(align: Edge): boolean {
+    return align === 'left' || align === 'right';
+}
+
+export function isVertical(align: Edge): boolean {
+    return align === 'top' || align === 'bottom';
+}

@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { LayoutSplitterProps, layoutSplitterPropTypes } from  './LayoutSplitterProps';
 import { LayoutSplitterState } from  './LayoutSplitterState';
-import { classNames, MouseCapture } from  '../../../utils';
+import { classNames, MouseCapture, isVertical } from  '../../../utils';
 
 import '../../../styles/layout-splitter.css';
 
@@ -93,8 +93,7 @@ export namespace Internal {
                         width: 6
                     };
                 default:
-                    return {
-                    };
+                    throw new Error('Unexpected error.');
             }
         }
 
@@ -107,10 +106,6 @@ export namespace Internal {
             );
         }
     }
-}
-
-function isVertical(align: 'left' | 'right' | 'top' | 'bottom'): boolean {
-    return align === 'top' || align === 'bottom';
 }
 
 const MULTIPLIER = {

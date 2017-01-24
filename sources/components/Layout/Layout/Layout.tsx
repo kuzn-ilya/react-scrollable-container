@@ -2,14 +2,14 @@ import * as React from 'react';
 import { List } from 'immutable';
 
 import { LayoutProps, layoutPropTypes } from  './LayoutProps';
-import { LayoutState, LayoutChildState, LayoutPanelChildState, LayoutSplitterChildState } from  './LayoutState';
+import { LayoutState, LayoutChildState, LayoutPanelChildState, LayoutSplitterChildState, isSplitter, isPanel } from  './LayoutState';
 import { LayoutPanel } from  '../LayoutPanel';
 import { LayoutPanelProps } from  '../LayoutPanel/LayoutPanelProps';
 import { Internal } from  '../InternalLayoutPanel';
 // TODO: How to avoid alias for namespace here
 import { Internal as Internal2} from  '../InternalLayoutSplitter';
 import { LayoutSplitter } from  '../LayoutSplitter';
-import { classNames, Edge } from '../../../utils';
+import { range, classNames, Edge, getOppositeEdge, isHorizontal } from '../../../utils';
 
 import '../../../styles/layout.css';
 import '../../../styles/common.css';
@@ -37,29 +37,20 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
             calculateChildState(child, newCoords)
         );
 
-        for (let i = 0; i < childrenStates.length; i++) {
-            let state = childrenStates[i];
-            if (state && state.type === 'splitter') {
-                let prevIndexes = [];
-                for (let j = i - 1; j >= 0; j--) {
-                    let siblingState = childrenStates[j];
-                    if (isPanelPreviousForSplitter(siblingState, state)) {
-                        prevIndexes.push(j);
-                    }
-                }
+        childrenStates.forEach((state, index) => {
+            if (isSplitter(state)) {
+                let prevIndexes =
+                    range(0, index)
+                    .filter((i) => isPanelPreviousForSplitter(childrenStates[i], state));
 
-                let nextIndexes = [];
-                for (let j = i + 1; j < childrenStates.length; j++) {
-                    let siblingState = childrenStates[j];
-                    if (isPanelNextForSplitter(siblingState, state)) {
-                        nextIndexes.push(j);
-                    }
-                }
+                let nextIndexes =
+                    range(index + 1, childrenStates.length)
+                    .filter((i) => isPanelNextForSplitter(childrenStates[i], state));
 
-                state.onResizing = this.handleSplitterResizing.bind(this, i, prevIndexes, nextIndexes);
-                state.onResizeEnd = this.handleSplitterResizeEnd.bind(this, i, prevIndexes, nextIndexes);
+                state.onResizing = this.handleSplitterResizing.bind(this, index, prevIndexes, nextIndexes);
+                state.onResizeEnd = this.handleSplitterResizeEnd.bind(this, index, prevIndexes, nextIndexes);
             }
-        }
+        });
 
         return {
             childrenStates: List(childrenStates)
@@ -71,7 +62,8 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
 
         let states = this.state.childrenStates;
         let splitterState = cloneLayoutChildState(states.get(splitterIndex));
-        if (splitterState && splitterState.type === 'splitter') {
+
+        if (isSplitter(splitterState)) {
             let adjustedNewCoord = this.adjustNewCoord(splitterIndex, splitterState, prevIndexes, nextIndexes, newCoord);
             this.resizeChildren(splitterIndex, splitterState, prevIndexes, nextIndexes, adjustedNewCoord);
         }
@@ -90,7 +82,7 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
 
         prevIndexes.forEach((value) => {
             let panelState = cloneLayoutChildState(states.get(value));
-            if (panelState && panelState.type === 'panel') {
+            if (isPanel(panelState)) {
                 // TODO: Asserting: prev for splitter must be a panel and have the same align
                 panelState[getMeasurementByAlign(splitterAlign)] = newCoord - panelState[splitterAlign];
                 states = states.set(value, panelState);
@@ -100,7 +92,7 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
         nextIndexes.forEach((value) => {
             let panelState = cloneLayoutChildState(states.get(value));
             if (panelState) {
-                if (panelState.type === 'panel' && panelState.align !== getOppositeAlign(splitterAlign)
+                if (isPanel(panelState) && panelState.align !== getOppositeEdge(splitterAlign)
                     && panelState.align === splitterAlign) {
                     panelState[getMeasurementByAlign(splitterAlign)] =
                         panelState[getMeasurementByAlign(splitterAlign)] - newCoord + panelState[splitterAlign];
@@ -123,7 +115,7 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
 
         prevIndexes.forEach((value) => {
             let panelState = states.get(value);
-            if (panelState && panelState.type === 'panel') {
+            if (isPanel(panelState)) {
                 let minMeasurement = panelState[getMinMeasurementByAlign(splitterAlign)];
                 let maxMeasurement = panelState[getMaxMeasurementByAlign(splitterAlign)];
                 let newMeasurement = result - panelState[splitterAlign];
@@ -140,7 +132,7 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
         nextIndexes.forEach((value) => {
             let panelState = states.get(value);
             if (panelState) {
-                if (panelState.type === 'panel' && panelState.align !== getOppositeAlign(splitterAlign)
+                if (isPanel(panelState) && panelState.align !== getOppositeEdge(splitterAlign)
                     && panelState.align === splitterAlign) {
 
                     let minMeasurement = panelState[getMinMeasurementByAlign(splitterAlign)];
@@ -173,6 +165,7 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                         let panelProps = (child as React.ReactElement<LayoutPanelProps & {children?: React.ReactChildren}>).props;
                         return (
                             <Internal.LayoutPanel
+                                key={index}
                                 top={childState.top}
                                 bottom={childState.bottom}
                                 left={childState.left}
@@ -188,6 +181,7 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                     case 'splitter':
                         return (
                             <Internal2.LayoutSplitter align={childState.align!}
+                                key={index}
                                 top={childState.top}
                                 left={childState.left}
                                 bottom={childState.bottom}
@@ -221,9 +215,7 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
 
 function isPanelPreviousForSplitter(sibling: LayoutChildState, splitter: LayoutSplitterChildState): boolean {
     // Only panel can be previous sibling of splitter
-    if (sibling === undefined) {
-        return false;
-    } else if (sibling.type === 'panel') {
+    if (isPanel(sibling)) {
         return splitter[splitter.align] === sibling[splitter.align] + sibling[getMeasurementByAlign(splitter.align)];
     } else {
         return false;
@@ -231,28 +223,13 @@ function isPanelPreviousForSplitter(sibling: LayoutChildState, splitter: LayoutS
 }
 
 function isPanelNextForSplitter(sibling: LayoutChildState, splitter: LayoutSplitterChildState): boolean {
-    if (sibling === undefined) {
-        return false;
-    } else if (sibling.type === 'panel') {
+    if (isPanel(sibling)) {
         return splitter[splitter.align] === sibling[splitter.align];
-    } else {
+    } else if (isSplitter(sibling)) {
         return isHorizontal(splitter.align) !== isHorizontal(sibling.align)
             && splitter[splitter.align] === sibling[splitter.align];
-    }
-}
-
-function getOppositeAlign(align: Edge): Edge {
-    switch (align) {
-        case 'left':
-            return 'right';
-        case 'right':
-            return 'left';
-        case 'bottom':
-            return 'top';
-        case 'top':
-            return 'bottom';
-        default:
-            throw new Error('Unexpected error');
+    } else {
+        return false;
     }
 }
 
@@ -294,14 +271,6 @@ function getMaxMeasurementByAlign(align: Edge): 'maxHeight' | 'maxWidth' {
             throw new Error('Unexpected error');
     }
 }
-
-function isHorizontal(align: Edge): boolean {
-    return align === 'left' || align === 'right';
-}
-
-// function isVertical(align: Edge): boolean {
-//     return align === 'top' || align === 'bottom';
-// }
 
 type Coords = {
     align?: Edge;

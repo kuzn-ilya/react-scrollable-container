@@ -17,12 +17,12 @@ export interface LayoutPanelChildState {
 }
 
 export interface LayoutSplitterChildState {
-    type?: 'splitter';
+    align: Edge;
+    type: 'splitter';
     bottom?: number;
     top?: number;
     left?: number;
     right?: number;
-    align: Edge;
     onResizing?: (newCoord: number) => void;
     onResizeEnd?: () => void;
 }
@@ -31,4 +31,12 @@ export type LayoutChildState = LayoutPanelChildState | LayoutSplitterChildState 
 
 export interface LayoutState {
     childrenStates: List<LayoutChildState>;
+}
+
+export function isSplitter(item: LayoutChildState): item is LayoutSplitterChildState {
+    return item !== undefined && item.type === 'splitter';
+}
+
+export function isPanel(item: LayoutChildState): item is LayoutPanelChildState {
+    return item !== undefined && item.type === 'panel';
 }

@@ -4,3 +4,4 @@ export * from './MouseCapture';
 export * from './StripModifiers';
 export * from './warning';
 export * from './WindowEvents';
+export * from './ArrayUtils';

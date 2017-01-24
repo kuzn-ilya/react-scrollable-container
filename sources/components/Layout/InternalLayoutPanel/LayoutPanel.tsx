@@ -24,6 +24,7 @@ export namespace Internal {
                 top: this.props.top,
                 width: this.props.width
             };
+
             return (
                 <div className={classNames({
                         'layout-panel': true,

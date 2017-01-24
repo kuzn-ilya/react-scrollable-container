@@ -25,6 +25,7 @@ export interface LayoutSplitterChildState {
     right?: number;
     onResizing?: (newCoord: number) => void;
     onResizeEnd?: () => void;
+    liveUpdate?: boolean;
 }
 
 export type LayoutChildState = LayoutPanelChildState | LayoutSplitterChildState | undefined;

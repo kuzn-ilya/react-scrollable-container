@@ -1,7 +1,8 @@
 import { WindowEvents } from './WindowEvents';
 
 export class MouseCapture {
-    private constructor(e: Event, mouseMoveHandler?: (e: MouseEvent) => void, releaseCaptureHandler?: () => void) {
+    private constructor(e: Event, mouseMoveHandler?: (e: MouseEvent) => void,
+        releaseCaptureHandler?: (e: MouseEvent) => void) {
         this.mouseUpListener = this.mouseUpListener.bind(this);
         this.mouseMoveListener = this.mouseMoveListener.bind(this);
 
@@ -17,7 +18,7 @@ export class MouseCapture {
         e.stopPropagation();
     }
 
-    private releaseCaptureHandler?: () => void;
+    private releaseCaptureHandler?: (e: MouseEvent) => void;
     private mouseMoveHandler?: (e: MouseEvent) => void;
 
     private static preventGlobalMouseEvents(): void {
@@ -40,22 +41,22 @@ export class MouseCapture {
         e.preventDefault();
         e.stopPropagation();
 
-        this.releaseCapture();
+        this.releaseCapture(e);
     }
 
-    releaseCapture(): void {
+    releaseCapture(e: MouseEvent): void {
         MouseCapture.restoreGlobalMouseEvents();
 
         WindowEvents.removeMouseUpEventListener(this.mouseUpListener, true);
         WindowEvents.removeMouseMoveEventListener(this.mouseMoveListener, true);
 
         if (this.releaseCaptureHandler) {
-            this.releaseCaptureHandler();
+            this.releaseCaptureHandler(e);
         }
     }
 
     static captureMouseEvents(e: Event, mouseMoveHandler?: (e: MouseEvent) => void,
-        releaseCaptureHandler?: () => void): MouseCapture {
+        releaseCaptureHandler?: (e: MouseEvent) => void): MouseCapture {
         return new MouseCapture(e, mouseMoveHandler, releaseCaptureHandler);
     }
 }

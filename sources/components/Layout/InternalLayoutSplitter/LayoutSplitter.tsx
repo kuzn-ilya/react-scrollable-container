@@ -34,24 +34,29 @@ export namespace Internal {
         }
 
         handleWindowMouseMove: (e: MouseEvent) => void = (e) => {
-            let pageCoord = isVertical(this.props.align) ? e.pageY : e.pageX;
-            // tslint:disable-next-line:no-use-before-declare
-            let newCoord = MULTIPLIER[this.props.align] * pageCoord - this.startCoord;
             if (this.props.onResizing) {
+                let newCoord = this.calcNewCoord(e);
                 this.props.onResizing(newCoord);
             }
         }
 
-        handleReleaseMouseCapture: () => void = () => {
+        handleReleaseMouseCapture: (e: MouseEvent) => void = (e) => {
             if (this.mouseCapture) {
                 this.mouseCapture = undefined;
                 if (this.props.onResizeEnd) {
-                    this.props.onResizeEnd();
+                    let newCoord = this.calcNewCoord(e);
+                    this.props.onResizeEnd(newCoord);
                 }
                 this.setState({
                     isActive: false
                 });
             }
+        }
+
+        calcNewCoord(e: MouseEvent): number {
+            let pageCoord = isVertical(this.props.align) ? e.pageY : e.pageX;
+            // tslint:disable-next-line:no-use-before-declare
+            return MULTIPLIER[this.props.align] * pageCoord - this.startCoord;
         }
 
         getClassName(): string | undefined {

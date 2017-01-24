@@ -9,6 +9,7 @@ import { Internal } from  '../InternalLayoutPanel';
 // TODO: How to avoid alias for namespace here
 import { Internal as Internal2} from  '../InternalLayoutSplitter';
 import { LayoutSplitter } from  '../LayoutSplitter';
+import { LayoutSplitterProps } from '../LayoutSplitter/LayoutSplitterProps';
 import { range, classNames, Edge, getOppositeEdge, isHorizontal } from '../../../utils';
 
 import '../../../styles/layout.css';
@@ -65,16 +66,37 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
 
         if (isSplitter(splitterState)) {
             let adjustedNewCoord = this.adjustNewCoord(splitterIndex, splitterState, prevIndexes, nextIndexes, newCoord);
-            this.resizeChildren(splitterIndex, splitterState, prevIndexes, nextIndexes, adjustedNewCoord);
+            if (splitterState.liveUpdate) {
+                this.resizePanels(splitterIndex, splitterState, prevIndexes, nextIndexes, adjustedNewCoord);
+            }
+            this.resizeSplitter(splitterIndex, splitterState, adjustedNewCoord);
         }
     }
 
-    handleSplitterResizeEnd: (splitterIndex: number, prevIndexes: Array<number>, nextIndexes: Array<number>) => void =
-        (splitterIndex, prevIndexes, nextIndexes) => {
-        return;
+    handleSplitterResizeEnd: (splitterIndex: number, prevIndexes: Array<number>, nextIndexes: Array<number>, newCoord: number) => void =
+        (splitterIndex, prevIndexes, nextIndexes, newCoord) => {
+
+        let states = this.state.childrenStates;
+        let splitterState = cloneLayoutChildState(states.get(splitterIndex));
+
+        if (isSplitter(splitterState)) {
+            let adjustedNewCoord = this.adjustNewCoord(splitterIndex, splitterState, prevIndexes, nextIndexes, newCoord);
+            this.resizePanels(splitterIndex, splitterState, prevIndexes, nextIndexes, adjustedNewCoord);
+            this.resizeSplitter(splitterIndex, splitterState, adjustedNewCoord);
+        }
     }
 
-    resizeChildren(splitterIndex: number, splitterState: LayoutSplitterChildState, prevIndexes: Array<number>, nextIndexes: Array<number>,
+    resizeSplitter(splitterIndex: number, splitterState: LayoutSplitterChildState, newCoord: number): void {
+
+        let states = this.state.childrenStates;
+        let splitterAlign = splitterState.align;
+
+        splitterState[splitterAlign] = newCoord;
+        states = states.set(splitterIndex, splitterState);
+        this.setState({childrenStates: states});
+    }
+
+    resizePanels(splitterIndex: number, splitterState: LayoutSplitterChildState, prevIndexes: Array<number>, nextIndexes: Array<number>,
         newCoord: number): void {
 
         let states = this.state.childrenStates;
@@ -101,8 +123,6 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                 states = states.set(value, panelState);
             }
         });
-        splitterState[splitterAlign] = newCoord;
-        states = states.set(splitterIndex, splitterState);
         this.setState({childrenStates: states});
     }
 
@@ -280,7 +300,7 @@ type Coords = {
     top?: number;
 };
 
-function calculateSplitterState(newCoords: Coords): LayoutSplitterChildState | undefined {
+function calculateSplitterState(newCoords: Coords, splitterProps: LayoutSplitterProps): LayoutSplitterChildState | undefined {
     if (newCoords.align === undefined) {
         return undefined;
     } else {
@@ -288,6 +308,7 @@ function calculateSplitterState(newCoords: Coords): LayoutSplitterChildState | u
             align: newCoords.align,
             bottom: newCoords.align === 'top' ? undefined : newCoords.bottom,
             left: newCoords.align === 'right' ? undefined : newCoords.left,
+            liveUpdate: splitterProps.liveUpdate,
             right: newCoords.align === 'left' ? undefined : newCoords.right,
             top: newCoords.align === 'bottom' ? undefined : newCoords.top,
             type: 'splitter'
@@ -327,7 +348,7 @@ function calculateChildState(child: React.ReactChild, newCoords: Coords): Layout
     } else if (child.type === LayoutPanel ) {
         return calculatePanelState(newCoords, child.props as LayoutPanelProps);
     } else if (child.type === LayoutSplitter) {
-        return calculateSplitterState(newCoords);
+        return calculateSplitterState(newCoords, child.props as LayoutSplitterProps);
     } else {
         return undefined;
     }

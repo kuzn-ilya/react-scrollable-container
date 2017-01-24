@@ -5,9 +5,11 @@ import { ValidationMap } from '../../../react';
 export interface LayoutSplitterProps {
     readonly onResizing?: (newCoord: number) => void;
     readonly onResizeEnd?: () => void;
+    readonly liveUpdate?: boolean;
 }
 
 export const layoutSplitterPropTypes: ValidationMap<LayoutSplitterProps> = {
+    liveUpdate: PropTypes.bool,
     onResizeEnd: PropTypes.func,
     onResizing: PropTypes.func
 };

@@ -1,12 +1,13 @@
 import * as React from 'react';
 
 import { LayoutSplitterProps, layoutSplitterPropTypes } from  './LayoutSplitterProps';
-import { MouseCapture } from  '../../../utils';
+import { LayoutSplitterState } from  './LayoutSplitterState';
+import { classNames, MouseCapture } from  '../../../utils';
 
 import '../../../styles/layout-splitter.css';
 
 export namespace Internal {
-    export class LayoutSplitter extends React.PureComponent<LayoutSplitterProps, {}> {
+    export class LayoutSplitter extends React.PureComponent<LayoutSplitterProps, LayoutSplitterState> {
         static propTypes = layoutSplitterPropTypes;
 
         constructor(props?: LayoutSplitterProps) {
@@ -14,6 +15,9 @@ export namespace Internal {
             this.handleMouseDown = this.handleMouseDown.bind(this);
             this.handleWindowMouseMove = this.handleWindowMouseMove.bind(this);
             this.handleReleaseMouseCapture = this.handleReleaseMouseCapture.bind(this);
+            this.state = {
+                isActive: false
+            };
         }
 
         startCoord: number = 0;
@@ -24,6 +28,9 @@ export namespace Internal {
             let pageCoord = isVertical(this.props.align) ? e.pageY : e.pageX;
             // tslint:disable-next-line:no-use-before-declare
             this.startCoord = MULTIPLIER[this.props.align] * pageCoord - this.props[this.props.align];
+            this.setState({
+                isActive: true
+            });
         }
 
         handleWindowMouseMove: (e: MouseEvent) => void = (e) => {
@@ -41,11 +48,18 @@ export namespace Internal {
                 if (this.props.onResizeEnd) {
                     this.props.onResizeEnd();
                 }
+                this.setState({
+                    isActive: false
+                });
             }
         }
 
-        getClassName(): string {
-            return isVertical(this.props.align) ? 'layout-vert-splitter' : 'layout-horz-splitter';
+        getClassName(): string | undefined {
+            return classNames({
+                'layout-vert-splitter': isVertical(this.props.align),
+                'layout-horz-splitter': !isVertical(this.props.align),
+                'layout-splitter-active': this.state.isActive
+            });
         }
 
         getStyle(): React.CSSProperties {

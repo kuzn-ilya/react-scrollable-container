@@ -6,6 +6,10 @@
   background-color: gray;
 }
 
+.layout-splitter-active {
+  background-color: gray;
+}
+
 .layout-vert-splitter {
   height: 6px;
   cursor: row-resize;

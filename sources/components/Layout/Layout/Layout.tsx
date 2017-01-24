@@ -69,7 +69,7 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
             if (splitterState.liveUpdate) {
                 this.resizePanels(splitterIndex, splitterState, prevIndexes, nextIndexes, adjustedNewCoord);
             }
-            this.resizeSplitter(splitterIndex, splitterState, adjustedNewCoord);
+            this.resizeSplitter(splitterIndex, splitterState, adjustedNewCoord, adjustedNewCoord !== newCoord);
         }
     }
 
@@ -82,18 +82,22 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
         if (isSplitter(splitterState)) {
             let adjustedNewCoord = this.adjustNewCoord(splitterIndex, splitterState, prevIndexes, nextIndexes, newCoord);
             this.resizePanels(splitterIndex, splitterState, prevIndexes, nextIndexes, adjustedNewCoord);
-            this.resizeSplitter(splitterIndex, splitterState, adjustedNewCoord);
+            this.resizeSplitter(splitterIndex, splitterState, adjustedNewCoord, adjustedNewCoord !== newCoord);
         }
     }
 
-    resizeSplitter(splitterIndex: number, splitterState: LayoutSplitterChildState, newCoord: number): void {
+    resizeSplitter(splitterIndex: number, splitterState: LayoutSplitterChildState, newCoord: number, showNoDropCursor: boolean): void {
 
         let states = this.state.childrenStates;
         let splitterAlign = splitterState.align;
 
         splitterState[splitterAlign] = newCoord;
         states = states.set(splitterIndex, splitterState);
-        this.setState({childrenStates: states});
+        // TODO: it doesn't react whenever showNoDropCursor is ture
+        this.setState({
+            childrenStates: states,
+            showNoDropCursor
+        });
     }
 
     resizePanels(splitterIndex: number, splitterState: LayoutSplitterChildState, prevIndexes: Array<number>, nextIndexes: Array<number>,

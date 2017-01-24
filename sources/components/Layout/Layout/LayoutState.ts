@@ -32,6 +32,7 @@ export type LayoutChildState = LayoutPanelChildState | LayoutSplitterChildState 
 
 export interface LayoutState {
     childrenStates: List<LayoutChildState>;
+    showNoDropCursor?: boolean;
 }
 
 export function isSplitter(item: LayoutChildState): item is LayoutSplitterChildState {

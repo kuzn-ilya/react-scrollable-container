@@ -10,6 +10,8 @@ export interface LayoutPanelChildState {
     right?: number;
     height?: number;
     width?: number;
+    minWidth?: number;
+    minHeight?: number;
 }
 
 export interface LayoutSplitterChildState {

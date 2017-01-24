@@ -69,46 +69,85 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
     handleSplitterResizing: (splitterIndex: number, prevIndexes: Array<number>, nextIndexes: Array<number>, newCoord: number) => void =
         (splitterIndex, prevIndexes, nextIndexes, newCoord) => {
 
-        function clone(state: LayoutChildState): LayoutChildState {
-            let result = { ...state };
-            return result;
-        }
-
         let states = this.state.childrenStates;
-        let splitterState = clone(states.get(splitterIndex));
+        let splitterState = cloneLayoutChildState(states.get(splitterIndex));
         if (splitterState && splitterState.type === 'splitter') {
-            let splitterAlign = splitterState.align;
-
-            prevIndexes.forEach((value) => {
-                let panelState = clone(states.get(value));
-                if (panelState && panelState.type === 'panel') {
-                    // TODO: Asserting: prev for splitter must be a panel and have the same align
-                    panelState[getMeasurementByAlign(splitterAlign)] = newCoord - panelState[splitterAlign];
-                    states = states.set(value, panelState);
-                }
-            });
-
-            nextIndexes.forEach((value) => {
-                let panelState = clone(states.get(value));
-                if (panelState) {
-                    if (panelState.type === 'panel' && panelState.align !== getOppositeAlign(splitterAlign)
-                        && panelState.align === splitterAlign) {
-                        panelState[getMeasurementByAlign(splitterAlign)] =
-                            panelState[getMeasurementByAlign(splitterAlign)] - newCoord + panelState[splitterAlign];
-                    }
-                    panelState[splitterAlign] = newCoord;
-                    states = states.set(value, panelState);
-                }
-            });
-            splitterState[splitterAlign] = newCoord;
-            states = states.set(splitterIndex, splitterState);
+            let adjustedNewCoord = this.adjustNewCoord(splitterIndex, splitterState, prevIndexes, nextIndexes, newCoord);
+            this.resizeChildren(splitterIndex, splitterState, prevIndexes, nextIndexes, adjustedNewCoord);
         }
-        this.setState({childrenStates: states});
     }
 
     handleSplitterResizeEnd: (splitterIndex: number, prevIndexes: Array<number>, nextIndexes: Array<number>) => void =
         (splitterIndex, prevIndexes, nextIndexes) => {
         return;
+    }
+
+    resizeChildren(splitterIndex: number, splitterState: LayoutSplitterChildState, prevIndexes: Array<number>, nextIndexes: Array<number>,
+        newCoord: number): void {
+
+        let states = this.state.childrenStates;
+        let splitterAlign = splitterState.align;
+
+        prevIndexes.forEach((value) => {
+            let panelState = cloneLayoutChildState(states.get(value));
+            if (panelState && panelState.type === 'panel') {
+                // TODO: Asserting: prev for splitter must be a panel and have the same align
+                panelState[getMeasurementByAlign(splitterAlign)] = newCoord - panelState[splitterAlign];
+                states = states.set(value, panelState);
+            }
+        });
+
+        nextIndexes.forEach((value) => {
+            let panelState = cloneLayoutChildState(states.get(value));
+            if (panelState) {
+                if (panelState.type === 'panel' && panelState.align !== getOppositeAlign(splitterAlign)
+                    && panelState.align === splitterAlign) {
+                    panelState[getMeasurementByAlign(splitterAlign)] =
+                        panelState[getMeasurementByAlign(splitterAlign)] - newCoord + panelState[splitterAlign];
+                }
+                panelState[splitterAlign] = newCoord;
+                states = states.set(value, panelState);
+            }
+        });
+        splitterState[splitterAlign] = newCoord;
+        states = states.set(splitterIndex, splitterState);
+        this.setState({childrenStates: states});
+    }
+
+    adjustNewCoord(splitterIndex: number, splitterState: LayoutSplitterChildState, prevIndexes: Array<number>, nextIndexes: Array<number>,
+        newCoord: number): number {
+
+        let states = this.state.childrenStates;
+        let splitterAlign = splitterState.align;
+        let result = newCoord;
+
+        prevIndexes.forEach((value) => {
+            let panelState = cloneLayoutChildState(states.get(value));
+            if (panelState && panelState.type === 'panel') {
+                let minMeasurement = panelState[getMinMeasurementByAlign(splitterAlign)];
+                let newMeasurement = result - panelState[splitterAlign];
+                if (minMeasurement > newMeasurement) {
+                    result = minMeasurement + panelState[splitterAlign];
+                }
+            }
+        });
+
+        nextIndexes.forEach((value) => {
+            let panelState = cloneLayoutChildState(states.get(value));
+            if (panelState) {
+                if (panelState.type === 'panel' && panelState.align !== getOppositeAlign(splitterAlign)
+                    && panelState.align === splitterAlign) {
+
+                    let minMeasurement = panelState[getMinMeasurementByAlign(splitterAlign)];
+                    let newMeasurement = panelState[getMeasurementByAlign(splitterAlign)] - result + panelState[splitterAlign];
+                    if (minMeasurement > newMeasurement) {
+                        result = panelState[getMeasurementByAlign(splitterAlign)] + panelState[splitterAlign] - newMeasurement;
+                    }
+                }
+            }
+        });
+
+        return result;
     }
 
     componentWillReceiveProps(nextProps: { children?: React.ReactNode }): void {
@@ -220,6 +259,19 @@ function getMeasurementByAlign(align: Edge): 'height' | 'width' {
     }
 }
 
+function getMinMeasurementByAlign(align: Edge): 'minHeight' | 'minWidth' {
+    switch (align) {
+        case 'left':
+        case 'right':
+            return 'minWidth';
+        case 'bottom':
+        case 'top':
+            return 'minHeight';
+        default:
+            throw new Error('Unexpected error');
+    }
+}
+
 function isHorizontal(align: Edge): boolean {
     return align === 'left' || align === 'right';
 }
@@ -259,6 +311,8 @@ function calculatePanelState(newCoords: Coords, panelProps: LayoutPanelProps): L
         bottom: align !== 'top' ? newCoords.bottom : undefined,
         height: panelProps.height,
         left: align !== 'right' ? newCoords.left : undefined,
+        minHeight: panelProps.minHeight,
+        minWidth: panelProps.minWidth,
         right: align !== 'left' ? newCoords.right : undefined,
         top: align !== 'bottom' ? newCoords.top : undefined,
         type: 'panel',
@@ -283,4 +337,9 @@ function calculateChildState(child: React.ReactChild, newCoords: Coords): Layout
     } else {
         return undefined;
     }
+}
+
+function cloneLayoutChildState(state: LayoutChildState): LayoutChildState {
+    let result = { ...state };
+    return result;
 }

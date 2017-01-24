@@ -7,10 +7,12 @@ import { ExamplesPage } from './ExamplesPage';
 import { Example } from './Example';
 import { GridExample } from './../GridExample/GridExample';
 import { LayoutExample } from './../LayoutExample/LayoutExample';
+import { ScrollBarExample } from './../ScrollBarExample/ScrollBarExample';
 
 let examples: Example[] = [
     { componentClass: GridExample, name: 'Grid' },
-    { componentClass: LayoutExample, name: 'Layout' }
+    { componentClass: LayoutExample, name: 'Layout' },
+    { componentClass: ScrollBarExample, name: 'ScrollBar' }
 ];
 
 // ReactDOM.render(<GridExample />, document.getElementById('app'));

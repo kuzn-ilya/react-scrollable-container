@@ -146,7 +146,6 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                     let minMeasurement = panelState[getMinMeasurementByAlign(splitterAlign)];
                     let maxMeasurement = panelState[getMaxMeasurementByAlign(splitterAlign)];
                     let newMeasurement = panelState[getMeasurementByAlign(splitterAlign)] - result + panelState[splitterAlign];
-                    console.log('[', minMeasurement, ', ', maxMeasurement, ']', newMeasurement);
                     if (minMeasurement > newMeasurement) {
                         result = panelState[getMeasurementByAlign(splitterAlign)] + panelState[splitterAlign] - minMeasurement;
                         newMeasurement = minMeasurement!;

@@ -10,6 +10,8 @@ export interface LayoutPanelChildState {
     right?: number;
     height?: number;
     width?: number;
+    maxWidth?: number;
+    maxHeight?: number;
     minWidth?: number;
     minHeight?: number;
 }

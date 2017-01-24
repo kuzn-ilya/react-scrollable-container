@@ -122,26 +122,37 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
         let result = newCoord;
 
         prevIndexes.forEach((value) => {
-            let panelState = cloneLayoutChildState(states.get(value));
+            let panelState = states.get(value);
             if (panelState && panelState.type === 'panel') {
                 let minMeasurement = panelState[getMinMeasurementByAlign(splitterAlign)];
+                let maxMeasurement = panelState[getMaxMeasurementByAlign(splitterAlign)];
                 let newMeasurement = result - panelState[splitterAlign];
                 if (minMeasurement > newMeasurement) {
                     result = minMeasurement + panelState[splitterAlign];
+                    newMeasurement = minMeasurement!;
+                }
+                if (maxMeasurement < newMeasurement) {
+                    result = maxMeasurement + panelState[splitterAlign];
                 }
             }
         });
 
         nextIndexes.forEach((value) => {
-            let panelState = cloneLayoutChildState(states.get(value));
+            let panelState = states.get(value);
             if (panelState) {
                 if (panelState.type === 'panel' && panelState.align !== getOppositeAlign(splitterAlign)
                     && panelState.align === splitterAlign) {
 
                     let minMeasurement = panelState[getMinMeasurementByAlign(splitterAlign)];
+                    let maxMeasurement = panelState[getMaxMeasurementByAlign(splitterAlign)];
                     let newMeasurement = panelState[getMeasurementByAlign(splitterAlign)] - result + panelState[splitterAlign];
+                    console.log('[', minMeasurement, ', ', maxMeasurement, ']', newMeasurement);
                     if (minMeasurement > newMeasurement) {
-                        result = panelState[getMeasurementByAlign(splitterAlign)] + panelState[splitterAlign] - newMeasurement;
+                        result = panelState[getMeasurementByAlign(splitterAlign)] + panelState[splitterAlign] - minMeasurement;
+                        newMeasurement = minMeasurement!;
+                    }
+                    if (maxMeasurement < newMeasurement) {
+                        result = panelState[getMeasurementByAlign(splitterAlign)] + panelState[splitterAlign] - maxMeasurement;
                     }
                 }
             }
@@ -272,6 +283,19 @@ function getMinMeasurementByAlign(align: Edge): 'minHeight' | 'minWidth' {
     }
 }
 
+function getMaxMeasurementByAlign(align: Edge): 'maxHeight' | 'maxWidth' {
+    switch (align) {
+        case 'left':
+        case 'right':
+            return 'maxWidth';
+        case 'bottom':
+        case 'top':
+            return 'maxHeight';
+        default:
+            throw new Error('Unexpected error');
+    }
+}
+
 function isHorizontal(align: Edge): boolean {
     return align === 'left' || align === 'right';
 }
@@ -311,6 +335,8 @@ function calculatePanelState(newCoords: Coords, panelProps: LayoutPanelProps): L
         bottom: align !== 'top' ? newCoords.bottom : undefined,
         height: panelProps.height,
         left: align !== 'right' ? newCoords.left : undefined,
+        maxHeight: panelProps.maxHeight,
+        maxWidth: panelProps.maxWidth,
         minHeight: panelProps.minHeight,
         minWidth: panelProps.minWidth,
         right: align !== 'left' ? newCoords.right : undefined,

@@ -5,6 +5,8 @@ import { Align, alignPropType } from '../../../utils';
 export interface LayoutPanelProps {
     readonly align: Align;
     readonly height?: number;
+    readonly maxHeight?: number;
+    readonly maxWidth?: number;
     readonly minHeight?: number;
     readonly minWidth?: number;
     readonly showBottomShadow?: boolean;
@@ -15,6 +17,8 @@ export interface LayoutPanelProps {
 export const layoutPanelPropTypes: ValidationMap<LayoutPanelProps> = {
     align: alignPropType.isRequired,
     height: PropTypes.number,
+    maxHeight: PropTypes.number,
+    maxWidth: PropTypes.number,
     minHeight: PropTypes.number,
     minWidth: PropTypes.number,
     showBottomShadow: PropTypes.bool,

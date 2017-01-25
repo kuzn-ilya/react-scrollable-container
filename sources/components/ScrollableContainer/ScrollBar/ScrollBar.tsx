@@ -3,7 +3,7 @@ import { ScrollBarProps } from './ScrollBarProps';
 
 export class ScrollBar extends React.PureComponent<ScrollBarProps, {}> {
 
-    render() {
+    render(): JSX.Element {
         return (
             <div>
             </div>

@@ -23,8 +23,8 @@ export interface LayoutSplitterChildState {
     top?: number;
     left?: number;
     right?: number;
-    onResizing?: (newCoord: number) => void;
-    onResizeEnd?: () => void;
+    onResizing?: (newPosition: number) => void;
+    onResizeEnd?: (newPosition: number) => void;
     liveUpdate?: boolean;
 }
 

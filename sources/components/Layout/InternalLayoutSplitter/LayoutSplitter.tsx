@@ -20,14 +20,14 @@ export namespace Internal {
             };
         }
 
-        startCoord: number = 0;
+        startPosition: number = 0;
         mouseCapture?: MouseCapture = undefined;
 
         handleMouseDown: React.EventHandler<React.MouseEvent<HTMLDivElement>> = (e) => {
             this.mouseCapture = MouseCapture.captureMouseEvents(e.nativeEvent, this.handleWindowMouseMove, this.handleReleaseMouseCapture);
-            let pageCoord = isVertical(this.props.align) ? e.pageY : e.pageX;
+            let pagePosition = isVertical(this.props.align) ? e.pageY : e.pageX;
             // tslint:disable-next-line:no-use-before-declare
-            this.startCoord = MULTIPLIER[this.props.align] * pageCoord - this.props[this.props.align];
+            this.startPosition = MULTIPLIER[this.props.align] * pagePosition - this.props[this.props.align];
             this.setState({
                 isActive: true
             });
@@ -35,8 +35,8 @@ export namespace Internal {
 
         handleWindowMouseMove: (e: MouseEvent) => void = (e) => {
             if (this.props.onResizing) {
-                let newCoord = this.calcNewCoord(e);
-                this.props.onResizing(newCoord);
+                let newPosition = this.calcNewPosition(e);
+                this.props.onResizing(newPosition);
             }
         }
 
@@ -44,8 +44,8 @@ export namespace Internal {
             if (this.mouseCapture) {
                 this.mouseCapture = undefined;
                 if (this.props.onResizeEnd) {
-                    let newCoord = this.calcNewCoord(e);
-                    this.props.onResizeEnd(newCoord);
+                    let newPosition = this.calcNewPosition(e);
+                    this.props.onResizeEnd(newPosition);
                 }
                 this.setState({
                     isActive: false
@@ -53,10 +53,10 @@ export namespace Internal {
             }
         }
 
-        calcNewCoord(e: MouseEvent): number {
-            let pageCoord = isVertical(this.props.align) ? e.pageY : e.pageX;
+        calcNewPosition(e: MouseEvent): number {
+            let pagePosition = isVertical(this.props.align) ? e.pageY : e.pageX;
             // tslint:disable-next-line:no-use-before-declare
-            return MULTIPLIER[this.props.align] * pageCoord - this.startCoord;
+            return MULTIPLIER[this.props.align] * pagePosition - this.startPosition;
         }
 
         getClassName(): string | undefined {

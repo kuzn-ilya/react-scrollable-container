@@ -24,6 +24,10 @@ export namespace Internal {
         mouseCapture?: MouseCapture = undefined;
 
         handleMouseDown: React.EventHandler<React.MouseEvent<HTMLDivElement>> = (e) => {
+            if (e.button !== 0) {
+                return;
+            }
+
             this.mouseCapture = MouseCapture.captureMouseEvents(e.nativeEvent, this.handleWindowMouseMove, this.handleReleaseMouseCapture);
             let pagePosition = isVertical(this.props.align) ? e.pageY : e.pageX;
             // tslint:disable-next-line:no-use-before-declare

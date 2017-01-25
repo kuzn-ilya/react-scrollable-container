@@ -26,7 +26,7 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
     }
 
     calculateState(props: { children?: React.ReactNode }): LayoutState {
-        let newCoords: Coords = {
+        let newPositions: Positions = {
             align: undefined,
             bottom: 0,
             left: 0,
@@ -35,7 +35,7 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
         };
 
         let childrenStates: LayoutChildState[] = React.Children.map(props.children, (child) =>
-            calculateChildState(child, newCoords)
+            calculateChildState(child, newPositions)
         );
 
         childrenStates.forEach((state, index) => {
@@ -58,40 +58,40 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
         };
     }
 
-    handleSplitterResizing: (splitterIndex: number, prevIndexes: Array<number>, nextIndexes: Array<number>, newCoord: number) => void =
-        (splitterIndex, prevIndexes, nextIndexes, newCoord) => {
+    handleSplitterResizing: (splitterIndex: number, prevIndexes: Array<number>, nextIndexes: Array<number>, newPosition: number) => void =
+        (splitterIndex, prevIndexes, nextIndexes, newPosition) => {
 
         let states = this.state.childrenStates;
         let splitterState = cloneLayoutChildState(states.get(splitterIndex));
 
         if (isSplitter(splitterState)) {
-            let adjustedNewCoord = this.adjustNewCoord(splitterIndex, splitterState, prevIndexes, nextIndexes, newCoord);
+            let adjustedNewPosition = this.adjustNewPosition(splitterIndex, splitterState, prevIndexes, nextIndexes, newPosition);
             if (splitterState.liveUpdate) {
-                this.resizePanels(splitterIndex, splitterState, prevIndexes, nextIndexes, adjustedNewCoord);
+                this.resizePanels(splitterIndex, splitterState, prevIndexes, nextIndexes, adjustedNewPosition);
             }
-            this.resizeSplitter(splitterIndex, splitterState, adjustedNewCoord, adjustedNewCoord !== newCoord);
+            this.resizeSplitter(splitterIndex, splitterState, adjustedNewPosition, adjustedNewPosition !== newPosition);
         }
     }
 
-    handleSplitterResizeEnd: (splitterIndex: number, prevIndexes: Array<number>, nextIndexes: Array<number>, newCoord: number) => void =
-        (splitterIndex, prevIndexes, nextIndexes, newCoord) => {
+    handleSplitterResizeEnd: (splitterIndex: number, prevIndexes: Array<number>, nextIndexes: Array<number>, newPosition: number) => void =
+        (splitterIndex, prevIndexes, nextIndexes, newPosition) => {
 
         let states = this.state.childrenStates;
         let splitterState = cloneLayoutChildState(states.get(splitterIndex));
 
         if (isSplitter(splitterState)) {
-            let adjustedNewCoord = this.adjustNewCoord(splitterIndex, splitterState, prevIndexes, nextIndexes, newCoord);
-            this.resizePanels(splitterIndex, splitterState, prevIndexes, nextIndexes, adjustedNewCoord);
-            this.resizeSplitter(splitterIndex, splitterState, adjustedNewCoord, adjustedNewCoord !== newCoord);
+            let adjustedNewPosition = this.adjustNewPosition(splitterIndex, splitterState, prevIndexes, nextIndexes, newPosition);
+            this.resizePanels(splitterIndex, splitterState, prevIndexes, nextIndexes, adjustedNewPosition);
+            this.resizeSplitter(splitterIndex, splitterState, adjustedNewPosition, adjustedNewPosition !== newPosition);
         }
     }
 
-    resizeSplitter(splitterIndex: number, splitterState: LayoutSplitterChildState, newCoord: number, showNoDropCursor: boolean): void {
+    resizeSplitter(splitterIndex: number, splitterState: LayoutSplitterChildState, newPosition: number, showNoDropCursor: boolean): void {
 
         let states = this.state.childrenStates;
         let splitterAlign = splitterState.align;
 
-        splitterState[splitterAlign] = newCoord;
+        splitterState[splitterAlign] = newPosition;
         states = states.set(splitterIndex, splitterState);
         // TODO: it doesn't react whenever showNoDropCursor is ture
         this.setState({
@@ -101,7 +101,7 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
     }
 
     resizePanels(splitterIndex: number, splitterState: LayoutSplitterChildState, prevIndexes: Array<number>, nextIndexes: Array<number>,
-        newCoord: number): void {
+        newPosition: number): void {
 
         let states = this.state.childrenStates;
         let splitterAlign = splitterState.align;
@@ -110,7 +110,7 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
             let panelState = cloneLayoutChildState(states.get(value));
             if (isPanel(panelState)) {
                 // TODO: Asserting: prev for splitter must be a panel and have the same align
-                panelState[getMeasurementByAlign(splitterAlign)] = newCoord - panelState[splitterAlign];
+                panelState[getMeasurementByAlign(splitterAlign)] = newPosition - panelState[splitterAlign];
                 states = states.set(value, panelState);
             }
         });
@@ -121,21 +121,21 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                 if (isPanel(panelState) && panelState.align !== getOppositeEdge(splitterAlign)
                     && panelState.align === splitterAlign) {
                     panelState[getMeasurementByAlign(splitterAlign)] =
-                        panelState[getMeasurementByAlign(splitterAlign)] - newCoord + panelState[splitterAlign];
+                        panelState[getMeasurementByAlign(splitterAlign)] - newPosition + panelState[splitterAlign];
                 }
-                panelState[splitterAlign] = newCoord;
+                panelState[splitterAlign] = newPosition;
                 states = states.set(value, panelState);
             }
         });
         this.setState({childrenStates: states});
     }
 
-    adjustNewCoord(splitterIndex: number, splitterState: LayoutSplitterChildState, prevIndexes: Array<number>, nextIndexes: Array<number>,
-        newCoord: number): number {
+    adjustNewPosition(splitterIndex: number, splitterState: LayoutSplitterChildState, prevIndexes: Array<number>,
+        nextIndexes: Array<number>, newPosition: number): number {
 
         let states = this.state.childrenStates;
         let splitterAlign = splitterState.align;
-        let result = newCoord;
+        let result = newPosition;
 
         prevIndexes.forEach((value) => {
             let panelState = states.get(value);
@@ -186,7 +186,7 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
             if (childState) {
                 switch (childState.type) {
                     case 'panel':
-                        let panelProps = (child as React.ReactElement<LayoutPanelProps & {children?: React.ReactChildren}>).props;
+                        let panelProps = (child as React.ReactElement<LayoutPanelProps>).props;
                         return (
                             <Internal.LayoutPanel
                                 key={index}
@@ -296,7 +296,7 @@ function getMaxMeasurementByAlign(align: Edge): 'maxHeight' | 'maxWidth' {
     }
 }
 
-type Coords = {
+type Positions = {
     align?: Edge;
     bottom?: number;
     left?: number;
@@ -304,55 +304,55 @@ type Coords = {
     top?: number;
 };
 
-function calculateSplitterState(newCoords: Coords, splitterProps: LayoutSplitterProps): LayoutSplitterChildState | undefined {
-    if (newCoords.align === undefined) {
+function calculateSplitterState(newPositions: Positions, splitterProps: LayoutSplitterProps): LayoutSplitterChildState | undefined {
+    if (newPositions.align === undefined) {
         return undefined;
     } else {
         return {
-            align: newCoords.align,
-            bottom: newCoords.align === 'top' ? undefined : newCoords.bottom,
-            left: newCoords.align === 'right' ? undefined : newCoords.left,
+            align: newPositions.align,
+            bottom: newPositions.align === 'top' ? undefined : newPositions.bottom,
+            left: newPositions.align === 'right' ? undefined : newPositions.left,
             liveUpdate: splitterProps.liveUpdate,
-            right: newCoords.align === 'left' ? undefined : newCoords.right,
-            top: newCoords.align === 'bottom' ? undefined : newCoords.top,
+            right: newPositions.align === 'left' ? undefined : newPositions.right,
+            top: newPositions.align === 'bottom' ? undefined : newPositions.top,
             type: 'splitter'
         };
     }
 }
 
-function calculatePanelState(newCoords: Coords, panelProps: LayoutPanelProps): LayoutPanelChildState | undefined {
+function calculatePanelState(newPositions: Positions, panelProps: LayoutPanelProps): LayoutPanelChildState | undefined {
     let align = panelProps.align;
 
     let state: LayoutPanelChildState = {
         align,
-        bottom: align !== 'top' ? newCoords.bottom : undefined,
+        bottom: align !== 'top' ? newPositions.bottom : undefined,
         height: panelProps.height,
-        left: align !== 'right' ? newCoords.left : undefined,
+        left: align !== 'right' ? newPositions.left : undefined,
         maxHeight: panelProps.maxHeight,
         maxWidth: panelProps.maxWidth,
         minHeight: panelProps.minHeight,
         minWidth: panelProps.minWidth,
-        right: align !== 'left' ? newCoords.right : undefined,
-        top: align !== 'bottom' ? newCoords.top : undefined,
+        right: align !== 'left' ? newPositions.right : undefined,
+        top: align !== 'bottom' ? newPositions.top : undefined,
         type: 'panel',
         width: panelProps.width
     };
 
-    newCoords.align = align === 'client' ? undefined : align;
+    newPositions.align = align === 'client' ? undefined : align;
     if (align !== 'client') {
-        newCoords[align] += panelProps[getMeasurementByAlign(align)];
+        newPositions[align] += panelProps[getMeasurementByAlign(align)];
     }
 
     return state;
 }
 
-function calculateChildState(child: React.ReactChild, newCoords: Coords): LayoutChildState {
+function calculateChildState(child: React.ReactChild, newPositions: Positions): LayoutChildState {
     if (typeof child === 'string' || typeof child === 'number') {
         return undefined;
     } else if (child.type === LayoutPanel ) {
-        return calculatePanelState(newCoords, child.props as LayoutPanelProps);
+        return calculatePanelState(newPositions, child.props as LayoutPanelProps);
     } else if (child.type === LayoutSplitter) {
-        return calculateSplitterState(newCoords, child.props as LayoutSplitterProps);
+        return calculateSplitterState(newPositions, child.props as LayoutSplitterProps);
     } else {
         return undefined;
     }

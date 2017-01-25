@@ -23,7 +23,11 @@
             "node"
         ],
         "noUnusedLocals": true,
-        "noFallthroughCasesInSwitch": true
+        "noFallthroughCasesInSwitch": true,
+        "typeRoots": [
+            "./node_modules/@types",
+            "./types/fbjs"
+        ]
     },
     "exclude": [
         "node_modules"

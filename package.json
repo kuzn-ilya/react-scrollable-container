@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/kuzn-ilya/react-scrollable-container.git#readme",
   "dependencies": {
+    "fbjs": "^0.8.8",
     "immutable": "^3.8.1",
     "react": "^15.4.0",
     "react-dom": "^15.4.0"

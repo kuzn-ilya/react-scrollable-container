@@ -1,25 +1,15 @@
+import * as EventListener from 'fbjs/lib/EventListener';
+
 export class WindowEvents {
-    static addResizeEventListener(handler: () => void): void {
-        window.addEventListener('resize', handler);
+    static listenToResize(handler: () => void): () => void {
+        return EventListener.listen(window, 'resize', handler).remove;
     }
 
-    static removeResizeEventListener(handler: () => void): void {
-        window.removeEventListener('resize', handler);
+    static captureMouseMove(handler: (e: MouseEvent) => void): () => void {
+        return EventListener.capture(window, 'mousemove', handler).remove;
     }
 
-    static addMouseMoveEventListener(handler: (e: MouseEvent) => void, useCapture?: boolean): void {
-        window.addEventListener('mousemove', handler, useCapture);
-    }
-
-    static removeMouseMoveEventListener(handler: (e: MouseEvent) => void, useCapture?: boolean): void {
-        window.removeEventListener('mousemove', handler, useCapture);
-    }
-
-    static addMouseUpEventListener(handler: (e: MouseEvent) => void, useCapture?: boolean): void {
-        window.addEventListener('mouseup', handler, useCapture);
-    }
-
-    static removeMouseUpEventListener(handler: (e: MouseEvent) => void, useCapture?: boolean): void {
-        window.removeEventListener('mouseup', handler, useCapture);
+    static captureMouseUp(handler: (e: MouseEvent) => void): () => void {
+        return EventListener.capture(window, 'mouseup', handler).remove;
     }
 }

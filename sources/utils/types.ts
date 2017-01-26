@@ -1,4 +1,5 @@
 import { PropTypes } from 'react';
+import * as sprintf from 'fbjs/lib/sprintf';
 
 export type Overflow = 'auto' | 'hidden' | 'scroll' | 'visible';
 
@@ -43,7 +44,7 @@ export function getOppositeEdge(align: Edge): Edge {
         case 'top':
             return 'bottom';
         default:
-            throw new Error('Unexpected error');
+            throw new Error(sprintf('Got unexpected "%s"', align));
     }
 }
 

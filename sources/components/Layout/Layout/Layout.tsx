@@ -12,6 +12,8 @@ import { LayoutSplitter } from  '../LayoutSplitter';
 import { LayoutSplitterProps } from '../LayoutSplitter/LayoutSplitterProps';
 import { range, classNames, Edge, getOppositeEdge, isHorizontal } from '../../../utils';
 
+import * as sprintf from 'fbjs/lib/sprintf';
+
 import '../../../styles/layout.css';
 import '../../../styles/common.css';
 
@@ -266,7 +268,7 @@ function getMeasurementByAlign(align: Edge): 'height' | 'width' {
         case 'top':
             return 'height';
         default:
-            throw new Error('Unexpected error');
+            throw new Error(sprintf('Got unexpected "%s"', align));
     }
 }
 
@@ -279,7 +281,7 @@ function getMinMeasurementByAlign(align: Edge): 'minHeight' | 'minWidth' {
         case 'top':
             return 'minHeight';
         default:
-            throw new Error('Unexpected error');
+            throw new Error(sprintf('Got unexpected "%s"', align));
     }
 }
 
@@ -292,7 +294,7 @@ function getMaxMeasurementByAlign(align: Edge): 'maxHeight' | 'maxWidth' {
         case 'top':
             return 'maxHeight';
         default:
-            throw new Error('Unexpected error');
+            throw new Error(sprintf('Got unexpected "%s"', align));
     }
 }
 

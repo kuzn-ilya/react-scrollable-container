@@ -10,8 +10,14 @@ import { Layout, LayoutPanel } from '../../Layout';
 import { RowData } from '../RowData';
 import { classNames } from '../../../utils';
 
+import * as emptyFunction from 'fbjs/lib/emptyFunction';
+
 export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGroupState> {
     static propTypes = columnGroupPropTypes;
+
+    static defaultProps: Partial<ColumnGroupProps> = {
+        onScrollPosChanged: emptyFunction
+    };
 
     constructor(props?: ColumnGroupProps) {
         super(props);
@@ -62,9 +68,7 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
 
     handleScrollPosChanged: (scrollLeft: number, scrollTop: number) => void = (scrollLeft, scrollTop) => {
         this.header.setScrollLeft(scrollLeft);
-        if (this.props.onScrollPosChanged) {
-            this.props.onScrollPosChanged(scrollLeft, scrollTop);
-        }
+        this.props.onScrollPosChanged!(scrollLeft, scrollTop);
     }
 
     render(): JSX.Element | null {

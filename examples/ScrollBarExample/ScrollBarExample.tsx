@@ -14,7 +14,15 @@ export class ScrollBarExample extends React.Component<{}, CompState> {
 
     render(): JSX.Element {
         return (
-            <ScrollBar orientation="horizontal" />
+            <ScrollBar
+                orientation="vertical"
+                minPosition={0}
+                maxPosition={100}
+                pageSize={20}
+                position={2}
+                height="100%"
+                width={17}
+            />
         );
     }
 }

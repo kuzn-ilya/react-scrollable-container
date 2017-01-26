@@ -18,23 +18,23 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, ScrollBarStat
         }
 
         let prevButtonStyle = {
-            position: 'absolute',
+            backgroundColor: 'red',
             display: 'inline-block',
             height: buttonSize,
-            width: buttonSize,
             left: 0,
+            position: 'absolute',
             top: 0,
-            backgroundColor: 'red'
+            width: buttonSize
         };
 
         let nextButtonStyle = {
-            display: 'inline-block',
-            position: 'absolute',
-            height: buttonSize,
-            width: buttonSize,
-            right: 0,
+            backgroundColor: 'red',
             bottom: 0,
-            backgroundColor: 'red'
+            display: 'inline-block',
+            height: buttonSize,
+            position: 'absolute',
+            right: 0,
+            width: buttonSize
         };
 
         let knob = null;
@@ -48,17 +48,17 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, ScrollBarStat
             knob = (
                 <div
                     style={{
+                        backgroundColor: 'white',
                         display: 'inline-block',
-                        position: 'absolute',
                         height: this.props.orientation === 'vertical' ? knobSize : buttonSize,
-                        width: this.props.orientation === 'horizontal' ? knobSize : buttonSize,
                         left: this.props.orientation === 'horizontal' ? knobPos : 0,
+                        position: 'absolute',
                         top: this.props.orientation === 'vertical' ? knobPos : 0,
-                        backgroundColor: 'white'
+                        width: this.props.orientation === 'horizontal' ? knobSize : buttonSize
                     }}
                 >
                 </div>
-            )
+            );
         }
 
         return (
@@ -84,7 +84,7 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, ScrollBarStat
         if (this.ref) {
             this.setState({
                 actualSize: this.props.orientation === 'vertical' ? this.ref.offsetHeight : this.ref.offsetWidth
-            })
+            });
         }
     }
 }

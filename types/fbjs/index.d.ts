@@ -1,11 +1,11 @@
 interface EmptyFunction {
-    (): void;
-    thatReturns<T>(arg: T): () => T;
-    thatReturnsFalse(): false;
-    thatReturnsTrue(): true;
-    thatReturnsNull(): null;
-    thatReturnsThis(): any;
-    thatReturnsArgument<T>(arg: T): () => T;
+    (...args: any[]): void;
+    thatReturns<T>(arg: T): (...args: any[]) => T;
+    thatReturnsFalse(...args: any[]): false;
+    thatReturnsTrue(...args: any[]): true;
+    thatReturnsNull(...args: any[]): null;
+    thatReturnsThis(...args: any[]): any;
+    thatReturnsArgument<T>(arg: T): (...args: any[]) => T;
 }
 
 declare var warning: (condition: boolean, format: string, ...args: any[]) => void;

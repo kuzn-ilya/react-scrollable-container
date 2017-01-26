@@ -11,12 +11,15 @@ export class MouseCapture {
 
         MouseCapture.preventGlobalMouseEvents();
 
-        WindowEvents.addMouseUpEventListener(this.mouseUpListener, true);
-        WindowEvents.addMouseMoveEventListener(this.mouseMoveListener, true);
+        this.removeMouseUpEventListener = WindowEvents.captureMouseUp(this.mouseUpListener);
+        this.removeMouseMoveEventListener = WindowEvents.captureMouseMove(this.mouseMoveListener);
 
         e.preventDefault();
         e.stopPropagation();
     }
+
+    private removeMouseUpEventListener: () => void;
+    private removeMouseMoveEventListener: () => void;
 
     private releaseCaptureHandler?: (e: MouseEvent) => void;
     private mouseMoveHandler?: (e: MouseEvent) => void;
@@ -47,8 +50,8 @@ export class MouseCapture {
     releaseCapture(e: MouseEvent): void {
         MouseCapture.restoreGlobalMouseEvents();
 
-        WindowEvents.removeMouseUpEventListener(this.mouseUpListener, true);
-        WindowEvents.removeMouseMoveEventListener(this.mouseMoveListener, true);
+        this.removeMouseUpEventListener();
+        this.removeMouseMoveEventListener();
 
         if (this.releaseCaptureHandler) {
             this.releaseCaptureHandler(e);

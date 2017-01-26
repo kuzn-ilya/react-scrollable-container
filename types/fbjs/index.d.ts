@@ -74,3 +74,40 @@ declare module "fbjs/lib/sprintf" {
     var sprintf: (format: string, ...args: any[]) => string;
     export = sprintf;
 }
+
+declare module "fbjs/lib/EventListener" {
+    interface RemoveListener {
+        remove: () => void;
+    }
+
+    interface EventListener  {
+        /**
+         * Listen to DOM events during the bubble phase.
+         *
+         * @param {DOMEventTarget} target DOM element to register listener on.
+         * @param {string} eventType Event type, e.g. 'click' or 'mouseover'.
+         * @param {function} callback Callback function.
+         * @return {object} Object with a `remove` method.
+         */
+        listen: (target: EventTarget, eventType: string, callback: EventListenerOrEventListenerObject) => RemoveListener;
+
+        /**
+         * Listen to DOM events during the capture phase.
+         *
+         * @param {DOMEventTarget} target DOM element to register listener on.
+         * @param {string} eventType Event type, e.g. 'click' or 'mouseover'.
+         * @param {function} callback Callback function.
+         * @return {object} Object with a `remove` method.
+         */
+        capture: (target: EventTarget, eventType: string, callback: EventListenerOrEventListenerObject) => RemoveListener;
+
+        registerDefault: () => void;
+    }
+
+    /**
+     * Upstream version of event listener. Does not take into account specific
+     * nature of platform.
+     */
+    var EventListener: EventListener;
+    export = EventListener;
+}

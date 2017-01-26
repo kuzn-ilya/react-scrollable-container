@@ -42,11 +42,13 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
         };
     }
 
+    private removeResizeEventListener: () => void = emptyFunction;
+
     componentDidMount(): void {
         this.measureScrollbars();
         this.updateScrollPositions();
 
-        WindowEvents.addResizeEventListener(this.handleWindowResize);
+        this.removeResizeEventListener = WindowEvents.listenToResize(this.handleWindowResize);
     }
 
     componentDidUpdate(): void {
@@ -54,7 +56,7 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
     }
 
     componentWillUnmount(): void {
-        WindowEvents.removeResizeEventListener(this.handleWindowResize);
+        this.removeResizeEventListener();
     }
 
     private ref: HTMLDivElement;

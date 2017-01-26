@@ -14,7 +14,7 @@ export namespace Internal {
 
         static defaultProps: Partial<LayoutSplitterProps> = {
             onResizeEnd: emptyFunction,
-            onResizing: emptyFunction,
+            onResizing: emptyFunction
         };
 
         constructor(props?: LayoutSplitterProps) {
@@ -105,7 +105,7 @@ export namespace Internal {
                         width: 6
                     };
                 default:
-                    throw new Error('Unexpected error.');
+                    throw new Error('Got unexpected null or undefined');
             }
         }
 

@@ -17,7 +17,7 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
 
     static defaultProps: Partial<ColumnGroupProps> = {
         onScrollPosChanged: emptyFunction
-    }
+    };
 
     constructor(props?: ColumnGroupProps) {
         super(props);

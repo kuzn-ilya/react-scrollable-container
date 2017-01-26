@@ -15,8 +15,6 @@ import { range, classNames, Edge, getOppositeEdge, isHorizontal } from '../../..
 import '../../../styles/layout.css';
 import '../../../styles/common.css';
 
-import * as warning from 'fbjs/lib/warning';
-
 export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
 
     static propTypes = layoutPropTypes;
@@ -183,7 +181,6 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
     }
 
     render(): JSX.Element {
-        warning(false, '<Layout /> is rendering');
         let children: React.ReactNode = React.Children.map(this.props.children, (child, index) => {
             let childState = this.state.childrenStates.get(index);
             if (childState) {

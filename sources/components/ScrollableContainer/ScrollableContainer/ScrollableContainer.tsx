@@ -5,6 +5,8 @@ import { ScrollableContainerProps, scrollableContainerPropTypes } from  './Scrol
 import { ScrollableContainerState } from  './ScrollableContainerState';
 import { ScrollableContent } from '../ScrollableContent';
 
+import * as emptyFunction from 'fbjs/lib/emptyFunction';
+
 import '../../../styles/container.css';
 import '../../../styles/common.css';
 
@@ -16,6 +18,9 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
         contentWidth: '100%',
         height: '100%',
         horzScrollBarReplacerHeight: 0,
+        onHorizontalScrollVisibilityChanged: emptyFunction,
+        onScrollPosChanged: emptyFunction,
+        onVerticalScrollVisibilityChanged: emptyFunction,
         overflowX: 'auto',
         overflowY: 'auto',
         scrollLeft: 0,
@@ -95,11 +100,9 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
         () => this.measureScrollbars();
 
     private handleScroll: (event: React.UIEvent<HTMLDivElement>) => void = (event) => {
-        if (this.props.onScrollPosChanged) {
-            let scrollLeft = (event.target as Element).scrollLeft;
-            let scrollTop = (event.target as Element).scrollTop;
-            this.props.onScrollPosChanged(scrollLeft, scrollTop);
-        }
+        let scrollLeft = (event.target as Element).scrollLeft;
+        let scrollTop = (event.target as Element).scrollTop;
+        this.props.onScrollPosChanged!(scrollLeft, scrollTop);
     }
 
     private updateScrollPositions(): void {
@@ -125,14 +128,12 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
                 newState.horzScrollThumbHeight !== oldState.horzScrollThumbHeight) {
                 this.setState(newState);
 
-                if (this.props.onVerticalScrollVisibilityChanged &&
-                    newState.vertScrollThumbWidth !== oldState.vertScrollThumbWidth) {
-                    this.props.onVerticalScrollVisibilityChanged(newState.vertScrollThumbWidth > 0, newState.vertScrollThumbWidth);
+                if (newState.vertScrollThumbWidth !== oldState.vertScrollThumbWidth) {
+                    this.props.onVerticalScrollVisibilityChanged!(newState.vertScrollThumbWidth > 0, newState.vertScrollThumbWidth);
                 }
 
-                if (this.props.onHorizontalScrollVisibilityChanged &&
-                    newState.horzScrollThumbHeight !== oldState.horzScrollThumbHeight) {
-                    this.props.onHorizontalScrollVisibilityChanged(newState.horzScrollThumbHeight > 0, newState.horzScrollThumbHeight);
+                if (newState.horzScrollThumbHeight !== oldState.horzScrollThumbHeight) {
+                    this.props.onHorizontalScrollVisibilityChanged!(newState.horzScrollThumbHeight > 0, newState.horzScrollThumbHeight);
                 }
             }
         }

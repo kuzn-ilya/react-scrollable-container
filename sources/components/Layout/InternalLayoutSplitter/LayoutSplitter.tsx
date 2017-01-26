@@ -4,11 +4,18 @@ import { LayoutSplitterProps, layoutSplitterPropTypes } from  './LayoutSplitterP
 import { LayoutSplitterState } from  './LayoutSplitterState';
 import { classNames, MouseCapture, isVertical } from  '../../../utils';
 
+import * as emptyFunction from 'fbjs/lib/emptyFunction';
+
 import '../../../styles/layout-splitter.css';
 
 export namespace Internal {
     export class LayoutSplitter extends React.PureComponent<LayoutSplitterProps, LayoutSplitterState> {
         static propTypes = layoutSplitterPropTypes;
+
+        static defaultProps: Partial<LayoutSplitterProps> = {
+            onResizeEnd: emptyFunction,
+            onResizing: emptyFunction,
+        };
 
         constructor(props?: LayoutSplitterProps) {
             super(props);
@@ -38,19 +45,15 @@ export namespace Internal {
         }
 
         handleWindowMouseMove: (e: MouseEvent) => void = (e) => {
-            if (this.props.onResizing) {
-                let newPosition = this.calcNewPosition(e);
-                this.props.onResizing(newPosition);
-            }
+            let newPosition = this.calcNewPosition(e);
+            this.props.onResizing!(newPosition);
         }
 
         handleReleaseMouseCapture: (e: MouseEvent) => void = (e) => {
             if (this.mouseCapture) {
                 this.mouseCapture = undefined;
-                if (this.props.onResizeEnd) {
-                    let newPosition = this.calcNewPosition(e);
-                    this.props.onResizeEnd(newPosition);
-                }
+                let newPosition = this.calcNewPosition(e);
+                this.props.onResizeEnd!(newPosition);
                 this.setState({
                     isActive: false
                 });

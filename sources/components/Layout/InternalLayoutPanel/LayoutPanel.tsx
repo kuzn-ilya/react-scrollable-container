@@ -22,6 +22,10 @@ export namespace Internal {
                 bottom: this.props.bottom,
                 height: this.props.height,
                 left: this.props.left,
+                maxHeight: this.props.maxHeight,
+                maxWidth: this.props.maxWidth,
+                minHeight: this.props.minHeight,
+                minWidth: this.props.minWidth,
                 right: this.props.right,
                 top: this.props.top,
                 width: this.props.width

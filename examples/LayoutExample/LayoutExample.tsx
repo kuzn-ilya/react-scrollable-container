@@ -31,7 +31,7 @@ export class LayoutExample extends React.Component<{}, CompState> {
                     </div>
                 </LayoutPanel>
                 <LayoutSplitter liveUpdate />
-                <LayoutPanel align="client" minWidth={20} minHeight={20}>
+                <LayoutPanel align="client" minWidth={100} minHeight={20}>
                     <div className="div-text" style={{backgroundColor: 'pink'}}>
                     </div>
                 </LayoutPanel>

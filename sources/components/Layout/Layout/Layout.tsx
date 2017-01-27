@@ -200,6 +200,10 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                                 height={childState.height}
                                 showBottomShadow={panelProps.showBottomShadow}
                                 showRightShadow={panelProps.showRightShadow}
+                                maxHeight={panelProps.maxHeight}
+                                maxWidth={panelProps.maxWidth}
+                                minHeight={panelProps.minHeight}
+                                minWidth={panelProps.minWidth}
                             >
                                 {panelProps.children}
                             </Internal.LayoutPanel>

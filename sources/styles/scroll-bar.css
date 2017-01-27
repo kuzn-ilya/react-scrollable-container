@@ -1,0 +1,30 @@
+.scrollbar-container {
+    background-color: $SCROLLBAR_COLOR;
+    position: relative;
+}
+
+.scrollbar-button {
+    background-color: $SCROLLBAR_COLOR;
+    display: inline-block;
+    position: absolute;
+}
+
+.scrollbar-prev-button {
+    left: 0px;
+    top: 0px;
+}
+
+.scrollbar-next-button {
+    bottom: 0px;
+    right: 0px;
+}
+
+.scrollbar-knob {
+    background-color: $SCROLLBAR_KNOB_COLOR;
+    display: inline-block;
+    position: absolute;
+}
+
+.scrollbar-knob:hover {
+    background-color: $SCROLLBAR_KNOB_HOVER_COLOR;
+}

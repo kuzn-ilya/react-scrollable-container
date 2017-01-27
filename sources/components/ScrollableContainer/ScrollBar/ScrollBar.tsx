@@ -1,6 +1,9 @@
 import * as React from 'react';
 import { ScrollBarProps } from './ScrollBarProps';
 import { ScrollBarState } from './ScrollBarState';
+import { classNames } from '../../../utils';
+
+import '../../../styles/scroll-bar.css';
 
 export class ScrollBar extends React.PureComponent<ScrollBarProps, ScrollBarState> {
     constructor(props?: ScrollBarProps) {
@@ -17,23 +20,8 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, ScrollBarStat
             buttonSize = 17;
         }
 
-        let prevButtonStyle = {
-            backgroundColor: 'red',
-            display: 'inline-block',
+        let buttonStyle = {
             height: buttonSize,
-            left: 0,
-            position: 'absolute',
-            top: 0,
-            width: buttonSize
-        };
-
-        let nextButtonStyle = {
-            backgroundColor: 'red',
-            bottom: 0,
-            display: 'inline-block',
-            height: buttonSize,
-            position: 'absolute',
-            right: 0,
             width: buttonSize
         };
 
@@ -48,7 +36,7 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, ScrollBarStat
             knob = (
                 <div
                     style={{
-                        backgroundColor: 'white',
+                        backgroundColor: 'lightgray',
                         display: 'inline-block',
                         height: this.props.orientation === 'vertical' ? knobSize : buttonSize,
                         left: this.props.orientation === 'horizontal' ? knobPos : 0,
@@ -65,15 +53,14 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, ScrollBarStat
             <div
                 ref={(ref: HTMLDivElement) => this.ref = ref}
                 style={{
-                    backgroundColor: 'lightgray',
                     height: this.props.height,
-                    position: 'relative',
                     width: this.props.width
                 }}
+                className="scrollbar-container"
             >
-                <div style={prevButtonStyle}></div>
+                <div style={buttonStyle} className={classNames('scrollbar-button', 'scrollbar-prev-button')}></div>
                 {knob}
-                <div style={nextButtonStyle}></div>
+                <div style={buttonStyle} className={classNames('scrollbar-button', 'scrollbar-next-button')}></div>
             </div>
         );
     }

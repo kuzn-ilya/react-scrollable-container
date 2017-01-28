@@ -36,6 +36,22 @@
     background-image: url(../../assets/images/btn-down-disabled.png);
 }
 
+.scrollbar-left-button {
+    background-image: url(../../assets/images/btn-left.png);
+}
+
+.scrollbar-left-button-disabled {
+    background-image: url(../../assets/images/btn-left-disabled.png);
+}
+
+.scrollbar-right-button {
+    background-image: url(../../assets/images/btn-right.png);
+}
+
+.scrollbar-right-button-disabled {
+    background-image: url(../../assets/images/btn-right-disabled.png);
+}
+
 .scrollbar-next-button {
     bottom: 0px;
     right: 0px;

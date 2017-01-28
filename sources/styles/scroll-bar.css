@@ -11,6 +11,10 @@
     background-position: center;
 }
 
+.scrollbar-button-captured {
+    background-color: $SCROLLBAR_BUTTON_CAPTURED_COLOR;
+}
+
 .scrollbar-button:hover {
     background-color: $SCROLLBAR_BUTTON_HOVER_COLOR;
 }

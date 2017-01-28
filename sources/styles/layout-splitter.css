@@ -3,11 +3,11 @@
 }
 
 .layout-vert-splitter:hover, .layout-horz-splitter:hover {
-  background-color: gray;
+  background-color: $LAYOUT_SPLITTER_COLOR;
 }
 
 .layout-splitter-active {
-  background-color: gray;
+  background-color: $LAYOUT_SPLITTER_COLOR;
 }
 
 .layout-vert-splitter {

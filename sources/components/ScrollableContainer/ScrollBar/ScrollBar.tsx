@@ -4,6 +4,7 @@ import { ScrollBarState } from './ScrollBarState';
 import { classNames } from '../../../utils';
 
 import '../../../styles/scroll-bar.css';
+import { CSS_NUMBER_VARS } from '../../../stubs/cssVars';
 
 export class ScrollBar extends React.PureComponent<ScrollBarProps, ScrollBarState> {
     constructor(props?: ScrollBarProps) {
@@ -33,16 +34,16 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, ScrollBarStat
             let knobSize = this.props.pageSize * posMultiplier;
             let knobPos = (this.props.position - this.props.minPosition) * posMultiplier + buttonSize;
 
+            // tslint:disable-next-line:no-string-literal
+            let scrollBarKnobOffset = CSS_NUMBER_VARS['SCROLLBAR_KNOB_OFFSET'];
+
             knob = (
-                <div
+                <div className="scrollbar-knob"
                     style={{
-                        backgroundColor: 'lightgray',
-                        display: 'inline-block',
-                        height: this.props.orientation === 'vertical' ? knobSize : buttonSize,
-                        left: this.props.orientation === 'horizontal' ? knobPos : 0,
-                        position: 'absolute',
-                        top: this.props.orientation === 'vertical' ? knobPos : 0,
-                        width: this.props.orientation === 'horizontal' ? knobSize : buttonSize
+                        height: this.props.orientation === 'vertical' ? knobSize : buttonSize - 2 * scrollBarKnobOffset,
+                        left: this.props.orientation === 'horizontal' ? knobPos : scrollBarKnobOffset,
+                        top: this.props.orientation === 'vertical' ? knobPos : scrollBarKnobOffset,
+                        width: this.props.orientation === 'horizontal' ? knobSize : buttonSize - 2 * scrollBarKnobOffset
                     }}
                 >
                 </div>
@@ -58,9 +59,23 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, ScrollBarStat
                 }}
                 className="scrollbar-container"
             >
-                <div style={buttonStyle} className={classNames('scrollbar-button', 'scrollbar-prev-button')}></div>
+                <div style={buttonStyle} className={classNames(
+                    'scrollbar-button',
+                    'scrollbar-prev-button',
+                    {
+                        'scrollbar-up-button': this.props.orientation === 'vertical',
+                        'scrollbar-left-button': this.props.orientation === 'horizontal'
+                    }
+                )}></div>
                 {knob}
-                <div style={buttonStyle} className={classNames('scrollbar-button', 'scrollbar-next-button')}></div>
+                <div style={buttonStyle} className={classNames(
+                    'scrollbar-button',
+                    'scrollbar-next-button',
+                    {
+                        'scrollbar-down-button': this.props.orientation === 'vertical',
+                        'scrollbar-right-button': this.props.orientation === 'horizontal'
+                    }
+                )}></div>
             </div>
         );
     }

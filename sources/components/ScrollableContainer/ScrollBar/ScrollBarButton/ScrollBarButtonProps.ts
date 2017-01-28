@@ -15,4 +15,4 @@ export const scrollBarButtonPropTypes: ValidationMap<ScrollBarButtonProps> = {
     onScroll: PropTypes.func,
     size: PropTypes.number.isRequired,
     type: edgePropType.isRequired
-}
+};

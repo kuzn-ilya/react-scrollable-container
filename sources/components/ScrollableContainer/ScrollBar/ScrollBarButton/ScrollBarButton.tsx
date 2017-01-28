@@ -13,13 +13,14 @@ export class ScrollBarButton extends React.PureComponent<ScrollBarButtonProps, S
 
     static defaultProps: Partial<ScrollBarButtonProps> = {
         onScroll: emptyFunction
-    }
+    };
 
     constructor(props?: ScrollBarButtonProps) {
         super(props);
 
         this.buttonMouseDown = this.buttonMouseDown.bind(this);
         this.buttonMouseUp = this.buttonMouseUp.bind(this);
+        this.scroll = this.scroll.bind(this);
     }
 
     render(): JSX.Element {
@@ -54,13 +55,12 @@ export class ScrollBarButton extends React.PureComponent<ScrollBarButtonProps, S
         );
     }
 
-    timerId?: number;
-    scroll(): void {
+    // tslint:disable-next-line:no-any
+    timerId: any;
+    scroll: () => void = () => {
         if (!this.props.disabled) {
             this.props.onScroll!();
-            this.timerId = setTimeout(() => {
-                this.scroll();
-            }, SCROLL_TIME);
+            this.timerId = setTimeout(this.scroll, SCROLL_TIME);
         }
     }
 

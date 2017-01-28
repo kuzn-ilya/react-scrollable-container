@@ -11,17 +11,30 @@
     background-position: center;
 }
 
-.scrollbar-button-captured {
-    background-color: $SCROLLBAR_BUTTON_CAPTURED_COLOR;
+.scrollbar-button-disabled {
+    background-color: $SCROLLBAR_BUTTON_COLOR;
+    display: inline-block;
+    position: absolute;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .scrollbar-button:hover {
     background-color: $SCROLLBAR_BUTTON_HOVER_COLOR;
 }
 
+.scrollbar-button-captured {
+    background-color: $SCROLLBAR_BUTTON_CAPTURED_COLOR;
+}
+
 .scrollbar-prev-button {
     left: 0px;
     top: 0px;
+}
+
+.scrollbar-next-button {
+    bottom: 0px;
+    right: 0px;
 }
 
 .scrollbar-up-button {
@@ -54,11 +67,6 @@
 
 .scrollbar-right-button-disabled {
     background-image: url(../../assets/images/btn-right-disabled.png);
-}
-
-.scrollbar-next-button {
-    bottom: 0px;
-    right: 0px;
 }
 
 .scrollbar-knob {

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ScrollBarProps } from './ScrollBarProps';
 import { ScrollBarState } from './ScrollBarState';
-import { classNames } from '../../../utils';
+import { ScrollBarButton } from './ScrollBarButton';
 
 import '../../../styles/scroll-bar.css';
 import { CSS_NUMBER_VARS } from '../../../stubs/cssVars';
@@ -50,11 +50,6 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
     }
 
     render(): JSX.Element {
-        let buttonStyle = {
-            height: this.state.buttonSize,
-            width: this.state.buttonSize
-        };
-
         let knob = null;
         if (this.state.scale) {
             let knobSize = this.props.pageSize * this.state.scale;
@@ -85,45 +80,19 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
                 }}
                 className="scrollbar-container"
             >
-                <div
-                    style={buttonStyle}
-                    className={classNames(
-                        'scrollbar-button',
-                        'scrollbar-prev-button',
-                        {
-                            'scrollbar-up-button': this.props.orientation === 'vertical'
-                                && this.state.position > this.props.minPosition,
-                            'scrollbar-left-button': this.props.orientation === 'horizontal'
-                                && this.state.position > this.props.minPosition,
-                            'scrollbar-up-button-disabled': this.props.orientation === 'vertical'
-                                && this.state.position <= this.props.minPosition,
-                            'scrollbar-left-button-disabled': this.props.orientation === 'horizontal'
-                                && this.state.position <= this.props.minPosition
-                        }
-                    )}
-                    onClick={this.prevButtonClick}
-                >
-                </div>
+                <ScrollBarButton
+                    type={this.props.orientation === 'vertical' ? 'top' : 'left'}
+                    size={this.state.buttonSize!}
+                    onScroll={this.prevButtonClick}
+                    disabled={this.state.position <= this.props.minPosition}
+                />
                 {knob}
-                <div
-                    style={buttonStyle}
-                    className={classNames(
-                        'scrollbar-button',
-                        'scrollbar-next-button',
-                        {
-                            'scrollbar-down-button': this.props.orientation === 'vertical'
-                                && this.state.position < this.props.maxPosition,
-                            'scrollbar-right-button': this.props.orientation === 'horizontal'
-                                && this.state.position < this.props.maxPosition,
-                            'scrollbar-down-button-disabled': this.props.orientation === 'vertical'
-                                && this.state.position >= this.props.maxPosition,
-                            'scrollbar-right-button-disabled': this.props.orientation === 'horizontal'
-                                && this.state.position >= this.props.maxPosition
-                        }
-                    )}
-                    onClick={this.nextButtonClick}
-                >
-                </div>
+                <ScrollBarButton
+                    type={this.props.orientation === 'vertical' ? 'bottom' : 'right'}
+                    size={this.state.buttonSize!}
+                    onScroll={this.nextButtonClick}
+                    disabled={this.state.position >= this.props.maxPosition}
+                />
             </div>
         );
     }

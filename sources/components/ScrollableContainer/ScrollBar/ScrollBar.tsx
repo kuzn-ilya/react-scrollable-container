@@ -13,9 +13,23 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
         this.prevButtonClick = this.prevButtonClick.bind(this);
         this.nextButtonClick = this.nextButtonClick.bind(this);
 
-        this.state = {
-            actualSize: 0,
-            position: this.props.position
+        this.state = this.calculateSize(0);
+    }
+
+    calculateSize(scrollBarSize: number): Partial<ScrollBarState> {
+        let buttonSize = this.props.orientation === 'vertical' ? this.props.width : this.props.height;
+
+        if (buttonSize === '100%') {
+            buttonSize = 17;
+        }
+
+        // TODO: Check min/max and assert if it's necessary
+        let scale = (scrollBarSize - 2 * buttonSize) / (this.props.maxPosition - this.props.minPosition);
+
+        return {
+            buttonSize,
+            position: this.props.position,
+            scale
         };
     }
 
@@ -36,24 +50,15 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
     }
 
     render(): JSX.Element {
-        let buttonSize = this.props.orientation === 'vertical' ? this.props.width : this.props.height;
-
-        if (buttonSize === '100%') {
-            buttonSize = 17;
-        }
-
         let buttonStyle = {
-            height: buttonSize,
-            width: buttonSize
+            height: this.state.buttonSize,
+            width: this.state.buttonSize
         };
 
         let knob = null;
-        if (this.state.actualSize) {
-            let actualSize = this.state.actualSize - 2 * buttonSize;
-            // TODO: Check min/max and assert if it's necessary
-            let posMultiplier = actualSize / (this.props.maxPosition - this.props.minPosition);
-            let knobSize = this.props.pageSize * posMultiplier;
-            let knobPos = (this.state.position - this.props.minPosition) * posMultiplier + buttonSize;
+        if (this.state.scale) {
+            let knobSize = this.props.pageSize * this.state.scale;
+            let knobPos = (this.state.position - this.props.minPosition) * this.state.scale + this.state.buttonSize;
 
             // tslint:disable-next-line:no-string-literal
             let scrollBarKnobOffset = CSS_NUMBER_VARS['SCROLLBAR_KNOB_OFFSET'];
@@ -61,10 +66,10 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
             knob = (
                 <div className="scrollbar-knob"
                     style={{
-                        height: this.props.orientation === 'vertical' ? knobSize : buttonSize - 2 * scrollBarKnobOffset,
+                        height: this.props.orientation === 'vertical' ? knobSize : this.state.buttonSize - 2 * scrollBarKnobOffset,
                         left: this.props.orientation === 'horizontal' ? knobPos : scrollBarKnobOffset,
                         top: this.props.orientation === 'vertical' ? knobPos : scrollBarKnobOffset,
-                        width: this.props.orientation === 'horizontal' ? knobSize : buttonSize - 2 * scrollBarKnobOffset
+                        width: this.props.orientation === 'horizontal' ? knobSize : this.state.buttonSize - 2 * scrollBarKnobOffset
                     }}
                 >
                 </div>
@@ -127,9 +132,7 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
 
     componentDidMount(): void {
         if (this.ref) {
-            this.setState({
-                actualSize: this.props.orientation === 'vertical' ? this.ref.offsetHeight : this.ref.offsetWidth
-            });
+            this.setState(this.calculateSize(this.props.orientation === 'vertical' ? this.ref.offsetHeight : this.ref.offsetWidth));
         }
     }
 }

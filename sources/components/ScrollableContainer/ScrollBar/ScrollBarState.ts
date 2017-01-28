@@ -1,4 +1,5 @@
 export interface ScrollBarState {
-    actualSize: number;
+    buttonSize: number;
+    scale: number;
     position: number;
 }

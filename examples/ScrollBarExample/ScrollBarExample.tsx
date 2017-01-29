@@ -4,29 +4,35 @@ import { ScrollBar, Layout, LayoutPanel } from '../../sources/components';
 
 interface CompState {
     orientation: 'horizontal' | 'vertical';
-    minPosition: number;
-    maxPosition: number;
+    largeChange: number;
+    min: number;
+    max: number;
     pageSize: number;
     position: number;
+    smallChange: number;
 }
 
 export class ScrollBarExample extends React.Component<{}, CompState> {
     constructor(props: {}) {
         super(props);
         this.state = {
-            maxPosition: 100,
-            minPosition: 1,
+            largeChange: 20,
+            max: 100,
+            min: 1,
             orientation: 'vertical',
             pageSize: 20,
-            position: 1
+            position: 1,
+            smallChange: 1
         };
 
         this.handleOrientationChanged = this.handleOrientationChanged.bind(this);
 
-        this.handleMinPositionChanged = this.handleNumberPropChanged.bind(this, 'minPosition');
-        this.handleMaxPositionChanged = this.handleNumberPropChanged.bind(this, 'maxPosition');
+        this.handleMinChanged = this.handleNumberPropChanged.bind(this, 'min');
+        this.handleMaxChanged = this.handleNumberPropChanged.bind(this, 'max');
         this.handlePositionChanged = this.handleNumberPropChanged.bind(this, 'position');
         this.handlePageSizeChanged = this.handleNumberPropChanged.bind(this, 'pageSize');
+        this.handleSmallChangeChanged = this.handleNumberPropChanged.bind(this, 'smallChange');
+        this.handleLargeChangeChanged = this.handleNumberPropChanged.bind(this, 'largeChange');
     }
 
     handleOrientationChanged: (e: React.FormEvent<HTMLInputElement>) => void = (e) => {
@@ -47,10 +53,12 @@ export class ScrollBarExample extends React.Component<{}, CompState> {
         }
     }
 
-    handleMinPositionChanged: (e: React.FormEvent<HTMLInputElement>) => void;
-    handleMaxPositionChanged: (e: React.FormEvent<HTMLInputElement>) => void;
+    handleMinChanged: (e: React.FormEvent<HTMLInputElement>) => void;
+    handleMaxChanged: (e: React.FormEvent<HTMLInputElement>) => void;
     handlePositionChanged: (e: React.FormEvent<HTMLInputElement>) => void;
     handlePageSizeChanged: (e: React.FormEvent<HTMLInputElement>) => void;
+    handleLargeChangeChanged: (e: React.FormEvent<HTMLInputElement>) => void;
+    handleSmallChangeChanged: (e: React.FormEvent<HTMLInputElement>) => void;
 
     render(): JSX.Element {
         return (
@@ -75,15 +83,15 @@ export class ScrollBarExample extends React.Component<{}, CompState> {
                     <input
                         style={{width: 30}}
                         type="text"
-                        value={this.state.minPosition}
-                        onChange={this.handleMinPositionChanged}
+                        value={this.state.min}
+                        onChange={this.handleMinChanged}
                     />
                     maxPosition:
                     <input
                         style={{width: 30}}
                         type="text"
-                        value={this.state.maxPosition}
-                        onChange={this.handleMaxPositionChanged}
+                        value={this.state.max}
+                        onChange={this.handleMaxChanged}
                     />
                     position:
                     <input
@@ -99,16 +107,32 @@ export class ScrollBarExample extends React.Component<{}, CompState> {
                         value={this.state.pageSize}
                         onChange={this.handlePageSizeChanged}
                     />
+                    smallChange:
+                    <input
+                        style={{width: 30}}
+                        type="text"
+                        value={this.state.smallChange}
+                        onChange={this.handleSmallChangeChanged}
+                    />
+                    largeChange:
+                    <input
+                        style={{width: 30}}
+                        type="text"
+                        value={this.state.largeChange}
+                        onChange={this.handleLargeChangeChanged}
+                    />
                 </LayoutPanel>
                 <LayoutPanel align="client">
                     <ScrollBar
                         orientation={this.state.orientation}
-                        minPosition={this.state.minPosition}
-                        maxPosition={this.state.maxPosition}
+                        min={this.state.min}
+                        max={this.state.max}
                         pageSize={this.state.pageSize}
                         position={this.state.position}
                         height={this.state.orientation === 'vertical' ? '100%' : 17}
                         width={this.state.orientation === 'horizontal' ? '100%' : 17}
+                        smallChange={this.state.smallChange}
+                        largeChange={this.state.largeChange}
                     />
                 </LayoutPanel>
             </Layout>

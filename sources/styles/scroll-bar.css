@@ -69,16 +69,16 @@
     background-image: url(../../assets/images/btn-right-disabled.png);
 }
 
-.scrollbar-knob {
-    background-color: $SCROLLBAR_KNOB_COLOR;
+.scrollbar-thumb {
+    background-color: $SCROLLBAR_THUMB_COLOR;
     display: inline-block;
     position: absolute;
 }
 
-.scrollbar-knob:hover {
-    background-color: $SCROLLBAR_KNOB_HOVER_COLOR;
+.scrollbar-thumb:hover {
+    background-color: $SCROLLBAR_THUMB_HOVER_COLOR;
 }
 
-.scrollbar-knob-captured {
-    background-color: $SCROLLBAR_KNOB_CAPTURED_COLOR;
+.scrollbar-thumb-captured {
+    background-color: $SCROLLBAR_THUMB_CAPTURED_COLOR;
 }

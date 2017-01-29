@@ -24,7 +24,7 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
         }
 
         // TODO: Check min/max and assert if it's necessary
-        let scale = (scrollBarSize - 2 * buttonSize) / (this.props.maxPosition - this.props.minPosition);
+        let scale = (scrollBarSize - 2 * buttonSize) / (this.props.max - this.props.min + 1);
 
         return {
             buttonSize,
@@ -34,7 +34,7 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
     }
 
     prevButtonClick: () => void = () => {
-        if (this.state.position > this.props.minPosition) {
+        if (this.state.position > this.props.min) {
             this.setState({
                 position: this.state.position - 1
             });
@@ -42,7 +42,7 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
     }
 
     nextButtonClick: () => void = () => {
-        if (this.state.position < this.props.maxPosition) {
+        if (this.state.position < this.props.max) {
             this.setState({
                 position: this.state.position + 1
             });
@@ -50,21 +50,21 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
     }
 
     render(): JSX.Element {
-        let knob = null;
+        let thumb = null;
         if (this.state.scale) {
-            let knobSize = this.props.pageSize * this.state.scale;
-            let knobPos = (this.state.position - this.props.minPosition) * this.state.scale + this.state.buttonSize;
+            let thumbSize = this.props.pageSize * this.state.scale;
+            let thumbPos = (this.state.position - this.props.min) * this.state.scale + this.state.buttonSize;
 
             // tslint:disable-next-line:no-string-literal
-            let scrollBarKnobOffset = CSS_NUMBER_VARS['SCROLLBAR_KNOB_OFFSET'];
+            let scrollBarThumbMargin = CSS_NUMBER_VARS['SCROLLBAR_THUMB_OFFSET'];
 
-            knob = (
-                <div className="scrollbar-knob"
+            thumb = (
+                <div className="scrollbar-thumb"
                     style={{
-                        height: this.props.orientation === 'vertical' ? knobSize : this.state.buttonSize - 2 * scrollBarKnobOffset,
-                        left: this.props.orientation === 'horizontal' ? knobPos : scrollBarKnobOffset,
-                        top: this.props.orientation === 'vertical' ? knobPos : scrollBarKnobOffset,
-                        width: this.props.orientation === 'horizontal' ? knobSize : this.state.buttonSize - 2 * scrollBarKnobOffset
+                        height: this.props.orientation === 'vertical' ? thumbSize : this.state.buttonSize - 2 * scrollBarThumbMargin,
+                        left: this.props.orientation === 'horizontal' ? thumbPos : scrollBarThumbMargin,
+                        top: this.props.orientation === 'vertical' ? thumbPos : scrollBarThumbMargin,
+                        width: this.props.orientation === 'horizontal' ? thumbSize : this.state.buttonSize - 2 * scrollBarThumbMargin
                     }}
                 >
                 </div>
@@ -84,14 +84,14 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
                     type={this.props.orientation === 'vertical' ? 'top' : 'left'}
                     size={this.state.buttonSize!}
                     onScroll={this.prevButtonClick}
-                    disabled={this.state.position <= this.props.minPosition}
+                    disabled={this.state.position <= this.props.min}
                 />
-                {knob}
+                {thumb}
                 <ScrollBarButton
                     type={this.props.orientation === 'vertical' ? 'bottom' : 'right'}
                     size={this.state.buttonSize!}
                     onScroll={this.nextButtonClick}
-                    disabled={this.state.position >= this.props.maxPosition}
+                    disabled={this.state.position >= this.props.max}
                 />
             </div>
         );

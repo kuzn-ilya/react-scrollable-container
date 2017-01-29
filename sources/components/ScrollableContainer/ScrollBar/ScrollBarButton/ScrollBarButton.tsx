@@ -64,11 +64,17 @@ export class ScrollBarButton extends React.PureComponent<ScrollBarButtonProps, S
         }
     }
 
-    buttonMouseDown: () => void = () => {
+    buttonMouseDown: (event: React.MouseEvent<HTMLDivElement>) => void = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+
         this.scroll();
     }
 
-    buttonMouseUp: () => void = () => {
+    buttonMouseUp: (event: React.MouseEvent<HTMLDivElement>) => void = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+
         if (this.timerId) {
             clearTimeout(this.timerId);
             this.timerId = undefined;

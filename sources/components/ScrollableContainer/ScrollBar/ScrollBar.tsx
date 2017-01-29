@@ -6,6 +6,8 @@ import { ScrollBarThumb } from './ScrollBarThumb';
 
 import '../../../styles/scroll-bar.css';
 
+const SCROLL_TIME = 50;
+
 export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<ScrollBarState>> {
     constructor(props?: ScrollBarProps) {
         super(props);
@@ -15,11 +17,14 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
 
         this.handleMouseDown = this.handleMouseDown.bind(this);
         this.handleMouseUp = this.handleMouseUp.bind(this);
+        this.handleMouseMove = this.handleMouseMove.bind(this);
 
-        this.state = this.calculateSize(0, this.props);
+        this.scroll = this.scroll.bind(this);
+
+        this.state = this.calculateState(0, this.props);
     }
 
-    calculateSize(scrollBarSize: number, props: ScrollBarProps, position?: number): Partial<ScrollBarState> {
+    calculateState(scrollBarSize: number, props: ScrollBarProps, position?: number): Partial<ScrollBarState> {
         let pos = position === undefined ? this.props.position : position;
 
         let buttonSize = props.orientation === 'vertical' ? props.width : props.height;
@@ -31,10 +36,17 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
         // TODO: Check min/max and assert if it's necessary
         let scale = (scrollBarSize - 2 * buttonSize) / (props.max - props.min + 1);
 
+        let thumbSize = props.pageSize * scale;
+        let thumbPosition = (pos - props.min) * scale
+            * (props.max - props.min - props.pageSize + 1) / (props.max - props.min)
+            + buttonSize;
+
         return {
             buttonSize,
             position: pos,
-            scale
+            scale,
+            thumbPosition,
+            thumbSize
         };
     }
 
@@ -46,12 +58,42 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
         this.moveBy(this.props.smallChange);
     }
 
-    handleMouseDown: () => void = () => {
-        return;
+    private mousePos?: number = undefined;
+
+    updateMousePos(event: React.MouseEvent<HTMLDivElement>): void {
+        this.mousePos = this.props.orientation === 'horizontal'
+            ? event.pageX - this.ref.getBoundingClientRect().left
+            : event.pageY - this.ref.getBoundingClientRect().top;
     }
 
-    handleMouseUp: () => void = () => {
-        return;
+    // tslint:disable-next-line:no-any
+    private timerId: any;
+
+    scroll: () => void = () => {
+        if (this.mousePos < this.state.thumbPosition) {
+            this.moveBy(-this.props.largeChange);
+            this.timerId = setTimeout(this.scroll, SCROLL_TIME);
+        } else if (this.mousePos > this.state.thumbPosition + this.state.thumbSize) {
+            this.moveBy(this.props.largeChange);
+            this.timerId = setTimeout(this.scroll, SCROLL_TIME);
+        }
+    }
+
+    handleMouseDown: (event: React.MouseEvent<HTMLDivElement>) => void = (event) => {
+        this.updateMousePos(event);
+        this.scroll();
+    }
+
+    handleMouseMove: (event: React.MouseEvent<HTMLDivElement>) => void = (event) => {
+        this.updateMousePos(event);
+    }
+
+    handleMouseUp: (event: React.MouseEvent<HTMLDivElement>) => void = (event) => {
+        this.mousePos = undefined;
+        if (this.timerId) {
+            clearTimeout(this.timerId);
+            this.timerId = undefined;
+        }
     }
 
     moveBy(delta: number): void {
@@ -65,15 +107,13 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
             newPosition = this.props.max;
         }
 
-        this.setState({
-            position: newPosition
-        });
+        this.updateState(this.props, newPosition);
     }
 
     updateState(props: ScrollBarProps, position?: number): void {
         if (this.ref) {
             let size = props.orientation === 'vertical' ? this.ref.offsetHeight : this.ref.offsetWidth;
-            this.setState(this.calculateSize(size, props, position));
+            this.setState(this.calculateState(size, props, position));
         }
     }
 
@@ -87,23 +127,6 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
     }
 
     render(): JSX.Element {
-        let thumb = null;
-        if (this.state.scale) {
-            let thumbSize = this.props.pageSize * this.state.scale;
-            let thumbPos = (this.state.position - this.props.min) * this.state.scale
-                * (this.props.max - this.props.min - this.props.pageSize + 1) / (this.props.max - this.props.min)
-                + this.state.buttonSize;
-
-            thumb = (
-                <ScrollBarThumb
-                    orientation={this.props.orientation}
-                    thickness={this.state.buttonSize!}
-                    position={thumbPos}
-                    size={thumbSize}
-                />
-            );
-        }
-
         return (
             <div
                 ref={(ref: HTMLDivElement) => this.ref = ref}
@@ -114,6 +137,7 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
                 className="scrollbar-container"
                 onMouseDown={this.handleMouseDown}
                 onMouseUp={this.handleMouseUp}
+                onMouseMove={this.handleMouseMove}
             >
                 <ScrollBarButton
                     type={this.props.orientation === 'vertical' ? 'top' : 'left'}
@@ -121,7 +145,12 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
                     onScroll={this.prevButtonClick}
                     disabled={this.state.position <= this.props.min}
                 />
-                {thumb}
+                <ScrollBarThumb
+                    orientation={this.props.orientation}
+                    thickness={this.state.buttonSize!}
+                    position={this.state.thumbPosition!}
+                    size={this.state.thumbSize!}
+                />
                 <ScrollBarButton
                     type={this.props.orientation === 'vertical' ? 'bottom' : 'right'}
                     size={this.state.buttonSize!}

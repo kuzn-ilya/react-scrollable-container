@@ -1,14 +1,16 @@
 import * as React from 'react';
 
 import { ScrollBarThumbProps } from './ScrollBarThumbProps';
+import { ScrollBarThumbState } from './ScrollBarThumbState';
+
 import { CSS_NUMBER_VARS } from '../../../../stubs/cssVars';
-import { MouseCapture } from '../../../../utils';
+import { MouseCapture, classNames } from '../../../../utils';
 
 import * as emptyFunction from 'fbjs/lib/emptyFunction';
 
 import '../../../../styles/scroll-bar.css';
 
-export class ScrollBarThumb extends React.PureComponent<ScrollBarThumbProps, {}> {
+export class ScrollBarThumb extends React.PureComponent<ScrollBarThumbProps, ScrollBarThumbState> {
     ref: HTMLDivElement;
 
     static defaultProps: Partial<ScrollBarThumbProps> = {
@@ -22,6 +24,9 @@ export class ScrollBarThumb extends React.PureComponent<ScrollBarThumbProps, {}>
         this.handleMouseDown = this.handleMouseDown.bind(this);
         this.handleMouseMove = this.handleMouseMove.bind(this);
         this.handleMouseUp = this.handleMouseUp.bind(this);
+        this.state = {
+            isActive: false
+        };
     }
 
     startPosition: number = 0;
@@ -64,7 +69,10 @@ export class ScrollBarThumb extends React.PureComponent<ScrollBarThumbProps, {}>
         let scrollBarThumbMargin = CSS_NUMBER_VARS['SCROLLBAR_THUMB_OFFSET'];
 
         return (
-            <div className="scrollbar-thumb"
+            <div
+                className={classNames('scrollbar-thumb', {
+                    'scrollbar-thumb-captured': this.state.isActive
+                })}
                 style={{
                     height: this.isVertical() ? this.props.size : this.props.thickness - 2 * scrollBarThumbMargin,
                     left: !this.isVertical() ? this.props.position : scrollBarThumbMargin,

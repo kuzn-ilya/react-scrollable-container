@@ -5,3 +5,5 @@ export * from './StripModifiers';
 export * from './WindowEvents';
 export * from './ArrayUtils';
 export * from './cancelAnimationFrame';
+export * from './updateCSSPosition';
+export * from './getCSSPropertyNameWithVendorPrefix';

@@ -15,7 +15,6 @@ const SCROLL_TIME = 50;
 // tslint:disable-next-line:no-string-literal
 const SCROLLBAR_THICKNESS = CSS_NUMBER_VARS['SCROLLBAR_THICKNESS'];
 
-
 export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<ScrollBarState>> {
     static defaultProps: Partial<ScrollBarProps> = {
         onScroll: emptyFunction
@@ -167,7 +166,7 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
                 ref={(ref: HTMLDivElement) => this.ref = ref}
                 className={classNames('scrollbar-container', {
                     'scrollbar-container-vertical': this.props.orientation === 'vertical',
-                    'scrollbar-container-horizontal': this.props.orientation === 'horizontal',
+                    'scrollbar-container-horizontal': this.props.orientation === 'horizontal'
                 })}
                 onMouseDown={this.handleMouseDown}
                 onMouseUp={this.handleMouseUp}

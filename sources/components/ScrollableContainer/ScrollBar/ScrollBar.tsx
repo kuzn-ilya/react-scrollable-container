@@ -4,12 +4,17 @@ import { ScrollBarState } from './ScrollBarState';
 import { ScrollBarButton } from './ScrollBarButton';
 import { ScrollBarThumb } from './ScrollBarThumb';
 
+import { classNames } from '../../../utils';
 import * as invariant from 'fbjs/lib/invariant';
 import * as emptyFunction from 'fbjs/lib/emptyFunction';
+import { CSS_NUMBER_VARS } from '../../../stubs/cssVars';
 
 import '../../../styles/scroll-bar.css';
 
 const SCROLL_TIME = 50;
+// tslint:disable-next-line:no-string-literal
+const SCROLLBAR_THICKNESS = CSS_NUMBER_VARS['SCROLLBAR_THICKNESS'];
+
 
 export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<ScrollBarState>> {
     static defaultProps: Partial<ScrollBarProps> = {
@@ -36,22 +41,15 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
     calculateState(scrollBarSize: number, props: ScrollBarProps, position?: number): Partial<ScrollBarState> {
         let pos = position === undefined ? this.props.position : position;
 
-        let buttonSize = props.orientation === 'vertical' ? props.width : props.height;
-
-        if (buttonSize === '100%') {
-            buttonSize = 17;
-        }
-
         // TODO: Check min/max and assert if it's necessary
-        let scale = (scrollBarSize - 2 * buttonSize) / (props.max - props.min + 1);
+        let scale = (scrollBarSize - 2 * SCROLLBAR_THICKNESS) / (props.max - props.min + 1);
 
         let thumbSize = props.pageSize * scale;
         let thumbPosition = (pos - props.min) * scale
             * (props.max - props.min - props.pageSize + 1) / (props.max - props.min)
-            + buttonSize;
+            + SCROLLBAR_THICKNESS;
 
         return {
-            buttonSize,
             position: pos,
             scale,
             thumbPosition,
@@ -116,13 +114,13 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
         let size = this.props.orientation === 'vertical' ? this.ref.offsetHeight : this.ref.offsetWidth;
 
         let thumbPos = thumbPosition;
-        if (thumbPos < this.state.buttonSize) {
-            thumbPos = this.state.buttonSize || 0;
-        } else if (thumbPos + this.state.thumbSize > size - this.state.buttonSize) {
-            thumbPos = size - this.state.buttonSize - this.state.thumbSize;
+        if (thumbPos < SCROLLBAR_THICKNESS) {
+            thumbPos = SCROLLBAR_THICKNESS;
+        } else if (thumbPos + this.state.thumbSize > size - SCROLLBAR_THICKNESS) {
+            thumbPos = size - SCROLLBAR_THICKNESS - this.state.thumbSize;
         }
 
-        let pos = (thumbPos - this.state.buttonSize) * (this.props.max - this.props.min)
+        let pos = (thumbPos - SCROLLBAR_THICKNESS) * (this.props.max - this.props.min)
             / (this.props.max - this.props.min - this.props.pageSize + 1) / this.state.scale
             + this.props.min;
 
@@ -167,31 +165,30 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
         return (
             <div
                 ref={(ref: HTMLDivElement) => this.ref = ref}
-                style={{
-                    height: this.props.height,
-                    width: this.props.width
-                }}
-                className="scrollbar-container"
+                className={classNames('scrollbar-container', {
+                    'scrollbar-container-vertical': this.props.orientation === 'vertical',
+                    'scrollbar-container-horizontal': this.props.orientation === 'horizontal',
+                })}
                 onMouseDown={this.handleMouseDown}
                 onMouseUp={this.handleMouseUp}
                 onMouseMove={this.handleMouseMove}
             >
                 <ScrollBarButton
                     type={this.props.orientation === 'vertical' ? 'top' : 'left'}
-                    size={this.state.buttonSize!}
+                    size={SCROLLBAR_THICKNESS}
                     onScroll={this.prevButtonClick}
                     disabled={this.state.position <= this.props.min}
                 />
                 <ScrollBarThumb
                     orientation={this.props.orientation}
-                    thickness={this.state.buttonSize!}
+                    thickness={SCROLLBAR_THICKNESS}
                     position={this.state.thumbPosition!}
                     size={this.state.thumbSize!}
                     onDragging={this.handleThumbDragging}
                 />
                 <ScrollBarButton
                     type={this.props.orientation === 'vertical' ? 'bottom' : 'right'}
-                    size={this.state.buttonSize!}
+                    size={SCROLLBAR_THICKNESS}
                     onScroll={this.nextButtonClick}
                     disabled={this.state.position >= this.props.max}
                 />

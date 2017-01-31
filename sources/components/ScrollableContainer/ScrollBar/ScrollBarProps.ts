@@ -6,7 +6,5 @@ export interface ScrollBarProps {
     readonly pageSize: number;
     readonly smallChange: number;
     readonly largeChange: number;
-    readonly width: '100%' | number;
-    readonly height: '100%' | number;
     readonly onScroll?: (newPosition: number) => void;
 }

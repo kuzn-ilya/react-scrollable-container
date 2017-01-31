@@ -148,8 +148,6 @@ export class ScrollBarExample extends React.Component<{}, CompState> {
                         max={this.state.max}
                         pageSize={this.state.pageSize}
                         position={this.state.initialPosition}
-                        height={this.state.orientation === 'vertical' ? '100%' : 17}
-                        width={this.state.orientation === 'horizontal' ? '100%' : 17}
                         smallChange={this.state.smallChange}
                         largeChange={this.state.largeChange}
                         onScroll={this.handleScroll}

@@ -1,6 +1,20 @@
 .scrollbar-container {
     background-color: $SCROLLBAR_COLOR;
-    position: relative;
+    position: absolute;
+}
+
+.scrollbar-container-vertical {
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: $(SCROLLBAR_THICKNESS)px;
+}
+
+.scrollbar-container-horizontal {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: $(SCROLLBAR_THICKNESS)px;
 }
 
 .scrollbar-button {

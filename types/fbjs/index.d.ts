@@ -111,3 +111,8 @@ declare module "fbjs/lib/EventListener" {
     var EventListener: EventListener;
     export = EventListener;
 }
+declare module "fbjs/lib/requestAnimationFrame" {
+    var requestAnimationFrame: (callback: FrameRequestCallback) => number;
+    export = requestAnimationFrame;
+}
+

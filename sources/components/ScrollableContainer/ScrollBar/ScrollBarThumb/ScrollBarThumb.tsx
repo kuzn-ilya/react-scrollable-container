@@ -20,8 +20,8 @@ export class ScrollBarThumb extends React.PureComponent<ScrollBarThumbProps, {}>
         super(props);
 
         this.handleMouseDown = this.handleMouseDown.bind(this);
-        this.handleWindowMouseMove = this.handleWindowMouseMove.bind(this);
-        this.handleReleaseMouseCapture = this.handleReleaseMouseCapture.bind(this);
+        this.handleMouseMove = this.handleMouseMove.bind(this);
+        this.handleMouseUp = this.handleMouseUp.bind(this);
     }
 
     startPosition: number = 0;
@@ -32,7 +32,7 @@ export class ScrollBarThumb extends React.PureComponent<ScrollBarThumbProps, {}>
             return;
         }
 
-        this.mouseCapture = MouseCapture.captureMouseEvents(e.nativeEvent, this.handleWindowMouseMove, this.handleReleaseMouseCapture);
+        this.mouseCapture = MouseCapture.captureMouseEvents(e.nativeEvent as MouseEvent, this.handleMouseMove, this.handleMouseUp);
         let pagePosition = this.isVertical() ? e.pageY : e.pageX;
 
         this.startPosition = pagePosition - this.props.position;
@@ -42,16 +42,16 @@ export class ScrollBarThumb extends React.PureComponent<ScrollBarThumbProps, {}>
         });
     }
 
-    handleWindowMouseMove: (e: MouseEvent) => void = (e) => {
-        let newPosition = this.calcNewPosition(e);
+    handleMouseMove: (deltaX: number, deltaY: number) => void = (deltaX, deltaY) => {
+        let newPosition = this.calcNewPosition(deltaX, deltaY);
         this.props.onDragging!(newPosition);
     }
 
-    handleReleaseMouseCapture: (e: MouseEvent) => void = (e) => {
+    handleMouseUp: () => void = () => {
         if (this.mouseCapture) {
             this.mouseCapture = undefined;
-            let newPosition = this.calcNewPosition(e);
-            this.props.onDragEnd!(newPosition);
+
+            this.props.onDragEnd!();
 
             this.setState({
                 isActive: false
@@ -82,9 +82,8 @@ export class ScrollBarThumb extends React.PureComponent<ScrollBarThumbProps, {}>
         return this.props.orientation === 'vertical';
     }
 
-    private calcNewPosition(e: MouseEvent): number {
-        let pagePosition = this.isVertical() ? e.pageY : e.pageX;
-        return pagePosition - this.startPosition;
+    private calcNewPosition(deltaX: number, deltaY: number): number {
+        return (this.isVertical() ? deltaY : deltaX) + this.props.position;
     }
 
 }

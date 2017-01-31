@@ -5,5 +5,5 @@ export interface ScrollBarThumbProps {
     readonly thickness: number;
 
     readonly onDragging?: (newPosition: number) => void;
-    readonly onDragEnd?: (newPosition: number) => void;
+    readonly onDragEnd?: () => void;
 }

@@ -26,7 +26,6 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
         this.handleMouseUp = this.handleMouseUp.bind(this);
         this.handleMouseMove = this.handleMouseMove.bind(this);
 
-        this.handleThumbDragEnd = this.handleThumbDragEnd.bind(this);
         this.handleThumbDragging = this.handleThumbDragging.bind(this);
 
         this.scroll = this.scroll.bind(this);
@@ -104,11 +103,6 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
             clearTimeout(this.timerId);
             this.timerId = undefined;
         }
-    }
-
-    handleThumbDragEnd: (newPosition: number) => void = (newPosition) => {
-        let newPos = this.thumbPositionToPosition(newPosition);
-        this.updateState(this.props, newPos);
     }
 
     handleThumbDragging: (newPosition: number) => void = (newPosition) => {
@@ -194,7 +188,6 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
                     position={this.state.thumbPosition!}
                     size={this.state.thumbSize!}
                     onDragging={this.handleThumbDragging}
-                    onDragEnd={this.handleThumbDragEnd}
                 />
                 <ScrollBarButton
                     type={this.props.orientation === 'vertical' ? 'bottom' : 'right'}

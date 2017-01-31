@@ -1,6 +1,9 @@
 export interface ScrollBarThumbProps {
-    orientation: 'horizontal' | 'vertical';
-    position: number;
-    size: number;
-    thickness: number;
+    readonly orientation: 'horizontal' | 'vertical';
+    readonly position: number;
+    readonly size: number;
+    readonly thickness: number;
+
+    readonly onDragging?: (newPosition: number) => void;
+    readonly onDragEnd?: (newPosition: number) => void;
 }

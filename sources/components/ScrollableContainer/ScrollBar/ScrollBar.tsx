@@ -4,11 +4,18 @@ import { ScrollBarState } from './ScrollBarState';
 import { ScrollBarButton } from './ScrollBarButton';
 import { ScrollBarThumb } from './ScrollBarThumb';
 
+import * as invariant from 'fbjs/lib/invariant';
+import * as emptyFunction from 'fbjs/lib/emptyFunction';
+
 import '../../../styles/scroll-bar.css';
 
 const SCROLL_TIME = 50;
 
 export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<ScrollBarState>> {
+    static defaultProps: Partial<ScrollBarProps> = {
+        onScroll: emptyFunction
+    };
+
     constructor(props?: ScrollBarProps) {
         super(props);
 
@@ -18,6 +25,9 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
         this.handleMouseDown = this.handleMouseDown.bind(this);
         this.handleMouseUp = this.handleMouseUp.bind(this);
         this.handleMouseMove = this.handleMouseMove.bind(this);
+
+        this.handleThumbDragEnd = this.handleThumbDragEnd.bind(this);
+        this.handleThumbDragging = this.handleThumbDragging.bind(this);
 
         this.scroll = this.scroll.bind(this);
 
@@ -96,6 +106,35 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
         }
     }
 
+    handleThumbDragEnd: (newPosition: number) => void = (newPosition) => {
+        let newPos = this.thumbPositionToPosition(newPosition);
+        this.updateState(this.props, newPos);
+    }
+
+    handleThumbDragging: (newPosition: number) => void = (newPosition) => {
+        let newPos = this.thumbPositionToPosition(newPosition);
+        this.updateState(this.props, newPos);
+    }
+
+    thumbPositionToPosition(thumbPosition: number): number {
+        invariant(!!this.ref, '<ScrollBar>: ref should be defined.');
+
+        let size = this.props.orientation === 'vertical' ? this.ref.offsetHeight : this.ref.offsetWidth;
+
+        let thumbPos = thumbPosition;
+        if (thumbPos < this.state.buttonSize) {
+            thumbPos = this.state.buttonSize || 0;
+        } else if (thumbPos + this.state.thumbSize > size - this.state.buttonSize) {
+            thumbPos = size - this.state.buttonSize - this.state.thumbSize;
+        }
+
+        let pos = (thumbPos - this.state.buttonSize) * (this.props.max - this.props.min)
+            / (this.props.max - this.props.min - this.props.pageSize + 1) / this.state.scale
+            + this.props.min;
+
+        return Math.round(pos);
+    }
+
     moveBy(delta: number): void {
         let newPosition = this.state.position + delta;
 
@@ -113,7 +152,11 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
     updateState(props: ScrollBarProps, position?: number): void {
         if (this.ref) {
             let size = props.orientation === 'vertical' ? this.ref.offsetHeight : this.ref.offsetWidth;
+            let oldPosition = this.state.position;
             this.setState(this.calculateState(size, props, position));
+            if (position !== undefined && position !== oldPosition) {
+                this.props.onScroll!(position);
+            }
         }
     }
 
@@ -150,6 +193,8 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
                     thickness={this.state.buttonSize!}
                     position={this.state.thumbPosition!}
                     size={this.state.thumbSize!}
+                    onDragging={this.handleThumbDragging}
+                    onDragEnd={this.handleThumbDragEnd}
                 />
                 <ScrollBarButton
                     type={this.props.orientation === 'vertical' ? 'bottom' : 'right'}

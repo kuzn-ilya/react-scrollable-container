@@ -4,7 +4,7 @@ import { ScrollBarState } from './ScrollBarState';
 import { ScrollBarButton } from './ScrollBarButton';
 import { ScrollBarThumb } from './ScrollBarThumb';
 
-import { classNames } from '../../../utils';
+import { classNames, WindowEvents } from '../../../utils';
 import * as invariant from 'fbjs/lib/invariant';
 import * as emptyFunction from 'fbjs/lib/emptyFunction';
 import { CSS_NUMBER_VARS } from '../../../stubs/cssVars';
@@ -31,6 +31,7 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
         this.handleMouseMove = this.handleMouseMove.bind(this);
 
         this.handleThumbDragging = this.handleThumbDragging.bind(this);
+        this.handleWindowResize = this.handleWindowResize.bind(this);
 
         this.scroll = this.scroll.bind(this);
 
@@ -115,6 +116,10 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
         this.updateState(this.props, newPos);
     }
 
+    handleWindowResize: () => void = () => {
+        this.updateState(this.props, this.state.position);
+    }
+
     thumbPositionToPosition(thumbPosition: number): number {
         invariant(!!this.ref, '<ScrollBar>: ref should be defined.');
 
@@ -151,7 +156,6 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
     updateState(props: ScrollBarProps, position?: number): void {
         let size = this.calculateScrollBarSize();
         let oldPosition = this.state.position;
-        console.log(props.orientation, size);
         this.setState(this.calculateState(size, props, position));
         if (position !== undefined && position !== oldPosition) {
             this.props.onScroll!(position);
@@ -161,12 +165,19 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
     setRef(ref: HTMLDivElement): void {
         this.ref = ref;
         if (ref && this.state.scrollBarSize !== this.calculateScrollBarSize()) {
-            this.updateState(this.props);
+            this.updateState(this.props, this.state.position);
         }
     }
 
+    private removeResizeEventListener: () => void = emptyFunction;
+
     componentDidMount(): void {
         this.updateState(this.props);
+        this.removeResizeEventListener = WindowEvents.listenToResize(this.handleWindowResize);
+    }
+
+    componentWillUnmount(): void {
+        this.removeResizeEventListener();
     }
 
     componentWillReceiveProps(nextProps: ScrollBarProps): void {

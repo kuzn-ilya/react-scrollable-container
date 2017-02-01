@@ -51,9 +51,17 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
         return {
             position: pos,
             scale,
+            scrollBarSize,
             thumbPosition,
             thumbSize
         };
+    }
+
+    calculateScrollBarSize(): number {
+        if (this.ref) {
+            return this.props.orientation === 'vertical' ? this.ref.offsetHeight : this.ref.offsetWidth;
+        }
+        return 0;
     }
 
     prevButtonClick: () => void = () => {
@@ -110,7 +118,7 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
     thumbPositionToPosition(thumbPosition: number): number {
         invariant(!!this.ref, '<ScrollBar>: ref should be defined.');
 
-        let size = this.props.orientation === 'vertical' ? this.ref.offsetHeight : this.ref.offsetWidth;
+        let size = this.calculateScrollBarSize();
 
         let thumbPos = thumbPosition;
         if (thumbPos < SCROLLBAR_THICKNESS) {
@@ -141,13 +149,19 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
     }
 
     updateState(props: ScrollBarProps, position?: number): void {
-        if (this.ref) {
-            let size = props.orientation === 'vertical' ? this.ref.offsetHeight : this.ref.offsetWidth;
-            let oldPosition = this.state.position;
-            this.setState(this.calculateState(size, props, position));
-            if (position !== undefined && position !== oldPosition) {
-                this.props.onScroll!(position);
-            }
+        let size = this.calculateScrollBarSize();
+        let oldPosition = this.state.position;
+        console.log(props.orientation, size);
+        this.setState(this.calculateState(size, props, position));
+        if (position !== undefined && position !== oldPosition) {
+            this.props.onScroll!(position);
+        }
+    }
+
+    setRef(ref: HTMLDivElement): void {
+        this.ref = ref;
+        if (ref && this.state.scrollBarSize !== this.calculateScrollBarSize()) {
+            this.updateState(this.props);
         }
     }
 
@@ -163,7 +177,7 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
     render(): JSX.Element {
         return (
             <div
-                ref={(ref: HTMLDivElement) => this.ref = ref}
+                ref={(ref: HTMLDivElement) => this.setRef(ref)}
                 className={classNames('scrollbar-container', {
                     'scrollbar-container-vertical': this.props.orientation === 'vertical',
                     'scrollbar-container-horizontal': this.props.orientation === 'horizontal'

@@ -4,7 +4,7 @@ import { ScrollBarState } from './ScrollBarState';
 import { ScrollBarButton } from './ScrollBarButton';
 import { ScrollBarThumb } from './ScrollBarThumb';
 
-import { classNames, WindowEvents } from '../../../utils';
+import { classNames, listenToResize } from '../../../utils';
 import * as invariant from 'fbjs/lib/invariant';
 import * as emptyFunction from 'fbjs/lib/emptyFunction';
 import { CSS_NUMBER_VARS } from '../../../stubs/cssVars';
@@ -117,6 +117,7 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
     }
 
     handleWindowResize: () => void = () => {
+        console.log(this.ref.offsetWidth, this.ref.offsetHeight);
         this.updateState(this.props, this.state.position);
     }
 
@@ -173,7 +174,7 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
 
     componentDidMount(): void {
         this.updateState(this.props);
-        this.removeResizeEventListener = WindowEvents.listenToResize(this.handleWindowResize);
+        this.removeResizeEventListener = listenToResize(this.ref, this.handleWindowResize);
     }
 
     componentWillUnmount(): void {

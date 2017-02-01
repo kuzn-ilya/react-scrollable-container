@@ -148,3 +148,8 @@ declare module "fbjs/lib/camelize" {
     var camelize: (str: string) => string;
     export = camelize;
 }
+
+declare module "fbjs/lib/getStyleProperty" {
+    var getStyleProperty: (node: HTMLElement, name: string) => string | null;
+    export = getStyleProperty;
+}

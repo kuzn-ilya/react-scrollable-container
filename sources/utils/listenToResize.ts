@@ -39,7 +39,7 @@ export function listenToResize(element: HTMLElement & HTMLElementAux, resized: (
 
     let remove: () => void = () => {
         if (rafId) {
-            cancelAnimationFrame(rafId);
+            cancelAnimationFrame.call(window, rafId);
         }
         if (element.resizedAttached) {
             element.resizedAttached.remove(resized);
@@ -139,7 +139,7 @@ export function listenToResize(element: HTMLElement & HTMLElementAux, resized: (
         dirty = newWidth !== lastWidth || newHeight !== lastHeight;
 
         if (dirty && !rafId) {
-            rafId = requestAnimationFrame(onResized);
+            rafId = requestAnimationFrame.call(window, onResized);
         }
 
         reset();

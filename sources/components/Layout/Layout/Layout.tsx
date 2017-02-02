@@ -75,16 +75,14 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
         }
     }
 
-    handleSplitterResizeEnd: (splitterIndex: number, prevIndexes: Array<number>, nextIndexes: Array<number>, newPosition: number) => void =
-        (splitterIndex, prevIndexes, nextIndexes, newPosition) => {
+    handleSplitterResizeEnd: (splitterIndex: number, prevIndexes: Array<number>, nextIndexes: Array<number>) => void =
+        (splitterIndex, prevIndexes, nextIndexes) => {
 
         let states = this.state.childrenStates;
         let splitterState = cloneLayoutChildState(states.get(splitterIndex));
 
         if (isSplitter(splitterState)) {
-            let adjustedNewPosition = this.adjustNewPosition(splitterIndex, splitterState, prevIndexes, nextIndexes, newPosition);
-            this.resizePanels(splitterIndex, splitterState, prevIndexes, nextIndexes, adjustedNewPosition);
-            this.resizeSplitter(splitterIndex, splitterState, adjustedNewPosition, adjustedNewPosition !== newPosition);
+            this.resizePanels(splitterIndex, splitterState, prevIndexes, nextIndexes, splitterState[splitterState.align]!);
         }
     }
 

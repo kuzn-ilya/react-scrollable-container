@@ -111,3 +111,45 @@ declare module "fbjs/lib/EventListener" {
     var EventListener: EventListener;
     export = EventListener;
 }
+
+declare module "fbjs/lib/requestAnimationFrame" {
+    var requestAnimationFrame: (callback: FrameRequestCallback) => number;
+    export = requestAnimationFrame;
+}
+
+declare module "fbjs/lib/ExecutionEnvironment" {
+    /**
+     * Simple, lightweight module assisting with the detection and context of
+     * Worker. Helps avoid circular dependencies and allows code to reason about
+     * whether or not they are in a Worker, even if they never include the main
+     * `ReactWorker` dependency.
+     */
+    interface ExecutionEnvironment {
+        canUseDOM: boolean;
+        canUseWorkers: boolean;
+        canUseEventListeners: boolean;
+        canUseViewport: boolean;
+        isInWorker: boolean;
+    }
+    var ExecutionEnvironment: ExecutionEnvironment;
+    export = ExecutionEnvironment;
+}
+
+declare module "fbjs/lib/camelize" {
+    /**
+     * Camelcases a hyphenated string, for example:
+     *
+     *   > camelize('background-color')
+     *   < "backgroundColor"
+     *
+     * @param {string} string
+     * @return {string}
+     */
+    var camelize: (str: string) => string;
+    export = camelize;
+}
+
+declare module "fbjs/lib/getStyleProperty" {
+    var getStyleProperty: (node: HTMLElement, name: string) => string | null;
+    export = getStyleProperty;
+}

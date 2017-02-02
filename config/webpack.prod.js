@@ -40,7 +40,7 @@ var config = merge.smart(common, {
                 test: /\.css$/,
                 loader: ExtractTextPlugin.extract(
                     'style-loader',
-                    'css-loader!' + path.join(__dirname, 'cssLoader.js?') + JSON.stringify(cssVars.CSS_VARS)
+                    'css-loader!' + path.join(__dirname, 'cssLoader.js?') + JSON.stringify(cssVars.CSS_ALL_VARS)
                 )
             }
         ]

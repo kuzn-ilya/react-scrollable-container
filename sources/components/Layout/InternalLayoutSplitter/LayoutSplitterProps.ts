@@ -6,7 +6,7 @@ export interface LayoutSplitterProps {
     readonly bottom?: number;
     readonly left?: number;
     readonly onResizing?: (newPosition: number) => void;
-    readonly onResizeEnd?: (newPosition: number) => void;
+    readonly onResizeEnd?: () => void;
     readonly align: Edge;
     readonly right?: number;
     readonly top?: number;

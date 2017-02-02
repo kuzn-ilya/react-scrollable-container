@@ -1,5 +1,6 @@
-interface CssVars {
-    [key: string]: string;
+interface CssVars<T> {
+    [key: string]: T;
 }
 
-export const CSS_VARS: CssVars;
+export const CSS_STRING_VARS: CssVars<string>;
+export const CSS_NUMBER_VARS: CssVars<number>;

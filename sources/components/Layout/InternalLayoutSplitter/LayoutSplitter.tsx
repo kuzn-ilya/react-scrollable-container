@@ -20,14 +20,13 @@ export namespace Internal {
         constructor(props?: LayoutSplitterProps) {
             super(props);
             this.handleMouseDown = this.handleMouseDown.bind(this);
-            this.handleWindowMouseMove = this.handleWindowMouseMove.bind(this);
-            this.handleReleaseMouseCapture = this.handleReleaseMouseCapture.bind(this);
+            this.handleMouseMove = this.handleMouseMove.bind(this);
+            this.handleMouseUp = this.handleMouseUp.bind(this);
             this.state = {
                 isActive: false
             };
         }
 
-        startPosition: number = 0;
         mouseCapture?: MouseCapture = undefined;
 
         handleMouseDown: React.EventHandler<React.MouseEvent<HTMLDivElement>> = (e) => {
@@ -35,35 +34,32 @@ export namespace Internal {
                 return;
             }
 
-            this.mouseCapture = MouseCapture.captureMouseEvents(e.nativeEvent, this.handleWindowMouseMove, this.handleReleaseMouseCapture);
-            let pagePosition = isVertical(this.props.align) ? e.pageY : e.pageX;
-            // tslint:disable-next-line:no-use-before-declare
-            this.startPosition = MULTIPLIER[this.props.align] * pagePosition - this.props[this.props.align];
+            this.mouseCapture = MouseCapture.captureMouseEvents(e.nativeEvent as MouseEvent, this.handleMouseMove, this.handleMouseUp);
+
             this.setState({
                 isActive: true
             });
         }
 
-        handleWindowMouseMove: (e: MouseEvent) => void = (e) => {
-            let newPosition = this.calcNewPosition(e);
+        handleMouseMove: (deltaX: number, deltaY: number) => void = (deltaX, deltaY) => {
+            let newPosition = this.calcNewPosition(deltaX, deltaY);
             this.props.onResizing!(newPosition);
         }
 
-        handleReleaseMouseCapture: (e: MouseEvent) => void = (e) => {
+        handleMouseUp: () => void = () => {
             if (this.mouseCapture) {
                 this.mouseCapture = undefined;
-                let newPosition = this.calcNewPosition(e);
-                this.props.onResizeEnd!(newPosition);
+                this.props.onResizeEnd!();
                 this.setState({
                     isActive: false
                 });
             }
         }
 
-        calcNewPosition(e: MouseEvent): number {
-            let pagePosition = isVertical(this.props.align) ? e.pageY : e.pageX;
+        calcNewPosition(deltaX: number, deltaY: number): number {
+            let delta = isVertical(this.props.align) ? deltaY : deltaX;
             // tslint:disable-next-line:no-use-before-declare
-            return MULTIPLIER[this.props.align] * pagePosition - this.startPosition;
+            return MULTIPLIER[this.props.align] * delta + this.props[this.props.align];
         }
 
         getClassName(): string | undefined {

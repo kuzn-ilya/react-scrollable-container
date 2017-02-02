@@ -1,0 +1,98 @@
+.scrollbar-container {
+    background-color: $SCROLLBAR_COLOR;
+    position: absolute;
+}
+
+.scrollbar-container-vertical {
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: $(SCROLLBAR_THICKNESS)px;
+}
+
+.scrollbar-container-horizontal {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: $(SCROLLBAR_THICKNESS)px;
+}
+
+.scrollbar-button {
+    background-color: $SCROLLBAR_BUTTON_COLOR;
+    display: inline-block;
+    position: absolute;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.scrollbar-button-disabled {
+    background-color: $SCROLLBAR_BUTTON_COLOR;
+    display: inline-block;
+    position: absolute;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.scrollbar-button:hover {
+    background-color: $SCROLLBAR_BUTTON_HOVER_COLOR;
+}
+
+.scrollbar-button-captured {
+    background-color: $SCROLLBAR_BUTTON_CAPTURED_COLOR;
+}
+
+.scrollbar-prev-button {
+    left: 0px;
+    top: 0px;
+}
+
+.scrollbar-next-button {
+    bottom: 0px;
+    right: 0px;
+}
+
+.scrollbar-up-button {
+    background-image: url(../../assets/images/btn-up.png);
+}
+
+.scrollbar-up-button-disabled {
+    background-image: url(../../assets/images/btn-up-disabled.png);
+}
+
+.scrollbar-down-button {
+    background-image: url(../../assets/images/btn-down.png);
+}
+
+.scrollbar-down-button-disabled {
+    background-image: url(../../assets/images/btn-down-disabled.png);
+}
+
+.scrollbar-left-button {
+    background-image: url(../../assets/images/btn-left.png);
+}
+
+.scrollbar-left-button-disabled {
+    background-image: url(../../assets/images/btn-left-disabled.png);
+}
+
+.scrollbar-right-button {
+    background-image: url(../../assets/images/btn-right.png);
+}
+
+.scrollbar-right-button-disabled {
+    background-image: url(../../assets/images/btn-right-disabled.png);
+}
+
+.scrollbar-thumb {
+    background-color: $SCROLLBAR_THUMB_COLOR;
+    display: inline-block;
+    position: absolute;
+}
+
+.scrollbar-thumb:hover {
+    background-color: $SCROLLBAR_THUMB_HOVER_COLOR;
+}
+
+.scrollbar-thumb-captured {
+    background-color: $SCROLLBAR_THUMB_CAPTURED_COLOR;
+}

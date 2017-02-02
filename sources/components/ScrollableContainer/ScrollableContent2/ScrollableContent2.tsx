@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import {ScrollableContent2Props, scrollableContent2PropTypes } from './ScrollableContent2Props';
-import { listenToResize, updateCSSPosition } from '../../../utils';
+import { listenToResize } from '../../../utils';
 import * as emptyFunction from 'fbjs/lib/emptyFunction';
 
 import '../../../styles/container.css';
@@ -12,9 +12,7 @@ export class ScrollableContent2 extends React.PureComponent<ScrollableContent2Pr
         contentHeight: '100%',
         contentWidth: '100%',
         dataRenderer: emptyFunction.thatReturns<React.ReactNode>(null),
-        onResize: emptyFunction,
-        scrollLeft: 0,
-        scrollTop: 0
+        onResize: emptyFunction
     };
 
     static propTypes = scrollableContent2PropTypes;
@@ -60,8 +58,6 @@ export class ScrollableContent2 extends React.PureComponent<ScrollableContent2Pr
             height: this.props.contentHeight,
             width: this.props.contentWidth
         };
-
-        updateCSSPosition(style, -this.props.scrollLeft, -this.props.scrollTop);
 
         return (
             <div style={style}

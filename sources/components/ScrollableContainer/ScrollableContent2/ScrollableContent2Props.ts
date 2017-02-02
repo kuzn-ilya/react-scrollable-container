@@ -10,8 +10,6 @@ export interface ScrollableContent2Props {
     // tslint:disable-next-line:no-any
     readonly data?: any;
     readonly onResize?: (newWidth: number, newHeight: number) => void;
-    readonly scrollLeft?: number;
-    readonly scrollTop?: number;
 }
 
 export const scrollableContent2PropTypes: ValidationMap<ScrollableContent2Props> = {
@@ -19,7 +17,5 @@ export const scrollableContent2PropTypes: ValidationMap<ScrollableContent2Props>
     contentWidth: sizePropType,
     data: PropTypes.any,
     dataRenderer: PropTypes.func,
-    onResize: PropTypes.func,
-    scrollLeft: PropTypes.number,
-    scrollTop: PropTypes.number
+    onResize: PropTypes.func
 };

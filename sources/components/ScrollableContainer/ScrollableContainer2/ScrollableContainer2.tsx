@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { classNames, listenToResize } from '../../../utils';
+import { classNames, listenToResize, updateCSSPosition } from '../../../utils';
 
 import { ScrollableContainer2Props, scrollableContainer2PropTypes } from  './ScrollableContainer2Props';
 import { ScrollableContainer2State } from  './ScrollableContainer2State';
@@ -116,6 +116,21 @@ export class ScrollableContainer2 extends React.PureComponent<ScrollableContaine
             />
         ) : null;
 
+        let style = {
+            bottom: this.props.horzScrollBarReplacerHeight ? this.props.horzScrollBarReplacerHeight + 'px' : '0px',
+            overflowX: 'hidden',
+            overflowY: 'hidden',
+            right: this.props.vertScrollBarReplacerWidth ? this.props.vertScrollBarReplacerWidth + 'px' : '0px'
+        };
+
+        let wrapperStyle = {
+            height: this.props.contentHeight,
+            width: this.props.contentWidth
+        };
+
+        updateCSSPosition(wrapperStyle, -(this.state.scrollLeft || this.props.scrollLeft!),
+            -(this.state.scrollTop || this.props.scrollTop!));
+
         return (
             <div
                 className={classNames('scrollable-container', this.props.className!)}
@@ -131,23 +146,18 @@ export class ScrollableContainer2 extends React.PureComponent<ScrollableContaine
                         'right-shadow': Boolean(this.props.showShadowForReplacer && this.props.vertScrollBarReplacerWidth),
                         'bottom-shadow': Boolean(this.props.showShadowForReplacer && this.props.horzScrollBarReplacerHeight)
                     })}
-                    style={{
-                        bottom: this.props.horzScrollBarReplacerHeight ? this.props.horzScrollBarReplacerHeight + 'px' : '0px',
-                        overflowX: 'hidden',
-                        overflowY: 'hidden',
-                        right: this.props.vertScrollBarReplacerWidth ? this.props.vertScrollBarReplacerWidth + 'px' : '0px'
-                    }}
+                    style={style}
                     ref={this.setRef}
                 >
-                    <ScrollableContent2 contentWidth={this.props.contentWidth} contentHeight={this.props.contentHeight}
-                        dataRenderer={this.props.dataRenderer}
-                        data={this.props.data}
-                        onResize={this.handleContentResize}
-                        scrollLeft={this.state.scrollLeft || this.props.scrollLeft!}
-                        scrollTop={this.state.scrollTop || this.props.scrollTop!}
-                    >
-                        {this.props.children}
-                    </ScrollableContent2>
+                    <div className="scrollable-content" style={wrapperStyle}>
+                        <ScrollableContent2 contentWidth={this.props.contentWidth} contentHeight={this.props.contentHeight}
+                            dataRenderer={this.props.dataRenderer}
+                            data={this.props.data}
+                            onResize={this.handleContentResize}
+                        >
+                            {this.props.children}
+                        </ScrollableContent2>
+                    </div>
                     {horzScrollBar}
                     {vertScrollBar}
                 </div>

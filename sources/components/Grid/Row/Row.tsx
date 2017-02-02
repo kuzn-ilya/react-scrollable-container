@@ -8,7 +8,7 @@ export class Row extends React.PureComponent<RowProps, {}> {
 
     render(): JSX.Element {
         return (
-            <div key={this.props.rowIndex} style={{height: this.props.height}}>
+            <div key={this.props.rowIndex} style={{height: this.props.height }}>
                 {this.renderCells()}
             </div>
         );

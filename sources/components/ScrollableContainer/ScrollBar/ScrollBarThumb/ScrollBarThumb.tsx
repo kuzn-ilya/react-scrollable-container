@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { ScrollBarThumbProps } from './ScrollBarThumbProps';
+import { ScrollBarThumbProps, scrollBarThumbPropTypes } from './ScrollBarThumbProps';
 import { ScrollBarThumbState } from './ScrollBarThumbState';
 
 import { CSS_NUMBER_VARS } from '../../../../stubs/cssVars';
@@ -11,7 +11,7 @@ import * as emptyFunction from 'fbjs/lib/emptyFunction';
 import '../../../../styles/scroll-bar.css';
 
 export class ScrollBarThumb extends React.PureComponent<ScrollBarThumbProps, ScrollBarThumbState> {
-    ref: HTMLDivElement;
+    static propTypes = scrollBarThumbPropTypes;
 
     static defaultProps: Partial<ScrollBarThumbProps> = {
         onDragEnd: emptyFunction,
@@ -29,10 +29,11 @@ export class ScrollBarThumb extends React.PureComponent<ScrollBarThumbProps, Scr
         };
     }
 
-    startPosition: number = 0;
-    mouseCapture?: MouseCapture = undefined;
+    private ref: HTMLDivElement;
+    private startPosition: number = 0;
+    private mouseCapture?: MouseCapture = undefined;
 
-    handleMouseDown: React.EventHandler<React.MouseEvent<HTMLDivElement>> = (e) => {
+    private handleMouseDown: React.EventHandler<React.MouseEvent<HTMLDivElement>> = (e) => {
         if (e.button !== 0) {
             return;
         }
@@ -47,12 +48,12 @@ export class ScrollBarThumb extends React.PureComponent<ScrollBarThumbProps, Scr
         });
     }
 
-    handleMouseMove: (deltaX: number, deltaY: number) => void = (deltaX, deltaY) => {
+    private handleMouseMove: (deltaX: number, deltaY: number) => void = (deltaX, deltaY) => {
         let newPosition = this.calcNewPosition(deltaX, deltaY);
         this.props.onDragging!(newPosition);
     }
 
-    handleMouseUp: () => void = () => {
+    private handleMouseUp: () => void = () => {
         if (this.mouseCapture) {
             this.mouseCapture = undefined;
 

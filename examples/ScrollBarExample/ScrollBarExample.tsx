@@ -11,6 +11,7 @@ interface CompState {
     initialPosition: number;
     position: number;
     smallChange: number;
+    showButtons: boolean;
 }
 
 export class ScrollBarExample extends React.Component<{}, CompState> {
@@ -24,10 +25,12 @@ export class ScrollBarExample extends React.Component<{}, CompState> {
             orientation: 'vertical',
             pageSize: 20,
             position: 1,
+            showButtons: true,
             smallChange: 1
         };
 
         this.handleOrientationChanged = this.handleOrientationChanged.bind(this);
+        this.handleShowButtonsChanged = this.handleShowButtonsChanged.bind(this);
 
         this.handleMinChanged = this.handleNumberPropChanged.bind(this, 'min');
         this.handleMaxChanged = this.handleNumberPropChanged.bind(this, 'max');
@@ -45,6 +48,12 @@ export class ScrollBarExample extends React.Component<{}, CompState> {
                 orientation: e.currentTarget.value
             } as CompState);
         }
+    }
+
+    handleShowButtonsChanged: (e: React.FormEvent<HTMLInputElement>) => void = (e) => {
+        this.setState({
+            showButtons: e.currentTarget.checked
+        } as CompState);
     }
 
     handleNumberPropChanged: (propName: keyof CompState, e: React.FormEvent<HTMLInputElement>) => void = (propName, e) => {
@@ -139,6 +148,12 @@ export class ScrollBarExample extends React.Component<{}, CompState> {
                             value={this.state.largeChange}
                             onChange={this.handleLargeChangeChanged}
                         />
+                        showButton:
+                        <input
+                            type="checkbox"
+                            checked={this.state.showButtons}
+                            onChange={this.handleShowButtonsChanged}
+                        />
                     </div>
                 </LayoutPanel>
                 <LayoutPanel align="client">
@@ -151,6 +166,7 @@ export class ScrollBarExample extends React.Component<{}, CompState> {
                         smallChange={this.state.smallChange}
                         largeChange={this.state.largeChange}
                         onScroll={this.handleScroll}
+                        showButtons={this.state.showButtons}
                     />
                 </LayoutPanel>
             </Layout>

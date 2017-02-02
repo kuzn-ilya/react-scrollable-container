@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ScrollBarProps } from './ScrollBarProps';
+import { ScrollBarProps, scrollBarPropTypes } from './ScrollBarProps';
 import { ScrollBarState } from './ScrollBarState';
 import { ScrollBarButton } from './ScrollBarButton';
 import { ScrollBarThumb } from './ScrollBarThumb';
@@ -16,38 +16,46 @@ const SCROLL_TIME = 50;
 const SCROLLBAR_THICKNESS = CSS_NUMBER_VARS['SCROLLBAR_THICKNESS'];
 
 export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<ScrollBarState>> {
+    static propTypes = scrollBarPropTypes;
+
     static defaultProps: Partial<ScrollBarProps> = {
-        onScroll: emptyFunction
+        onScroll: emptyFunction,
+        showButtons: false
     };
 
     constructor(props?: ScrollBarProps) {
         super(props);
 
-        this.prevButtonClick = this.prevButtonClick.bind(this);
-        this.nextButtonClick = this.nextButtonClick.bind(this);
-
+        this.handlePrevButtonClick = this.handlePrevButtonClick.bind(this);
+        this.handleNextButtonClick = this.handleNextButtonClick.bind(this);
         this.handleMouseDown = this.handleMouseDown.bind(this);
         this.handleMouseUp = this.handleMouseUp.bind(this);
         this.handleMouseMove = this.handleMouseMove.bind(this);
-
         this.handleThumbDragging = this.handleThumbDragging.bind(this);
-        this.handleWindowResize = this.handleWindowResize.bind(this);
+        this.handleResize = this.handleResize.bind(this);
 
-        this.scroll = this.scroll.bind(this);
+        this.doScroll = this.doScroll.bind(this);
+        this.setRef = this.setRef.bind(this);
 
         this.state = this.calculateState(0, this.props);
     }
 
-    calculateState(scrollBarSize: number, props: ScrollBarProps, position?: number): Partial<ScrollBarState> {
-        let pos = position === undefined ? this.props.position : position;
+    // tslint:disable-next-line:no-any
+    private timerId: any;
+    private ref: HTMLDivElement;
+    private removeResizeEventListener: () => void = emptyFunction;
+    private mousePos?: number = undefined;
 
+    private calculateState(scrollBarSize: number, props: ScrollBarProps, position?: number): Partial<ScrollBarState> {
+        let pos = position === undefined ? this.props.position : position;
+        let buttonSize = props.showButtons ? SCROLLBAR_THICKNESS : 0;
         // TODO: Check min/max and assert if it's necessary
-        let scale = (scrollBarSize - 2 * SCROLLBAR_THICKNESS) / (props.max - props.min + 1);
+        let scale = (scrollBarSize - 2 * buttonSize) / (props.max - props.min + 1);
 
         let thumbSize = props.pageSize * scale;
         let thumbPosition = (pos - props.min) * scale
             * (props.max - props.min - props.pageSize + 1) / (props.max - props.min)
-            + SCROLLBAR_THICKNESS;
+            + buttonSize;
 
         return {
             position: pos,
@@ -58,89 +66,40 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
         };
     }
 
-    calculateScrollBarSize(): number {
+    private calculateScrollBarSize(): number {
         if (this.ref) {
             return this.props.orientation === 'vertical' ? this.ref.offsetHeight : this.ref.offsetWidth;
         }
         return 0;
     }
 
-    prevButtonClick: () => void = () => {
-        this.moveBy(-this.props.smallChange);
-    }
-
-    nextButtonClick: () => void = () => {
-        this.moveBy(this.props.smallChange);
-    }
-
-    private mousePos?: number = undefined;
-
-    updateMousePos(event: React.MouseEvent<HTMLDivElement>): void {
+    private updateMousePos(event: React.MouseEvent<HTMLDivElement>): void {
         this.mousePos = this.props.orientation === 'horizontal'
             ? event.pageX - this.ref.getBoundingClientRect().left
             : event.pageY - this.ref.getBoundingClientRect().top;
     }
 
-    // tslint:disable-next-line:no-any
-    private timerId: any;
-
-    scroll: () => void = () => {
-        if (this.mousePos < this.state.thumbPosition) {
-            this.moveBy(-this.props.largeChange);
-            this.timerId = setTimeout(this.scroll, SCROLL_TIME);
-        } else if (this.mousePos > this.state.thumbPosition + this.state.thumbSize) {
-            this.moveBy(this.props.largeChange);
-            this.timerId = setTimeout(this.scroll, SCROLL_TIME);
-        }
-    }
-
-    handleMouseDown: (event: React.MouseEvent<HTMLDivElement>) => void = (event) => {
-        this.updateMousePos(event);
-        this.scroll();
-    }
-
-    handleMouseMove: (event: React.MouseEvent<HTMLDivElement>) => void = (event) => {
-        this.updateMousePos(event);
-    }
-
-    handleMouseUp: (event: React.MouseEvent<HTMLDivElement>) => void = (event) => {
-        this.mousePos = undefined;
-        if (this.timerId) {
-            clearTimeout(this.timerId);
-            this.timerId = undefined;
-        }
-    }
-
-    handleThumbDragging: (newPosition: number) => void = (newPosition) => {
-        let newPos = this.thumbPositionToPosition(newPosition);
-        this.updateState(this.props, newPos);
-    }
-
-    handleWindowResize: () => void = () => {
-        console.log(this.ref.offsetWidth, this.ref.offsetHeight);
-        this.updateState(this.props, this.state.position);
-    }
-
-    thumbPositionToPosition(thumbPosition: number): number {
+    private thumbPositionToPosition(thumbPosition: number): number {
         invariant(!!this.ref, '<ScrollBar>: ref should be defined.');
 
         let size = this.calculateScrollBarSize();
+        let buttonSize = this.props.showButtons ? SCROLLBAR_THICKNESS : 0;
 
         let thumbPos = thumbPosition;
-        if (thumbPos < SCROLLBAR_THICKNESS) {
-            thumbPos = SCROLLBAR_THICKNESS;
-        } else if (thumbPos + this.state.thumbSize > size - SCROLLBAR_THICKNESS) {
-            thumbPos = size - SCROLLBAR_THICKNESS - this.state.thumbSize;
+        if (thumbPos < buttonSize) {
+            thumbPos = buttonSize;
+        } else if (thumbPos + this.state.thumbSize > size - buttonSize) {
+            thumbPos = size - buttonSize - this.state.thumbSize;
         }
 
-        let pos = (thumbPos - SCROLLBAR_THICKNESS) * (this.props.max - this.props.min)
+        let pos = (thumbPos - buttonSize) * (this.props.max - this.props.min)
             / (this.props.max - this.props.min - this.props.pageSize + 1) / this.state.scale
             + this.props.min;
 
         return Math.round(pos);
     }
 
-    moveBy(delta: number): void {
+    private moveBy(delta: number): void {
         let newPosition = this.state.position + delta;
 
         if (delta < 0 && newPosition < this.props.min) {
@@ -154,7 +113,7 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
         this.updateState(this.props, newPosition);
     }
 
-    updateState(props: ScrollBarProps, position?: number): void {
+    private updateState(props: ScrollBarProps, position?: number): void {
         let size = this.calculateScrollBarSize();
         let oldPosition = this.state.position;
         this.setState(this.calculateState(size, props, position));
@@ -163,18 +122,60 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
         }
     }
 
-    setRef(ref: HTMLDivElement): void {
+    private setRef: (ref: HTMLDivElement) => void = (ref) => {
         this.ref = ref;
         if (ref && this.state.scrollBarSize !== this.calculateScrollBarSize()) {
             this.updateState(this.props, this.state.position);
         }
     }
 
-    private removeResizeEventListener: () => void = emptyFunction;
+    private handlePrevButtonClick: () => void = () => {
+        this.moveBy(-this.props.smallChange);
+    }
+
+    private handleNextButtonClick: () => void = () => {
+        this.moveBy(this.props.smallChange);
+    }
+
+    private handleMouseDown: (event: React.MouseEvent<HTMLDivElement>) => void = (event) => {
+        this.updateMousePos(event);
+        this.doScroll();
+    }
+
+    private handleMouseMove: (event: React.MouseEvent<HTMLDivElement>) => void = (event) => {
+        this.updateMousePos(event);
+    }
+
+    private handleMouseUp: (event: React.MouseEvent<HTMLDivElement>) => void = (event) => {
+        this.mousePos = undefined;
+        if (this.timerId) {
+            clearTimeout(this.timerId);
+            this.timerId = undefined;
+        }
+    }
+
+    private handleThumbDragging: (newPosition: number) => void = (newPosition) => {
+        let newPos = this.thumbPositionToPosition(newPosition);
+        this.updateState(this.props, newPos);
+    }
+
+    private handleResize: () => void = () => {
+        this.updateState(this.props, this.state.position);
+    }
+
+    private doScroll: () => void = () => {
+        if (this.mousePos < this.state.thumbPosition) {
+            this.moveBy(-this.props.largeChange);
+            this.timerId = setTimeout(this.doScroll, SCROLL_TIME);
+        } else if (this.mousePos > this.state.thumbPosition + this.state.thumbSize) {
+            this.moveBy(this.props.largeChange);
+            this.timerId = setTimeout(this.doScroll, SCROLL_TIME);
+        }
+    }
 
     componentDidMount(): void {
         this.updateState(this.props);
-        this.removeResizeEventListener = listenToResize(this.ref, this.handleWindowResize);
+        this.removeResizeEventListener = listenToResize(this.ref, this.handleResize);
     }
 
     componentWillUnmount(): void {
@@ -187,9 +188,25 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
     }
 
     render(): JSX.Element {
+        let prevButton = this.props.showButtons ?
+            <ScrollBarButton
+                type={this.props.orientation === 'vertical' ? 'top' : 'left'}
+                size={SCROLLBAR_THICKNESS}
+                onScroll={this.handlePrevButtonClick}
+                disabled={this.state.position <= this.props.min}
+            /> : null;
+
+        let nextButton = this.props.showButtons ?
+            <ScrollBarButton
+                type={this.props.orientation === 'vertical' ? 'bottom' : 'right'}
+                size={SCROLLBAR_THICKNESS}
+                onScroll={this.handleNextButtonClick}
+                disabled={this.state.position >= this.props.max}
+            /> : null;
+
         return (
             <div
-                ref={(ref: HTMLDivElement) => this.setRef(ref)}
+                ref={this.setRef}
                 className={classNames('scrollbar-container', {
                     'scrollbar-container-vertical': this.props.orientation === 'vertical',
                     'scrollbar-container-horizontal': this.props.orientation === 'horizontal'
@@ -198,12 +215,7 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
                 onMouseUp={this.handleMouseUp}
                 onMouseMove={this.handleMouseMove}
             >
-                <ScrollBarButton
-                    type={this.props.orientation === 'vertical' ? 'top' : 'left'}
-                    size={SCROLLBAR_THICKNESS}
-                    onScroll={this.prevButtonClick}
-                    disabled={this.state.position <= this.props.min}
-                />
+                {prevButton}
                 <ScrollBarThumb
                     orientation={this.props.orientation}
                     thickness={SCROLLBAR_THICKNESS}
@@ -211,15 +223,8 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
                     size={this.state.thumbSize!}
                     onDragging={this.handleThumbDragging}
                 />
-                <ScrollBarButton
-                    type={this.props.orientation === 'vertical' ? 'bottom' : 'right'}
-                    size={SCROLLBAR_THICKNESS}
-                    onScroll={this.nextButtonClick}
-                    disabled={this.state.position >= this.props.max}
-                />
+                {nextButton}
             </div>
         );
     }
-
-    private ref: HTMLDivElement;
 }

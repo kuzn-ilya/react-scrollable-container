@@ -18,9 +18,9 @@ export class ScrollBarButton extends React.PureComponent<ScrollBarButtonProps, S
     constructor(props?: ScrollBarButtonProps) {
         super(props);
 
-        this.buttonMouseDown = this.buttonMouseDown.bind(this);
-        this.buttonMouseUp = this.buttonMouseUp.bind(this);
-        this.scroll = this.scroll.bind(this);
+        this.handleMouseDown = this.handleMouseDown.bind(this);
+        this.handleMouseUp = this.handleMouseUp.bind(this);
+        this.doScroll = this.doScroll.bind(this);
     }
 
     render(): JSX.Element {
@@ -48,32 +48,31 @@ export class ScrollBarButton extends React.PureComponent<ScrollBarButtonProps, S
                         'scrollbar-right-button-disabled': this.props.type === 'right' && !!this.props.disabled
                     }
                 )}
-                onMouseDown={this.buttonMouseDown}
-                onMouseUp={this.buttonMouseUp}
+                onMouseDown={this.handleMouseDown}
+                onMouseUp={this.handleMouseUp}
             >
             </div>
         );
     }
 
     // tslint:disable-next-line:no-any
-    timerId: any;
-    scroll: () => void = () => {
+    private timerId: any;
+
+    private doScroll: () => void = () => {
         if (!this.props.disabled) {
             this.props.onScroll!();
-            this.timerId = setTimeout(this.scroll, SCROLL_TIME);
+            this.timerId = setTimeout(this.doScroll, SCROLL_TIME);
         }
     }
 
-    buttonMouseDown: (event: React.MouseEvent<HTMLDivElement>) => void = (event) => {
+    private handleMouseDown: (event: React.MouseEvent<HTMLDivElement>) => void = (event) => {
         event.preventDefault();
-        event.stopPropagation();
 
-        this.scroll();
+        this.doScroll();
     }
 
-    buttonMouseUp: (event: React.MouseEvent<HTMLDivElement>) => void = (event) => {
+    private handleMouseUp: (event: React.MouseEvent<HTMLDivElement>) => void = (event) => {
         event.preventDefault();
-        event.stopPropagation();
 
         if (this.timerId) {
             clearTimeout(this.timerId);

@@ -204,6 +204,13 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
                 disabled={this.state.position >= this.props.max}
             /> : null;
 
+        let style = {
+            bottom: this.props.orientation === 'vertical' ? this.props.rightOrBottom : undefined,
+            left: this.props.orientation === 'horizontal' ? this.props.leftOrTop : undefined,
+            right: this.props.orientation === 'horizontal' ? this.props.rightOrBottom : undefined,
+            top: this.props.orientation === 'vertical' ? this.props.leftOrTop : undefined
+        };
+
         return (
             <div
                 ref={this.setRef}
@@ -214,6 +221,7 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
                 onMouseDown={this.handleMouseDown}
                 onMouseUp={this.handleMouseUp}
                 onMouseMove={this.handleMouseMove}
+                style={style}
             >
                 {prevButton}
                 <ScrollBarThumb

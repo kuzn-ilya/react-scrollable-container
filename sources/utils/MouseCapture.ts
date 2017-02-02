@@ -51,8 +51,8 @@ export class MouseCapture {
 
         if (this.animationFrameID === undefined) {
             // The mouse may move faster then the animation frame does.
-            // Use `requestAnimationFramePolyfill` to avoid over-updating.
-            this.animationFrameID = requestAnimationFrame(this.didMouseMove);
+            // Use `requestAnimationFrame` to avoid over-updating.
+            this.animationFrameID = requestAnimationFrame.call(window, this.didMouseMove);
         }
 
         this.x += (x - this.x);
@@ -91,7 +91,7 @@ export class MouseCapture {
         this.removeMouseMoveEventListener();
 
         if (this.animationFrameID !== undefined) {
-            cancelAnimationFrame(this.animationFrameID);
+            cancelAnimationFrame.call(window, this.animationFrameID);
             this.animationFrameID = undefined;
         }
     }

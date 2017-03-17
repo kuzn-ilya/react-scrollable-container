@@ -48,7 +48,7 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
     render(): JSX.Element {
         return (
             <Layout height="100%" width="100%">
-                <LayoutPanel align="left" width={this.state.fixedColumnsWidth || 0} showRightShadow={this.state.scrollLeft > 0}>
+                <LayoutPanel align="left" width={this.state.fixedColumnsWidth || 0} showRightShadow={(this.state.scrollLeft || 0)  > 0}>
                     <ColumnGroup width={this.state.fixedColumnsWidth || 0}
                         ref={(ref: ColumnGroup) => this.fixedColumnGroup = ref }
                         headerHeight={this.props.headerHeight}

@@ -110,7 +110,7 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
             let panelState = cloneLayoutChildState(states.get(value));
             if (isPanel(panelState)) {
                 // TODO: Asserting: prev for splitter must be a panel and have the same align
-                panelState[getMeasurementByAlign(splitterAlign)] = newPosition - panelState[splitterAlign];
+                panelState[getMeasurementByAlign(splitterAlign)] = newPosition - (panelState[splitterAlign] || 0);
                 states = states.set(value, panelState);
             }
         });
@@ -121,7 +121,7 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                 if (isPanel(panelState) && panelState.align !== getOppositeEdge(splitterAlign)
                     && panelState.align === splitterAlign) {
                     panelState[getMeasurementByAlign(splitterAlign)] =
-                        panelState[getMeasurementByAlign(splitterAlign)] - newPosition + panelState[splitterAlign];
+                        (panelState[getMeasurementByAlign(splitterAlign)] || 0) - newPosition + (panelState[splitterAlign] || 0);
                 }
                 panelState[splitterAlign] = newPosition;
                 states = states.set(value, panelState);
@@ -140,15 +140,16 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
         prevIndexes.forEach((value) => {
             let panelState = states.get(value);
             if (isPanel(panelState)) {
-                let minMeasurement = panelState[getMinMeasurementByAlign(splitterAlign)];
-                let maxMeasurement = panelState[getMaxMeasurementByAlign(splitterAlign)];
-                let newMeasurement = result - panelState[splitterAlign];
+                let minMeasurement = panelState[getMinMeasurementByAlign(splitterAlign)] || 0;
+                let maxMeasurement = panelState[getMaxMeasurementByAlign(splitterAlign)] || 0;
+                let boundaryCoord = panelState[splitterAlign] || 0;
+                let newMeasurement = result - boundaryCoord;
                 if (minMeasurement > newMeasurement) {
-                    result = minMeasurement + panelState[splitterAlign];
+                    result = minMeasurement + boundaryCoord;
                     newMeasurement = minMeasurement!;
                 }
                 if (maxMeasurement < newMeasurement) {
-                    result = maxMeasurement + panelState[splitterAlign];
+                    result = maxMeasurement + boundaryCoord;
                 }
             }
         });
@@ -159,15 +160,17 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                 if (isPanel(panelState) && panelState.align !== getOppositeEdge(splitterAlign)
                     && panelState.align === splitterAlign) {
 
-                    let minMeasurement = panelState[getMinMeasurementByAlign(splitterAlign)];
-                    let maxMeasurement = panelState[getMaxMeasurementByAlign(splitterAlign)];
-                    let newMeasurement = panelState[getMeasurementByAlign(splitterAlign)] - result + panelState[splitterAlign];
+                    let minMeasurement = panelState[getMinMeasurementByAlign(splitterAlign)] || 0;
+                    let maxMeasurement = panelState[getMaxMeasurementByAlign(splitterAlign)] || 0;
+                    let measurement = panelState[getMeasurementByAlign(splitterAlign)] || 0;
+                    let boundaryCoord = panelState[splitterAlign] || 0;
+                    let newMeasurement = measurement - result + boundaryCoord;
                     if (minMeasurement > newMeasurement) {
-                        result = panelState[getMeasurementByAlign(splitterAlign)] + panelState[splitterAlign] - minMeasurement;
+                        result = measurement + boundaryCoord - minMeasurement;
                         newMeasurement = minMeasurement!;
                     }
                     if (maxMeasurement < newMeasurement) {
-                        result = panelState[getMeasurementByAlign(splitterAlign)] + panelState[splitterAlign] - maxMeasurement;
+                        result = measurement + boundaryCoord - maxMeasurement;
                     }
                 }
             }
@@ -244,7 +247,7 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
 function isPanelPreviousForSplitter(sibling: LayoutChildState, splitter: LayoutSplitterChildState): boolean {
     // Only panel can be previous sibling of splitter
     if (isPanel(sibling)) {
-        return splitter[splitter.align] === sibling[splitter.align] + sibling[getMeasurementByAlign(splitter.align)];
+        return splitter[splitter.align] === (sibling[splitter.align] || 0) + (sibling[getMeasurementByAlign(splitter.align)] || 0);
     } else {
         return false;
     }
@@ -344,7 +347,7 @@ function calculatePanelState(newPositions: Positions, panelProps: LayoutPanelPro
 
     newPositions.align = align === 'client' ? undefined : align;
     if (align !== 'client') {
-        newPositions[align] += panelProps[getMeasurementByAlign(align)];
+        newPositions[align] = (newPositions[align] || 0) + (panelProps[getMeasurementByAlign(align)] || 0);
     }
 
     return state;

@@ -26,7 +26,7 @@ export function scryRenderedComponentsWithType<P, S, P2, S2,
     C extends React.ComponentClass<P2>>(
     root: React.Component<P, S> | void | Element,
     type: React.ClassType<P2, T, C>): T[] {
-    if (typeof root === 'undefined' || typeof root === 'Element') {
+    if (typeof root === 'undefined' || root instanceof Element) {
         return [];
     }
     return TestUtils.scryRenderedComponentsWithType(root, type) as T[];

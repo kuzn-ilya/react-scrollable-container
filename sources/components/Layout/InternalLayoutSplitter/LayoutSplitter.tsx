@@ -59,7 +59,7 @@ export namespace Internal {
         calcNewPosition(deltaX: number, deltaY: number): number {
             let delta = isVertical(this.props.align) ? deltaY : deltaX;
             // tslint:disable-next-line:no-use-before-declare
-            return MULTIPLIER[this.props.align] * delta + this.props[this.props.align];
+            return MULTIPLIER[this.props.align] * delta + (this.props[this.props.align] || 0);
         }
 
         getClassName(): string | undefined {
@@ -77,11 +77,11 @@ export namespace Internal {
                         heigth: 6,
                         left: this.props.left,
                         right: this.props.right,
-                        top: this.props.top - 3
+                        top: (this.props.top || 0) - 3
                     };
                 case 'bottom':
                     return {
-                        bottom: this.props.bottom - 3,
+                        bottom: (this.props.bottom || 0) - 3,
                         heigth: 6,
                         left: this.props.left,
                         right: this.props.right
@@ -89,14 +89,14 @@ export namespace Internal {
                 case 'left':
                     return {
                         bottom: this.props.bottom,
-                        left: this.props.left - 3,
+                        left: (this.props.left || 0) - 3,
                         top: this.props.top,
                         width: 6
                     };
                 case 'right':
                     return {
                         bottom: this.props.bottom,
-                        right: this.props.right - 3,
+                        right: (this.props.right || 0) - 3,
                         top: this.props.top,
                         width: 6
                     };

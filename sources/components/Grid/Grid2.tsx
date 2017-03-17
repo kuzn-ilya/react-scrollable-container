@@ -43,7 +43,7 @@ export class Grid2 extends React.PureComponent<Grid2Props, Grid2State> {
     render(): JSX.Element {
         return (
             <Layout height="100%" width="100%">
-                <LayoutPanel align="left" width={this.state.fixedColumnsWidth || 0} showRightShadow={this.state.scrollLeft > 0}>
+                <LayoutPanel align="left" width={this.state.fixedColumnsWidth || 0} showRightShadow={(this.state.scrollLeft || 0) > 0}>
                     <ColumnGroup2 width={this.state.fixedColumnsWidth || 0}
                         headerHeight={this.props.headerHeight}
                         showEdgeForTheLeftCell

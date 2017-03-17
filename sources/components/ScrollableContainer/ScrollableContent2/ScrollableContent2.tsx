@@ -47,8 +47,8 @@ export class ScrollableContent2 extends React.PureComponent<ScrollableContent2Pr
             wrapper = (
                 <div className="scrollable-container-wrapper"
                     style={{
-                        left: this.props.contentWidth === '100%' ? 0 : this.props.contentWidth - 1,
-                        top: this.props.contentHeight === '100%' ? 0 : this.props.contentHeight - 1
+                        left: this.props.contentWidth === '100%' ? 0 : (this.props.contentWidth || 0) - 1,
+                        top: this.props.contentHeight === '100%' ? 0 : (this.props.contentHeight || 0) - 1
                     }}
                 />
             );

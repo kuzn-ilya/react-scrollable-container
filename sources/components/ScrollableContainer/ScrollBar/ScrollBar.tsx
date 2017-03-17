@@ -95,21 +95,22 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
         let buttonSize = this.props.showButtons ? SCROLLBAR_THICKNESS : 0;
 
         let thumbPos = thumbPosition;
+        let thumbSize = this.state.thumbSize || 0;
         if (thumbPos < buttonSize) {
             thumbPos = buttonSize;
-        } else if (thumbPos + this.state.thumbSize > size - buttonSize) {
-            thumbPos = size - buttonSize - this.state.thumbSize;
+        } else if (thumbPos + thumbSize > size - buttonSize) {
+            thumbPos = size - buttonSize - thumbSize;
         }
 
         let pos = (thumbPos - buttonSize) * (this.props.max - this.props.min)
-            / (this.props.max - this.props.min - this.state.pageSize + 1) / this.state.scale
+            / (this.props.max - this.props.min - (this.state.pageSize || 0) + 1) / (this.state.scale || 1)
             + this.props.min;
 
         return Math.round(pos);
     }
 
     private moveBy(delta: number): void {
-        let newPosition = this.state.position + delta;
+        let newPosition = (this.state.position || 0) + delta;
 
         if (delta < 0 && newPosition < this.props.min) {
             newPosition = this.props.min;
@@ -173,10 +174,12 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
     }
 
     private doScroll: () => void = () => {
-        if (this.mousePos < this.state.thumbPosition) {
+        let mousePos = this.mousePos || 0;
+        let thumbPosition = this.state.thumbPosition || 0;
+        if (mousePos < thumbPosition) {
             this.moveBy(-this.props.largeChange);
             this.timerId = setTimeout(this.doScroll, SCROLL_TIME);
-        } else if (this.mousePos > this.state.thumbPosition + this.state.thumbSize) {
+        } else if (mousePos > thumbPosition + (this.state.thumbSize || 0)) {
             this.moveBy(this.props.largeChange);
             this.timerId = setTimeout(this.doScroll, SCROLL_TIME);
         }
@@ -197,12 +200,13 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
     }
 
     render(): JSX.Element {
+        let position = this.state.position || 0;
         let prevButton = this.props.showButtons ?
             <ScrollBarButton
                 type={this.props.orientation === 'vertical' ? 'top' : 'left'}
                 size={SCROLLBAR_THICKNESS}
                 onScroll={this.handlePrevButtonClick}
-                disabled={this.state.position <= this.props.min}
+                disabled={position <= this.props.min}
             /> : null;
 
         let nextButton = this.props.showButtons ?
@@ -210,7 +214,7 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
                 type={this.props.orientation === 'vertical' ? 'bottom' : 'right'}
                 size={SCROLLBAR_THICKNESS}
                 onScroll={this.handleNextButtonClick}
-                disabled={this.state.position >= this.props.max}
+                disabled={position >= this.props.max}
             /> : null;
 
         let style = {

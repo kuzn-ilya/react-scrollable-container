@@ -6,7 +6,7 @@
     font-family: 'Roboto', sans-serif;
     line-height: 18px;
     height: 18px;
-    vertical-align: middle;
+    vertical-align: top;
 }
 
 .cell, .cell-first {
@@ -32,7 +32,7 @@
     font-family: 'Roboto', sans-serif;
     line-height: 18px;
     height: 18px;
-    vertical-align: middle;
+    vertical-align: top;
 }
 
 .header-cell, .header-cell-first {

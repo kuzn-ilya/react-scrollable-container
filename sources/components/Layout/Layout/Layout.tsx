@@ -140,15 +140,15 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
         prevIndexes.forEach((value) => {
             let panelState = states.get(value);
             if (isPanel(panelState)) {
-                let minMeasurement = panelState[getMinMeasurementByAlign(splitterAlign)] || 0;
-                let maxMeasurement = panelState[getMaxMeasurementByAlign(splitterAlign)] || 0;
+                let minMeasurement = panelState[getMinMeasurementByAlign(splitterAlign)];
+                let maxMeasurement = panelState[getMaxMeasurementByAlign(splitterAlign)];
                 let boundaryCoord = panelState[splitterAlign] || 0;
                 let newMeasurement = result - boundaryCoord;
-                if (minMeasurement > newMeasurement) {
+                if (minMeasurement && minMeasurement > newMeasurement) {
                     result = minMeasurement + boundaryCoord;
                     newMeasurement = minMeasurement!;
                 }
-                if (maxMeasurement < newMeasurement) {
+                if (maxMeasurement && maxMeasurement < newMeasurement) {
                     result = maxMeasurement + boundaryCoord;
                 }
             }
@@ -160,16 +160,16 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                 if (isPanel(panelState) && panelState.align !== getOppositeEdge(splitterAlign)
                     && panelState.align === splitterAlign) {
 
-                    let minMeasurement = panelState[getMinMeasurementByAlign(splitterAlign)] || 0;
-                    let maxMeasurement = panelState[getMaxMeasurementByAlign(splitterAlign)] || 0;
+                    let minMeasurement = panelState[getMinMeasurementByAlign(splitterAlign)];
+                    let maxMeasurement = panelState[getMaxMeasurementByAlign(splitterAlign)];
                     let measurement = panelState[getMeasurementByAlign(splitterAlign)] || 0;
                     let boundaryCoord = panelState[splitterAlign] || 0;
                     let newMeasurement = measurement - result + boundaryCoord;
-                    if (minMeasurement > newMeasurement) {
+                    if (minMeasurement && minMeasurement > newMeasurement) {
                         result = measurement + boundaryCoord - minMeasurement;
                         newMeasurement = minMeasurement!;
                     }
-                    if (maxMeasurement < newMeasurement) {
+                    if (maxMeasurement && maxMeasurement < newMeasurement) {
                         result = measurement + boundaryCoord - maxMeasurement;
                     }
                 }

@@ -11,6 +11,7 @@ export interface ColumnGroupProps {
 
     readonly onHorizontalScrollVisibilityChanged?: (visible: boolean, thumbHeight: number) => void;
     readonly onScrollPosChanged?: (left: number, top: number) => void;
+    readonly onResize?: () => void;
 
     readonly overflowX: Overflow;
     readonly overflowY: Overflow;
@@ -31,6 +32,7 @@ export const columnGroupPropTypes: ValidationMap<ColumnGroupProps> = {
     headerHeight: PropTypes.number.isRequired,
 
     onHorizontalScrollVisibilityChanged: PropTypes.func,
+    onResize: PropTypes.func,
     onScrollPosChanged: PropTypes.func,
 
     overflowX: overflowPropType.isRequired,

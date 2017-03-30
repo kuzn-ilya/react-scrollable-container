@@ -78,6 +78,7 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
                 className={classNames({
                     'right-shadow': Boolean(this.props.showRightShadow)
                 })}
+                onResize={this.props.onResize}
             >
                 <LayoutPanel align="top" height={this.props.headerHeight}>
                     <ScrollableContainer

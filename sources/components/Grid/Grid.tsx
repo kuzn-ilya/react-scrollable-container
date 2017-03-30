@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 
 import { GridProps, gridPropTypes } from './GridProps';
 import { GridState } from './GridState';
@@ -28,10 +29,12 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
 
         this.handleVerticalScrollPosChanged = this.handleVerticalScrollPosChanged.bind(this);
         this.handleHorizontalScrollVisibilityChanged = this.handleHorizontalScrollVisibilityChanged.bind(this);
+        this.handleScrollableColumnsResize = this.handleScrollableColumnsResize.bind(this);
         this.state = this.calculateState();
     }
 
     handleVerticalScrollPosChanged: (scrollLeft: number, scrollTop: number) => void = (scrollLeft, scrollTop) => {
+        console.log('handleVerticalScrollPosChanged begin');
         if (this.fixedColumnGroup) {
             this.fixedColumnGroup.setScrollTop(scrollTop);
         }
@@ -41,14 +44,19 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
                 scrollTop
             });
         }
+        console.log('handleVerticalScrollPosChanged end');
     }
 
     fixedColumnGroup: ColumnGroup;
+    scrollableColumnGroup: ColumnGroup;
 
     render(): JSX.Element {
         return (
             <Layout height="100%" width="100%">
-                <LayoutPanel align="left" width={this.state.fixedColumnsWidth || 0} showRightShadow={(this.state.scrollLeft || 0)  > 0}>
+                <LayoutPanel align="left"
+                    width={this.state.fixedColumnsWidth || 0}
+                    showRightShadow={(this.state.scrollLeft || 0)  > 0}
+                >
                     <ColumnGroup width={this.state.fixedColumnsWidth || 0}
                         ref={(ref: ColumnGroup) => this.fixedColumnGroup = ref }
                         headerHeight={this.props.headerHeight}
@@ -62,8 +70,10 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
                     />
                 </LayoutPanel>
                 <LayoutSplitter />
-                <LayoutPanel align="client">
+                <LayoutPanel align="client"
+                >
                     <ColumnGroup width="100%"
+                        ref={(ref: ColumnGroup) => this.scrollableColumnGroup = ref }
                         headerHeight={this.props.headerHeight}
                         rowData={this.props.rowData}
                         columnProps={this.state.scrollableColumns!}
@@ -72,6 +82,7 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
                         overflowY="auto"
                         onScrollPosChanged={this.handleVerticalScrollPosChanged}
                         onHorizontalScrollVisibilityChanged={this.handleHorizontalScrollVisibilityChanged}
+                        onResize={this.handleScrollableColumnsResize}
                     />
                 </LayoutPanel>
             </Layout>
@@ -79,19 +90,58 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
     }
 
     handleHorizontalScrollVisibilityChanged: (visible: boolean, thumbHeight: number) => void = (visible: boolean, thumbHeight: number) => {
+        console.log('handleHorizontalScrollVisibilityChanged begin');
         this.setState({
             colsThumbHeight: thumbHeight
         });
+        console.log('handleHorizontalScrollVisibilityChanged end');
     }
 
-    calculateState(): GridState {
-        let columns = React.Children
+    handleScrollableColumnsResize: () => void = () => {
+        console.log('handleScrollableColumnsResize begin');
+        let scrollableColumnMinWidth = this.calculateScrollableColumnsMinWidth();
+        this.setState({
+            scrollableColumnMinWidth
+        });
+        console.log('handleScrollableColumnsResize end');
+    }
+
+    getColumnProps(): ColumnProps[] {
+        return React.Children
             .toArray(this.props.children).filter((value: React.ReactChild): boolean =>
                 typeof value !== 'string' && typeof value !== 'number' && value.type === Column
             )
             .map((value: React.ReactChild) =>
                 (value as React.ReactElement<ColumnProps>).props
             );
+    }
+
+    calculateScrollableColumnsMinWidth(firstScrollableColumnWidth?: number): number | undefined {
+        let adjustedFirstScrollableColumnWidth = 0;
+        if (firstScrollableColumnWidth !== undefined) {
+            adjustedFirstScrollableColumnWidth = firstScrollableColumnWidth;
+        } else if (this.props.fixedColumnCount !== undefined) {
+            let columnsProps = this.getColumnProps();
+            if (columnsProps.length > this.props.fixedColumnCount) {
+                let firstColumnProps = columnsProps[this.props.fixedColumnCount];
+                adjustedFirstScrollableColumnWidth = firstColumnProps.width;
+            }
+        }
+
+        let scrollableColumnMinWidth = undefined;
+
+        if (this.scrollableColumnGroup) {
+            let domNode = ReactDOM.findDOMNode(this.scrollableColumnGroup);
+            if (domNode) {
+                scrollableColumnMinWidth = domNode.clientWidth - adjustedFirstScrollableColumnWidth;
+            }
+        }
+
+        return scrollableColumnMinWidth;
+    }
+
+    calculateState(): GridState {
+        let columns = this.getColumnProps();
 
         let fixedColumns = columns.slice(0, this.props.fixedColumnCount);
         let scrollableColumns = columns.slice(this.props.fixedColumnCount);
@@ -101,9 +151,25 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
             .map((value: ColumnProps): number => value.width)
             .reduce((prevValue: number, currValue: number) => prevValue + currValue, 0);
 
+        let fixedColumnMinWidth = fixedColumns
+            .slice(0, -1)
+            .map((value: ColumnProps): number => value.width)
+            .reduce((prevValue: number, currValue: number) => prevValue + currValue, 0);
+
+        let scrollableColumnMinWidth = undefined;
+
+        if (this.scrollableColumnGroup) {
+            let firstColumnWidth = scrollableColumns.slice(0, 1)
+                    .map((value: ColumnProps): number => value.width)
+                    .reduce((prevValue: number, currValue: number) => prevValue + currValue, 0);
+            scrollableColumnMinWidth = this.calculateScrollableColumnsMinWidth(firstColumnWidth);
+        }
+
         return {
             fixedColumns,
+            fixedColumnMinWidth,
             fixedColumnsWidth,
+            scrollableColumnMinWidth,
             scrollableColumns
         };
     }

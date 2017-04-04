@@ -9,11 +9,13 @@ export interface ScrollableContentProps {
     readonly dataRenderer?: (data: any) => React.ReactNode;
     // tslint:disable-next-line:no-any
     readonly data?: any;
+    readonly onResize?: (newWidth: number, newHeight: number) => void;
 }
 
 export const scrollableContentPropTypes: ValidationMap<ScrollableContentProps> = {
     contentHeight: sizePropType,
     contentWidth: sizePropType,
     data: PropTypes.any,
-    dataRenderer: PropTypes.func
+    dataRenderer: PropTypes.func,
+    onResize: PropTypes.func
 };

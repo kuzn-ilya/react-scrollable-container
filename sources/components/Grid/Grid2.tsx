@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { List } from 'immutable';
 
 import { Grid2Props, grid2PropTypes } from './Grid2Props';
 import { Grid2State } from './Grid2State';
@@ -97,9 +98,9 @@ export class Grid2 extends React.PureComponent<Grid2Props, Grid2State> {
             .reduce((prevValue: number, currValue: number) => prevValue + currValue, 0);
 
         return {
-            fixedColumns,
+            fixedColumns: List(fixedColumns),
             fixedColumnsWidth,
-            scrollableColumns
+            scrollableColumns: List(scrollableColumns)
         };
     }
 }

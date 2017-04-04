@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import { List } from 'immutable';
 
 import { GridProps, gridPropTypes } from './GridProps';
 import { GridState } from './GridState';
@@ -7,6 +8,9 @@ import { Column } from './Column';
 import { ColumnGroup } from './ColumnGroup';
 import { ColumnProps } from './Column/ColumnProps';
 import { Layout, LayoutPanel, LayoutSplitter } from '../Layout';
+
+import * as objectAssign from 'object-assign';
+
 
 // import { classNames } from '../../utils/classNames';
 
@@ -34,7 +38,6 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
     }
 
     handleVerticalScrollPosChanged: (scrollLeft: number, scrollTop: number) => void = (scrollLeft, scrollTop) => {
-        console.log('handleVerticalScrollPosChanged begin');
         if (this.fixedColumnGroup) {
             this.fixedColumnGroup.setScrollTop(scrollTop);
         }
@@ -44,15 +47,17 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
                 scrollTop
             });
         }
-        console.log('handleVerticalScrollPosChanged end');
     }
 
     fixedColumnGroup: ColumnGroup;
     scrollableColumnGroup: ColumnGroup;
+    ref: Layout;
 
     render(): JSX.Element {
         return (
-            <Layout height="100%" width="100%">
+            <Layout height="100%" width="100%"
+                ref={(ref) => this.ref = ref}
+            >
                 <LayoutPanel align="left"
                     width={this.state.fixedColumnsWidth || 0}
                     showRightShadow={(this.state.scrollLeft || 0)  > 0}
@@ -90,20 +95,25 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
     }
 
     handleHorizontalScrollVisibilityChanged: (visible: boolean, thumbHeight: number) => void = (visible: boolean, thumbHeight: number) => {
-        console.log('handleHorizontalScrollVisibilityChanged begin');
         this.setState({
             colsThumbHeight: thumbHeight
         });
-        console.log('handleHorizontalScrollVisibilityChanged end');
     }
 
     handleScrollableColumnsResize: () => void = () => {
-        console.log('handleScrollableColumnsResize begin');
-        let scrollableColumnMinWidth = this.calculateScrollableColumnsMinWidth();
-        this.setState({
-            scrollableColumnMinWidth
-        });
-        console.log('handleScrollableColumnsResize end');
+        if (this.scrollableColumnGroup && this.fixedColumnGroup && this.ref) {
+            let layoutDom = ReactDOM.findDOMNode(this.ref);
+            let scrollableColumnGroupDom = ReactDOM.findDOMNode(this.scrollableColumnGroup);
+            let lastFixedColumn: ColumnProps = objectAssign({}, this.state.fixedColumns!.last());
+            let oldFixedColumnsWidth = this.state.fixedColumnsWidth || 0;
+            let newFixedColumnsWidth = layoutDom.clientWidth - scrollableColumnGroupDom.clientWidth;
+            lastFixedColumn.width = lastFixedColumn.width - oldFixedColumnsWidth + newFixedColumnsWidth;
+            let fixedColumns = this.state.fixedColumns!.set(this.state.fixedColumns!.size - 1, lastFixedColumn);
+            this.setState({
+                fixedColumns,
+                fixedColumnsWidth: newFixedColumnsWidth
+            });
+        }
     }
 
     getColumnProps(): ColumnProps[] {
@@ -114,30 +124,6 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
             .map((value: React.ReactChild) =>
                 (value as React.ReactElement<ColumnProps>).props
             );
-    }
-
-    calculateScrollableColumnsMinWidth(firstScrollableColumnWidth?: number): number | undefined {
-        let adjustedFirstScrollableColumnWidth = 0;
-        if (firstScrollableColumnWidth !== undefined) {
-            adjustedFirstScrollableColumnWidth = firstScrollableColumnWidth;
-        } else if (this.props.fixedColumnCount !== undefined) {
-            let columnsProps = this.getColumnProps();
-            if (columnsProps.length > this.props.fixedColumnCount) {
-                let firstColumnProps = columnsProps[this.props.fixedColumnCount];
-                adjustedFirstScrollableColumnWidth = firstColumnProps.width;
-            }
-        }
-
-        let scrollableColumnMinWidth = undefined;
-
-        if (this.scrollableColumnGroup) {
-            let domNode = ReactDOM.findDOMNode(this.scrollableColumnGroup);
-            if (domNode) {
-                scrollableColumnMinWidth = domNode.clientWidth - adjustedFirstScrollableColumnWidth;
-            }
-        }
-
-        return scrollableColumnMinWidth;
     }
 
     calculateState(): GridState {
@@ -156,21 +142,11 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
             .map((value: ColumnProps): number => value.width)
             .reduce((prevValue: number, currValue: number) => prevValue + currValue, 0);
 
-        let scrollableColumnMinWidth = undefined;
-
-        if (this.scrollableColumnGroup) {
-            let firstColumnWidth = scrollableColumns.slice(0, 1)
-                    .map((value: ColumnProps): number => value.width)
-                    .reduce((prevValue: number, currValue: number) => prevValue + currValue, 0);
-            scrollableColumnMinWidth = this.calculateScrollableColumnsMinWidth(firstColumnWidth);
-        }
-
         return {
-            fixedColumns,
+            fixedColumns: List(fixedColumns),
             fixedColumnMinWidth,
             fixedColumnsWidth,
-            scrollableColumnMinWidth,
-            scrollableColumns
+            scrollableColumns: List(scrollableColumns)
         };
     }
 }

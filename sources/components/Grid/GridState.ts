@@ -1,11 +1,11 @@
 import { ColumnProps } from './Column/ColumnProps';
+import { List } from 'immutable';
 
 export interface GridState {
-    fixedColumns?: ColumnProps[];
+    fixedColumns?: List<ColumnProps>;
     fixedColumnsWidth?: number;
     fixedColumnMinWidth?: number;
-    scrollableColumns?: ColumnProps[];
-    scrollableColumnMinWidth?: number;
+    scrollableColumns?: List<ColumnProps>;
     colsThumbHeight?: number;
     scrollLeft?: number;
     scrollTop?: number;

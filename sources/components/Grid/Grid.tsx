@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { List } from 'immutable';
+import * as objectAssign from 'object-assign';
 
 import { GridProps, gridPropTypes } from './GridProps';
 import { GridState } from './GridState';
@@ -8,11 +9,6 @@ import { Column } from './Column';
 import { ColumnGroup } from './ColumnGroup';
 import { ColumnProps } from './Column/ColumnProps';
 import { Layout, LayoutPanel, LayoutSplitter } from '../Layout';
-
-import * as objectAssign from 'object-assign';
-
-
-// import { classNames } from '../../utils/classNames';
 
 import '../../styles/common.css';
 

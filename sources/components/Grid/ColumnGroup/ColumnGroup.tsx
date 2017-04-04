@@ -30,7 +30,7 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
         this.state = this.calculateState(this.props);
     }
 
-    componentWillReceiveProps(nextProps: ColumnGroupProps) {
+    componentWillReceiveProps(nextProps: ColumnGroupProps): void {
         this.setState(this.calculateState(nextProps));
     }
 

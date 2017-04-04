@@ -10,7 +10,7 @@ import { Internal } from  '../InternalLayoutPanel';
 import { Internal as Internal2} from  '../InternalLayoutSplitter';
 import { LayoutSplitter } from  '../LayoutSplitter';
 import { LayoutSplitterProps } from '../LayoutSplitter/LayoutSplitterProps';
-import { range, classNames, Edge, getOppositeEdge, isHorizontal } from '../../../utils';
+import { range, classNames, Edge, getOppositeEdge, isHorizontal, listenToResize } from '../../../utils';
 
 import * as sprintf from 'fbjs/lib/sprintf';
 
@@ -26,6 +26,9 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
 
         this.state = this.calculateState(this.props);
     }
+
+    private ref: HTMLDivElement;
+    private removeResizeEventListener: () => void;
 
     calculateState(props: { children?: React.ReactNode }): LayoutState {
         let newPositions: Positions = {
@@ -183,6 +186,18 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
         this.setState(this.calculateState(nextProps));
     }
 
+    componentDidMount(): void {
+        if (this.props.onResize && this.ref) {
+            this.removeResizeEventListener = listenToResize(this.ref, this.props.onResize);
+        }
+    }
+
+    componentWillUnmount(): void {
+        if (this.removeResizeEventListener) {
+            this.removeResizeEventListener();
+        }
+    }
+
     render(): JSX.Element {
         let children: React.ReactNode = React.Children.map(this.props.children, (child, index) => {
             let childState = this.state.childrenStates.get(index);
@@ -235,6 +250,7 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
                     height: this.props.height,
                     width: this.props.width
                 }}
+                ref={(ref: HTMLDivElement) => this.ref = ref}
             >
                 {children}
             </div>

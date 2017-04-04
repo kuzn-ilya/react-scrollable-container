@@ -99,11 +99,10 @@ export function listenToResize(element: HTMLElement & HTMLElementAux, resized: (
     const shrink = element.resizeSensor.childNodes[1] as HTMLElement;
 
     let dirty = false;
-    let newWidth = element.offsetWidth;
-    let newHeight = element.offsetWidth;
-
-    let lastWidth = newWidth;
-    let lastHeight = newHeight;
+    let newWidth: number | undefined = undefined;
+    let newHeight: number | undefined = undefined;
+    let lastWidth: number | undefined = element.offsetWidth;
+    let lastHeight: number | undefined = element.offsetHeight;
 
     let reset: () => void = () => {
         expandChild.style.width = '100000px';

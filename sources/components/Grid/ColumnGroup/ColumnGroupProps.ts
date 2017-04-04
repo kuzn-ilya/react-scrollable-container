@@ -3,14 +3,16 @@ import { ValidationMap } from '../../../react';
 import { ColumnProps } from '../Column/ColumnProps';
 import { Overflow, overflowPropType } from '../../../utils';
 import { RowData } from '../RowData';
+import { List } from 'immutable';
 
 export interface ColumnGroupProps {
     readonly colsThumbHeight?: number;
-    readonly columnProps: ColumnProps[];
+    readonly columnProps: List<ColumnProps>;
     readonly headerHeight: number;
 
     readonly onHorizontalScrollVisibilityChanged?: (visible: boolean, thumbHeight: number) => void;
     readonly onScrollPosChanged?: (left: number, top: number) => void;
+    readonly onResize?: () => void;
 
     readonly overflowX: Overflow;
     readonly overflowY: Overflow;
@@ -27,10 +29,11 @@ export interface ColumnGroupProps {
 
 export const columnGroupPropTypes: ValidationMap<ColumnGroupProps> = {
     colsThumbHeight: PropTypes.number,
-    columnProps: PropTypes.arrayOf(PropTypes.object).isRequired,
+    columnProps: PropTypes.instanceOf(List),
     headerHeight: PropTypes.number.isRequired,
 
     onHorizontalScrollVisibilityChanged: PropTypes.func,
+    onResize: PropTypes.func,
     onScrollPosChanged: PropTypes.func,
 
     overflowX: overflowPropType.isRequired,

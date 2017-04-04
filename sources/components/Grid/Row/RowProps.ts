@@ -1,9 +1,10 @@
 import { PropTypes } from 'react';
 import { ValidationMap } from '../../../react';
 import { ColumnProps } from '../Column/ColumnProps';
+import { List } from 'immutable';
 
 export interface RowProps {
-    columnProps: ColumnProps[];
+    columnProps: List<ColumnProps>;
     // tslint:disable-next-line:no-any
     data: any;
     rowIndex: number;
@@ -12,7 +13,7 @@ export interface RowProps {
 }
 
 export const rowPropTypes: ValidationMap<RowProps> = {
-    columnProps: PropTypes.arrayOf(PropTypes.any).isRequired,
+    columnProps: PropTypes.instanceOf(List).isRequired,
     data: PropTypes.any.isRequired,
     height: PropTypes.number.isRequired,
     rowIndex: PropTypes.number.isRequired,

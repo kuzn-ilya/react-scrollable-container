@@ -27,9 +27,16 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
         this.handleScrollPosChanged = this.handleScrollPosChanged.bind(this);
         this.handleVerticalScrollVisibilityChanged = this.handleVerticalScrollVisibilityChanged.bind(this);
 
-        // TODO calculate columnsWidth whether columnProps is changed
-        this.state = {
-            columnsWidth: this.props.columnProps
+        this.state = this.calculateState(this.props);
+    }
+
+    componentWillReceiveProps(nextProps: ColumnGroupProps): void {
+        this.setState(this.calculateState(nextProps));
+    }
+
+    calculateState(props: ColumnGroupProps): ColumnGroupState {
+        return {
+            columnsWidth: props.columnProps
                 .map((value: ColumnProps): number => value.width)
                 .reduce((prevValue: number, currValue: number) => prevValue + currValue, 0)
         };
@@ -78,6 +85,7 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
                 className={classNames({
                     'right-shadow': Boolean(this.props.showRightShadow)
                 })}
+                onResize={this.props.onResize}
             >
                 <LayoutPanel align="top" height={this.props.headerHeight}>
                     <ScrollableContainer

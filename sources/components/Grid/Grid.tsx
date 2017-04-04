@@ -1,4 +1,7 @@
 import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import { List } from 'immutable';
+import * as objectAssign from 'object-assign';
 
 import { GridProps, gridPropTypes } from './GridProps';
 import { GridState } from './GridState';
@@ -6,8 +9,6 @@ import { Column } from './Column';
 import { ColumnGroup } from './ColumnGroup';
 import { ColumnProps } from './Column/ColumnProps';
 import { Layout, LayoutPanel, LayoutSplitter } from '../Layout';
-
-// import { classNames } from '../../utils/classNames';
 
 import '../../styles/common.css';
 
@@ -28,6 +29,7 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
 
         this.handleVerticalScrollPosChanged = this.handleVerticalScrollPosChanged.bind(this);
         this.handleHorizontalScrollVisibilityChanged = this.handleHorizontalScrollVisibilityChanged.bind(this);
+        this.handleScrollableColumnsResize = this.handleScrollableColumnsResize.bind(this);
         this.state = this.calculateState();
     }
 
@@ -44,11 +46,18 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
     }
 
     fixedColumnGroup: ColumnGroup;
+    scrollableColumnGroup: ColumnGroup;
+    ref: Layout;
 
     render(): JSX.Element {
         return (
-            <Layout height="100%" width="100%">
-                <LayoutPanel align="left" width={this.state.fixedColumnsWidth || 0} showRightShadow={(this.state.scrollLeft || 0)  > 0}>
+            <Layout height="100%" width="100%"
+                ref={(ref) => this.ref = ref}
+            >
+                <LayoutPanel align="left"
+                    width={this.state.fixedColumnsWidth || 0}
+                    showRightShadow={(this.state.scrollLeft || 0)  > 0}
+                >
                     <ColumnGroup width={this.state.fixedColumnsWidth || 0}
                         ref={(ref: ColumnGroup) => this.fixedColumnGroup = ref }
                         headerHeight={this.props.headerHeight}
@@ -62,8 +71,10 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
                     />
                 </LayoutPanel>
                 <LayoutSplitter />
-                <LayoutPanel align="client">
+                <LayoutPanel align="client"
+                >
                     <ColumnGroup width="100%"
+                        ref={(ref: ColumnGroup) => this.scrollableColumnGroup = ref }
                         headerHeight={this.props.headerHeight}
                         rowData={this.props.rowData}
                         columnProps={this.state.scrollableColumns!}
@@ -72,6 +83,7 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
                         overflowY="auto"
                         onScrollPosChanged={this.handleVerticalScrollPosChanged}
                         onHorizontalScrollVisibilityChanged={this.handleHorizontalScrollVisibilityChanged}
+                        onResize={this.handleScrollableColumnsResize}
                     />
                 </LayoutPanel>
             </Layout>
@@ -84,14 +96,34 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
         });
     }
 
-    calculateState(): GridState {
-        let columns = React.Children
+    handleScrollableColumnsResize: () => void = () => {
+        if (this.scrollableColumnGroup && this.fixedColumnGroup && this.ref) {
+            let layoutDom = ReactDOM.findDOMNode(this.ref);
+            let scrollableColumnGroupDom = ReactDOM.findDOMNode(this.scrollableColumnGroup);
+            let lastFixedColumn: ColumnProps = objectAssign({}, this.state.fixedColumns!.last());
+            let oldFixedColumnsWidth = this.state.fixedColumnsWidth || 0;
+            let newFixedColumnsWidth = layoutDom.clientWidth - scrollableColumnGroupDom.clientWidth;
+            lastFixedColumn.width = lastFixedColumn.width - oldFixedColumnsWidth + newFixedColumnsWidth;
+            let fixedColumns = this.state.fixedColumns!.set(this.state.fixedColumns!.size - 1, lastFixedColumn);
+            this.setState({
+                fixedColumns,
+                fixedColumnsWidth: newFixedColumnsWidth
+            });
+        }
+    }
+
+    getColumnProps(): ColumnProps[] {
+        return React.Children
             .toArray(this.props.children).filter((value: React.ReactChild): boolean =>
                 typeof value !== 'string' && typeof value !== 'number' && value.type === Column
             )
             .map((value: React.ReactChild) =>
                 (value as React.ReactElement<ColumnProps>).props
             );
+    }
+
+    calculateState(): GridState {
+        let columns = this.getColumnProps();
 
         let fixedColumns = columns.slice(0, this.props.fixedColumnCount);
         let scrollableColumns = columns.slice(this.props.fixedColumnCount);
@@ -101,10 +133,16 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
             .map((value: ColumnProps): number => value.width)
             .reduce((prevValue: number, currValue: number) => prevValue + currValue, 0);
 
+        let fixedColumnMinWidth = fixedColumns
+            .slice(0, -1)
+            .map((value: ColumnProps): number => value.width)
+            .reduce((prevValue: number, currValue: number) => prevValue + currValue, 0);
+
         return {
-            fixedColumns,
+            fixedColumns: List(fixedColumns),
+            fixedColumnMinWidth,
             fixedColumnsWidth,
-            scrollableColumns
+            scrollableColumns: List(scrollableColumns)
         };
     }
 }

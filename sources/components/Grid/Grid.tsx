@@ -17,6 +17,7 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
     static propTypes = gridPropTypes;
 
     static defaultProps: GridProps = {
+        customScrollBars: false,
         fixedColumnCount: 0,
         fixedRowCount: 0,
         headerHeight: 0,
@@ -58,7 +59,8 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
                     width={this.state.fixedColumnsWidth || 0}
                     showRightShadow={(this.state.scrollLeft || 0)  > 0}
                 >
-                    <ColumnGroup width={this.state.fixedColumnsWidth || 0}
+                    <ColumnGroup customScrollBars={this.props.customScrollBars}
+                        width={this.state.fixedColumnsWidth || 0}
                         ref={(ref: ColumnGroup) => this.fixedColumnGroup = ref }
                         headerHeight={this.props.headerHeight}
                         showEdgeForTheLeftCell
@@ -68,12 +70,14 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
                         colsThumbHeight={this.state.colsThumbHeight}
                         overflowX="hidden"
                         overflowY="hidden"
+                        scrollTop={this.state.scrollTop}
                     />
                 </LayoutPanel>
                 <LayoutSplitter />
                 <LayoutPanel align="client"
                 >
-                    <ColumnGroup width="100%"
+                    <ColumnGroup customScrollBars={this.props.customScrollBars}
+                        width="100%"
                         ref={(ref: ColumnGroup) => this.scrollableColumnGroup = ref }
                         headerHeight={this.props.headerHeight}
                         rowData={this.props.rowData}

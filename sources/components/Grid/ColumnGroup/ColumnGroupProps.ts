@@ -8,6 +8,7 @@ import { List } from 'immutable';
 export interface ColumnGroupProps {
     readonly colsThumbHeight?: number;
     readonly columnProps: List<ColumnProps>;
+    readonly customScrollBars?: boolean;
     readonly headerHeight: number;
 
     readonly onHorizontalScrollVisibilityChanged?: (visible: boolean, thumbHeight: number) => void;
@@ -29,7 +30,8 @@ export interface ColumnGroupProps {
 
 export const columnGroupPropTypes: ValidationMap<ColumnGroupProps> = {
     colsThumbHeight: PropTypes.number,
-    columnProps: PropTypes.instanceOf(List),
+    columnProps: PropTypes.instanceOf(List).isRequired,
+    customScrollBars: PropTypes.bool,
     headerHeight: PropTypes.number.isRequired,
 
     onHorizontalScrollVisibilityChanged: PropTypes.func,

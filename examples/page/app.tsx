@@ -6,13 +6,11 @@ import './styles.css';
 import { ExamplesPage } from './ExamplesPage';
 import { Example } from './Example';
 import { GridExample } from './../GridExample/GridExample';
-import { Grid2Example } from './../Grid2Example/Grid2Example';
 import { LayoutExample } from './../LayoutExample/LayoutExample';
 import { ScrollBarExample } from './../ScrollBarExample/ScrollBarExample';
 
 let examples: Example[] = [
     { componentClass: GridExample, name: 'Grid' },
-    { componentClass: Grid2Example, name: 'Grid 2' },
     { componentClass: LayoutExample, name: 'Layout' },
     { componentClass: ScrollBarExample, name: 'ScrollBar' }
 ];

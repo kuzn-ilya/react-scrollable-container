@@ -3,6 +3,7 @@ import { ValidationMap } from '../../react';
 import { RowData } from './RowData';
 
 export interface GridProps {
+    customScrollBars?: boolean;
     headerHeight: number;
     // tslint:disable-next-line:no-any
     rowData: RowData<any>;
@@ -12,6 +13,7 @@ export interface GridProps {
 }
 
 export const gridPropTypes: ValidationMap<GridProps> = {
+    customScrollBars: PropTypes.bool,
     fixedColumnCount: PropTypes.number,
     fixedRowCount: PropTypes.number,
     headerHeight: PropTypes.number.isRequired,

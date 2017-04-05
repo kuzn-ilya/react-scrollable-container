@@ -36,12 +36,15 @@ export interface ScrollableContainerProps {
      */
     readonly style?: CSSProperties;
     readonly showShadowForReplacer?: boolean;
+
+    readonly customScrollBars?: boolean;
 }
 
 export const scrollableContainerPropTypes: ValidationMap<ScrollableContainerProps> = {
     className: PropTypes.string,
     contentHeight: sizePropType,
     contentWidth: sizePropType,
+    customScrollBars: PropTypes.bool,
     data: PropTypes.any,
     dataRenderer: PropTypes.func,
     height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,

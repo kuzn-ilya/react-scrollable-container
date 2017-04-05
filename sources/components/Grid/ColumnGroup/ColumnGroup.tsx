@@ -16,6 +16,7 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
     static propTypes = columnGroupPropTypes;
 
     static defaultProps: Partial<ColumnGroupProps> = {
+        customScrollBars: false,
         onScrollPosChanged: emptyFunction
     };
 
@@ -27,19 +28,23 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
         this.handleScrollPosChanged = this.handleScrollPosChanged.bind(this);
         this.handleVerticalScrollVisibilityChanged = this.handleVerticalScrollVisibilityChanged.bind(this);
 
-        this.state = this.calculateState(this.props);
+        this.state = {
+            columnsWidth: this.calculateColumnsWidth(this.props),
+            scrollLeft: 0,
+            scrollTop: 0
+        };
     }
 
     componentWillReceiveProps(nextProps: ColumnGroupProps): void {
-        this.setState(this.calculateState(nextProps));
+        this.setState({
+            columnsWidth: this.calculateColumnsWidth(nextProps)
+        } as ColumnGroupState);
     }
 
-    calculateState(props: ColumnGroupProps): ColumnGroupState {
-        return {
-            columnsWidth: props.columnProps
-                .map((value: ColumnProps): number => value.width)
-                .reduce((prevValue: number, currValue: number) => prevValue + currValue, 0)
-        };
+    calculateColumnsWidth(props: ColumnGroupProps): number {
+        return props.columnProps
+            .map((value: ColumnProps): number => value.width)
+            .reduce((prevValue: number, currValue: number) => prevValue + currValue, 0);
     }
 
     renderHeader: (data: undefined) => React.ReactNode = (data) => {
@@ -67,14 +72,17 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
         this.setState({
             columnsWidth: this.state.columnsWidth,
             rowsThumbWidth: thumbWidth
-        });
+        } as ColumnGroupState);
     }
 
     header: ScrollableContainer;
     rows: ScrollableContainer;
 
     handleScrollPosChanged: (scrollLeft: number, scrollTop: number) => void = (scrollLeft, scrollTop) => {
-        this.header.setScrollLeft(scrollLeft);
+        this.setState({
+            scrollLeft,
+            scrollTop
+        } as ColumnGroupState);
         this.props.onScrollPosChanged!(scrollLeft, scrollTop);
     }
 
@@ -89,6 +97,7 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
             >
                 <LayoutPanel align="top" height={this.props.headerHeight}>
                     <ScrollableContainer
+                        customScrollBars={this.props.customScrollBars}
                         key="header"
                         contentWidth={this.state.columnsWidth}
                         contentHeight={this.props.headerHeight}
@@ -97,28 +106,33 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
                         dataRenderer={this.renderHeader}
                         width="100%"
                         height={this.props.headerHeight}
-                        vertScrollBarReplacerWidth={this.state.rowsThumbWidth}
+                        vertScrollBarReplacerWidth={this.props.customScrollBars
+                            ? (this.props.overflowY !== 'hidden' ? 17 : 0) : this.state.rowsThumbWidth}
                         ref={(ref: ScrollableContainer) => this.header = ref}
                         showShadowForReplacer
+                        scrollLeft={this.state.scrollLeft}
                     />
                 </LayoutPanel>
                 <LayoutPanel align="client">
                     <ScrollableContainer
+                        customScrollBars={this.props.customScrollBars}
                         key="body"
                         contentWidth={this.state.columnsWidth}
-                        contentHeight="100%"
+                        contentHeight={this.props.rowData.length * this.props.rowHeight}
                         overflowX={this.props.overflowX}
                         overflowY={this.props.overflowY}
                         data={this.props.rowData}
                         dataRenderer={this.renderRows}
                         width="100%"
                         height="100%"
-                        horzScrollBarReplacerHeight={this.props.colsThumbHeight}
+                        horzScrollBarReplacerHeight={this.props.customScrollBars
+                            ? (this.props.overflowX === 'hidden' ? 17 : 0) : this.props.colsThumbHeight }
                         onScrollPosChanged={this.handleScrollPosChanged}
                         onHorizontalScrollVisibilityChanged={this.props.onHorizontalScrollVisibilityChanged}
                         onVerticalScrollVisibilityChanged={this.handleVerticalScrollVisibilityChanged}
                         ref={(ref: ScrollableContainer) => this.rows = ref}
                         showShadowForReplacer
+                        scrollTop={this.props.scrollTop}
                     />
                 </LayoutPanel>
             </Layout>
@@ -126,7 +140,7 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
     }
 
     setScrollTop(position: number): void {
-        if (this.rows) {
+        if (this.rows && !this.props.customScrollBars) {
             this.rows.setScrollTop(position);
         }
     }

@@ -6,15 +6,18 @@ import { Layout, LayoutPanel, LayoutSplitter, Grid, Column } from '../../sources
 interface CompState {
     // tslint:disable-next-line:no-any
     data: any[];
+    customScrollBar?: boolean;
 }
 
 export class GridExample extends React.Component<{}, CompState> {
     constructor(props: {}) {
         super(props);
         this.state = {
+            customScrollBar: false,
             data: fakeData
         };
         this.removeLastItem = this.removeLastItem.bind(this);
+        this.handleCustomScrollBarChanged = this.handleCustomScrollBarChanged.bind(this);
     }
 
     removeLastItem: () => void = () => {
@@ -23,15 +26,26 @@ export class GridExample extends React.Component<{}, CompState> {
         });
     }
 
+    handleCustomScrollBarChanged: (e: React.FormEvent<HTMLInputElement>) => void = (e) => {
+        this.setState({
+            customScrollBar: e.currentTarget.checked
+        } as CompState);
+    }
+
     render(): JSX.Element {
         return (
             <Layout width="100%" height="100%">
                 <LayoutPanel align="top" height={50}>
-                    <button onClick={this.removeLastItem}>Remove Last</button>
+                    <div>
+                        <button onClick={this.removeLastItem}>Remove Last</button>
+                        <input type="checkbox" checked={this.state.customScrollBar}
+                            onChange={this.handleCustomScrollBarChanged}/>Custom ScrollBars <br/>
+                    </div>
                 </LayoutPanel>
                 <LayoutSplitter />
                 <LayoutPanel align="client">
-                    <Grid rowData={this.state.data} fixedColumnCount={2} rowHeight={20} headerHeight={21}>
+                    <Grid customScrollBars={this.state.customScrollBar}
+                        rowData={this.state.data} fixedColumnCount={2} rowHeight={20} headerHeight={21}>
                         <Column caption="id" propName="id" width={30} align="right" />
                         <Column caption="firstName" propName="firstName" width={150} />
                         <Column caption="id" propName="id" width={30} align="right" />

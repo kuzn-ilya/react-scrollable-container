@@ -102,8 +102,8 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
         () => this.measureScrollbars();
 
     private handleScroll: (event: React.UIEvent<HTMLDivElement>) => void = (event) => {
-        let scrollLeft = (event.target as Element).scrollLeft;
-        let scrollTop = (event.target as Element).scrollTop;
+        let scrollLeft = (event.currentTarget as Element).scrollLeft;
+        let scrollTop = (event.currentTarget as Element).scrollTop;
         this.props.onScrollPosChanged!(scrollLeft, scrollTop);
     }
 

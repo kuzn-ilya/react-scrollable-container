@@ -35,9 +35,9 @@ export class ScrollableContent extends React.PureComponent<ScrollableContentProp
     }
 
     private doResize(): void {
-        // if (this.ref) {
-        //     this.props.onResize!(this.ref.offsetWidth, this.ref.offsetHeight);
-        // }
+        if (this.ref) {
+            this.props.onResize!(this.ref.offsetWidth, this.ref.offsetHeight);
+        }
     }
 
     render(): JSX.Element {

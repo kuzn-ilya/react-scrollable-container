@@ -3,7 +3,7 @@ import { classNames, listenToResize, updateCSSPosition } from '../../../utils';
 
 import { ScrollableContainer2Props, scrollableContainer2PropTypes } from  './ScrollableContainer2Props';
 import { ScrollableContainer2State } from  './ScrollableContainer2State';
-import { ScrollableContent2 } from '../ScrollableContent2';
+import { ScrollableContent } from '../ScrollableContent';
 import { ScrollBar } from '../ScrollBar';
 
 import * as emptyFunction from 'fbjs/lib/emptyFunction';
@@ -150,13 +150,13 @@ export class ScrollableContainer2 extends React.PureComponent<ScrollableContaine
                     ref={this.setRef}
                 >
                     <div className="scrollable-content" style={wrapperStyle}>
-                        <ScrollableContent2 contentWidth={this.props.contentWidth} contentHeight={this.props.contentHeight}
+                        <ScrollableContent contentWidth={this.props.contentWidth} contentHeight={this.props.contentHeight}
                             dataRenderer={this.props.dataRenderer}
                             data={this.props.data}
                             onResize={this.handleContentResize}
                         >
                             {this.props.children}
-                        </ScrollableContent2>
+                        </ScrollableContent>
                     </div>
                     {horzScrollBar}
                     {vertScrollBar}

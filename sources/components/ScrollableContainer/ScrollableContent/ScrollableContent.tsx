@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as objectAssign from 'object-assign';
 
 import {ScrollableContentProps, scrollableContentPropTypes } from './ScrollableContentProps';
 import { listenToResize } from '../../../utils';
@@ -12,7 +13,9 @@ export class ScrollableContent extends React.PureComponent<ScrollableContentProp
         contentHeight: '100%',
         contentWidth: '100%',
         dataRenderer: emptyFunction.thatReturns<React.ReactNode>(null),
-        onResize: emptyFunction
+        onResize: emptyFunction,
+        style: {
+        }
     };
 
     static propTypes = scrollableContentPropTypes;
@@ -26,18 +29,14 @@ export class ScrollableContent extends React.PureComponent<ScrollableContentProp
     private ref: HTMLDivElement;
 
     private handleResize: () => void = () => {
-        this.doResize();
+        if (this.ref) {
+            this.props.onResize!(this.ref.offsetWidth, this.ref.offsetHeight);
+        }
     }
 
     private setRef: (ref: HTMLDivElement) => void = (ref) => {
         this.ref = ref;
-        this.doResize();
-    }
-
-    private doResize(): void {
-        if (this.ref) {
-            this.props.onResize!(this.ref.offsetWidth, this.ref.offsetHeight);
-        }
+        this.handleResize();
     }
 
     render(): JSX.Element {
@@ -53,10 +52,10 @@ export class ScrollableContent extends React.PureComponent<ScrollableContentProp
             );
         }
 
-        let style = {
+        let style = objectAssign(this.props.style, {
             height: this.props.contentHeight,
             width: this.props.contentWidth
-        };
+        });
 
         return (
             <div style={style}

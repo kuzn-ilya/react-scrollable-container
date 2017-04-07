@@ -106,8 +106,7 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
                         dataRenderer={this.renderHeader}
                         width="100%"
                         height={this.props.headerHeight}
-                        vertScrollBarReplacerWidth={this.props.customScrollBars
-                            ? (this.props.overflowY !== 'hidden' ? 17 : 0) : this.state.rowsThumbWidth}
+                        vertScrollBarReplacerWidth={this.state.rowsThumbWidth}
                         ref={(ref: ScrollableContainer) => this.header = ref}
                         showShadowForReplacer
                         scrollLeft={this.state.scrollLeft}
@@ -125,8 +124,7 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
                         dataRenderer={this.renderRows}
                         width="100%"
                         height="100%"
-                        horzScrollBarReplacerHeight={this.props.customScrollBars
-                            ? (this.props.overflowX === 'hidden' ? 17 : 0) : this.props.colsThumbHeight }
+                        horzScrollBarReplacerHeight={this.props.colsThumbHeight }
                         onScrollPosChanged={this.handleScrollPosChanged}
                         onHorizontalScrollVisibilityChanged={this.props.onHorizontalScrollVisibilityChanged}
                         onVerticalScrollVisibilityChanged={this.handleVerticalScrollVisibilityChanged}

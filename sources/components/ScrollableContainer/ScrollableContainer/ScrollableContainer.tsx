@@ -44,6 +44,7 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
         this.handleResize = this.handleResize.bind(this);
         this.handleContentResize = this.handleContentResize.bind(this);
         this.setRef = this.setRef.bind(this);
+        this.setScrollableContentRef = this.setScrollableContentRef.bind(this);
         this.state = {
             containerHeight: 0,
             containerWidth: 0,
@@ -60,16 +61,12 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
 
     componentDidMount(): void {
         this.measureScrollbars();
-        if (!this.props.customScrollBars) {
-            this.updateScrollPositions();
-        }
+        this.updateScrollPositions();
         this.removeResizeEventListener = listenToResize(this.ref, this.handleResize);
     }
 
     componentDidUpdate(): void {
-        if (!this.props.customScrollBars) {
-            this.updateScrollPositions();
-        }
+        this.updateScrollPositions();
     }
 
     componentWillUnmount(): void {
@@ -77,70 +74,42 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
     }
 
     private ref: HTMLDivElement;
-    private scrollableContentRef: ScrollableContent;
+    private scrollableContentDOMRef: HTMLElement;
 
     private setRef: (ref: HTMLDivElement) => void = (ref) => {
         this.ref = ref;
         this.handleResize();
     }
 
+    private setScrollableContentRef: (ref: ScrollableContent) => void = (ref) => {
+        this.scrollableContentDOMRef = ReactDOM.findDOMNode(ref) as HTMLElement;
+        if (this.scrollableContentDOMRef) {
+            this.handleContentResize(this.scrollableContentDOMRef.offsetWidth, this.scrollableContentDOMRef.offsetHeight);
+        } else {
+            this.handleContentResize(0, 0);
+        }
+    }
+
     handleResize: () => void = () => {
-        this.setState({
+        this.setStateInternal({
             containerHeight: this.ref ? this.ref.offsetHeight : 0,
             containerWidth: this.ref ? this.ref.offsetWidth : 0
-        } as ScrollableContainerState);
+        });
         this.measureScrollbars();
     }
 
     private handleContentResize: (newWidth: number, newHeight: number) => void = (newWidth, newHeight) => {
-        this.setState({
+        this.setStateInternal({
             contentHeight: newHeight,
             contentWidth: newWidth
-        } as ScrollableContainerState);
+        });
         this.measureScrollbars();
     }
 
     // TODO: Implement class for both shadows.
-    private renderNativeScrollBars(): JSX.Element {
-        return (
-            <div
-                className={classNames('scrollable-container', this.props.className!)}
-                style={{
-                    height: this.props.height,
-                    width: this.props.width
-                }}
-                id={this.props.id}
-            >
-                <div className={classNames({
-                        'scrollable-container-scrollable': true,
-                        'scrollable-container-scrollable-boost': this.props.overflowX !== 'hidden' || this.props.overflowY !== 'hidden',
-                        'right-shadow': Boolean(this.props.showShadowForReplacer && this.props.vertScrollBarReplacerWidth),
-                        'bottom-shadow': Boolean(this.props.showShadowForReplacer && this.props.horzScrollBarReplacerHeight)
-                    })}
-                    ref={(ref: HTMLDivElement) => this.ref = ref}
-                    onScroll={this.handleScroll}
-                    style={{
-                        bottom: this.props.horzScrollBarReplacerHeight ? this.props.horzScrollBarReplacerHeight + 'px' : '0px',
-                        overflowX: this.props.overflowX,
-                        overflowY: this.props.overflowY,
-                        right: this.props.vertScrollBarReplacerWidth ? this.props.vertScrollBarReplacerWidth + 'px' : '0px'
-                    }}
-                >
-                    <ScrollableContent contentWidth={this.props.contentWidth} contentHeight={this.props.contentHeight}
-                        dataRenderer={this.props.dataRenderer}
-                        data={this.props.data}
-                        ref={(ref: ScrollableContent) => this.scrollableContentRef = ref}
-                    >
-                        {this.props.children}
-                    </ScrollableContent>
-                </div>
-            </div>
-        );
-    }
-
-    // TODO: Implement class for both shadows.
-    private renderCustomScrollBars(): JSX.Element {
-        let horzScrollBar = this.props.overflowX === 'auto' && this.state.vertScrollThumbWidth ? (
+    render(): JSX.Element {
+        // TODO: overflowX & overflowY other values
+        let horzScrollBar = this.props.customScrollBars && this.props.overflowX === 'auto' && this.state.vertScrollThumbWidth ? (
             <ScrollBar
                 orientation="horizontal"
                 min={0}
@@ -155,7 +124,7 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
             />
         ) : null;
 
-        let vertScrollBar = this.props.overflowY === 'auto' && this.state.horzScrollThumbHeight ? (
+        let vertScrollBar = this.props.customScrollBars && this.props.overflowY === 'auto' && this.state.horzScrollThumbHeight ? (
             <ScrollBar
                 orientation="vertical"
                 min={0}
@@ -170,25 +139,22 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
             />
         ) : null;
 
-        let contentWidth = this.props.contentWidth;
-        let contentHeight = this.props.contentHeight;
+        let contentStyle = {
+        };
+
+        if (this.props.customScrollBars) {
+            updateCSSPosition(contentStyle, -(this.state.scrollLeft || this.props.scrollLeft!),
+                -(this.state.scrollTop || this.props.scrollTop!));
+        }
 
         let style = {
-            bottom: this.props.horzScrollBarReplacerHeight && this.state.horzScrollThumbHeight
+            bottom: this.props.horzScrollBarReplacerHeight
                 ? this.props.horzScrollBarReplacerHeight + 'px' : '0px',
-            overflowX: 'hidden',
-            overflowY: 'hidden',
-            right: this.props.vertScrollBarReplacerWidth && this.state.vertScrollThumbWidth
+            overflowX: this.props.customScrollBars ? 'hidden' : this.props.overflowX,
+            overflowY: this.props.customScrollBars ? 'hidden' : this.props.overflowY,
+            right: this.props.vertScrollBarReplacerWidth
                 ? this.props.vertScrollBarReplacerWidth + 'px' : '0px'
         };
-
-        let wrapperStyle = {
-            height: contentHeight,
-            width: contentWidth
-        };
-
-        updateCSSPosition(wrapperStyle, -(this.state.scrollLeft || this.props.scrollLeft!),
-            -(this.state.scrollTop || this.props.scrollTop!));
 
         return (
             <div
@@ -201,36 +167,29 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
             >
                 <div className={classNames({
                         'scrollable-container-scrollable': true,
-                        // 'scrollable-container-scrollable-boost': this.props.overflowX !== 'hidden' || this.props.overflowY !== 'hidden',
+                        'scrollable-container-scrollable-boost': !this.props.customScrollBars
+                            && (this.props.overflowX !== 'hidden' || this.props.overflowY !== 'hidden'),
                         'right-shadow': Boolean(this.props.showShadowForReplacer && this.props.vertScrollBarReplacerWidth),
                         'bottom-shadow': Boolean(this.props.showShadowForReplacer && this.props.horzScrollBarReplacerHeight)
                     })}
                     style={style}
                     ref={this.setRef}
+                    onScroll={this.props.customScrollBars ? undefined : this.handleScroll}
                 >
-                    <div className="scrollable-content" style={wrapperStyle}>
-                        <ScrollableContent contentWidth={contentWidth} contentHeight={contentHeight}
-                            dataRenderer={this.props.dataRenderer}
-                            data={this.props.data}
-                            onResize={this.handleContentResize}
-                            ref={(ref: ScrollableContent) => this.scrollableContentRef = ref}
-                        >
-                            {this.props.children}
-                        </ScrollableContent>
-                    </div>
+                    <ScrollableContent contentWidth={this.props.contentWidth} contentHeight={this.props.contentHeight}
+                        dataRenderer={this.props.dataRenderer}
+                        data={this.props.data}
+                        onResize={this.handleContentResize}
+                        ref={this.setScrollableContentRef}
+                        style={contentStyle}
+                    >
+                        {this.props.children}
+                    </ScrollableContent>
                     {horzScrollBar}
                     {vertScrollBar}
                 </div>
             </div>
         );
-    }
-
-    render(): JSX.Element {
-        if (this.props.customScrollBars) {
-            return this.renderCustomScrollBars();
-        } else {
-            return this.renderNativeScrollBars();
-        }
     }
 
     private handleScroll: (event: React.UIEvent<HTMLDivElement>) => void = (event) => {
@@ -241,22 +200,22 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
 
     private handleVertScroll: (newPosition: number) => void = (newPosition) => {
         let scrollLeft = this.state.scrollLeft || this.props.scrollLeft!;
-        this.setState({
+        this.setStateInternal({
             scrollTop: newPosition
-        } as ScrollableContainerState);
+        });
         this.props.onScrollPosChanged!(scrollLeft, newPosition);
     }
 
     private handleHorzScroll: (newPosition: number) => void = (newPosition) => {
         let scrollTop = this.state.scrollTop || this.props.scrollTop!;
-        this.setState({
+        this.setStateInternal({
             scrollLeft: newPosition
-        } as ScrollableContainerState);
+        });
         this.props.onScrollPosChanged!(newPosition, scrollTop);
     }
 
     private updateScrollPositions(): void {
-        if (this.ref) {
+        if (!this.props.customScrollBars && this.ref) {
             if (this.props.scrollLeft !== undefined) {
                 this.ref.scrollLeft = this.props.scrollLeft;
             }
@@ -268,12 +227,11 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
 
     private calculateScrollThumbsMeasurements(): ScrollableContainerState {
         invariant(!!this.ref, 'calculateScrollThumbsMeasurements: this.ref must be defined.');
-        invariant(!!this.scrollableContentRef, 'calculateScrollThumbsMeasurements: this.scrollableContentRef must be defined.');
         if (this.props.customScrollBars) {
-            let scrollableContentDom = ReactDOM.findDOMNode(this.scrollableContentRef) as HTMLElement;
+            invariant(!!this.scrollableContentDOMRef, 'calculateScrollThumbsMeasurements: this.scrollableContentDOMRef must be defined.');
             return {
-                horzScrollThumbHeight: this.ref.offsetHeight < scrollableContentDom.offsetHeight ? 17 : 0,
-                vertScrollThumbWidth: this.ref.offsetWidth < scrollableContentDom.offsetWidth ? 17 : 0
+                horzScrollThumbHeight: this.ref.offsetHeight < this.scrollableContentDOMRef.offsetHeight ? 17 : 0,
+                vertScrollThumbWidth: this.ref.offsetWidth < this.scrollableContentDOMRef.offsetWidth ? 17 : 0
             }  as ScrollableContainerState;
         } else {
             return {
@@ -283,23 +241,30 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
         }
     }
 
+    private vertScrollThumbWidth: number = 0;
+    private horzScrollThumbWidth: number = 0;
+
+    setStateInternal(state: Partial<ScrollableContainerState>): void {
+        if (state.horzScrollThumbHeight !== undefined) {
+            this.horzScrollThumbWidth = state.horzScrollThumbHeight;
+        }
+        if (state.vertScrollThumbWidth !== undefined) {
+            this.vertScrollThumbWidth = state.vertScrollThumbWidth;
+        }
+
+        this.setState(state as ScrollableContainerState);
+    }
+
     private measureScrollbars: () => void = () => {
-        if (this.ref) {
+        if (this.ref && (!this.props.customScrollBars || this.scrollableContentDOMRef)) {
             let newState = this.calculateScrollThumbsMeasurements();
-            let oldState = this.state;
-
-            if (newState.vertScrollThumbWidth !== oldState.vertScrollThumbWidth ||
-                newState.horzScrollThumbHeight !== oldState.horzScrollThumbHeight) {
-                this.setState(newState);
-
-                if (newState.vertScrollThumbWidth !== oldState.vertScrollThumbWidth) {
-                    this.props.onVerticalScrollVisibilityChanged!(newState.vertScrollThumbWidth > 0, newState.vertScrollThumbWidth);
-                }
-
-                if (newState.horzScrollThumbHeight !== oldState.horzScrollThumbHeight) {
-                    this.props.onHorizontalScrollVisibilityChanged!(newState.horzScrollThumbHeight > 0, newState.horzScrollThumbHeight);
-                }
+            if (this.vertScrollThumbWidth !== newState.vertScrollThumbWidth) {
+                this.props.onVerticalScrollVisibilityChanged!(newState.vertScrollThumbWidth > 0, newState.vertScrollThumbWidth);
             }
+            if (this.horzScrollThumbWidth !== newState.horzScrollThumbHeight) {
+                this.props.onHorizontalScrollVisibilityChanged!(newState.horzScrollThumbHeight > 0, newState.horzScrollThumbHeight);
+            }
+            this.setStateInternal(newState);
         }
     }
 

@@ -1,4 +1,4 @@
-import { PropTypes } from 'react';
+import { PropTypes, CSSProperties } from 'react';
 import { Size, sizePropType } from '../../../utils';
 import { ValidationMap } from '../../../react';
 
@@ -10,6 +10,7 @@ export interface ScrollableContentProps {
     // tslint:disable-next-line:no-any
     readonly data?: any;
     readonly onResize?: (newWidth: number, newHeight: number) => void;
+    readonly style?: CSSProperties;
 }
 
 export const scrollableContentPropTypes: ValidationMap<ScrollableContentProps> = {
@@ -17,5 +18,6 @@ export const scrollableContentPropTypes: ValidationMap<ScrollableContentProps> =
     contentWidth: sizePropType,
     data: PropTypes.any,
     dataRenderer: PropTypes.func,
-    onResize: PropTypes.func
+    onResize: PropTypes.func,
+    style: PropTypes.object
 };

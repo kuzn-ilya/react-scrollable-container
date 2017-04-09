@@ -133,8 +133,8 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
                 orientation="horizontal"
                 min={0}
                 max={this.state.contentWidth - this.state.containerWidth + this.state.horzScrollThumbHeight}
-                pageSize={10}
-                largeChange={50}
+                pageSize={this.state.containerWidth - this.state.horzScrollThumbHeight}
+                largeChange={this.state.containerWidth - this.state.horzScrollThumbHeight}
                 smallChange={10}
                 position={this.state.scrollLeft}
                 rightOrBottom={this.state.horzScrollThumbHeight}
@@ -148,8 +148,8 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
                 orientation="vertical"
                 min={0}
                 max={this.state.contentHeight - this.state.containerHeight + this.state.vertScrollThumbWidth}
-                pageSize={10}
-                largeChange={50}
+                pageSize={this.state.containerHeight - this.state.vertScrollThumbWidth}
+                largeChange={this.state.containerHeight - this.state.vertScrollThumbWidth}
                 smallChange={10}
                 position={this.state.scrollTop}
                 rightOrBottom={this.state.vertScrollThumbWidth}

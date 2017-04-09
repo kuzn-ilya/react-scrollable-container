@@ -11,7 +11,7 @@ import { CSS_NUMBER_VARS } from '../../../stubs/cssVars';
 
 import '../../../styles/scroll-bar.css';
 
-const SCROLL_TIME = 50;
+const SCROLL_TIME = 200;
 // tslint:disable-next-line:no-string-literal
 const SCROLLBAR_THICKNESS = CSS_NUMBER_VARS['SCROLLBAR_THICKNESS'];
 const SCROLLBAR_MIN_SIZE = SCROLLBAR_THICKNESS;
@@ -50,25 +50,23 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
     private calculateState(scrollBarSize: number, props: ScrollBarProps, position?: number): Partial<ScrollBarState> {
         let pos = position === undefined ? this.props.position : position;
         let buttonSize = props.showButtons ? SCROLLBAR_THICKNESS : 0;
+        scrollBarSize = scrollBarSize - 2 * buttonSize;
 
-        // TODO: Check min/max and assert if it's necessary
-        let scale = (scrollBarSize - 2 * buttonSize) / (props.max - props.min + 1);
         let pageSize = props.pageSize;
+        // TODO: Check min/max and assert if it's necessary
 
-        if (pageSize * scale < SCROLLBAR_MIN_SIZE) {
-            pageSize = SCROLLBAR_MIN_SIZE / scale;
+        let thumbSize = pageSize * scrollBarSize / (pageSize + props.max - props.min + 1);
+
+        if (thumbSize < SCROLLBAR_MIN_SIZE) {
+            thumbSize = SCROLLBAR_MIN_SIZE;
         }
 
-        let thumbSize = pageSize * scale;
-
-        let thumbPosition = (pos - props.min)
-            * (props.max - props.min - pageSize + 1) * scale / (props.max - props.min)
+        let thumbPosition = pos * scrollBarSize / (pageSize + props.max - props.min + 1)
             + buttonSize;
 
         return {
             pageSize,
             position: pos,
-            scale,
             scrollBarSize,
             thumbPosition,
             thumbSize
@@ -91,20 +89,19 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
     private thumbPositionToPosition(thumbPosition: number): number {
         invariant(!!this.ref, '<ScrollBar>: ref should be defined.');
 
-        let size = this.calculateScrollBarSize();
+        let scrollBarSize = this.calculateScrollBarSize();
         let buttonSize = this.props.showButtons ? SCROLLBAR_THICKNESS : 0;
 
         let thumbPos = thumbPosition;
         let thumbSize = this.state.thumbSize || 0;
         if (thumbPos < buttonSize) {
             thumbPos = buttonSize;
-        } else if (thumbPos + thumbSize > size - buttonSize) {
-            thumbPos = size - buttonSize - thumbSize;
+        } else if (thumbPos + thumbSize > scrollBarSize - buttonSize) {
+            thumbPos = scrollBarSize - buttonSize - thumbSize;
         }
 
-        let pos = (thumbPos - buttonSize) * (this.props.max - this.props.min)
-            / (this.props.max - this.props.min - (this.state.pageSize || 0) + 1) / (this.state.scale || 1)
-            + this.props.min;
+        scrollBarSize = scrollBarSize - 2 * buttonSize;
+        let pos = (thumbPos - buttonSize) * (this.state.pageSize! + this.props.max - this.props.min + 1) / scrollBarSize;
 
         return Math.round(pos);
     }

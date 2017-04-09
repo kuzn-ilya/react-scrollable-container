@@ -55,6 +55,8 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
             scrollTop: this.props.scrollTop || 0,
             vertScrollThumbWidth: 0
         };
+        this.propsScrollLeft = this.props.scrollLeft;
+        this.propsScrollTop = this.props.scrollTop;
     }
 
     private removeResizeEventListener: () => void = emptyFunction;
@@ -71,6 +73,23 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
 
     componentWillUnmount(): void {
         this.removeResizeEventListener();
+    }
+
+    componentWillReceiveProps(newProps: ScrollableContainerProps): void {
+        if (newProps.scrollLeft !== this.propsScrollLeft
+            && newProps.scrollLeft !== this.state.scrollLeft) {
+            this.setStateInternal({
+                scrollLeft: newProps.scrollLeft || 0
+            });
+            this.propsScrollLeft = newProps.scrollLeft;
+        }
+        if (newProps.scrollTop !== this.propsScrollTop
+            && newProps.scrollTop !== this.state.scrollTop) {
+            this.setStateInternal({
+                scrollTop: newProps.scrollTop || 0
+            });
+            this.propsScrollTop = newProps.scrollTop;
+        }
     }
 
     private ref: HTMLDivElement;
@@ -117,7 +136,7 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
                 pageSize={10}
                 largeChange={50}
                 smallChange={10}
-                position={this.props.scrollLeft || this.props.scrollLeft!}
+                position={this.state.scrollLeft}
                 rightOrBottom={this.state.horzScrollThumbHeight}
                 showButtons
                 onScroll={this.handleHorzScroll}
@@ -132,7 +151,7 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
                 pageSize={10}
                 largeChange={50}
                 smallChange={10}
-                position={this.state.scrollTop || this.props.scrollTop!}
+                position={this.state.scrollTop}
                 rightOrBottom={this.state.vertScrollThumbWidth}
                 showButtons
                 onScroll={this.handleVertScroll}
@@ -143,8 +162,7 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
         };
 
         if (this.props.customScrollBars) {
-            updateCSSPosition(contentStyle, -(this.state.scrollLeft || this.props.scrollLeft!),
-                -(this.state.scrollTop || this.props.scrollTop!));
+            updateCSSPosition(contentStyle, -this.state.scrollLeft,  -this.state.scrollTop);
         }
 
         let style = {
@@ -199,28 +217,27 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
     }
 
     private handleVertScroll: (newPosition: number) => void = (newPosition) => {
-        let scrollLeft = this.state.scrollLeft || this.props.scrollLeft!;
         this.setStateInternal({
             scrollTop: newPosition
         });
-        this.props.onScrollPosChanged!(scrollLeft, newPosition);
+        this.props.onScrollPosChanged!(this.state.scrollLeft, newPosition);
     }
 
     private handleHorzScroll: (newPosition: number) => void = (newPosition) => {
-        let scrollTop = this.state.scrollTop || this.props.scrollTop!;
         this.setStateInternal({
             scrollLeft: newPosition
         });
-        this.props.onScrollPosChanged!(newPosition, scrollTop);
+        this.props.onScrollPosChanged!(newPosition, this.state.scrollTop);
     }
 
     private updateScrollPositions(): void {
-        if (!this.props.customScrollBars && this.ref) {
-            if (this.props.scrollLeft !== undefined) {
-                this.ref.scrollLeft = this.props.scrollLeft;
-            }
-            if (this.props.scrollTop !== undefined) {
-                this.ref.scrollTop = this.props.scrollTop;
+        if (this.ref) {
+            if (this.props.customScrollBars) {
+                this.ref.scrollLeft = 0;
+                this.ref.scrollTop = 0;
+            } else {
+                this.ref.scrollLeft = this.state.scrollLeft;
+                this.ref.scrollTop = this.state.scrollTop;
             }
         }
     }
@@ -243,6 +260,8 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
 
     private vertScrollThumbWidth: number = 0;
     private horzScrollThumbWidth: number = 0;
+    private propsScrollLeft?: number;
+    private propsScrollTop?: number;
 
     setStateInternal(state: Partial<ScrollableContainerState>): void {
         if (state.horzScrollThumbHeight !== undefined) {

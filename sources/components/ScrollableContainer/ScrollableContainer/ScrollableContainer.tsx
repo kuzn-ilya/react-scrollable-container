@@ -213,6 +213,10 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
     private handleScroll: (event: React.UIEvent<HTMLDivElement>) => void = (event) => {
         let scrollLeft = (event.currentTarget as Element).scrollLeft;
         let scrollTop = (event.currentTarget as Element).scrollTop;
+        this.setStateInternal({
+            scrollLeft,
+            scrollTop
+        });
         this.props.onScrollPosChanged!(scrollLeft, scrollTop);
     }
 

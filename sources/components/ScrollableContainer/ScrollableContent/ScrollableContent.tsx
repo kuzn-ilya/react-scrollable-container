@@ -2,9 +2,10 @@ import * as React from 'react';
 import * as objectAssign from 'object-assign';
 
 import {ScrollableContentProps, scrollableContentPropTypes } from './ScrollableContentProps';
-import { listenToResize } from '../../../utils';
+import { listenToResize, classNames } from '../../../utils';
 import * as emptyFunction from 'fbjs/lib/emptyFunction';
 
+import '../../../styles/common.css';
 import '../../../styles/container.css';
 
 export class ScrollableContent extends React.PureComponent<ScrollableContentProps, {}> {
@@ -40,6 +41,7 @@ export class ScrollableContent extends React.PureComponent<ScrollableContentProp
     }
 
     render(): JSX.Element {
+        console.log('ScrollableContainer', this.props.contentWidth, this.props.contentHeight);
         let wrapper: React.ReactNode = null;
         if (this.props.contentWidth !== '100%' || this.props.contentHeight !== '100%') {
             wrapper = (
@@ -59,7 +61,7 @@ export class ScrollableContent extends React.PureComponent<ScrollableContentProp
 
         return (
             <div style={style}
-                className="scrollable-content"
+                className={classNames('scrollable-content', 'transform-boost')}
                 ref={this.setRef}
             >
                 {this.props.dataRenderer!(this.props.data)}

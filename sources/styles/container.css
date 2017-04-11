@@ -11,11 +11,6 @@
     top: 0px;
 }
 
-.scrollable-container-scrollable-boost {
-    transform: translateZ(0);
-    will-change: transform;
-}
-
 .scrollable-content {
 }
 

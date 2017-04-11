@@ -16,3 +16,8 @@
 .cursor-no-drop {
   cursor: no-drop;
 }
+
+.transform-boost {
+    transform: translateZ(0);
+    will-change: transform;
+}

@@ -1,6 +1,8 @@
 import { PropTypes, ComponentClass } from 'react';
 import { ValidationMap } from '../../react';
 import { RowData } from './RowData';
+import { RowProps } from './Row/RowProps';
+import { HeaderRowProps } from './HeaderRow/HeaderRowProps';
 
 export interface GridProps {
     customScrollBars?: boolean;
@@ -10,10 +12,8 @@ export interface GridProps {
     fixedColumnCount?: number;
     fixedRowCount?: number;
     rowHeight: number;
-    // tslint:disable-next-line:no-any
-    readonly headerRowClass: ComponentClass<any>;
-    // tslint:disable-next-line:no-any
-    readonly rowClass: ComponentClass<any>;
+    readonly headerRowClass: ComponentClass<HeaderRowProps>;
+    readonly rowClass: ComponentClass<RowProps>;
 }
 
 export const gridPropTypes: ValidationMap<GridProps> = {

@@ -1,6 +1,8 @@
 import { PropTypes, ComponentClass } from 'react';
 import { ValidationMap } from '../../../react';
 import { ColumnProps } from '../Column/ColumnProps';
+import { RowProps } from '../Row/RowProps';
+import { HeaderRowProps } from '../HeaderRow/HeaderRowProps';
 import { Overflow, overflowPropType } from '../../../utils';
 import { RowData } from '../RowData';
 import { List } from 'immutable';
@@ -27,10 +29,8 @@ export interface ColumnGroupProps {
 
     readonly width: number | '100%';
 
-    // tslint:disable-next-line:no-any
-    readonly headerRowClass: ComponentClass<any>;
-    // tslint:disable-next-line:no-any
-    readonly rowClass: ComponentClass<any>;
+    readonly headerRowClass: ComponentClass<HeaderRowProps>;
+    readonly rowClass: ComponentClass<RowProps>;
 }
 
 export const columnGroupPropTypes: ValidationMap<ColumnGroupProps> = {

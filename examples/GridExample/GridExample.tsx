@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { fakeData } from './data/fake.data';
-import { Layout, LayoutPanel, LayoutSplitter, Grid, Column } from '../../sources/components';
+import { Layout, LayoutPanel, LayoutSplitter, Grid, Column, HeaderRow, Row } from '../../sources/components';
 
 interface CompState {
     // tslint:disable-next-line:no-any
@@ -44,8 +44,10 @@ export class GridExample extends React.Component<{}, CompState> {
                 </LayoutPanel>
                 <LayoutSplitter />
                 <LayoutPanel align="client">
-                    <Grid customScrollBars={this.state.customScrollBar}
-                        rowData={this.state.data} fixedColumnCount={2} rowHeight={20} headerHeight={21}>
+                    <Grid headerRowClass={HeaderRow} rowClass={Row}
+                        customScrollBars={this.state.customScrollBar}
+                        rowData={this.state.data} fixedColumnCount={2} rowHeight={20} headerHeight={21}
+                    >
                         <Column caption="id" propName="id" width={30} align="right" />
                         <Column caption="firstName" propName="firstName" width={150} />
                         <Column caption="id" propName="id" width={30} align="right" />

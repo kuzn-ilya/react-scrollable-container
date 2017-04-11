@@ -3,8 +3,6 @@ import * as React from 'react';
 import { ColumnGroupProps, columnGroupPropTypes } from './ColumnGroupProps';
 import { ColumnGroupState } from './ColumnGroupState';
 import { ColumnProps } from '../Column/ColumnProps';
-import { HeaderRow } from '../HeaderRow';
-import { Row } from '../Row';
 import { ScrollableContainer } from '../../ScrollableContainer';
 import { Layout, LayoutPanel } from '../../Layout';
 import { RowData } from '../RowData';
@@ -48,6 +46,8 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
     }
 
     renderHeader: (data: undefined) => React.ReactNode = (data) => {
+        // tslint:disable-next-line:variable-name
+        let HeaderRow = this.props.headerRowClass;
         return <HeaderRow columnProps={this.props.columnProps}
             showEdgeForTheLeftCell={this.props.showEdgeForTheLeftCell}
             height={this.props.headerHeight}
@@ -56,6 +56,8 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
 
     // tslint:disable-next-line:no-any
     renderRows: (rowData: RowData<any>) => React.ReactNode = (rowData) => {
+        // tslint:disable-next-line:variable-name
+        let Row = this.props.rowClass;
         // tslint:disable-next-line:no-any
         return Array.prototype.map.call(rowData, (value: any, index: number) =>
             <Row data={value}

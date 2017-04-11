@@ -16,7 +16,7 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
 
     static propTypes = gridPropTypes;
 
-    static defaultProps: GridProps = {
+    static defaultProps: Partial<GridProps> = {
         customScrollBars: false,
         fixedColumnCount: 0,
         fixedRowCount: 0,
@@ -71,6 +71,8 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
                         overflowX="hidden"
                         overflowY="hidden"
                         scrollTop={this.state.scrollTop}
+                        headerRowClass={this.props.headerRowClass}
+                        rowClass={this.props.rowClass}
                     />
                 </LayoutPanel>
                 <LayoutSplitter />
@@ -88,6 +90,8 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
                         onScrollPosChanged={this.handleVerticalScrollPosChanged}
                         onHorizontalScrollVisibilityChanged={this.handleHorizontalScrollVisibilityChanged}
                         onResize={this.handleScrollableColumnsResize}
+                        headerRowClass={this.props.headerRowClass}
+                        rowClass={this.props.rowClass}
                     />
                 </LayoutPanel>
             </Layout>

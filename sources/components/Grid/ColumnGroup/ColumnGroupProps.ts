@@ -1,4 +1,4 @@
-import { PropTypes } from 'react';
+import { PropTypes, ComponentClass } from 'react';
 import { ValidationMap } from '../../../react';
 import { ColumnProps } from '../Column/ColumnProps';
 import { Overflow, overflowPropType } from '../../../utils';
@@ -26,6 +26,11 @@ export interface ColumnGroupProps {
     readonly showRightShadow?: boolean;
 
     readonly width: number | '100%';
+
+    // tslint:disable-next-line:no-any
+    readonly headerRowClass: ComponentClass<any>;
+    // tslint:disable-next-line:no-any
+    readonly rowClass: ComponentClass<any>;
 }
 
 export const columnGroupPropTypes: ValidationMap<ColumnGroupProps> = {
@@ -34,12 +39,18 @@ export const columnGroupPropTypes: ValidationMap<ColumnGroupProps> = {
     customScrollBars: PropTypes.bool,
     headerHeight: PropTypes.number.isRequired,
 
+    // TODO: Find more appropriate prop type
+    headerRowClass: PropTypes.any.isRequired,
+
     onHorizontalScrollVisibilityChanged: PropTypes.func,
     onResize: PropTypes.func,
     onScrollPosChanged: PropTypes.func,
 
     overflowX: overflowPropType.isRequired,
     overflowY: overflowPropType.isRequired,
+
+    // TODO: Find more appropriate prop type
+    rowClass: PropTypes.any.isRequired,
 
     rowData: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
     rowHeight: PropTypes.number.isRequired,

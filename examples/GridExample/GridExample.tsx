@@ -44,7 +44,7 @@ export class GridExample extends React.Component<{}, CompState> {
                 </LayoutPanel>
                 <LayoutSplitter />
                 <LayoutPanel align="client">
-                    <Grid headerRowClass={HeaderRow} rowClass={Row}
+                    <Grid fixedHeaderRowClass={HeaderRow} fixedRowClass={Row} scrollableHeaderRowClass={HeaderRow} scrollableRowClass={Row}
                         customScrollBars={this.state.customScrollBar}
                         rowData={this.state.data} fixedColumnCount={2} rowHeight={20} headerHeight={21}
                     >

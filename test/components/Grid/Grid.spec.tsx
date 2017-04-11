@@ -15,7 +15,9 @@ describe('Grid', () => {
         let error = chai.spy.on(console, 'error');
 
         let container = renderIntoDocument(
-            <Grid headerRowClass={HeaderRow} rowClass={Row} rowData={[]} rowHeight={20} headerHeight={20}/>
+            <Grid fixedHeaderRowClass={HeaderRow} fixedRowClass={Row} scrollableHeaderRowClass={HeaderRow} scrollableRowClass={Row}
+                rowData={[]} rowHeight={20} headerHeight={20}
+            />
         ) as Grid;
 
         expect(container).to.exist;
@@ -33,7 +35,7 @@ describe('Grid', () => {
         let error = chai.spy.on(console, 'error');
 
         let container = renderIntoDocument(
-            <Grid headerRowClass={HeaderRow} rowClass={Row}
+            <Grid fixedHeaderRowClass={HeaderRow} fixedRowClass={Row} scrollableHeaderRowClass={HeaderRow} scrollableRowClass={Row}
                 fixedColumnCount={2} rowData={[]} rowHeight={20} headerHeight={20}
             >
                 <Column width={20} propName="dummy"/>

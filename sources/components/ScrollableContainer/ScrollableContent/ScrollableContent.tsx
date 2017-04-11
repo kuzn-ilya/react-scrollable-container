@@ -1,14 +1,15 @@
 import * as React from 'react';
 import * as objectAssign from 'object-assign';
 
-import {ScrollableContentProps, scrollableContentPropTypes } from './ScrollableContentProps';
+import { ScrollableContentProps, scrollableContentPropTypes } from './ScrollableContentProps';
+import { ScrollableContentState } from './ScrollableContentState';
 import { listenToResize, classNames } from '../../../utils';
 import * as emptyFunction from 'fbjs/lib/emptyFunction';
 
 import '../../../styles/common.css';
 import '../../../styles/container.css';
 
-export class ScrollableContent extends React.PureComponent<ScrollableContentProps, {}> {
+export class ScrollableContent extends React.PureComponent<ScrollableContentProps, ScrollableContentState> {
 
     static defaultProps: ScrollableContentProps = {
         contentHeight: '100%',
@@ -24,6 +25,9 @@ export class ScrollableContent extends React.PureComponent<ScrollableContentProp
         super(props);
         this.handleResize = this.handleResize.bind(this);
         this.setRef = this.setRef.bind(this);
+        this.state = {
+            style: this.calculateStyle(this.props)
+        };
     }
 
     private removeResizeEventListener: () => void = emptyFunction;
@@ -41,7 +45,6 @@ export class ScrollableContent extends React.PureComponent<ScrollableContentProp
     }
 
     render(): JSX.Element {
-        console.log('ScrollableContainer', this.props.contentWidth, this.props.contentHeight);
         let wrapper: React.ReactNode = null;
         if (this.props.contentWidth !== '100%' || this.props.contentHeight !== '100%') {
             wrapper = (
@@ -54,13 +57,8 @@ export class ScrollableContent extends React.PureComponent<ScrollableContentProp
             );
         }
 
-        let style = objectAssign(this.props.style, {
-            height: this.props.contentHeight,
-            width: this.props.contentWidth
-        });
-
         return (
-            <div style={style}
+            <div style={this.state.style}
                 className={classNames('scrollable-content', 'transform-boost')}
                 ref={this.setRef}
             >
@@ -77,5 +75,23 @@ export class ScrollableContent extends React.PureComponent<ScrollableContentProp
 
     componentWillUnmount(): void {
         this.removeResizeEventListener();
+    }
+
+    private calculateStyle(props: ScrollableContentProps): React.CSSProperties {
+        return objectAssign(props.style, {
+            height: props.contentHeight,
+            width: props.contentWidth
+        });
+    }
+
+    componentWillReceiveProps(newProps: ScrollableContentProps): void {
+        if (newProps.style !== this.props.style
+            || newProps.contentHeight !== this.props.contentHeight
+            || newProps.contentWidth !== this.props.contentWidth) {
+            console.log('update style');
+            this.setState({
+                style: this.calculateStyle(newProps)
+            });
+        }
     }
 }

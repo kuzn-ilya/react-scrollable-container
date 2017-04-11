@@ -1,3 +1,5 @@
+import { CSSProperties } from 'react';
+
 export interface ScrollableContainerState {
     readonly vertScrollThumbWidth: number;
     readonly horzScrollThumbHeight: number;
@@ -9,4 +11,5 @@ export interface ScrollableContainerState {
 
     readonly scrollLeft: number;
     readonly scrollTop: number;
+    readonly style: CSSProperties;
 }

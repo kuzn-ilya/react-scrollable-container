@@ -78,7 +78,7 @@ export class ScrollableContent extends React.PureComponent<ScrollableContentProp
     }
 
     private calculateStyle(props: ScrollableContentProps): React.CSSProperties {
-        return objectAssign(props.style, {
+        return objectAssign({}, props.style, {
             height: props.contentHeight,
             width: props.contentWidth
         });
@@ -88,7 +88,6 @@ export class ScrollableContent extends React.PureComponent<ScrollableContentProp
         if (newProps.style !== this.props.style
             || newProps.contentHeight !== this.props.contentHeight
             || newProps.contentWidth !== this.props.contentWidth) {
-            console.log('update style');
             this.setState({
                 style: this.calculateStyle(newProps)
             });

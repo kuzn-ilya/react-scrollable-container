@@ -1,3 +1,8 @@
+export interface DateRange {
+      startDateTime: string;
+      endDateTime: string;
+}
+
 export interface Data {
       id: number;
       firstName: string;
@@ -13,4 +18,5 @@ export interface Data {
       creditCardNumber: string;
       currency: string;
       creditCardExpires: string;
+      shifts?: Array<DateRange>;
 }

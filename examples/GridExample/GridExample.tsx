@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { fakeData } from './data/fake.data';
-import { Layout, LayoutPanel, LayoutSplitter, Grid, Column, HeaderRow, Row } from '../../sources/components';
+import { Layout, LayoutPanel, LayoutSplitter, Grid, TextColumn, HeaderRow, Row } from '../../sources/components';
 
 interface CompState {
     // tslint:disable-next-line:no-any
@@ -44,24 +44,30 @@ export class GridExample extends React.Component<{}, CompState> {
                 </LayoutPanel>
                 <LayoutSplitter />
                 <LayoutPanel align="client">
-                    <Grid fixedHeaderRowClass={HeaderRow} fixedRowClass={Row} scrollableHeaderRowClass={HeaderRow} scrollableRowClass={Row}
+                    <Grid fixedHeaderRowClass={HeaderRow}
+                        fixedRowClass={Row}
+                        scrollableHeaderRowClass={HeaderRow}
+                        scrollableRowClass={Row}
                         customScrollBars={this.state.customScrollBar}
-                        rowData={this.state.data} fixedColumnCount={2} rowHeight={20} headerHeight={21}
+                        rowData={this.state.data}
+                        fixedColumnCount={2}
+                        rowHeight={20}
+                        headerHeight={51}
                     >
-                        <Column caption="id" propName="id" width={30} align="right" />
-                        <Column caption="firstName" propName="firstName" width={150} />
-                        <Column caption="id" propName="id" width={30} align="right" />
-                        <Column caption="lastName" propName="lastName" width={150} />
-                        <Column caption="email" propName="email" width={150} />
-                        <Column caption="gender" propName="gender" width={80} />
-                        <Column caption="ipAddress" propName="ipAddress" width={150} align="center" />
-                        <Column caption="creditCardType" propName="creditCardType" width={200} />
-                        <Column caption="creditCardNumber" propName="creditCardNumber" width={150} />
-                        <Column caption="creditCardExpires" propName="creditCardExpires" width={80} align="center" />
-                        <Column caption="city" propName="city" width={250} />
-                        <Column caption="company" propName="company" width={150} />
-                        <Column caption="department" propName="department" width={250} />
-                        <Column caption="currency" propName="currency" width={150} />
+                        <TextColumn caption="id" propName="id" width={30} align="right" />
+                        <TextColumn caption="firstName" propName="firstName" width={150} />
+                        <TextColumn caption="id" propName="id" width={30} align="right" />
+                        <TextColumn caption="lastName" propName="lastName" width={150} />
+                        <TextColumn caption="email" propName="email" width={150} />
+                        <TextColumn caption="gender" propName="gender" width={80} />
+                        <TextColumn caption="ipAddress" propName="ipAddress" width={150} align="center" />
+                        <TextColumn caption="creditCardType" propName="creditCardType" width={200} />
+                        <TextColumn caption="creditCardNumber" propName="creditCardNumber" width={150} />
+                        <TextColumn caption="creditCardExpires" propName="creditCardExpires" width={80} align="center" />
+                        <TextColumn caption="city" propName="city" width={250} />
+                        <TextColumn caption="company" propName="company" width={150} />
+                        <TextColumn caption="department" propName="department" width={250} />
+                        <TextColumn caption="currency" propName="currency" width={150} />
                     </Grid>
                 </LayoutPanel>
             </Layout>

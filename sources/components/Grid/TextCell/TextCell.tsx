@@ -1,15 +1,16 @@
 import * as React from 'react';
-import { CellProps, cellPropTypes } from './CellProps';
+import { CellProps, cellPropTypes } from '../Cell/CellProps';
+import { TextColumnProps } from '../TextColumn/TextColumnProps';
 
 import '../../../styles/grid.css';
 
-export class Cell extends React.PureComponent<CellProps, {}> {
+export class TextCell extends React.PureComponent<CellProps<TextColumnProps>, {}> {
     static propTypes = cellPropTypes;
 
     render(): JSX.Element {
         let style: React.CSSProperties = {
             height: this.props.height.toString() + 'px',
-            textAlign: this.props.align,
+            textAlign: this.props.columnProps.align,
             width: this.props.width.toString() + 'px'
         };
         return (

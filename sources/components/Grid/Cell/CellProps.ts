@@ -1,17 +1,19 @@
 import { PropTypes } from 'react';
 import { ValidationMap } from '../../../react';
 
-export interface CellProps {
-    align?: 'left' | 'right' | 'center';
+export interface CellProps<ColumnProps> {
     firstCell?: boolean;
     height: number;
     // tslint:disable-next-line:no-any
     value: any;
     width: number;
+    columnProps: ColumnProps;
 }
 
-export const cellPropTypes: ValidationMap<CellProps> = {
-    align: PropTypes.oneOf(['left', 'right', 'center']),
+// tslint:disable-next-line:no-any
+export const cellPropTypes: ValidationMap<CellProps<any>> = {
+    // TODO: columnProps type
+    columnProps: PropTypes.any,
     firstCell: PropTypes.bool,
     height: PropTypes.number.isRequired,
     value: PropTypes.any.isRequired,

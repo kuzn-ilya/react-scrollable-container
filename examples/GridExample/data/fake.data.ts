@@ -17,7 +17,17 @@ export const fakeData: Array<Data> =
       creditCardType: 'jcb',
       creditCardNumber: '3535094176782044',
       currency: 'Ruble',
-      creditCardExpires: '2018-09-08'
+      creditCardExpires: '2018-09-08',
+      shifts: [
+        {
+          startDateTime: '2017-04-11 14:30:00.000',
+          endDateTime: '2017-04-11 23:00:00.000'
+        },
+        {
+          startDateTime: '2017-04-12 14:30:00.000',
+          endDateTime: '2017-04-12 23:00:00.000'
+        }
+      ]
     }, {
       id: 2,
       firstName: 'Steve',

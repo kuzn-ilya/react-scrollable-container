@@ -5,7 +5,7 @@ import * as chaiSpies from 'chai-spies';
 
 import { renderIntoDocument } from '../../TestUtils';
 
-import { Grid, Column, HeaderRow, Row } from '../../../sources';
+import { Grid, TextColumn, HeaderRow, Row } from '../../../sources';
 
 const expect = chai.expect;
 chai.use(chaiSpies);
@@ -38,10 +38,10 @@ describe('Grid', () => {
             <Grid fixedHeaderRowClass={HeaderRow} fixedRowClass={Row} scrollableHeaderRowClass={HeaderRow} scrollableRowClass={Row}
                 fixedColumnCount={2} rowData={[]} rowHeight={20} headerHeight={20}
             >
-                <Column width={20} propName="dummy"/>
-                <Column width={40} propName="dummy"/>
-                <Column width={60} propName="dummy"/>
-                <Column width={80} propName="dummy"/>
+                <TextColumn width={20} propName="dummy"/>
+                <TextColumn width={40} propName="dummy"/>
+                <TextColumn width={60} propName="dummy"/>
+                <TextColumn width={80} propName="dummy"/>
             </Grid>
         ) as Grid;
 

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { HeaderRowProps, headerRowPropTypes } from './HeaderRowProps';
 import { ColumnProps } from '../Column/ColumnProps';
-import { HeaderCell } from '../HeaderCell';
 
 export class HeaderRow extends React.PureComponent<HeaderRowProps, {}> {
     static propTypes = headerRowPropTypes;
@@ -15,11 +14,16 @@ export class HeaderRow extends React.PureComponent<HeaderRowProps, {}> {
     }
 
     renderCells(): React.ReactNode {
-        return this.props.columnProps.map((value: ColumnProps, index: number) =>
-            <HeaderCell key={index} width={value.width}
-                caption={value.caption}
-                firstCell={index === 0 && this.props.showEdgeForTheLeftCell}
-                height={this.props.height}/>
-        );
+        return this.props.columnProps.map((value: ColumnProps, index: number) => {
+            // tslint:disable-next-line:variable-name
+            let HeaderCell = value.headerCellClass!;
+            return (
+                <HeaderCell key={index} width={value.width}
+                    caption={value.caption}
+                    firstCell={index === 0 && this.props.showEdgeForTheLeftCell}
+                    height={this.props.height}
+                    columnProps={value}/>
+            );
+        });
     }
 }

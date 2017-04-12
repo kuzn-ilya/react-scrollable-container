@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { HeaderCellProps, headerCellPropTypes } from './HeaderCellProps';
+import { ColumnProps } from '../Column/ColumnProps';
 
 import '../../../styles/grid.css';
 
-export class HeaderCell extends React.PureComponent<HeaderCellProps, {}> {
+export class HeaderCell extends React.PureComponent<HeaderCellProps<ColumnProps>, {}> {
     static propTypes = headerCellPropTypes;
 
     render(): JSX.Element {

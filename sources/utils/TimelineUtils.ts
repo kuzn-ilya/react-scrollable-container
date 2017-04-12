@@ -1,4 +1,7 @@
-import { calculateDaysDifference, addSeconds } from './DateTimeUtils';
+import { List } from 'immutable';
+import * as invariant from 'fbjs/lib/invariant';
+
+import { calculateDaysDifference, addDays, addSeconds } from './DateTimeUtils';
 
 export interface TimelineModel {
     readonly zoomStartDate: Date;
@@ -19,6 +22,11 @@ export interface EntityModel {
 export interface EntityGeometry {
     left: number;
     width: number;
+}
+
+export interface WeekModel {
+    readonly weekStart: Date;
+    readonly weekEnd: Date;
 }
 
 const MAX_DAY_SIZE = 155;
@@ -83,4 +91,31 @@ export function calculateEntityGeometry(entity: EntityModel, isTabularView: bool
         left,
         width
     };
+}
+
+export function calculateWeeks(startDate: Date, endDate: Date): List<WeekModel> {
+    invariant(startDate <= endDate, 'calculateWeeks: Parameter "startDate" should be less than parameter "endDate"');
+
+    let result = List<WeekModel>([]);
+
+    let startResultDate = addDays(startDate, -startDate.getDay());
+    let endResultDate = addDays(endDate, 6 - endDate.getDay());
+
+    while (startResultDate < endResultDate) {
+        let nextStartDate = addDays(startResultDate, 7);
+        let weekEnd = addSeconds(nextStartDate, -1);
+
+        result = result.push({
+            weekStart: startResultDate,
+            weekEnd
+        });
+
+        startResultDate = nextStartDate;
+    }
+
+    return result;
+}
+
+export function calculateWeekWidth(weeks: List<WeekModel>, width: number): number {
+    return width / weeks.size;
 }

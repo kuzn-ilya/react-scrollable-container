@@ -8,3 +8,6 @@ export * from './cancelAnimationFrame';
 export * from './updateCSSPosition';
 export * from './getCSSPropertyNameWithVendorPrefix';
 export * from './listenToResize';
+
+export * from './TimelineUtils';
+export * from './DateTimeUtils';

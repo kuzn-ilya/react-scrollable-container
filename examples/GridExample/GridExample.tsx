@@ -1,7 +1,8 @@
 import * as React from 'react';
 
 import { fakeData } from './data/fake.data';
-import { Layout, LayoutPanel, LayoutSplitter, Grid, TextColumn, HeaderRow, Row } from '../../sources/components';
+import { Layout, LayoutPanel, LayoutSplitter, Grid, TextColumn, GanttColumn, HeaderRow, Row } from '../../sources/components';
+import { calculateTimeline } from '../../sources/utils';
 
 interface CompState {
     // tslint:disable-next-line:no-any
@@ -57,6 +58,14 @@ export class GridExample extends React.Component<{}, CompState> {
                         <TextColumn caption="id" propName="id" width={30} align="right" />
                         <TextColumn caption="firstName" propName="firstName" width={150} />
                         <TextColumn caption="id" propName="id" width={30} align="right" />
+                        <GanttColumn caption="shifts"
+                            propName="shifts"
+                            width={500}
+                            timelineModel={calculateTimeline(
+                                new Date(2017, 3, 11), new Date(2017, 3, 13),
+                                new Date(2017, 3, 11), new Date(2017, 3, 13), 500
+                            )}
+                        />
                         <TextColumn caption="lastName" propName="lastName" width={150} />
                         <TextColumn caption="email" propName="email" width={150} />
                         <TextColumn caption="gender" propName="gender" width={80} />

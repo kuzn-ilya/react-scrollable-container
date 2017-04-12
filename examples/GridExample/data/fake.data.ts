@@ -42,7 +42,17 @@ export const fakeData: Array<Data> =
       creditCardType: 'mastercard',
       creditCardNumber: '5103283225531737',
       currency: 'Dram',
-      creditCardExpires: '2020-02-04'
+      creditCardExpires: '2020-02-04',
+      shifts: [
+        {
+          startDateTime: '2017-04-11 9:30:00.000',
+          endDateTime: '2017-04-11 15:00:00.000'
+        },
+        {
+          startDateTime: '2017-04-12 0:30:00.000',
+          endDateTime: '2017-04-12 2:00:00.000'
+        }
+      ]
     }, {
       id: 3,
       firstName: 'Nancy',
@@ -57,7 +67,17 @@ export const fakeData: Array<Data> =
       creditCardType: 'solo',
       creditCardNumber: '676755294268504407',
       currency: 'Ruble',
-      creditCardExpires: '2018-08-16'
+      creditCardExpires: '2018-08-16',
+      shifts: [
+        {
+          startDateTime: '2017-04-11 0:00:00.000',
+          endDateTime: '2017-04-11 1:00:00.000'
+        },
+        {
+          startDateTime: '2017-04-12 1:30:00.000',
+          endDateTime: '2017-04-12 5:00:00.000'
+        }
+      ]
     }, {
       id: 4,
       firstName: 'Evelyn',

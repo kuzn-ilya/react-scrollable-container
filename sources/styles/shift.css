@@ -1,0 +1,19 @@
+.shift {
+    position: absolute;
+    cursor: pointer;
+    font-size: 11px;
+    box-sizing: border-box;
+    padding-top: 2px;
+    padding-left: 2px;
+    font-family: 'Roboto', sans-serif;
+    background-color: steelblue;
+    color: white;
+    height: '100%';
+}
+    
+.shift-gantt {
+    border-left-width: 3px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

@@ -22,8 +22,7 @@ export class Row extends React.PureComponent<RowProps, {}> {
                     value={this.props.data[value.propName]}
                     firstCell={index === 0 && this.props.showEdgeForTheLeftCell}
                     height={this.props.height}
-                    {...this.props}>
-                </Cell>
+                    columnProps={value} />
             );
         });
     }

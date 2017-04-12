@@ -5,7 +5,6 @@ import * as objectAssign from 'object-assign';
 
 import { GridProps, gridPropTypes } from './GridProps';
 import { GridState } from './GridState';
-import { Column } from './Column';
 import { ColumnGroup } from './ColumnGroup';
 import { ColumnProps } from './Column/ColumnProps';
 import { Layout, LayoutPanel, LayoutSplitter } from '../Layout';
@@ -123,7 +122,7 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
     getColumnProps(): ColumnProps[] {
         return React.Children
             .toArray(this.props.children).filter((value: React.ReactChild): boolean =>
-                typeof value !== 'string' && typeof value !== 'number' && value.type === Column
+                typeof value !== 'string' && typeof value !== 'number'
             )
             .map((value: React.ReactChild) =>
                 (value as React.ReactElement<ColumnProps>).props

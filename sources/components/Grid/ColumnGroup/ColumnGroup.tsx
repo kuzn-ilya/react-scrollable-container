@@ -1,4 +1,7 @@
 import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import { List } from 'immutable';
+import * as objectAssign from 'object-assign';
 
 import { ColumnGroupProps, columnGroupPropTypes } from './ColumnGroupProps';
 import { ColumnGroupState } from './ColumnGroupState';
@@ -15,6 +18,7 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
 
     static defaultProps: Partial<ColumnGroupProps> = {
         customScrollBars: false,
+        onResize: emptyFunction,
         onScrollPosChanged: emptyFunction
     };
 
@@ -25,30 +29,53 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
         this.renderRows = this.renderRows.bind(this);
         this.handleScrollPosChanged = this.handleScrollPosChanged.bind(this);
         this.handleVerticalScrollVisibilityChanged = this.handleVerticalScrollVisibilityChanged.bind(this);
+        this.handleResize = this.handleResize.bind(this);
 
-        this.state = {
-            columnsWidth: this.calculateColumnsWidth(this.props),
+        this.state = objectAssign(this.calculateColumnState(this.props.columnProps, 0), {
             scrollLeft: 0,
             scrollTop: 0
-        };
+        }) as ColumnGroupState;
     }
 
     componentWillReceiveProps(nextProps: ColumnGroupProps): void {
-        this.setState({
-            columnsWidth: this.calculateColumnsWidth(nextProps)
-        } as ColumnGroupState);
+        if (nextProps.columnProps !== this.props.columnProps) {
+            this.updateColumnState(nextProps, this.state.rowsThumbWidth || 0);
+        }
     }
 
-    calculateColumnsWidth(props: ColumnGroupProps): number {
-        return props.columnProps
+    updateColumnState(props: ColumnGroupProps, rowsThumbWidth: number): void {
+        this.setState(this.calculateColumnState(props.columnProps, rowsThumbWidth) as ColumnGroupState);
+    }
+
+    calculateColumnState(props: List<ColumnProps>, rowsThumbWidth: number): Partial<ColumnGroupState> {
+        let columnsWidth = props
             .map((value: ColumnProps): number => value.width)
             .reduce((prevValue: number, currValue: number) => prevValue + currValue, 0);
+        let columnProps = props;
+
+        if (props.size > 0 && this.ref) {
+            let refDom = ReactDOM.findDOMNode(this.ref) as HTMLElement;
+            if (columnsWidth < refDom.offsetWidth - rowsThumbWidth) {
+                let lastColumnProps = props.last();
+                let newLastcolumnProps = objectAssign({}, lastColumnProps);
+
+                newLastcolumnProps.width = refDom.offsetWidth - columnsWidth + newLastcolumnProps.width - rowsThumbWidth;
+                columnsWidth = refDom.offsetWidth - rowsThumbWidth;
+
+                let newProps = props.set(props.size - 1, newLastcolumnProps);
+                columnProps = newProps;
+            }
+        }
+        return {
+            columnProps,
+            columnsWidth
+        };
     }
 
     renderHeader: (data: undefined) => React.ReactNode = (data) => {
         // tslint:disable-next-line:variable-name
         let HeaderRow = this.props.headerRowClass;
-        return <HeaderRow columnProps={this.props.columnProps}
+        return <HeaderRow columnProps={this.state.columnProps}
             showEdgeForTheLeftCell={this.props.showEdgeForTheLeftCell}
             height={this.props.headerHeight}
         />;
@@ -63,7 +90,7 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
             <Row data={value}
                 key={index}
                 rowIndex={index}
-                columnProps={this.props.columnProps}
+                columnProps={this.state.columnProps}
                 height={this.props.rowHeight}
                 showEdgeForTheLeftCell={this.props.showEdgeForTheLeftCell}
             />
@@ -72,13 +99,14 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
 
     handleVerticalScrollVisibilityChanged: (visible: boolean, thumbWidth: number) => void = (visible: boolean, thumbWidth: number) => {
         this.setState({
-            columnsWidth: this.state.columnsWidth,
             rowsThumbWidth: thumbWidth
         } as ColumnGroupState);
+        this.updateColumnState(this.props, thumbWidth);
     }
 
     header: ScrollableContainer;
     rows: ScrollableContainer;
+    ref: Layout;
 
     handleScrollPosChanged: (scrollLeft: number, scrollTop: number) => void = (scrollLeft, scrollTop) => {
         this.setState({
@@ -88,6 +116,11 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
         this.props.onScrollPosChanged!(scrollLeft, scrollTop);
     }
 
+    handleResize: () => void = () => {
+        this.updateColumnState(this.props, this.state.rowsThumbWidth || 0);
+        this.props.onResize!();
+    }
+
     render(): JSX.Element | null {
         return this.state.columnsWidth ?
             <Layout height="100%"
@@ -95,7 +128,8 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
                 className={classNames({
                     'right-shadow': Boolean(this.props.showRightShadow)
                 })}
-                onResize={this.props.onResize}
+                onResize={this.handleResize}
+                ref={(ref: Layout) => this.ref = ref}
             >
                 <LayoutPanel align="top" height={this.props.headerHeight}>
                     <ScrollableContainer

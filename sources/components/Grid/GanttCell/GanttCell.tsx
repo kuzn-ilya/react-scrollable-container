@@ -2,29 +2,43 @@ import * as React from 'react';
 import { List } from 'immutable';
 import { CellProps, cellPropTypes } from '../Cell/CellProps';
 import { GanttColumnProps } from '../GanttColumn/GanttColumnProps';
-import { isEntityInPeriod, calculateEntityGeometry, EntityModel } from '../../../utils';
+import { isEntityInPeriod, calculateEntityGeometry, calculateTimeline, EntityModel, TimelineModel } from '../../../utils';
 import { Shift } from './Shift';
 
 import '../../../styles/grid.css';
 
-export class GanttCell extends React.PureComponent<CellProps<GanttColumnProps>, {}> {
+export class GanttCell extends React.PureComponent<CellProps<GanttColumnProps>, TimelineModel> {
     static propTypes = cellPropTypes;
+
+    constructor(props: CellProps<GanttColumnProps>) {
+        super(props);
+        this.state = this.calcState(props);
+    }
+
+    componentWillReceiveProps(nextProps: CellProps<GanttColumnProps>): void {
+        this.setState(this.calcState(nextProps));
+    }
+
+    calcState(props: CellProps<GanttColumnProps>): TimelineModel {
+        return calculateTimeline(props.columnProps.startDate, props.columnProps.endDate,
+            props.columnProps.zoomStartDate, props.columnProps.zoomEndDate, props.width);
+    }
 
     render(): JSX.Element {
         let entities: List<JSX.Element> = List<JSX.Element>([]);
-
-        let timeline = this.props.columnProps.timelineModel;
 
         let periodEntities = List<EntityModel>(
             this.props.value ? this.props.value
                 .map((item: {startDateTime: string, endDateTime: string}) => {
                     return { endDateTime: new Date(item.endDateTime), startDateTime: new Date(item.startDateTime) };
                 })
-                .filter((entity: EntityModel) => isEntityInPeriod(entity, timeline))
-                : []);
+                .filter((entity: EntityModel) => isEntityInPeriod(this.props.columnProps.startDate,
+                    this.props.columnProps.endDate, entity)) : []
+                );
 
         entities = periodEntities.map((entity: EntityModel) => {
-            let geometry = calculateEntityGeometry(entity, false, timeline);
+            let geometry = calculateEntityGeometry(this.props.columnProps.startDate, entity, false,
+                this.state.hourWidth, this.state.dayWidth);
 
             return (
                 <Shift

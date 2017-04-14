@@ -2,13 +2,18 @@ import { PropTypes } from 'react';
 import { ValidationMap } from '../../../react';
 import * as objectAssign from 'object-assign';
 
-import { TimelineModel } from '../../../utils';
 import { ColumnProps, columnPropTypes } from '../Column/ColumnProps';
 
 export interface GanttColumnProps extends ColumnProps {
-    timelineModel: TimelineModel;
+    zoomStartDate: Date;
+    zoomEndDate: Date;
+    startDate: Date;
+    endDate: Date;
 }
 
 export const ganttColumnPropTypes: ValidationMap<GanttColumnProps> = objectAssign(columnPropTypes, {
-    timelineModel: PropTypes.object
+    endDate: PropTypes.object.isRequired,
+    startDate: PropTypes.object.isRequired,
+    zoomEndDate: PropTypes.object.isRequired,
+    zoomStartDate: PropTypes.object.isRequired
 });

@@ -4,10 +4,6 @@ import * as invariant from 'fbjs/lib/invariant';
 import { calculateDaysDifference, addDays, addSeconds } from './DateTimeUtils';
 
 export interface TimelineModel {
-    readonly zoomStartDate: Date;
-    readonly zoomEndDate: Date;
-    readonly startDate: Date;
-    readonly endDate: Date;
     readonly horizontalScrollPosition: number;
     readonly fullWidth: number;
     readonly hourWidth: number;
@@ -38,10 +34,6 @@ export function calculateTimeline(startDate: Date, endDate: Date, zoomStartDate:
     let fullWidth = calculateDaysDifference(startDate, addSeconds(endDate, 1)) * dayWidth;
     let horizontalScrollPosition: number = (zoomStartDate.getTime() - startDate.getTime()) / (60 * 60 * 1000) * hourWidth;
     let timeline = {
-        zoomStartDate,
-        zoomEndDate,
-        startDate,
-        endDate,
         horizontalScrollPosition,
         fullWidth,
         hourWidth,
@@ -60,31 +52,28 @@ function calculateHourWidth(startDate: Date, endDate: Date, width: number): numb
     return calculateDayWidth(startDate, endDate, width) / 24;
 }
 
-export function isEntityInPeriod(entity: EntityModel, timeline: TimelineModel): boolean {
-    let stateStartDate = timeline.startDate;
-    let stateEndDate = timeline.endDate;
-
-    return (entity.startDateTime >= stateStartDate && entity.startDateTime < stateEndDate)
-        || (entity.endDateTime > stateStartDate && entity.endDateTime <= stateEndDate);
+export function isEntityInPeriod(startDate: Date, endDate: Date, entity: EntityModel): boolean {
+    return (entity.startDateTime >= startDate && entity.startDateTime < endDate)
+        || (entity.endDateTime > startDate && entity.endDateTime <= endDate);
 }
 
-export function calculateEntityGeometry(entity: EntityModel, isTabularView: boolean, timeline: TimelineModel): EntityGeometry {
+export function calculateEntityGeometry(startDate: Date,
+    entity: EntityModel, isTabularView: boolean, hourWidth: number, dayWidth: number): EntityGeometry {
     let width = 0;
     let left = -1;
 
-    let timelineStartDate = timeline.startDate;
     let entityStartDate = entity.startDateTime;
     let entityEndDate = entity.endDateTime;
-    let daysDifference = calculateDaysDifference(timelineStartDate, entityEndDate);
+    let daysDifference = calculateDaysDifference(startDate, entityEndDate);
 
     if (isTabularView) {
-        width = 24 * timeline.hourWidth;
-        left = daysDifference <= 0 ? 0 : daysDifference * timeline.dayWidth;
+        width = 24 * hourWidth;
+        left = daysDifference <= 0 ? 0 : daysDifference * dayWidth;
     } else {
         // TODO move calc into DateTimeService
         let hourDifference = (entity.endDateTime.getTime() - entity.startDateTime.getTime()) / (60 * 60 * 1000);
-        width = hourDifference * timeline.hourWidth;
-        left = daysDifference < 0 ? 0 : (daysDifference * timeline.dayWidth) + timeline.hourWidth * entityStartDate.getHours();
+        width = hourDifference * hourWidth;
+        left = daysDifference < 0 ? 0 : (daysDifference * dayWidth) + hourWidth * entityStartDate.getHours();
     }
 
     return {

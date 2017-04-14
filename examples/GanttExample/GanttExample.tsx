@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import { fakeData } from '../GridExample/data/fake.data';
 import { Layout, LayoutPanel, LayoutSplitter, Grid, TextColumn, GanttColumn, HeaderRow, Row } from '../../sources/components';
-import { calculateTimeline } from '../../sources/utils';
 
 interface CompState {
     // tslint:disable-next-line:no-any
@@ -61,10 +60,10 @@ export class GanttExample extends React.Component<{}, CompState> {
                         <GanttColumn caption="shifts"
                             propName="shifts"
                             width={500}
-                            timelineModel={calculateTimeline(
-                                new Date(2017, 3, 11), new Date(2017, 3, 13),
-                                new Date(2017, 3, 11), new Date(2017, 3, 13), 500
-                            )}
+                            startDate={new Date(2017, 3, 11)}
+                            endDate={new Date(2017, 3, 13)}
+                            zoomStartDate={new Date(2017, 3, 11)}
+                            zoomEndDate={new Date(2017, 3, 13)}
                         />
                     </Grid>
                 </LayoutPanel>

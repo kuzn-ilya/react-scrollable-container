@@ -1,7 +1,8 @@
 import * as React from 'react';
 
-import { fakeData } from './data/fake.data';
-import { Layout, LayoutPanel, LayoutSplitter, Grid, TextColumn, HeaderRow, Row } from '../../sources/components';
+import { fakeData } from '../GridExample/data/fake.data';
+import { Layout, LayoutPanel, LayoutSplitter, Grid, TextColumn, GanttColumn, HeaderRow, Row } from '../../sources/components';
+import { calculateTimeline } from '../../sources/utils';
 
 interface CompState {
     // tslint:disable-next-line:no-any
@@ -9,7 +10,7 @@ interface CompState {
     customScrollBar?: boolean;
 }
 
-export class GridExample extends React.Component<{}, CompState> {
+export class GanttExample extends React.Component<{}, CompState> {
     constructor(props: {}) {
         super(props);
         this.state = {
@@ -50,24 +51,21 @@ export class GridExample extends React.Component<{}, CompState> {
                         scrollableRowClass={Row}
                         customScrollBars={this.state.customScrollBar}
                         rowData={this.state.data}
-                        fixedColumnCount={2}
+                        fixedColumnCount={3}
                         rowHeight={20}
                         headerHeight={51}
                     >
                         <TextColumn caption="id" propName="id" width={30} align="right" />
                         <TextColumn caption="firstName" propName="firstName" width={150} />
-                        <TextColumn caption="id" propName="id" width={30} align="right" />
                         <TextColumn caption="lastName" propName="lastName" width={150} />
-                        <TextColumn caption="email" propName="email" width={150} />
-                        <TextColumn caption="gender" propName="gender" width={80} />
-                        <TextColumn caption="ipAddress" propName="ipAddress" width={150} align="center" />
-                        <TextColumn caption="creditCardType" propName="creditCardType" width={200} />
-                        <TextColumn caption="creditCardNumber" propName="creditCardNumber" width={150} />
-                        <TextColumn caption="creditCardExpires" propName="creditCardExpires" width={80} align="center" />
-                        <TextColumn caption="city" propName="city" width={250} />
-                        <TextColumn caption="company" propName="company" width={150} />
-                        <TextColumn caption="department" propName="department" width={250} />
-                        <TextColumn caption="currency" propName="currency" width={150} />
+                        <GanttColumn caption="shifts"
+                            propName="shifts"
+                            width={500}
+                            timelineModel={calculateTimeline(
+                                new Date(2017, 3, 11), new Date(2017, 3, 13),
+                                new Date(2017, 3, 11), new Date(2017, 3, 13), 500
+                            )}
+                        />
                     </Grid>
                 </LayoutPanel>
             </Layout>

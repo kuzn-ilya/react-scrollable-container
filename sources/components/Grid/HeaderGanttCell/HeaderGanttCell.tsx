@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { List } from 'immutable';
 
-import { createDateListBetweenTwoDates } from '../../../utils';
+import { createDateListBetweenTwoDates, addSeconds } from '../../../utils';
 
 import { HeaderGanttCellProps, headerGanttCellPropTypes } from './HeaderGanttCellProps';
 import { Day } from './Day';
@@ -14,7 +14,7 @@ export class HeaderGanttCell extends React.PureComponent<HeaderGanttCellProps, {
         let timelineEndDate: Date = this.props.columnProps.timelineModel.endDate;
         let days: List<Date> = createDateListBetweenTwoDates(
             timelineStartDate,
-            timelineEndDate
+            addSeconds(timelineEndDate, -1)
         );
 
         let dayWidth = this.props.columnProps.timelineModel.dayWidth;

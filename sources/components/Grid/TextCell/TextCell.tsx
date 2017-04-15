@@ -4,7 +4,7 @@ import { TextColumnProps } from '../TextColumn/TextColumnProps';
 
 import '../../../styles/grid.css';
 
-export class TextCell extends React.PureComponent<CellProps<TextColumnProps>, {}> {
+export class TextCell extends React.PureComponent<CellProps<TextColumnProps, string>, {}> {
     static propTypes = cellPropTypes;
 
     render(): JSX.Element {

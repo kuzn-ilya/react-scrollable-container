@@ -2,10 +2,12 @@ import { ColumnProps } from './Column/ColumnProps';
 import { List } from 'immutable';
 
 export interface GanttState {
-    fixedColumns?: List<ColumnProps>;
+    // tslint:disable-next-line:no-any
+    fixedColumns?: List<ColumnProps<any>>;
     fixedColumnsWidth?: number;
     fixedColumnMinWidth?: number;
-    scrollableColumns?: List<ColumnProps>;
+    // tslint:disable-next-line:no-any
+    scrollableColumns?: List<ColumnProps<any>>;
     colsThumbHeight?: number;
     scrollLeft?: number;
     scrollTop?: number;

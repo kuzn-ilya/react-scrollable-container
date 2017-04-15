@@ -51,9 +51,11 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
         this.setState(this.calculateColumnState(props.columnProps, rowsThumbWidth) as ColumnGroupState);
     }
 
-    calculateColumnState(props: List<ColumnProps>, rowsThumbWidth: number): Partial<ColumnGroupState> {
+    // tslint:disable-next-line:no-any
+    calculateColumnState(props: List<ColumnProps<any>>, rowsThumbWidth: number): Partial<ColumnGroupState> {
         let columnsWidth = props
-            .map((value: ColumnProps): number => value.width)
+            // tslint:disable-next-line:no-any
+            .map((value: ColumnProps<any>): number => value.width)
             .reduce((prevValue: number, currValue: number) => prevValue + currValue, 0);
         let columnProps = props;
         let width = this.state ? this.state.width : 0;

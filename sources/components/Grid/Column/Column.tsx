@@ -3,7 +3,7 @@ import * as warning from 'fbjs/lib/warning';
 
 import { ColumnProps, columnPropTypes } from './ColumnProps';
 
-export class Column extends React.PureComponent<ColumnProps, {}> {
+export class Column<V> extends React.PureComponent<ColumnProps<V>, {}> {
 
     static propTypes = columnPropTypes;
 

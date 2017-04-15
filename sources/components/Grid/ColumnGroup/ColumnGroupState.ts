@@ -8,6 +8,7 @@ export interface ColumnGroupState {
 
     scrollLeft: number;
     scrollTop: number;
-    columnProps: List<ColumnProps>;
+    // tslint:disable-next-line:no-any
+    columnProps: List<ColumnProps<any>>;
     width: number;
 }

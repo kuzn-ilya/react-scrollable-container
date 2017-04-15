@@ -4,7 +4,8 @@ import { ColumnProps } from '../Column/ColumnProps';
 
 import '../../../styles/grid.css';
 
-export class HeaderCell extends React.PureComponent<HeaderCellProps<ColumnProps>, {}> {
+// tslint:disable-next-line:no-any
+export class HeaderCell extends React.PureComponent<HeaderCellProps<ColumnProps<any>>, {}> {
     static propTypes = headerCellPropTypes;
 
     render(): JSX.Element {

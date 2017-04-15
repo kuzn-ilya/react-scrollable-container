@@ -4,7 +4,7 @@ import * as objectAssign from 'object-assign';
 
 import { ColumnProps, columnPropTypes } from '../Column/ColumnProps';
 
-export interface TextColumnProps extends ColumnProps {
+export interface TextColumnProps extends ColumnProps<string> {
     align?: 'left' | 'right' | 'center';
 }
 

@@ -4,7 +4,8 @@ import { ColumnProps } from '../Column/ColumnProps';
 import { List } from 'immutable';
 
 export interface RowProps {
-    columnProps: List<ColumnProps>;
+    // tslint:disable-next-line:no-any
+    columnProps: List<ColumnProps<any>>;
     // tslint:disable-next-line:no-any
     data: any;
     rowIndex: number;

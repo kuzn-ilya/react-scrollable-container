@@ -4,7 +4,12 @@ import * as objectAssign from 'object-assign';
 
 import { ColumnProps, columnPropTypes } from '../Column/ColumnProps';
 
-export interface GanttColumnProps extends ColumnProps {
+export interface GanttEntity {
+    endDateTime: Date;
+    startDateTime: Date;
+}
+
+export interface GanttColumnProps extends ColumnProps<Array<GanttEntity>> {
     zoomStartDate: Date;
     zoomEndDate: Date;
     startDate: Date;

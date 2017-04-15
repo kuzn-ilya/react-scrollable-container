@@ -107,7 +107,8 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
         if (this.scrollableColumnGroup && this.fixedColumnGroup && this.ref) {
             let layoutDom = ReactDOM.findDOMNode(this.ref);
             let scrollableColumnGroupDom = ReactDOM.findDOMNode(this.scrollableColumnGroup);
-            let lastFixedColumn: ColumnProps = objectAssign({}, this.state.fixedColumns!.last());
+            // tslint:disable-next-line:no-any
+            let lastFixedColumn: ColumnProps<any> = objectAssign({}, this.state.fixedColumns!.last());
             let oldFixedColumnsWidth = this.state.fixedColumnsWidth || 0;
             let newFixedColumnsWidth = layoutDom.clientWidth - scrollableColumnGroupDom.clientWidth;
             lastFixedColumn.width = lastFixedColumn.width - oldFixedColumnsWidth + newFixedColumnsWidth;
@@ -119,13 +120,15 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
         }
     }
 
-    getColumnProps(): ColumnProps[] {
+    // tslint:disable-next-line:no-any
+    getColumnProps(): ColumnProps<any>[] {
         return React.Children
             .toArray(this.props.children).filter((value: React.ReactChild): boolean =>
                 typeof value !== 'string' && typeof value !== 'number'
             )
             .map((value: React.ReactChild) =>
-                (value as React.ReactElement<ColumnProps>).props
+                // tslint:disable-next-line:no-any
+                (value as React.ReactElement<ColumnProps<any>>).props
             );
     }
 
@@ -137,12 +140,14 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
 
         // TODO calculate columnsWidth whether columnProps is changed
         let fixedColumnsWidth = fixedColumns
-            .map((value: ColumnProps): number => value.width)
+            // tslint:disable-next-line:no-any
+            .map((value: ColumnProps<any>): number => value.width)
             .reduce((prevValue: number, currValue: number) => prevValue + currValue, 0);
 
         let fixedColumnMinWidth = fixedColumns
             .slice(0, -1)
-            .map((value: ColumnProps): number => value.width)
+            // tslint:disable-next-line:no-any
+            .map((value: ColumnProps<any>): number => value.width)
             .reduce((prevValue: number, currValue: number) => prevValue + currValue, 0);
 
         return {

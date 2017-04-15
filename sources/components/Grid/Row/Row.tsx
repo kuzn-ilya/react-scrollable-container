@@ -14,7 +14,8 @@ export class Row extends React.PureComponent<RowProps, {}> {
     }
 
     renderCells(): React.ReactNode {
-        return this.props.columnProps.map((value: ColumnProps, index: number) => {
+        // tslint:disable-next-line:no-any
+        return this.props.columnProps.map((value: ColumnProps<any>, index: number) => {
             // tslint:disable-next-line:variable-name
             let Cell = value.cellClass!;
             return (

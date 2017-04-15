@@ -4,7 +4,8 @@ import { ColumnProps } from '../Column/ColumnProps';
 import { List } from 'immutable';
 
 export interface HeaderRowProps {
-    columnProps: List<ColumnProps>;
+    // tslint:disable-next-line:no-any
+    columnProps: List<ColumnProps<any>>;
     height: number;
     showEdgeForTheLeftCell?: boolean;
 }

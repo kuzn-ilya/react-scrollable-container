@@ -14,7 +14,8 @@ export class HeaderRow extends React.PureComponent<HeaderRowProps, {}> {
     }
 
     renderCells(): React.ReactNode {
-        return this.props.columnProps.map((value: ColumnProps, index: number) => {
+        // tslint:disable-next-line:no-any
+        return this.props.columnProps.map((value: ColumnProps<any>, index: number) => {
             // tslint:disable-next-line:variable-name
             let HeaderCell = value.headerCellClass!;
             return (

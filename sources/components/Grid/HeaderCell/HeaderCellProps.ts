@@ -2,7 +2,8 @@ import { PropTypes } from 'react';
 import { ValidationMap } from '../../../react';
 import { ColumnProps } from '../Column/ColumnProps';
 
-export interface HeaderCellProps<T extends ColumnProps> {
+// tslint:disable-next-line:no-any
+export interface HeaderCellProps<T extends ColumnProps<any>> {
     caption?: string;
     firstCell?: boolean;
     height: number;

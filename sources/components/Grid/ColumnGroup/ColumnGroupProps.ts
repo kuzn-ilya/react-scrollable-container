@@ -9,7 +9,8 @@ import { List } from 'immutable';
 
 export interface ColumnGroupProps {
     readonly colsThumbHeight?: number;
-    readonly columnProps: List<ColumnProps>;
+    // tslint:disable-next-line:no-any
+    readonly columnProps: List<ColumnProps<any>>;
     readonly customScrollBars?: boolean;
     readonly headerHeight: number;
 

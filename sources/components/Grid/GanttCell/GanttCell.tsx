@@ -1,25 +1,25 @@
 import * as React from 'react';
 import { List } from 'immutable';
 import { CellProps, cellPropTypes } from '../Cell/CellProps';
-import { GanttColumnProps } from '../GanttColumn/GanttColumnProps';
+import { GanttColumnProps, GanttEntity } from '../GanttColumn/GanttColumnProps';
 import { isEntityInPeriod, calculateEntityGeometry, calculateTimeline, EntityModel, TimelineModel } from '../../../utils';
 import { Shift } from './Shift';
 
 import '../../../styles/grid.css';
 
-export class GanttCell extends React.PureComponent<CellProps<GanttColumnProps>, TimelineModel> {
+export class GanttCell extends React.PureComponent<CellProps<GanttColumnProps, Array<GanttEntity>>, TimelineModel> {
     static propTypes = cellPropTypes;
 
-    constructor(props: CellProps<GanttColumnProps>) {
+    constructor(props: CellProps<GanttColumnProps, Array<GanttEntity>>) {
         super(props);
         this.state = this.calcState(props);
     }
 
-    componentWillReceiveProps(nextProps: CellProps<GanttColumnProps>): void {
+    componentWillReceiveProps(nextProps: CellProps<GanttColumnProps, Array<GanttEntity>>): void {
         this.setState(this.calcState(nextProps));
     }
 
-    calcState(props: CellProps<GanttColumnProps>): TimelineModel {
+    calcState(props: CellProps<GanttColumnProps, Array<GanttEntity>>): TimelineModel {
         return calculateTimeline(props.columnProps.startDate, props.columnProps.endDate,
             props.columnProps.zoomStartDate, props.columnProps.zoomEndDate, props.width);
     }
@@ -29,7 +29,7 @@ export class GanttCell extends React.PureComponent<CellProps<GanttColumnProps>, 
 
         let periodEntities = List<EntityModel>(
             this.props.value ? this.props.value
-                .map((item: {startDateTime: string, endDateTime: string}) => {
+                .map((item: GanttEntity) => {
                     return { endDateTime: new Date(item.endDateTime), startDateTime: new Date(item.startDateTime) };
                 })
                 .filter((entity: EntityModel) => isEntityInPeriod(this.props.columnProps.startDate,

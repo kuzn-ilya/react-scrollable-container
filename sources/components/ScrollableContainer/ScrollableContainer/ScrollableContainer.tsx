@@ -156,31 +156,31 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
     // TODO: Implement class for both shadows.
     render(): JSX.Element {
         // TODO: overflowX & overflowY other values
-        let horzScrollBar = this.props.customScrollBars && this.props.overflowX === 'auto' && this.state.vertScrollThumbWidth ? (
+        let horzScrollBar = this.props.customScrollBars && this.props.overflowX === 'auto' && this.state.horzScrollThumbHeight ? (
             <ScrollBar
                 orientation="horizontal"
                 min={0}
                 max={this.state.contentWidth - this.state.containerWidth + this.state.horzScrollThumbHeight}
-                pageSize={this.state.containerWidth - this.state.horzScrollThumbHeight}
-                largeChange={this.state.containerWidth - this.state.horzScrollThumbHeight}
+                pageSize={this.state.containerWidth - this.state.vertScrollThumbWidth}
+                largeChange={this.state.containerWidth - this.state.vertScrollThumbWidth}
                 smallChange={10}
                 position={this.state.scrollLeft}
-                rightOrBottom={this.state.horzScrollThumbHeight}
+                rightOrBottom={this.state.vertScrollThumbWidth}
                 showButtons
                 onScroll={this.handleHorzScroll}
             />
         ) : null;
 
-        let vertScrollBar = this.props.customScrollBars && this.props.overflowY === 'auto' && this.state.horzScrollThumbHeight ? (
+        let vertScrollBar = this.props.customScrollBars && this.props.overflowY === 'auto' && this.state.vertScrollThumbWidth ? (
             <ScrollBar
                 orientation="vertical"
                 min={0}
-                max={this.state.contentHeight - this.state.containerHeight + this.state.vertScrollThumbWidth}
-                pageSize={this.state.containerHeight - this.state.vertScrollThumbWidth}
-                largeChange={this.state.containerHeight - this.state.vertScrollThumbWidth}
+                max={this.state.contentHeight - this.state.containerHeight + this.state.horzScrollThumbHeight}
+                pageSize={this.state.containerHeight - this.state.horzScrollThumbHeight}
+                largeChange={this.state.containerHeight - this.state.horzScrollThumbHeight}
                 smallChange={10}
                 position={this.state.scrollTop}
-                rightOrBottom={this.state.vertScrollThumbWidth}
+                rightOrBottom={this.state.horzScrollThumbHeight}
                 showButtons
                 onScroll={this.handleVertScroll}
             />
@@ -275,8 +275,10 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
         if (this.props.customScrollBars) {
             invariant(!!this.scrollableContentDOMRef, 'calculateScrollThumbsMeasurements: this.scrollableContentDOMRef must be defined.');
             return {
-                horzScrollThumbHeight: this.ref.offsetHeight < this.scrollableContentDOMRef.offsetHeight ? 17 : 0,
-                vertScrollThumbWidth: this.ref.offsetWidth < this.scrollableContentDOMRef.offsetWidth ? 17 : 0
+                horzScrollThumbHeight: this.props.overflowX !== 'hidden'
+                    && this.ref.offsetWidth < this.scrollableContentDOMRef.offsetWidth ? 17 : 0,
+                vertScrollThumbWidth: this.props.overflowY !== 'hidden'
+                    && this.ref.offsetHeight < this.scrollableContentDOMRef.offsetHeight ? 17 : 0
             }  as ScrollableContainerState;
         } else {
             return {
@@ -314,7 +316,7 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
     }
 
     private measureScrollbars: () => void = () => {
-        if (this.ref && (!this.props.customScrollBars || this.scrollableContentDOMRef)) {
+        if (this.ref && this.scrollableContentDOMRef) {
             let newState = this.calculateScrollThumbsMeasurements();
             if (this.vertScrollThumbWidth !== newState.vertScrollThumbWidth) {
                 this.props.onVerticalScrollVisibilityChanged!(newState.vertScrollThumbWidth > 0, newState.vertScrollThumbWidth);

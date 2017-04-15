@@ -9,4 +9,5 @@ export interface ColumnGroupState {
     scrollLeft: number;
     scrollTop: number;
     columnProps: List<ColumnProps>;
+    width: number;
 }

@@ -38,9 +38,13 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
     }
 
     componentWillReceiveProps(nextProps: ColumnGroupProps): void {
-        if (nextProps.columnProps !== this.props.columnProps) {
+        if (nextProps.columnProps !== this.props.columnProps || nextProps.customScrollBars !== this.props.customScrollBars) {
             this.updateColumnState(nextProps, this.state.rowsThumbWidth || 0);
         }
+    }
+
+    componentDidMount(): void {
+        this.updateColumnState(this.props, this.state.rowsThumbWidth || 0);
     }
 
     updateColumnState(props: ColumnGroupProps, rowsThumbWidth: number): void {
@@ -52,15 +56,17 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
             .map((value: ColumnProps): number => value.width)
             .reduce((prevValue: number, currValue: number) => prevValue + currValue, 0);
         let columnProps = props;
+        let width = this.state ? this.state.width : 0;
 
         if (props.size > 0 && this.ref) {
             let refDom = ReactDOM.findDOMNode(this.ref) as HTMLElement;
-            if (columnsWidth < refDom.offsetWidth - rowsThumbWidth) {
+            width = refDom.offsetWidth;
+            if (columnsWidth < width - rowsThumbWidth) {
                 let lastColumnProps = props.last();
                 let newLastcolumnProps = objectAssign({}, lastColumnProps);
 
-                newLastcolumnProps.width = refDom.offsetWidth - columnsWidth + newLastcolumnProps.width - rowsThumbWidth;
-                columnsWidth = refDom.offsetWidth - rowsThumbWidth;
+                newLastcolumnProps.width = width - columnsWidth + newLastcolumnProps.width - rowsThumbWidth;
+                columnsWidth = width - rowsThumbWidth;
 
                 let newProps = props.set(props.size - 1, newLastcolumnProps);
                 columnProps = newProps;
@@ -68,7 +74,8 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
         }
         return {
             columnProps,
-            columnsWidth
+            columnsWidth,
+            width
         };
     }
 

@@ -8,5 +8,5 @@ import { GanttColumnProps } from '../GanttColumn/GanttColumnProps';
 export interface HeaderGanttCellProps extends HeaderCellProps<GanttColumnProps> {
 }
 
-export const headerGanttCellPropTypes: ValidationMap<HeaderGanttCellProps> = objectAssign(headerCellPropTypes, {
+export const headerGanttCellPropTypes: ValidationMap<HeaderGanttCellProps> = objectAssign({}, headerCellPropTypes, {
 });

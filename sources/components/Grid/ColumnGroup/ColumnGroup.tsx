@@ -31,7 +31,7 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
         this.handleVerticalScrollVisibilityChanged = this.handleVerticalScrollVisibilityChanged.bind(this);
         this.handleResize = this.handleResize.bind(this);
 
-        this.state = objectAssign(this.calculateColumnState(this.props.columnProps, 0), {
+        this.state = objectAssign({}, this.calculateColumnState(this.props.columnProps, 0), {
             scrollLeft: 0,
             scrollTop: 0
         }) as ColumnGroupState;

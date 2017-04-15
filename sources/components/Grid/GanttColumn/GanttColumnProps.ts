@@ -11,7 +11,7 @@ export interface GanttColumnProps extends ColumnProps {
     endDate: Date;
 }
 
-export const ganttColumnPropTypes: ValidationMap<GanttColumnProps> = objectAssign(columnPropTypes, {
+export const ganttColumnPropTypes: ValidationMap<GanttColumnProps> = objectAssign({}, columnPropTypes, {
     endDate: PropTypes.object.isRequired,
     startDate: PropTypes.object.isRequired,
     zoomEndDate: PropTypes.object.isRequired,

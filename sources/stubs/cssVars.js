@@ -19,7 +19,7 @@ var CSS_STRING_VARS = {
     'LAYOUT_SPLITTER_COLOR': 'gray'
 };
 
-var CSS_ALL_VARS = objectAssign(CSS_STRING_VARS, CSS_NUMBER_VARS);
+var CSS_ALL_VARS = objectAssign({}, CSS_STRING_VARS, CSS_NUMBER_VARS);
 
 module.exports = {
     CSS_NUMBER_VARS: CSS_NUMBER_VARS,

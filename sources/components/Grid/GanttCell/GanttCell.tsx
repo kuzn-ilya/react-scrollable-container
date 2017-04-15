@@ -36,12 +36,14 @@ export class GanttCell extends React.PureComponent<CellProps<GanttColumnProps>, 
                     this.props.columnProps.endDate, entity)) : []
                 );
 
-        entities = periodEntities.map((entity: EntityModel) => {
+        // TODO: More appropriate value for key
+        entities = periodEntities.map((entity: EntityModel, key: number) => {
             let geometry = calculateEntityGeometry(this.props.columnProps.startDate, entity, false,
                 this.state.hourWidth, this.state.dayWidth);
 
             return (
                 <Shift
+                    key={key}
                     position={geometry.left}
                     width={geometry.width}
                     entity={entity}

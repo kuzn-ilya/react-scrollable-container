@@ -8,6 +8,6 @@ export interface TextColumnProps extends ColumnProps {
     align?: 'left' | 'right' | 'center';
 }
 
-export const textColumnPropTypes: ValidationMap<TextColumnProps> = objectAssign(columnPropTypes, {
+export const textColumnPropTypes: ValidationMap<TextColumnProps> = objectAssign({}, columnPropTypes, {
     align: PropTypes.oneOf(['left', 'right', 'center'])
 });

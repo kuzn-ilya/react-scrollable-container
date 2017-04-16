@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { RowProps, rowPropTypes } from './RowProps';
-import { ColumnProps } from '../Column/ColumnProps';
+import { ColumnProps } from '../Columns/Column/ColumnProps';
 
 export class Row extends React.PureComponent<RowProps, {}> {
     static propTypes = rowPropTypes;

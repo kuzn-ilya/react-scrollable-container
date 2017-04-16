@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { List } from 'immutable';
 
-import { classNames, getWeekDayName, isSameDay } from '../../../../utils';
+import { classNames, getWeekDayName, isSameDay } from '../../../../../utils';
 
 import { DayProps } from './DayProps';
 import { Hour } from '../Hour';

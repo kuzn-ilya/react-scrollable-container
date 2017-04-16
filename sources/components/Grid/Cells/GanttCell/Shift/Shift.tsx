@@ -1,9 +1,9 @@
 import * as React from 'react';
 
 import { ShiftProps } from './ShiftProps';
-import { toHourAndMinutesString } from '../../../../utils';
+import { toHourAndMinutesString } from '../../../../../utils';
 
-import '../../../../styles/shift.css';
+import '../../../../../styles/shift.css';
 
 export class Shift extends React.PureComponent<ShiftProps, {}> {
     public render(): JSX.Element {

@@ -17,7 +17,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'jcb',
       creditCardNumber: '3535094176782044',
       currency: 'Ruble',
-      creditCardExpires: '2018-09-08',
+      creditCardExpires: new Date('2018-09-08'),
       shifts: [
         {
           startDateTime: new Date('2017-04-11 14:30:00.000'),
@@ -42,7 +42,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'mastercard',
       creditCardNumber: '5103283225531737',
       currency: 'Dram',
-      creditCardExpires: '2020-02-04',
+      creditCardExpires: new Date('2020-02-04'),
       shifts: [
         {
           startDateTime: new Date('2017-04-11 9:30:00.000'),
@@ -67,7 +67,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'solo',
       creditCardNumber: '676755294268504407',
       currency: 'Ruble',
-      creditCardExpires: '2018-08-16',
+      creditCardExpires: new Date('2018-08-16'),
       shifts: [
         {
           startDateTime: new Date('2017-04-11 0:00:00.000'),
@@ -92,7 +92,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'diners-club-enroute',
       creditCardNumber: '201406361364652',
       currency: 'Franc',
-      creditCardExpires: '2020-06-12'
+      creditCardExpires: new Date('2020-06-12')
     }, {
       id: 5,
       firstName: 'Brandon',
@@ -107,7 +107,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'china-unionpay',
       creditCardNumber: '56022521805772341',
       currency: 'Lev',
-      creditCardExpires: '2018-06-28'
+      creditCardExpires: new Date('2018-06-28')
     }, {
       id: 6,
       firstName: 'Ralph',
@@ -122,7 +122,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'americanexpress',
       creditCardNumber: '372301632709442',
       currency: 'Peso',
-      creditCardExpires: '2020-04-23'
+      creditCardExpires: new Date('2020-04-23')
     }, {
       id: 7,
       firstName: 'Randy',
@@ -137,7 +137,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'switch',
       creditCardNumber: '6759114545502353867',
       currency: 'Ruble',
-      creditCardExpires: '2019-11-25'
+      creditCardExpires: new Date('2019-11-25')
     }, {
       id: 8,
       firstName: 'Jane',
@@ -152,7 +152,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'diners-club-international',
       creditCardNumber: '36372228439403',
       currency: 'Peso',
-      creditCardExpires: '2016-12-15'
+      creditCardExpires: new Date('2016-12-15')
     }, {
       id: 9,
       firstName: 'Peter',
@@ -167,7 +167,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'diners-club-carte-blanche',
       creditCardNumber: '30020367302017',
       currency: 'Yuan Renminbi',
-      creditCardExpires: '2016-09-23'
+      creditCardExpires: new Date('2016-09-23')
     }, {
       id: 10,
       firstName: 'Bruce',
@@ -182,7 +182,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'jcb',
       creditCardNumber: '3536482946562334',
       currency: 'Peso',
-      creditCardExpires: '2018-04-27'
+      creditCardExpires: new Date('2018-04-27')
     }, {
       id: 11,
       firstName: 'Philip',
@@ -197,7 +197,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'diners-club-enroute',
       creditCardNumber: '201562445971738',
       currency: 'Krona',
-      creditCardExpires: '2020-05-07'
+      creditCardExpires: new Date('2020-05-07')
     }, {
       id: 12,
       firstName: 'Terry',
@@ -212,7 +212,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'mastercard',
       creditCardNumber: '5220282403030338',
       currency: 'Rupiah',
-      creditCardExpires: '2020-05-24'
+      creditCardExpires: new Date('2020-05-24')
     }, {
       id: 13,
       firstName: 'Dennis',
@@ -227,7 +227,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'bankcard',
       creditCardNumber: '5610785369253916',
       currency: 'Euro',
-      creditCardExpires: '2019-09-08'
+      creditCardExpires: new Date('2019-09-08')
     }, {
       id: 14,
       firstName: 'Cheryl',
@@ -242,7 +242,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'instapayment',
       creditCardNumber: '6399514245766783',
       currency: 'Peso',
-      creditCardExpires: '2016-09-23'
+      creditCardExpires: new Date('2016-09-23')
     }, {
       id: 15,
       firstName: 'Ryan',
@@ -257,7 +257,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'jcb',
       creditCardNumber: '3569814900193351',
       currency: 'Euro',
-      creditCardExpires: '2018-05-16'
+      creditCardExpires: new Date('2018-05-16')
     }, {
       id: 16,
       firstName: 'Jack',
@@ -272,7 +272,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'visa',
       creditCardNumber: '4041377147297688',
       currency: 'Rupiah',
-      creditCardExpires: '2020-10-03'
+      creditCardExpires: new Date('2020-10-03')
     }, {
       id: 17,
       firstName: 'Catherine',
@@ -287,7 +287,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'maestro',
       creditCardNumber: '6762949219918862',
       currency: 'Rand',
-      creditCardExpires: '2019-08-27'
+      creditCardExpires: new Date('2019-08-27')
     }, {
       id: 18,
       firstName: 'Joseph',
@@ -302,7 +302,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'jcb',
       creditCardNumber: '3545992175305782',
       currency: 'Yuan Renminbi',
-      creditCardExpires: '2020-09-20'
+      creditCardExpires: new Date('2020-09-20')
     }, {
       id: 19,
       firstName: 'Christina',
@@ -317,7 +317,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'maestro',
       creditCardNumber: '060403454365824883',
       currency: 'Zloty',
-      creditCardExpires: '2018-08-15'
+      creditCardExpires: new Date('2018-08-15')
     }, {
       id: 20,
       firstName: 'Judy',
@@ -332,7 +332,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'jcb',
       creditCardNumber: '3536806306412070',
       currency: 'Krone',
-      creditCardExpires: '2020-06-11'
+      creditCardExpires: new Date('2020-06-11')
     }, {
       id: 21,
       firstName: 'Ashley',
@@ -347,7 +347,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'jcb',
       creditCardNumber: '3534742421843380',
       currency: 'Yen',
-      creditCardExpires: '2019-04-18'
+      creditCardExpires: new Date('2019-04-18')
     }, {
       id: 22,
       firstName: 'Jesse',
@@ -362,7 +362,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'solo',
       creditCardNumber: '6334004851785331124',
       currency: 'Euro',
-      creditCardExpires: '2016-03-03'
+      creditCardExpires: new Date('2016-03-03')
     }, {
       id: 23,
       firstName: 'Richard',
@@ -377,7 +377,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'jcb',
       creditCardNumber: '3578709571051913',
       currency: 'Real',
-      creditCardExpires: '2016-09-23'
+      creditCardExpires: new Date('2016-09-23')
     }, {
       id: 24,
       firstName: 'Joyce',
@@ -392,7 +392,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'diners-club-carte-blanche',
       creditCardNumber: '30228085688332',
       currency: 'Rupiah',
-      creditCardExpires: '2018-09-01'
+      creditCardExpires: new Date('2018-09-01')
     }, {
       id: 25,
       firstName: 'Andrea',
@@ -407,7 +407,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'jcb',
       creditCardNumber: '3535186849336248',
       currency: 'Rupiah',
-      creditCardExpires: '2020-08-15'
+      creditCardExpires: new Date('2020-08-15')
     }, {
       id: 26,
       firstName: 'Sean',
@@ -422,7 +422,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'jcb',
       creditCardNumber: '3584596978774581',
       currency: 'Yen',
-      creditCardExpires: '2020-03-08'
+      creditCardExpires: new Date('2020-03-08')
     }, {
       id: 27,
       firstName: 'Phyllis',
@@ -437,7 +437,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'jcb',
       creditCardNumber: '3570736814413996',
       currency: 'Euro',
-      creditCardExpires: '2017-10-04'
+      creditCardExpires: new Date('2017-10-04')
     }, {
       id: 28,
       firstName: 'Michael',
@@ -452,7 +452,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'diners-club-carte-blanche',
       creditCardNumber: '30197752912939',
       currency: 'Rupiah',
-      creditCardExpires: '2016-02-21'
+      creditCardExpires: new Date('2016-02-21')
     }, {
       id: 29,
       firstName: 'Martha',
@@ -467,7 +467,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'jcb',
       creditCardNumber: '3552723353506275',
       currency: 'Yuan Renminbi',
-      creditCardExpires: '2016-05-21'
+      creditCardExpires: new Date('2016-05-21')
     }, {
       id: 30,
       firstName: 'Arthur',
@@ -482,7 +482,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'bankcard',
       creditCardNumber: '5602211506894066',
       currency: 'Lira',
-      creditCardExpires: '2017-04-19'
+      creditCardExpires: new Date('2017-04-19')
     }, {
       id: 31,
       firstName: 'Edward',
@@ -497,7 +497,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'switch',
       creditCardNumber: '564182043129346784',
       currency: 'Yuan Renminbi',
-      creditCardExpires: '2020-11-06'
+      creditCardExpires: new Date('2020-11-06')
     }, {
       id: 32,
       firstName: 'Jesse',
@@ -512,7 +512,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'jcb',
       creditCardNumber: '3534291460837481',
       currency: 'Peso',
-      creditCardExpires: '2017-05-04'
+      creditCardExpires: new Date('2017-05-04')
     }, {
       id: 33,
       firstName: 'Kimberly',
@@ -527,7 +527,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'jcb',
       creditCardNumber: '3534699078158985',
       currency: 'Pound',
-      creditCardExpires: '2020-09-13'
+      creditCardExpires: new Date('2020-09-13')
     }, {
       id: 34,
       firstName: 'Kathy',
@@ -542,7 +542,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'jcb',
       creditCardNumber: '3569359725353897',
       currency: 'Real',
-      creditCardExpires: '2016-08-30'
+      creditCardExpires: new Date('2016-08-30')
     }, {
       id: 35,
       firstName: 'Bruce',
@@ -557,7 +557,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'visa',
       creditCardNumber: '4041592567850374',
       currency: 'Rupiah',
-      creditCardExpires: '2020-06-30'
+      creditCardExpires: new Date('2020-06-30')
     }, {
       id: 36,
       firstName: 'Timothy',
@@ -572,7 +572,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'jcb',
       creditCardNumber: '3531398310712666',
       currency: 'Yuan Renminbi',
-      creditCardExpires: '2017-11-04'
+      creditCardExpires: new Date('2017-11-04')
     }, {
       id: 37,
       firstName: 'Doris',
@@ -587,7 +587,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'americanexpress',
       creditCardNumber: '374622145314281',
       currency: 'Peso',
-      creditCardExpires: '2019-06-02'
+      creditCardExpires: new Date('2019-06-02')
     }, {
       id: 38,
       firstName: 'Wayne',
@@ -602,7 +602,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'jcb',
       creditCardNumber: '3573122240040652',
       currency: 'Real',
-      creditCardExpires: '2018-01-11'
+      creditCardExpires: new Date('2018-01-11')
     }, {
       id: 39,
       firstName: 'Daniel',
@@ -617,7 +617,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'visa-electron',
       creditCardNumber: '4405753668962282',
       currency: 'Yuan Renminbi',
-      creditCardExpires: '2016-02-28'
+      creditCardExpires: new Date('2016-02-28')
     }, {
       id: 40,
       firstName: 'Scott',
@@ -632,7 +632,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'laser',
       creditCardNumber: '6771958947728087051',
       currency: 'Krone',
-      creditCardExpires: '2016-06-09'
+      creditCardExpires: new Date('2016-06-09')
     }, {
       id: 41,
       firstName: 'David',
@@ -647,7 +647,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'laser',
       creditCardNumber: '670611215674557140',
       currency: 'Pound',
-      creditCardExpires: '2020-01-11'
+      creditCardExpires: new Date('2020-01-11')
     }, {
       id: 42,
       firstName: 'Dorothy',
@@ -662,7 +662,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'jcb',
       creditCardNumber: '3577549842477864',
       currency: 'Ruble',
-      creditCardExpires: '2018-07-07'
+      creditCardExpires: new Date('2018-07-07')
     }, {
       id: 43,
       firstName: 'Maria',
@@ -677,7 +677,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'maestro',
       creditCardNumber: '5038221926769321',
       currency: 'Yuan Renminbi',
-      creditCardExpires: '2017-02-04'
+      creditCardExpires: new Date('2017-02-04')
     }, {
       id: 44,
       firstName: 'Paula',
@@ -692,7 +692,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'jcb',
       creditCardNumber: '3542968342540116',
       currency: 'Peso',
-      creditCardExpires: '2019-12-14'
+      creditCardExpires: new Date('2019-12-14')
     }, {
       id: 45,
       firstName: 'Cynthia',
@@ -707,7 +707,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'bankcard',
       creditCardNumber: '5602234762297311',
       currency: 'Rupiah',
-      creditCardExpires: '2016-07-26'
+      creditCardExpires: new Date('2016-07-26')
     }, {
       id: 46,
       firstName: 'Julie',
@@ -722,7 +722,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'jcb',
       creditCardNumber: '3579956359066584',
       currency: 'Real',
-      creditCardExpires: '2019-04-04'
+      creditCardExpires: new Date('2019-04-04')
     }, {
       id: 47,
       firstName: 'Joan',
@@ -737,7 +737,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'maestro',
       creditCardNumber: '50208991485543289',
       currency: 'Franc',
-      creditCardExpires: '2016-01-15'
+      creditCardExpires: new Date('2016-01-15')
     }, {
       id: 48,
       firstName: 'Nancy',
@@ -752,7 +752,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'maestro',
       creditCardNumber: '06048643925695643',
       currency: 'Rupiah',
-      creditCardExpires: '2020-03-11'
+      creditCardExpires: new Date('2020-03-11')
     }, {
       id: 49,
       firstName: 'Rachel',
@@ -767,7 +767,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'jcb',
       creditCardNumber: '3543522041237307',
       currency: 'Rupiah',
-      creditCardExpires: '2018-06-19'
+      creditCardExpires: new Date('2018-06-19')
     }, {
       id: 50,
       firstName: 'Arthur',
@@ -782,7 +782,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'jcb',
       creditCardNumber: '3569886251884853',
       currency: 'Yuan Renminbi',
-      creditCardExpires: '2018-05-27'
+      creditCardExpires: new Date('2018-05-27')
     }, {
       id: 51,
       firstName: 'Helen',
@@ -797,7 +797,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'americanexpress',
       creditCardNumber: '375571381442034',
       currency: 'Yuan Renminbi',
-      creditCardExpires: '2020-08-12'
+      creditCardExpires: new Date('2020-08-12')
     }, {
       id: 52,
       firstName: 'Gerald',
@@ -812,7 +812,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'instapayment',
       creditCardNumber: '6395858774124094',
       currency: 'Naira',
-      creditCardExpires: '2019-12-29'
+      creditCardExpires: new Date('2019-12-29')
     }, {
       id: 53,
       firstName: 'Patricia',
@@ -827,7 +827,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'maestro',
       creditCardNumber: '50206684478048638',
       currency: 'Euro',
-      creditCardExpires: '2016-12-15'
+      creditCardExpires: new Date('2016-12-15')
     }, {
       id: 54,
       firstName: 'David',
@@ -842,7 +842,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'jcb',
       creditCardNumber: '3542579110359413',
       currency: 'Colon',
-      creditCardExpires: '2019-03-17'
+      creditCardExpires: new Date('2019-03-17')
     }, {
       id: 55,
       firstName: 'Brandon',
@@ -857,7 +857,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'jcb',
       creditCardNumber: '3559739283439232',
       currency: 'Yuan Renminbi',
-      creditCardExpires: '2018-02-11'
+      creditCardExpires: new Date('2018-02-11')
     }, {
       id: 56,
       firstName: 'Anne',
@@ -872,7 +872,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'china-unionpay',
       creditCardNumber: '56022591571965965',
       currency: 'Dirham',
-      creditCardExpires: '2018-12-05'
+      creditCardExpires: new Date('2018-12-05')
     }, {
       id: 57,
       firstName: 'Catherine',
@@ -887,7 +887,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'mastercard',
       creditCardNumber: '5010127705458436',
       currency: 'Yuan Renminbi',
-      creditCardExpires: '2018-12-20'
+      creditCardExpires: new Date('2018-12-20')
     }, {
       id: 58,
       firstName: 'Heather',
@@ -902,7 +902,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'jcb',
       creditCardNumber: '3577993344107795',
       currency: 'Euro',
-      creditCardExpires: '2018-08-25'
+      creditCardExpires: new Date('2018-08-25')
     }, {
       id: 59,
       firstName: 'Shirley',
@@ -917,7 +917,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'diners-club-international',
       creditCardNumber: '36239008502702',
       currency: 'Yuan Renminbi',
-      creditCardExpires: '2020-05-13'
+      creditCardExpires: new Date('2020-05-13')
     }, {
       id: 60,
       firstName: 'Sean',
@@ -932,7 +932,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'diners-club-carte-blanche',
       creditCardNumber: '30586085891689',
       currency: 'Yuan Renminbi',
-      creditCardExpires: '2017-10-09'
+      creditCardExpires: new Date('2017-10-09')
     }, {
       id: 61,
       firstName: 'David',
@@ -947,7 +947,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'instapayment',
       creditCardNumber: '6398196165860936',
       currency: 'Dollar',
-      creditCardExpires: '2020-05-13'
+      creditCardExpires: new Date('2020-05-13')
     }, {
       id: 62,
       firstName: 'Christine',
@@ -962,7 +962,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'visa-electron',
       creditCardNumber: '4026205782189648',
       currency: 'Yuan Renminbi',
-      creditCardExpires: '2019-04-14'
+      creditCardExpires: new Date('2019-04-14')
     }, {
       id: 63,
       firstName: 'Virginia',
@@ -977,7 +977,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'jcb',
       creditCardNumber: '3539297631643828',
       currency: 'Hryvnia',
-      creditCardExpires: '2018-09-11'
+      creditCardExpires: new Date('2018-09-11')
     }, {
       id: 64,
       firstName: 'Jean',
@@ -992,7 +992,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'americanexpress',
       creditCardNumber: '375313478844545',
       currency: 'Peso',
-      creditCardExpires: '2016-08-30'
+      creditCardExpires: new Date('2016-08-30')
     }, {
       id: 65,
       firstName: 'Patricia',
@@ -1007,7 +1007,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'diners-club-carte-blanche',
       creditCardNumber: '30595377695021',
       currency: 'Koruna',
-      creditCardExpires: '2016-02-22'
+      creditCardExpires: new Date('2016-02-22')
     }, {
       id: 66,
       firstName: 'Carlos',
@@ -1022,7 +1022,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'switch',
       creditCardNumber: '490324799212307747',
       currency: 'Ruble',
-      creditCardExpires: '2018-01-24'
+      creditCardExpires: new Date('2018-01-24')
     }, {
       id: 67,
       firstName: 'Edward',
@@ -1037,7 +1037,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'jcb',
       creditCardNumber: '3585620664411628',
       currency: 'Dollar',
-      creditCardExpires: '2018-12-17'
+      creditCardExpires: new Date('2018-12-17')
     }, {
       id: 68,
       firstName: 'Patrick',
@@ -1052,7 +1052,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'jcb',
       creditCardNumber: '3586241390522700',
       currency: 'Euro',
-      creditCardExpires: '2016-06-30'
+      creditCardExpires: new Date('2016-06-30')
     }, {
       id: 69,
       firstName: 'Paula',
@@ -1067,7 +1067,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'instapayment',
       creditCardNumber: '6392372016636934',
       currency: 'Yuan Renminbi',
-      creditCardExpires: '2018-08-03'
+      creditCardExpires: new Date('2018-08-03')
     }, {
       id: 70,
       firstName: 'Amy',
@@ -1082,7 +1082,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'visa',
       creditCardNumber: '4174138736680497',
       currency: 'Real',
-      creditCardExpires: '2017-07-28'
+      creditCardExpires: new Date('2017-07-28')
     }, {
       id: 71,
       firstName: 'Todd',
@@ -1097,7 +1097,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'china-unionpay',
       creditCardNumber: '5602243656542913060',
       currency: 'Rupiah',
-      creditCardExpires: '2018-09-15'
+      creditCardExpires: new Date('2018-09-15')
     }, {
       id: 72,
       firstName: 'Kimberly',
@@ -1112,7 +1112,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'china-unionpay',
       creditCardNumber: '5610269129442096644',
       currency: 'Yuan Renminbi',
-      creditCardExpires: '2017-09-15'
+      creditCardExpires: new Date('2017-09-15')
     }, {
       id: 73,
       firstName: 'Judy',
@@ -1127,7 +1127,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'jcb',
       creditCardNumber: '3581678721710642',
       currency: 'Pound',
-      creditCardExpires: '2016-09-21'
+      creditCardExpires: new Date('2016-09-21')
     }, {
       id: 74,
       firstName: 'Ryan',
@@ -1142,7 +1142,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'jcb',
       creditCardNumber: '3559661557038435',
       currency: 'Euro',
-      creditCardExpires: '2016-04-04'
+      creditCardExpires: new Date('2016-04-04')
     }, {
       id: 75,
       firstName: 'Kathy',
@@ -1157,7 +1157,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'jcb',
       creditCardNumber: '3543759282905818',
       currency: 'Peso',
-      creditCardExpires: '2020-10-10'
+      creditCardExpires: new Date('2020-10-10')
     }, {
       id: 76,
       firstName: 'Paul',
@@ -1172,7 +1172,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'jcb',
       creditCardNumber: '3536583002568063',
       currency: 'Ruble',
-      creditCardExpires: '2019-05-07'
+      creditCardExpires: new Date('2019-05-07')
     }, {
       id: 77,
       firstName: 'Nancy',
@@ -1187,7 +1187,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'maestro',
       creditCardNumber: '6759023594793576265',
       currency: 'Ruble',
-      creditCardExpires: '2016-10-24'
+      creditCardExpires: new Date('2016-10-24')
     }, {
       id: 78,
       firstName: 'Kevin',
@@ -1202,7 +1202,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'mastercard',
       creditCardNumber: '5470677453487428',
       currency: 'Peso',
-      creditCardExpires: '2019-02-11'
+      creditCardExpires: new Date('2019-02-11')
     }, {
       id: 79,
       firstName: 'Todd',
@@ -1217,7 +1217,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'diners-club-enroute',
       creditCardNumber: '201988521392863',
       currency: 'Zloty',
-      creditCardExpires: '2018-08-04'
+      creditCardExpires: new Date('2018-08-04')
     }, {
       id: 80,
       firstName: 'Norma',
@@ -1232,7 +1232,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'jcb',
       creditCardNumber: '3535773595516170',
       currency: 'Afghani',
-      creditCardExpires: '2016-06-09'
+      creditCardExpires: new Date('2016-06-09')
     }, {
       id: 81,
       firstName: 'George',
@@ -1247,7 +1247,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'switch',
       creditCardNumber: '4903053452048977631',
       currency: 'Euro',
-      creditCardExpires: '2016-01-09'
+      creditCardExpires: new Date('2016-01-09')
     }, {
       id: 82,
       firstName: 'Bobby',
@@ -1262,7 +1262,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'switch',
       creditCardNumber: '5641828738408127',
       currency: 'Dong',
-      creditCardExpires: '2019-10-04'
+      creditCardExpires: new Date('2019-10-04')
     }, {
       id: 83,
       firstName: 'Bobby',
@@ -1277,7 +1277,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'visa',
       creditCardNumber: '4994368055079397',
       currency: 'Real',
-      creditCardExpires: '2018-10-25'
+      creditCardExpires: new Date('2018-10-25')
     }, {
       id: 84,
       firstName: 'Jeremy',
@@ -1292,7 +1292,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'jcb',
       creditCardNumber: '3538261625160141',
       currency: 'Real',
-      creditCardExpires: '2016-03-09'
+      creditCardExpires: new Date('2016-03-09')
     }, {
       id: 85,
       firstName: 'Melissa',
@@ -1307,7 +1307,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'mastercard',
       creditCardNumber: '5100134837089239',
       currency: 'Rupiah',
-      creditCardExpires: '2017-08-19'
+      creditCardExpires: new Date('2017-08-19')
     }, {
       id: 86,
       firstName: 'Jessica',
@@ -1322,7 +1322,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'diners-club-enroute',
       creditCardNumber: '201845654885867',
       currency: 'Yuan Renminbi',
-      creditCardExpires: '2017-03-12'
+      creditCardExpires: new Date('2017-03-12')
     }, {
       id: 87,
       firstName: 'Gloria',
@@ -1337,7 +1337,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'bankcard',
       creditCardNumber: '5602217057666266',
       currency: 'Rial',
-      creditCardExpires: '2017-11-30'
+      creditCardExpires: new Date('2017-11-30')
     }, {
       id: 88,
       firstName: 'Margaret',
@@ -1352,7 +1352,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'jcb',
       creditCardNumber: '3553811044148216',
       currency: 'Euro',
-      creditCardExpires: '2018-06-21'
+      creditCardExpires: new Date('2018-06-21')
     }, {
       id: 89,
       firstName: 'Jose',
@@ -1367,7 +1367,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'maestro',
       creditCardNumber: '675942927451182210',
       currency: 'Rupiah',
-      creditCardExpires: '2017-10-19'
+      creditCardExpires: new Date('2017-10-19')
     }, {
       id: 90,
       firstName: 'Joyce',
@@ -1382,7 +1382,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'maestro',
       creditCardNumber: '503889908139528221',
       currency: 'Krona',
-      creditCardExpires: '2017-11-12'
+      creditCardExpires: new Date('2017-11-12')
     }, {
       id: 91,
       firstName: 'Lori',
@@ -1397,7 +1397,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'jcb',
       creditCardNumber: '3568180407594454',
       currency: 'Koruna',
-      creditCardExpires: '2017-05-24'
+      creditCardExpires: new Date('2017-05-24')
     }, {
       id: 92,
       firstName: 'Ann',
@@ -1412,7 +1412,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'mastercard',
       creditCardNumber: '5048377832187277',
       currency: 'Yuan Renminbi',
-      creditCardExpires: '2018-10-31'
+      creditCardExpires: new Date('2018-10-31')
     }, {
       id: 93,
       firstName: 'Jason',
@@ -1427,7 +1427,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'jcb',
       creditCardNumber: '3573643191238912',
       currency: 'Real',
-      creditCardExpires: '2016-08-13'
+      creditCardExpires: new Date('2016-08-13')
     }, {
       id: 94,
       firstName: 'Todd',
@@ -1442,7 +1442,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'jcb',
       creditCardNumber: '3536098730187102',
       currency: 'Rupiah',
-      creditCardExpires: '2020-06-23'
+      creditCardExpires: new Date('2020-06-23')
     }, {
       id: 95,
       firstName: 'Julie',
@@ -1457,7 +1457,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'visa',
       creditCardNumber: '4017957989809',
       currency: 'Dong',
-      creditCardExpires: '2016-08-14'
+      creditCardExpires: new Date('2016-08-14')
     }, {
       id: 96,
       firstName: 'Martin',
@@ -1472,7 +1472,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'jcb',
       creditCardNumber: '3555787616327156',
       currency: 'Koruna',
-      creditCardExpires: '2018-06-05'
+      creditCardExpires: new Date('2018-06-05')
     }, {
       id: 97,
       firstName: 'Sandra',
@@ -1487,7 +1487,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'jcb',
       creditCardNumber: '3567470515766271',
       currency: 'Euro',
-      creditCardExpires: '2019-08-21'
+      creditCardExpires: new Date('2019-08-21')
     }, {
       id: 98,
       firstName: 'Jane',
@@ -1502,7 +1502,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'switch',
       creditCardNumber: '4905710036690807681',
       currency: 'Yen',
-      creditCardExpires: '2018-01-01'
+      creditCardExpires: new Date('2018-01-01')
     }, {
       id: 99,
       firstName: 'Craig',
@@ -1517,7 +1517,7 @@ export const fakeData: Array<Data> =
       creditCardType: 'jcb',
       creditCardNumber: '3585074584550638',
       currency: 'Dram',
-      creditCardExpires: '2017-12-20'
+      creditCardExpires: new Date('2017-12-20')
     }, {
       id: 100,
       firstName: 'Pamela',
@@ -1532,5 +1532,5 @@ export const fakeData: Array<Data> =
       creditCardType: 'jcb',
       creditCardNumber: '3567940727386852',
       currency: 'Franc',
-      creditCardExpires: '2020-06-21'
+      creditCardExpires: new Date('2020-06-21')
     }];

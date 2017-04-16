@@ -59,7 +59,7 @@ export class GridExample extends React.Component<{}, CompState> {
                         <TextColumn caption="id" propName="id" width={30} align="right" />
                         <TextColumn caption="lastName" propName="lastName" width={150} />
                         <TextColumn caption="email" propName="email" width={150} />
-                        {/*<TextColumn caption="gender" propName="gender" width={80} />
+                        <TextColumn caption="gender" propName="gender" width={80} />
                         <TextColumn caption="ipAddress" propName="ipAddress" width={150} align="center" />
                         <TextColumn caption="creditCardType" propName="creditCardType" width={200} />
                         <TextColumn caption="creditCardNumber" propName="creditCardNumber" width={150} />
@@ -67,7 +67,7 @@ export class GridExample extends React.Component<{}, CompState> {
                         <TextColumn caption="city" propName="city" width={250} />
                         <TextColumn caption="company" propName="company" width={150} />
                         <TextColumn caption="department" propName="department" width={250} />
-                        <TextColumn caption="currency" propName="currency" width={150} />*/}
+                        <TextColumn caption="currency" propName="currency" width={150} />
                     </Grid>
                 </LayoutPanel>
             </Layout>

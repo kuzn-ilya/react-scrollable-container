@@ -1,6 +1,6 @@
 import { PropTypes } from 'react';
-import { ValidationMap } from '../../../react';
-import { ColumnProps } from '../Column/ColumnProps';
+import { ValidationMap } from '../../../../react';
+import { ColumnProps } from '../../Columns/Column/ColumnProps';
 
 // tslint:disable-next-line:no-any
 export interface HeaderCellProps<T extends ColumnProps<any>> {

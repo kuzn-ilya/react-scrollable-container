@@ -1,7 +1,7 @@
 import { PropTypes } from 'react';
-import { ValidationMap } from '../../../react';
+import { ValidationMap } from '../../../../react';
 import * as objectAssign from 'object-assign';
-import { GanttCellModel } from '../../../utils';
+import { GanttCellModel } from '../../../../utils';
 
 import { ColumnProps, columnPropTypes } from '../Column/ColumnProps';
 

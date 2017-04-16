@@ -1,7 +1,7 @@
 import { PropTypes, ComponentClass } from 'react';
-import { ValidationMap } from '../../../react';
-import { CellProps } from '../Cell/CellProps';
-import { HeaderCellProps } from '../HeaderCell/HeaderCellProps';
+import { ValidationMap } from '../../../../react';
+import { CellProps } from '../../Cells/Cell/CellProps';
+import { HeaderCellProps } from '../../Cells/HeaderCell/HeaderCellProps';
 
 export interface ColumnProps<V> {
     caption?: string;

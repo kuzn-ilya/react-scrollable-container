@@ -5,7 +5,7 @@ import * as objectAssign from 'object-assign';
 
 import { ColumnGroupProps, columnGroupPropTypes } from './ColumnGroupProps';
 import { ColumnGroupState } from './ColumnGroupState';
-import { ColumnProps } from '../Column/ColumnProps';
+import { ColumnProps } from '../Columns/Column/ColumnProps';
 import { ScrollableContainer } from '../../ScrollableContainer';
 import { Layout, LayoutPanel } from '../../Layout';
 import { RowData } from '../RowData';

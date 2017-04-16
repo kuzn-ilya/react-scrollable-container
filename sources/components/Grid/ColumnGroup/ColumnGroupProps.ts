@@ -1,6 +1,6 @@
 import { PropTypes, ComponentClass } from 'react';
 import { ValidationMap } from '../../../react';
-import { ColumnProps } from '../Column/ColumnProps';
+import { ColumnProps } from '../Columns/Column/ColumnProps';
 import { RowProps } from '../Row/RowProps';
 import { HeaderRowProps } from '../HeaderRow/HeaderRowProps';
 import { Overflow, overflowPropType } from '../../../utils';

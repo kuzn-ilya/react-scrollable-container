@@ -2,8 +2,7 @@ import * as React from 'react';
 import * as warning from 'fbjs/lib/warning';
 
 import { TextColumnProps, textColumnPropTypes } from './TextColumnProps';
-import { TextCell } from '../TextCell';
-import { HeaderCell } from '../HeaderCell';
+import { TextCell, HeaderCell } from '../../Cells';
 
 export class TextColumn extends React.PureComponent<TextColumnProps, {}> {
 

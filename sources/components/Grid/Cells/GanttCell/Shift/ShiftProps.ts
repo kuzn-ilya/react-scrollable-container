@@ -1,4 +1,4 @@
-import { GanttCellModel } from '../../../../utils';
+import { GanttCellModel } from '../../../../../utils';
 
 export interface ShiftProps {
     entity: GanttCellModel;

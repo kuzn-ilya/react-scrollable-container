@@ -6,7 +6,7 @@ import * as objectAssign from 'object-assign';
 import { GridProps, gridPropTypes } from './GridProps';
 import { GridState } from './GridState';
 import { ColumnGroup } from './ColumnGroup';
-import { ColumnProps } from './Column/ColumnProps';
+import { ColumnProps } from './Columns/Column/ColumnProps';
 import { Layout, LayoutPanel, LayoutSplitter } from '../Layout';
 
 import '../../styles/common.css';

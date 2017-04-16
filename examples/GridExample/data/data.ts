@@ -17,6 +17,6 @@ export interface Data {
       creditCardType: string;
       creditCardNumber: string;
       currency: string;
-      creditCardExpires: string;
+      creditCardExpires: Date;
       shifts?: Array<DateRange>;
 }

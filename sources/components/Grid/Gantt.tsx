@@ -6,7 +6,7 @@ import * as objectAssign from 'object-assign';
 import { GanttProps, ganttPropTypes } from './GanttProps';
 import { GanttState } from './GanttState';
 import { ColumnGroup } from './ColumnGroup';
-import { ColumnProps } from './Column/ColumnProps';
+import { ColumnProps } from './Columns/Column/ColumnProps';
 import { Layout, LayoutPanel, LayoutSplitter } from '../Layout';
 
 import '../../styles/common.css';

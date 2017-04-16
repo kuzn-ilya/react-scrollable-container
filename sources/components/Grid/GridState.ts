@@ -1,4 +1,4 @@
-import { ColumnProps } from './Column/ColumnProps';
+import { ColumnProps } from './Columns/Column/ColumnProps';
 import { List } from 'immutable';
 
 export interface GridState {

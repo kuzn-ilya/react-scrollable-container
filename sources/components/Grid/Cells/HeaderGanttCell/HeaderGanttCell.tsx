@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { List } from 'immutable';
 
-import { createDateListBetweenTwoDates, addSeconds, calculateTimeline, TimelineModel } from '../../../utils';
+import { createDateListBetweenTwoDates, addSeconds, calculateTimeline, TimelineModel } from '../../../../utils';
 
 import { HeaderGanttCellProps, headerGanttCellPropTypes } from './HeaderGanttCellProps';
 import { Day } from './Day';

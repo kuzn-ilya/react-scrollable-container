@@ -1,6 +1,6 @@
 import { List } from 'immutable';
 
-import { ColumnProps } from '../Column/ColumnProps';
+import { ColumnProps } from '../Columns/Column/ColumnProps';
 
 export interface ColumnGroupState {
     columnsWidth: number;

@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { List } from 'immutable';
 import { CellProps, cellPropTypes } from '../Cell/CellProps';
-import { GanttColumnProps } from '../GanttColumn/GanttColumnProps';
-import { isEntityInPeriod, calculateEntityGeometry, calculateTimeline, GanttCellModel, TimelineModel } from '../../../utils';
+import { GanttColumnProps } from '../../Columns/GanttColumn/GanttColumnProps';
+import { isEntityInPeriod, calculateEntityGeometry, calculateTimeline, GanttCellModel, TimelineModel } from '../../../../utils';
 import { Shift } from './Shift';
 
-import '../../../styles/grid.css';
+import '../../../../styles/grid.css';
 
 export class GanttCell extends React.PureComponent<CellProps<GanttColumnProps, Array<GanttCellModel>>, TimelineModel> {
     static propTypes = cellPropTypes;

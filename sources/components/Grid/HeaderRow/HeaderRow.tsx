@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { HeaderRowProps, headerRowPropTypes } from './HeaderRowProps';
-import { ColumnProps } from '../Column/ColumnProps';
+import { ColumnProps } from '../Columns/Column/ColumnProps';
 
 export class HeaderRow extends React.PureComponent<HeaderRowProps, {}> {
     static propTypes = headerRowPropTypes;

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { HeaderCellProps, headerCellPropTypes } from './HeaderCellProps';
-import { ColumnProps } from '../Column/ColumnProps';
+import { ColumnProps } from '../../Columns/Column/ColumnProps';
 
-import '../../../styles/grid.css';
+import '../../../../styles/grid.css';
 
 // tslint:disable-next-line:no-any
 export class HeaderCell extends React.PureComponent<HeaderCellProps<ColumnProps<any>>, {}> {

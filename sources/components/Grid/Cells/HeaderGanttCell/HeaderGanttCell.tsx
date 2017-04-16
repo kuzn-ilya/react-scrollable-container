@@ -20,7 +20,7 @@ export class HeaderGanttCell extends React.PureComponent<HeaderGanttCellProps, T
 
     calcState(props: HeaderGanttCellProps): TimelineModel {
         return calculateTimeline(props.columnProps.startDate, props.columnProps.endDate,
-            props.columnProps.zoomStartDate, props.columnProps.zoomEndDate, props.width);
+            props.columnProps.zoomStartDate, props.columnProps.zoomEndDate, props.columnProps.width);
     }
 
     render(): JSX.Element {
@@ -37,16 +37,9 @@ export class HeaderGanttCell extends React.PureComponent<HeaderGanttCellProps, T
             return <Day key={day.toString()} position={this.state.dayWidth * key} day={day} width={dayWidth} />;
         });
 
-        let style = {
-            height: this.props.height.toString() + 'px',
-            width: this.props.width.toString() + 'px'
-        };
-
         return (
-            <div style={style} className="header-cell-container">
-                <div className={this.props.firstCell ? 'header-cell-first' : 'header-cell'}>
-                    {daysEl}
-                </div>
+            <div >
+                {daysEl}
             </div>
         );
     }

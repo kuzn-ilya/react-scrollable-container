@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { HeaderRowProps, headerRowPropTypes } from './HeaderRowProps';
 import { ColumnProps } from '../Columns/Column/ColumnProps';
+import { HeaderCellContainer } from '../Cells';
 
 export class HeaderRow extends React.PureComponent<HeaderRowProps, {}> {
     static propTypes = headerRowPropTypes;
@@ -19,11 +20,16 @@ export class HeaderRow extends React.PureComponent<HeaderRowProps, {}> {
             // tslint:disable-next-line:variable-name
             let HeaderCell = value.headerCellClass!;
             return (
-                <HeaderCell key={index} width={value.width}
-                    caption={value.caption}
+                <HeaderCellContainer
+                    key={index}
+                    width={value.width}
                     firstCell={index === 0 && this.props.showEdgeForTheLeftCell}
                     height={this.props.height}
-                    columnProps={value}/>
+                >
+                    <HeaderCell
+                        caption={value.caption}
+                        columnProps={value}/>
+                </ HeaderCellContainer>
             );
         });
     }

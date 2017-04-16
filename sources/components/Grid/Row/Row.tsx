@@ -2,6 +2,7 @@ import * as React from 'react';
 import { RowProps, rowPropTypes } from './RowProps';
 import { ColumnProps } from '../Columns/Column/ColumnProps';
 import { CellContainer } from '../Cells/CellContainer';
+import { classNames } from '../../../utils';
 
 export class Row extends React.PureComponent<RowProps, {}> {
     static propTypes = rowPropTypes;
@@ -19,7 +20,8 @@ export class Row extends React.PureComponent<RowProps, {}> {
 
     render(): JSX.Element {
         return (
-            <div key={this.props.rowIndex} style={{height: this.props.height }} onClick={this.handleClick}>
+            <div className={classNames({'selected-row': this.props.selected})}
+                key={this.props.rowIndex} style={{height: this.props.height }} onClick={this.handleClick}>
                 {this.renderCells()}
             </div>
         );
@@ -41,7 +43,6 @@ export class Row extends React.PureComponent<RowProps, {}> {
                     <Cell rowIndex={this.props.rowIndex}
                         value={this.props.data[value.propName]}
                         columnProps={value}
-                        rowSelected={this.props.selected}
                     />
                 </CellContainer>
             );

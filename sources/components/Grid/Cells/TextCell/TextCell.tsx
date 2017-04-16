@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { CellProps, cellPropTypes } from '../Cell/CellProps';
 import { TextColumnProps } from '../../Columns/TextColumn/TextColumnProps';
-import { classNames } from '../../../../utils';
 
 import '../../../../styles/grid.css';
 
@@ -10,9 +9,9 @@ export class TextCell extends React.PureComponent<CellProps<TextColumnProps, str
 
     render(): JSX.Element {
         return (
-            <div className={classNames('text-cell', {
-                'selected-cell': this.props.rowSelected
-            })} style={{textAlign: this.props.columnProps.align}}>
+            <div className="text-cell"
+                style={{textAlign: this.props.columnProps.align}}
+            >
                 {this.props.value ? this.props.value.toString() : '' }
             </div>
         );

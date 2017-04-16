@@ -68,6 +68,6 @@
     white-space: nowrap;
 }
 
-.selected-cell {
+.selected-row {
     background-color: gray;
 }

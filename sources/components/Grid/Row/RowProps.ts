@@ -1,4 +1,4 @@
-import { PropTypes } from 'react';
+import { PropTypes, MouseEvent } from 'react';
 import { ValidationMap } from '../../../react';
 import { ColumnProps } from '../Columns/Column/ColumnProps';
 import { List } from 'immutable';
@@ -12,7 +12,7 @@ export interface RowProps {
     height: number;
     selected: boolean;
     showEdgeForTheLeftCell?: boolean;
-    onClick?: (rowIndex: number) => void;
+    onClick?: (rowIndex: number, e?: MouseEvent<HTMLElement>) => void;
 }
 
 export const rowPropTypes: ValidationMap<RowProps> = {

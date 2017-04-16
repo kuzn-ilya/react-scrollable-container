@@ -10,6 +10,7 @@ interface CompState {
     customScrollBar?: boolean;
     selectedRowIndexes?: Array<number>;
     propSelectedRowIndexes?: Array<number>;
+    multiSelectRows?: boolean;
 }
 
 export class GridExample extends React.Component<{}, CompState> {
@@ -17,6 +18,7 @@ export class GridExample extends React.Component<{}, CompState> {
         super(props);
         this.state = {
             customScrollBar: false,
+            multiSelectRows: false,
             data: fakeData,
             propSelectedRowIndexes: [],
             selectedRowIndexes: []
@@ -24,6 +26,7 @@ export class GridExample extends React.Component<{}, CompState> {
         this.handleDeleteSelectedItem = this.handleDeleteSelectedItem.bind(this);
         this.handleCustomScrollBarChanged = this.handleCustomScrollBarChanged.bind(this);
         this.handleRowSelectionChanged = this.handleRowSelectionChanged.bind(this);
+        this.handleMultiSelectRowsChanged = this.handleMultiSelectRowsChanged.bind(this);
     }
 
     handleDeleteSelectedItem: () => void = () => {
@@ -45,6 +48,12 @@ export class GridExample extends React.Component<{}, CompState> {
     handleCustomScrollBarChanged: (e: React.FormEvent<HTMLInputElement>) => void = (e) => {
         this.setState({
             customScrollBar: e.currentTarget.checked
+        } as CompState);
+    }
+
+    handleMultiSelectRowsChanged: (e: React.FormEvent<HTMLInputElement>) => void = (e) => {
+        this.setState({
+            multiSelectRows: e.currentTarget.checked
         } as CompState);
     }
 
@@ -70,6 +79,11 @@ export class GridExample extends React.Component<{}, CompState> {
                             onChange={this.handleCustomScrollBarChanged}
                         />
                         Custom ScrollBars
+                        <input
+                            type="checkbox" checked={this.state.multiSelectRows}
+                            onChange={this.handleMultiSelectRowsChanged}
+                        />
+                        MultiSelectRows
                         <br/>
                     </div>
                 </LayoutPanel>
@@ -85,7 +99,7 @@ export class GridExample extends React.Component<{}, CompState> {
                         rowHeight={20}
                         headerHeight={51}
                         onRowSelectionChanged={this.handleRowSelectionChanged}
-                        multiSelectRows
+                        multiSelectRows={this.state.multiSelectRows}
                         selectedRowIndexes={this.state.propSelectedRowIndexes}
                     >
                         <TextColumn caption="id" propName="id" width={30} align="right" />

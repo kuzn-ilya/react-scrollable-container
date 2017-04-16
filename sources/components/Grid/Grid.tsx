@@ -58,23 +58,26 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
         }
     }
 
-    handleRowClick: (rowIndex: number) => void = (rowIndex) => {
+    handleRowClick: (rowIndex: number, e: React.MouseEvent<HTMLElement>) => void = (rowIndex, e) => {
         if (this.props.onRowClick) {
             this.props.onRowClick(rowIndex);
         }
 
-        if (this.props.multiSelectRows) {
+        if (this.props.multiSelectRows && (this.state.selectedRowIndexes.length === 0 || e.ctrlKey)) {
+            let selectedRowIndexes = [...this.state.selectedRowIndexes];
             if (this.state.selectedRowIndexes!.indexOf(rowIndex) === -1) {
-                let selectedRowIndexes = [...this.state.selectedRowIndexes];
                 selectedRowIndexes.push(rowIndex);
-                this.setState({
-                    selectedRowIndexes
-                });
-                if (this.props.onRowSelectionChanged) {
-                    this.props.onRowSelectionChanged(selectedRowIndexes);
-                }
+            } else {
+                selectedRowIndexes.splice(rowIndex, 1);
             }
-        } else {
+
+            this.setState({
+                selectedRowIndexes
+            });
+            if (this.props.onRowSelectionChanged) {
+                this.props.onRowSelectionChanged(selectedRowIndexes);
+            }
+        } else if (this.state.selectedRowIndexes.indexOf(rowIndex) === -1) {
             let selectedRowIndexes = [rowIndex];
             this.setState({
                 selectedRowIndexes

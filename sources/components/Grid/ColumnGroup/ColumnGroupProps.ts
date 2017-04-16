@@ -1,4 +1,4 @@
-import { PropTypes, ComponentClass } from 'react';
+import { PropTypes, ComponentClass, MouseEvent } from 'react';
 import { ValidationMap } from '../../../react';
 import { ColumnProps } from '../Columns/Column/ColumnProps';
 import { RowProps } from '../Row/RowProps';
@@ -15,7 +15,7 @@ export interface ColumnGroupProps {
     readonly headerHeight: number;
 
     readonly onHorizontalScrollVisibilityChanged?: (visible: boolean, thumbHeight: number) => void;
-    readonly onRowClick?: (rowIndex: number) => void;
+    readonly onRowClick?: (rowIndex: number, e: MouseEvent<HTMLElement>) => void;
     readonly onScrollPosChanged?: (left: number, top: number) => void;
     readonly onResize?: () => void;
 

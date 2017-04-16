@@ -1,4 +1,4 @@
-import { PropTypes, ComponentClass } from 'react';
+import { PropTypes, ComponentClass, MouseEvent } from 'react';
 import { ValidationMap } from '../../react';
 import { RowData } from './RowData';
 import { RowProps } from './Row/RowProps';
@@ -18,7 +18,7 @@ export interface GridProps {
     readonly scrollableHeaderRowClass: ComponentClass<HeaderRowProps>;
     readonly scrollableRowClass: ComponentClass<RowProps>;
     readonly multiSelectRows?: boolean;
-    readonly onRowClick?: (rowIndex: number) => void;
+    readonly onRowClick?: (rowIndex: number, e?: MouseEvent<HTMLElement>) => void;
     readonly onRowSelectionChanged?: (rowIndexes: Array<number>) => void;
 }
 

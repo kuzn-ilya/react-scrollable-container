@@ -14,7 +14,7 @@ export class Row extends React.PureComponent<RowProps, {}> {
 
     handleClick: (e: React.MouseEvent<HTMLDivElement>) => void = (e) => {
         if (this.props.onClick) {
-            this.props.onClick(this.props.rowIndex);
+            this.props.onClick(this.props.rowIndex, e);
         }
     }
 

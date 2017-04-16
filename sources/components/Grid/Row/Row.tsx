@@ -6,9 +6,20 @@ import { CellContainer } from '../Cells/CellContainer';
 export class Row extends React.PureComponent<RowProps, {}> {
     static propTypes = rowPropTypes;
 
+    constructor(props: RowProps) {
+        super(props);
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick: (e: React.MouseEvent<HTMLDivElement>) => void = (e) => {
+        if (this.props.onClick) {
+            this.props.onClick(this.props.rowIndex);
+        }
+    }
+
     render(): JSX.Element {
         return (
-            <div key={this.props.rowIndex} style={{height: this.props.height }}>
+            <div key={this.props.rowIndex} style={{height: this.props.height }} onClick={this.handleClick}>
                 {this.renderCells()}
             </div>
         );
@@ -24,10 +35,14 @@ export class Row extends React.PureComponent<RowProps, {}> {
                     firstCell={index === 0 && this.props.showEdgeForTheLeftCell}
                     width={value.width}
                     height={this.props.height}
+                    columnProps={value}
+                    rowIndex={this.props.rowIndex}
                 >
-                    <Cell
+                    <Cell rowIndex={this.props.rowIndex}
                         value={this.props.data[value.propName]}
-                        columnProps={value} />
+                        columnProps={value}
+                        rowSelected={this.props.selected}
+                    />
                 </CellContainer>
             );
         });

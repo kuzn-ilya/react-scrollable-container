@@ -13,6 +13,7 @@ export interface ColumnProps<V> {
     cellClass?: ComponentClass<CellProps<ColumnProps<V>, V>>;
     // tslint:disable-next-line:no-any
     headerCellClass?: ComponentClass<HeaderCellProps<ColumnProps<V>>>;
+    onCellClick?: (rowIndex: number, propName: string) => void;
 }
 
 // tslint:disable-next-line:no-any
@@ -23,6 +24,7 @@ export const columnPropTypes: ValidationMap<ColumnProps<any>> = {
     headerCellClass: PropTypes.any.isRequired,
     maxWidth: PropTypes.number,
     minWidth: PropTypes.number,
+    onCellClick: PropTypes.func,
     propName: PropTypes.string.isRequired,
     width: PropTypes.number.isRequired
 };

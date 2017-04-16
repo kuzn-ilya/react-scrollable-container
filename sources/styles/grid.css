@@ -19,9 +19,6 @@
     border-bottom: solid 1px #d6d6d6;
     border-right: solid 1px #d6d6d6;
     display: inline-block;
-    padding-left: 5px;
-    padding-right: 5px;
-    text-overflow: ellipsis;
 }
 
 .header-cell-container {
@@ -48,6 +45,14 @@
     border-top: solid 1px #6C7A89;
     display: inline-block;
     overflow: hidden;
+}
+
+.header-cell-first, .cell-first {
+    border-left: solid 1px #6C7A89;
+}
+
+.header-cell-caption {
+    overflow: hidden;
     padding-left: 5px;
     padding-right: 5px;
     text-align: center;
@@ -55,6 +60,14 @@
     white-space: nowrap;
 }
 
-.header-cell-first, .cell-first {
-    border-left: solid 1px #6C7A89;
+.text-cell {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-left: 5px;
+    padding-right: 5px;
+    white-space: nowrap;
+}
+
+.selected-cell {
+    background-color: gray;
 }

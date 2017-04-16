@@ -5,15 +5,17 @@ import { RowProps } from './Row/RowProps';
 import { HeaderRowProps } from './HeaderRow/HeaderRowProps';
 
 export interface GridProps {
-    customScrollBars?: boolean;
-    headerHeight: number;
+    readonly customScrollBars?: boolean;
+    readonly headerHeight: number;
     // tslint:disable-next-line:no-any
-    rowData: RowData<any>;
-    fixedColumnCount?: number;
-    fixedRowCount?: number;
-    rowHeight: number;
+    readonly rowData: RowData<any>;
+    readonly fixedColumnCount?: number;
+    readonly fixedRowCount?: number;
+    readonly rowHeight: number;
+    readonly selectedRowIndexes?: number[];
     readonly fixedHeaderRowClass: ComponentClass<HeaderRowProps>;
     readonly fixedRowClass: ComponentClass<RowProps>;
+    readonly onRowClick?: (rowIndex: number) => void;
     readonly scrollableHeaderRowClass: ComponentClass<HeaderRowProps>;
     readonly scrollableRowClass: ComponentClass<RowProps>;
 }
@@ -27,10 +29,12 @@ export const gridPropTypes: ValidationMap<GridProps> = {
     fixedRowClass: PropTypes.any.isRequired,
     fixedRowCount: PropTypes.number,
     headerHeight: PropTypes.number.isRequired,
+    onRowClick: PropTypes.func,
     rowData: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
     rowHeight: PropTypes.number.isRequired,
     // TODO: Find more appropriate prop type
     scrollableHeaderRowClass: PropTypes.any.isRequired,
     // TODO: Find more appropriate prop type
-    scrollableRowClass: PropTypes.any.isRequired
+    scrollableRowClass: PropTypes.any.isRequired,
+    selectedRowIndexes: PropTypes.arrayOf(PropTypes.number)
 };

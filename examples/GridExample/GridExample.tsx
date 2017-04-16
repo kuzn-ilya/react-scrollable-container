@@ -7,6 +7,7 @@ interface CompState {
     // tslint:disable-next-line:no-any
     data: any[];
     customScrollBar?: boolean;
+    selectedRowIndexes?: Array<number>;
 }
 
 export class GridExample extends React.Component<{}, CompState> {
@@ -14,10 +15,12 @@ export class GridExample extends React.Component<{}, CompState> {
         super(props);
         this.state = {
             customScrollBar: false,
-            data: fakeData
+            data: fakeData,
+            selectedRowIndexes: []
         };
         this.removeLastItem = this.removeLastItem.bind(this);
         this.handleCustomScrollBarChanged = this.handleCustomScrollBarChanged.bind(this);
+        this.handleRowClick = this.handleRowClick.bind(this);
     }
 
     removeLastItem: () => void = () => {
@@ -30,6 +33,12 @@ export class GridExample extends React.Component<{}, CompState> {
         this.setState({
             customScrollBar: e.currentTarget.checked
         } as CompState);
+    }
+
+    handleRowClick: (rowIndex: number) => void = (rowIndex) => {
+        this.setState({
+            selectedRowIndexes: [rowIndex]
+        } as CompState)
     }
 
     render(): JSX.Element {
@@ -53,6 +62,8 @@ export class GridExample extends React.Component<{}, CompState> {
                         fixedColumnCount={2}
                         rowHeight={20}
                         headerHeight={51}
+                        selectedRowIndexes={this.state.selectedRowIndexes}
+                        onRowClick={this.handleRowClick}
                     >
                         <TextColumn caption="id" propName="id" width={30} align="right" />
                         <TextColumn caption="firstName" propName="firstName" width={150} />

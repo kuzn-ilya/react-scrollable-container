@@ -4,11 +4,10 @@ import { List } from 'immutable';
 import * as objectAssign from 'object-assign';
 
 import { ColumnGroupProps, columnGroupPropTypes } from './ColumnGroupProps';
-import { ColumnGroupState } from './ColumnGroupState';
+import { ColumnGroupState, RowState } from './ColumnGroupState';
 import { ColumnProps } from '../Columns/Column/ColumnProps';
 import { ScrollableContainer } from '../../ScrollableContainer';
 import { Layout, LayoutPanel } from '../../Layout';
-import { RowData } from '../RowData';
 import { classNames } from '../../../utils';
 
 import * as emptyFunction from 'fbjs/lib/emptyFunction';
@@ -32,6 +31,10 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
         this.handleResize = this.handleResize.bind(this);
 
         this.state = objectAssign({}, this.calculateColumnState(this.props.columnProps, 0), {
+            rowState: {
+                data: this.props.rowData,
+                selectedIndexes: []
+            },
             scrollLeft: 0,
             scrollTop: 0
         }) as ColumnGroupState;
@@ -40,6 +43,15 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
     componentWillReceiveProps(nextProps: ColumnGroupProps): void {
         if (nextProps.columnProps !== this.props.columnProps || nextProps.customScrollBars !== this.props.customScrollBars) {
             this.updateColumnState(nextProps, this.state.rowsThumbWidth || 0);
+        }
+
+        if (nextProps.rowData !== this.props.rowData || nextProps.selectedRowIndexes !== this.props.selectedRowIndexes) {
+            this.setState({
+                rowState: {
+                    data: nextProps.rowData,
+                    selectedIndexes: nextProps.selectedRowIndexes
+                }
+            } as ColumnGroupState);
         }
     }
 
@@ -91,17 +103,19 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
     }
 
     // tslint:disable-next-line:no-any
-    renderRows: (rowData: RowData<any>) => React.ReactNode = (rowData) => {
+    renderRows: (rowData: RowState) => React.ReactNode = (rowData) => {
         // tslint:disable-next-line:variable-name
         let Row = this.props.rowClass;
         // tslint:disable-next-line:no-any
-        return Array.prototype.map.call(rowData, (value: any, index: number) =>
+        return Array.prototype.map.call(rowData.data, (value: any, index: number) =>
             <Row data={value}
                 key={index}
                 rowIndex={index}
                 columnProps={this.state.columnProps}
                 height={this.props.rowHeight}
                 showEdgeForTheLeftCell={this.props.showEdgeForTheLeftCell}
+                selected={!!(rowData.selectedIndexes && (rowData.selectedIndexes.indexOf(index) >= 0))}
+                onClick={this.props.onRowClick}
             />
         );
     }
@@ -162,10 +176,10 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
                         customScrollBars={this.props.customScrollBars}
                         key="body"
                         contentWidth={this.state.columnsWidth}
-                        contentHeight={this.props.rowData.length * this.props.rowHeight}
+                        contentHeight={this.state.rowState.data.length * this.props.rowHeight}
                         overflowX={this.props.overflowX}
                         overflowY={this.props.overflowY}
-                        data={this.props.rowData}
+                        data={this.state.rowState}
                         dataRenderer={this.renderRows}
                         width="100%"
                         height="100%"

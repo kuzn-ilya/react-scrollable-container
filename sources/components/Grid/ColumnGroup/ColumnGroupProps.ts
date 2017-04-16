@@ -15,6 +15,7 @@ export interface ColumnGroupProps {
     readonly headerHeight: number;
 
     readonly onHorizontalScrollVisibilityChanged?: (visible: boolean, thumbHeight: number) => void;
+    readonly onRowClick?: (rowIndex: number) => void;
     readonly onScrollPosChanged?: (left: number, top: number) => void;
     readonly onResize?: () => void;
 
@@ -32,6 +33,8 @@ export interface ColumnGroupProps {
 
     readonly headerRowClass: ComponentClass<HeaderRowProps>;
     readonly rowClass: ComponentClass<RowProps>;
+
+    readonly selectedRowIndexes?: number[];
 }
 
 export const columnGroupPropTypes: ValidationMap<ColumnGroupProps> = {
@@ -45,6 +48,7 @@ export const columnGroupPropTypes: ValidationMap<ColumnGroupProps> = {
 
     onHorizontalScrollVisibilityChanged: PropTypes.func,
     onResize: PropTypes.func,
+    onRowClick: PropTypes.func,
     onScrollPosChanged: PropTypes.func,
 
     overflowX: overflowPropType.isRequired,
@@ -57,6 +61,7 @@ export const columnGroupPropTypes: ValidationMap<ColumnGroupProps> = {
     rowHeight: PropTypes.number.isRequired,
     scrollLeft: PropTypes.number,
     scrollTop: PropTypes.number,
+    selectedRowIndexes: PropTypes.arrayOf(PropTypes.number),
     showEdgeForTheLeftCell: PropTypes.bool,
     showRightShadow: PropTypes.bool,
     width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired

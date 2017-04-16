@@ -10,13 +10,17 @@ export interface RowProps {
     data: any;
     rowIndex: number;
     height: number;
+    selected: boolean;
     showEdgeForTheLeftCell?: boolean;
+    onClick?: (rowIndex: number) => void;
 }
 
 export const rowPropTypes: ValidationMap<RowProps> = {
     columnProps: PropTypes.instanceOf(List).isRequired,
     data: PropTypes.any.isRequired,
     height: PropTypes.number.isRequired,
+    onClick: PropTypes.func,
     rowIndex: PropTypes.number.isRequired,
+    selected: PropTypes.bool.isRequired,
     showEdgeForTheLeftCell: PropTypes.bool
 };

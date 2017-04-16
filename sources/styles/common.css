@@ -1,15 +1,15 @@
 .bottom-shadow {
-  box-shadow: 0px 3px 5px 0px #ccc;
+  box-shadow: 0px 3px 5px 0px $COMMON_SHADOW_COLOR;
   z-index: 1;
 }
 
 .right-shadow {
-  box-shadow: 3px 0px 5px 0px #ccc;
+  box-shadow: 3px 0px 5px 0px $COMMON_SHADOW_COLOR;
   z-index: 1;
 }
 
 .right-bottom-shadow {
-  box-shadow: 3px 3px 5px 0px #ccc;
+  box-shadow: 3px 3px 5px 0px $COMMON_SHADOW_COLOR;
   z-index: 1;
 }
 

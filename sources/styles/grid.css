@@ -2,8 +2,7 @@
     display: inline-block;
     overflow: hidden;
     position: relative;
-    font-size: 11px;
-    font-family: 'Roboto', sans-serif;
+    font: $GRID_CELL_FONT;
     line-height: 18px;
     height: 18px;
     vertical-align: top;
@@ -16,8 +15,8 @@
     right: 0;
     left: 0;
     overflow: hidden;
-    border-bottom: solid 1px #d6d6d6;
-    border-right: solid 1px #d6d6d6;
+    border-bottom: solid 1px $GRID_CELL_BORDER_COLOR;
+    border-right: solid 1px $GRID_CELL_BORDER_COLOR;
     display: inline-block;
 }
 
@@ -25,9 +24,7 @@
     display: inline-block;
     overflow: hidden;
     position: relative;
-    font-size: 11px;
-    font-weight: bold;
-    font-family: 'Roboto', sans-serif;
+    font: $GRID_HEADER_CELL_FONT;
     line-height: 18px;
     height: 18px;
     vertical-align: top;
@@ -39,22 +36,26 @@
     bottom: 0;
     right: 0;
     left: 0;
-    background-color: #d6d6d6;
-    border-bottom: solid 1px #6C7A89;
-    border-right: solid 1px #6C7A89;
-    border-top: solid 1px #6C7A89;
+    background-color: $GRID_HEADER_CELL_BACKGROUND_COLOR;
+    border-bottom: solid 1px $GRID_HEADER_CELL_BORDER_COLOR;
+    border-right: solid 1px $GRID_HEADER_CELL_BORDER_COLOR;
+    border-top: solid 1px $GRID_HEADER_CELL_BORDER_COLOR;
     display: inline-block;
     overflow: hidden;
 }
 
-.header-cell-first, .cell-first {
-    border-left: solid 1px #6C7A89;
+.header-cell-first {
+    border-left: solid 1px $GRID_HEADER_CELL_BORDER_COLOR;
+}
+
+.cell-first {
+    border-left: solid 1px $GRID_CELL_BORDER_COLOR;
 }
 
 .header-cell-caption {
     overflow: hidden;
-    padding-left: 5px;
-    padding-right: 5px;
+    padding-left: $(GRID_CELL_HORZ_PADDING)px;
+    padding-right: $(GRID_CELL_HORZ_PADDING)px;
     text-align: center;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -63,11 +64,11 @@
 .text-cell {
     overflow: hidden;
     text-overflow: ellipsis;
-    padding-left: 5px;
-    padding-right: 5px;
+    padding-left: $(GRID_CELL_HORZ_PADDING)px;
+    padding-right: $(GRID_CELL_HORZ_PADDING)px;
     white-space: nowrap;
 }
 
 .selected-row {
-    background-color: gray;
+    background-color: $GRID_SELECTED_ROW_COLOR;
 }

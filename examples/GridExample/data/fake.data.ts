@@ -20,12 +20,12 @@ export const fakeData: Array<Data> =
       creditCardExpires: new Date('2018-09-08'),
       shifts: [
         {
-          startDateTime: new Date('2017-04-11T14:30:00.000'),
-          endDateTime: new Date('2017-04-11T23:00:00.000')
+          startDateTime: new Date('2017-04-11T11:30:00.000'),
+          endDateTime: new Date('2017-04-11T20:00:00.000')
         },
         {
-          startDateTime: new Date('2017-04-12T14:30:00.000'),
-          endDateTime: new Date('2017-04-12T23:00:00.000')
+          startDateTime: new Date('2017-04-12T11:30:00.000'),
+          endDateTime: new Date('2017-04-12T20:00:00.000')
         }
       ]
     }, {

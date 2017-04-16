@@ -1,14 +1,13 @@
 .shift {
     position: absolute;
     cursor: pointer;
-    font-size: 11px;
     box-sizing: border-box;
-    padding-top: 2px;
-    padding-left: 2px;
-    font-family: 'Roboto', sans-serif;
-    background-color: steelblue;
-    color: white;
-    height: '100%';
+    padding-top: $(SHIFT_PADDING)px;
+    padding-left: $(SHIFT_PADDING)px;
+    font: $GRID_SHIFT_FONT;
+    background-color: $GRID_SHIFT_BACKGROUND_COLOR;
+    color: $GRID_SHIFT_COLOR;
+    height: 100%;
 }
     
 .shift-gantt {
@@ -21,18 +20,13 @@
 .day {
     position: absolute;
     height: 100%;
-    font-size: 10px;
-    font-weight: bold;
     text-align: center;
-    background-color: #d6d6d6;
+    background-color: $GRID_HEADER_CELL_BACKGROUND_COLOR;
     cursor: pointer;
     color: #1b3966;
-    border-right: 1px solid black;
-    text-shadow: 0 1px 0 rgba(255,255,255,0.3);
-    background-image: none;
-    background-color: #c5c5c5;
+    border-right: 1px solid $GRID_HEADER_CELL_BORDER_COLOR;
     /*.top-linear-gradient(#f9f9f9, #e3e4e6);*/
-    font-family: 'Roboto', sans-serif;
+    font-family: $GRID_HEADER_CELL_FONT;
     box-sizing: border-box;
     overflow: hidden;
 }
@@ -46,24 +40,11 @@
 
 .hour {
     display: inline-block;
-    font-size: 10px;
     height: 15px;
-    font-weight: normal;
     box-sizing: border-box;
     overflow: hidden;
     cursor: pointer;
-    color: #1b3966;
-    text-shadow: 0 1px 0 rgba(255,255,255,0.3);
-    background-image: none;
-    /*background-image: -webkit-gradient(linear,50% 0,50% 100%,color-stop(0%,#f9f9f9),color-stop(100%,#e3e4e6));
-    background-image: -webkit-linear-gradient(top,#f9f9f9,#e3e4e6);
-    background-image: -moz-linear-gradient(top,#f9f9f9,#e3e4e6);
-    background-image: -o-linear-gradient(top,#f9f9f9,#e3e4e6);
-    background-image: -ms-linear-gradient(top,#f9f9f9,#e3e4e6);
-    background-image: linear-gradient(top,#f9f9f9,#e3e4e6);*/
-    font-family: 'Roboto', sans-serif;
-    box-sizing: border-box;
-    overflow: hidden;
+    font: $GRID_HEADER_CELL_FONT;
     margin-top: 5px;
     padding-top: 3px;
 }

@@ -1,15 +1,11 @@
 import { PropTypes } from 'react';
 import { ValidationMap } from '../../../react';
 import * as objectAssign from 'object-assign';
+import { GanttCellModel } from '../../../utils';
 
 import { ColumnProps, columnPropTypes } from '../Column/ColumnProps';
 
-export interface GanttEntity {
-    endDateTime: Date;
-    startDateTime: Date;
-}
-
-export interface GanttColumnProps extends ColumnProps<Array<GanttEntity>> {
+export interface GanttColumnProps extends ColumnProps<Array<GanttCellModel>> {
     zoomStartDate: Date;
     zoomEndDate: Date;
     startDate: Date;

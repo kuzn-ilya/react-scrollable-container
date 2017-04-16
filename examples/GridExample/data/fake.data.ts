@@ -20,12 +20,12 @@ export const fakeData: Array<Data> =
       creditCardExpires: '2018-09-08',
       shifts: [
         {
-          startDateTime: '2017-04-11 14:30:00.000',
-          endDateTime: '2017-04-11 23:00:00.000'
+          startDateTime: new Date('2017-04-11 14:30:00.000'),
+          endDateTime: new Date('2017-04-11 23:00:00.000')
         },
         {
-          startDateTime: '2017-04-12 14:30:00.000',
-          endDateTime: '2017-04-12 23:00:00.000'
+          startDateTime: new Date('2017-04-12 14:30:00.000'),
+          endDateTime: new Date('2017-04-12 23:00:00.000')
         }
       ]
     }, {
@@ -45,12 +45,12 @@ export const fakeData: Array<Data> =
       creditCardExpires: '2020-02-04',
       shifts: [
         {
-          startDateTime: '2017-04-11 9:30:00.000',
-          endDateTime: '2017-04-11 15:00:00.000'
+          startDateTime: new Date('2017-04-11 9:30:00.000'),
+          endDateTime: new Date('2017-04-11 15:00:00.000')
         },
         {
-          startDateTime: '2017-04-12 0:30:00.000',
-          endDateTime: '2017-04-12 2:00:00.000'
+          startDateTime: new Date('2017-04-12 0:30:00.000'),
+          endDateTime: new Date('2017-04-12 2:00:00.000')
         }
       ]
     }, {
@@ -70,12 +70,12 @@ export const fakeData: Array<Data> =
       creditCardExpires: '2018-08-16',
       shifts: [
         {
-          startDateTime: '2017-04-11 0:00:00.000',
-          endDateTime: '2017-04-11 1:00:00.000'
+          startDateTime: new Date('2017-04-11 0:00:00.000'),
+          endDateTime: new Date('2017-04-11 1:00:00.000')
         },
         {
-          startDateTime: '2017-04-12 1:30:00.000',
-          endDateTime: '2017-04-12 5:00:00.000'
+          startDateTime: new Date('2017-04-12 1:30:00.000'),
+          endDateTime: new Date('2017-04-12 5:00:00.000')
         }
       ]
     }, {

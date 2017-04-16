@@ -1,7 +1,7 @@
-import { EntityModel } from '../../../../utils';
+import { GanttCellModel } from '../../../../utils';
 
 export interface ShiftProps {
-    entity: EntityModel;
+    entity: GanttCellModel;
     position: number;
     width: number;
 }

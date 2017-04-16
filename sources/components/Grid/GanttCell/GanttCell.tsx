@@ -1,25 +1,25 @@
 import * as React from 'react';
 import { List } from 'immutable';
 import { CellProps, cellPropTypes } from '../Cell/CellProps';
-import { GanttColumnProps, GanttEntity } from '../GanttColumn/GanttColumnProps';
-import { isEntityInPeriod, calculateEntityGeometry, calculateTimeline, EntityModel, TimelineModel } from '../../../utils';
+import { GanttColumnProps } from '../GanttColumn/GanttColumnProps';
+import { isEntityInPeriod, calculateEntityGeometry, calculateTimeline, GanttCellModel, TimelineModel } from '../../../utils';
 import { Shift } from './Shift';
 
 import '../../../styles/grid.css';
 
-export class GanttCell extends React.PureComponent<CellProps<GanttColumnProps, Array<GanttEntity>>, TimelineModel> {
+export class GanttCell extends React.PureComponent<CellProps<GanttColumnProps, Array<GanttCellModel>>, TimelineModel> {
     static propTypes = cellPropTypes;
 
-    constructor(props: CellProps<GanttColumnProps, Array<GanttEntity>>) {
+    constructor(props: CellProps<GanttColumnProps, Array<GanttCellModel>>) {
         super(props);
         this.state = this.calcState(props);
     }
 
-    componentWillReceiveProps(nextProps: CellProps<GanttColumnProps, Array<GanttEntity>>): void {
+    componentWillReceiveProps(nextProps: CellProps<GanttColumnProps, Array<GanttCellModel>>): void {
         this.setState(this.calcState(nextProps));
     }
 
-    calcState(props: CellProps<GanttColumnProps, Array<GanttEntity>>): TimelineModel {
+    calcState(props: CellProps<GanttColumnProps, Array<GanttCellModel>>): TimelineModel {
         return calculateTimeline(props.columnProps.startDate, props.columnProps.endDate,
             props.columnProps.zoomStartDate, props.columnProps.zoomEndDate, props.width);
     }
@@ -27,17 +27,14 @@ export class GanttCell extends React.PureComponent<CellProps<GanttColumnProps, A
     render(): JSX.Element {
         let entities: List<JSX.Element> = List<JSX.Element>([]);
 
-        let periodEntities = List<EntityModel>(
+        let periodEntities = List<GanttCellModel>(
             this.props.value ? this.props.value
-                .map((item: GanttEntity) => {
-                    return { endDateTime: new Date(item.endDateTime), startDateTime: new Date(item.startDateTime) };
-                })
-                .filter((entity: EntityModel) => isEntityInPeriod(this.props.columnProps.startDate,
+                .filter((entity: GanttCellModel) => isEntityInPeriod(this.props.columnProps.startDate,
                     this.props.columnProps.endDate, entity)) : []
                 );
 
         // TODO: More appropriate value for key
-        entities = periodEntities.map((entity: EntityModel, key: number) => {
+        entities = periodEntities.map((entity: GanttCellModel, key: number) => {
             let geometry = calculateEntityGeometry(this.props.columnProps.startDate, entity, false,
                 this.state.hourWidth, this.state.dayWidth);
 

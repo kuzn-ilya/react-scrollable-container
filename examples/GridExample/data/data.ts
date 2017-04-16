@@ -1,6 +1,6 @@
 export interface DateRange {
-      startDateTime: string;
-      endDateTime: string;
+      startDateTime: Date;
+      endDateTime: Date;
 }
 
 export interface Data {

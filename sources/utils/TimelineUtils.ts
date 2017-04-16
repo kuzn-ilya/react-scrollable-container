@@ -10,12 +10,12 @@ export interface TimelineModel {
     readonly dayWidth: number;
 }
 
-export interface EntityModel {
+export interface GanttCellModel {
     startDateTime: Date;
     endDateTime: Date;
 }
 
-export interface EntityGeometry {
+export interface GantCellGeometry {
     left: number;
     width: number;
 }
@@ -52,13 +52,13 @@ function calculateHourWidth(startDate: Date, endDate: Date, width: number): numb
     return calculateDayWidth(startDate, endDate, width) / 24;
 }
 
-export function isEntityInPeriod(startDate: Date, endDate: Date, entity: EntityModel): boolean {
+export function isEntityInPeriod(startDate: Date, endDate: Date, entity: GanttCellModel): boolean {
     return (entity.startDateTime >= startDate && entity.startDateTime < endDate)
         || (entity.endDateTime > startDate && entity.endDateTime <= endDate);
 }
 
 export function calculateEntityGeometry(startDate: Date,
-    entity: EntityModel, isTabularView: boolean, hourWidth: number, dayWidth: number): EntityGeometry {
+    entity: GanttCellModel, isTabularView: boolean, hourWidth: number, dayWidth: number): GantCellGeometry {
     let width = 0;
     let left = -1;
 

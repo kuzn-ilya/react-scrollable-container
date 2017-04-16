@@ -3,10 +3,7 @@ import { ValidationMap } from '../../../../react';
 import { ColumnProps } from '../../Columns/Column/ColumnProps';
 
 export interface CellProps<T extends ColumnProps<V>, V> {
-    firstCell?: boolean;
-    height: number;
     value?: V;
-    width: number;
     columnProps: T;
 }
 
@@ -14,8 +11,5 @@ export interface CellProps<T extends ColumnProps<V>, V> {
 export const cellPropTypes: ValidationMap<CellProps<any, any>> = {
     // TODO: columnProps type
     columnProps: PropTypes.any.isRequired,
-    firstCell: PropTypes.bool,
-    height: PropTypes.number.isRequired,
-    value: PropTypes.any,
-    width: PropTypes.number.isRequired
+    value: PropTypes.any
 };

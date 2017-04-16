@@ -21,7 +21,7 @@ export class GanttCell extends React.PureComponent<CellProps<GanttColumnProps, A
 
     calcState(props: CellProps<GanttColumnProps, Array<GanttCellModel>>): TimelineModel {
         return calculateTimeline(props.columnProps.startDate, props.columnProps.endDate,
-            props.columnProps.zoomStartDate, props.columnProps.zoomEndDate, props.width);
+            props.columnProps.zoomStartDate, props.columnProps.zoomEndDate, props.columnProps.width);
     }
 
     render(): JSX.Element {
@@ -48,17 +48,10 @@ export class GanttCell extends React.PureComponent<CellProps<GanttColumnProps, A
             );
         }) as List<JSX.Element>;
 
-        let style: React.CSSProperties = {
-            height: this.props.height.toString() + 'px',
-            width: this.props.width.toString() + 'px'
-        };
-
         return (
-            <div style={style} className="cell-container">
-                <div className={this.props.firstCell ? 'cell-first' : 'cell'}>
-                    {entities}
-                </div>
+            <div style={{height: '100%', width: '100%'}}>
+                {entities}
             </div>
-       );
+        );
     }
 }

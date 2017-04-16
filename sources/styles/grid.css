@@ -15,6 +15,7 @@
     bottom: 0;
     right: 0;
     left: 0;
+    overflow: hidden;
     border-bottom: solid 1px #d6d6d6;
     border-right: solid 1px #d6d6d6;
     display: inline-block;

@@ -2,7 +2,6 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { List } from 'immutable';
 import * as objectAssign from 'object-assign';
-import * as shallowEqual from 'fbjs/lib/shallowEqual';
 
 import { GridProps, gridPropTypes } from './GridProps';
 import { GridState } from './GridState';
@@ -40,7 +39,7 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
     }
 
     componentWillReceiveProps(nextProps: GridProps): void {
-        if (!shallowEqual(nextProps.selectedRowIndexes, this.props.selectedRowIndexes)) {
+        if (nextProps.selectedRowIndexes !== this.props.selectedRowIndexes) {
             this.setState({
                 selectedRowIndexes: nextProps.selectedRowIndexes
             } as GridState);

@@ -1,11 +1,12 @@
 import * as React from 'react';
 
 import { fakeData } from './data/fake.data';
+import { Data } from './data/data';
 import { Layout, LayoutPanel, LayoutSplitter, Grid, TextColumn, DateColumn, HeaderRow, Row } from '../../sources/components';
 
 interface CompState {
     // tslint:disable-next-line:no-any
-    data: any[];
+    data: Data[];
     customScrollBar?: boolean;
     selectedRowIndexes?: Array<number>;
 }
@@ -18,14 +19,23 @@ export class GridExample extends React.Component<{}, CompState> {
             data: fakeData,
             selectedRowIndexes: []
         };
-        this.removeLastItem = this.removeLastItem.bind(this);
+        this.handleDeleteSelectedItem = this.handleDeleteSelectedItem.bind(this);
         this.handleCustomScrollBarChanged = this.handleCustomScrollBarChanged.bind(this);
         this.handleRowClick = this.handleRowClick.bind(this);
     }
 
-    removeLastItem: () => void = () => {
+    handleDeleteSelectedItem: () => void = () => {
+        let data = new Array<Data>(...this.state.data!);
+
+        if (this.state.selectedRowIndexes) {
+            let sortedIndexes = this.state.selectedRowIndexes.sort((first, second) => first === second ? 0 : (first < second ? -1 : 1));
+            for (let i = 0; i < sortedIndexes.length; i++)  {
+                data.splice(sortedIndexes[i], 1);
+            }
+        }
         this.setState({
-            data: this.state.data!.slice(0, this.state.data!.length - 1)
+            data,
+            selectedRowIndexes: []
         });
     }
 
@@ -46,9 +56,18 @@ export class GridExample extends React.Component<{}, CompState> {
             <Layout width="100%" height="100%">
                 <LayoutPanel align="top" height={50}>
                     <div>
-                        <button onClick={this.removeLastItem}>Remove Last</button>
-                        <input type="checkbox" checked={this.state.customScrollBar}
-                            onChange={this.handleCustomScrollBarChanged}/>Custom ScrollBars <br/>
+                        <button
+                            onClick={this.handleDeleteSelectedItem}
+                            disabled={!this.state.selectedRowIndexes || this.state.selectedRowIndexes.length === 0}
+                        >
+                            Delete
+                        </button>
+                        <input
+                            type="checkbox" checked={this.state.customScrollBar}
+                            onChange={this.handleCustomScrollBarChanged}
+                        />
+                        Custom ScrollBars
+                        <br/>
                     </div>
                 </LayoutPanel>
                 <LayoutSplitter />

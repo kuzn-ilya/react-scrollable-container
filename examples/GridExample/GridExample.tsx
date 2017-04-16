@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { fakeData } from './data/fake.data';
-import { Layout, LayoutPanel, LayoutSplitter, Grid, TextColumn, HeaderRow, Row } from '../../sources/components';
+import { Layout, LayoutPanel, LayoutSplitter, Grid, TextColumn, DateColumn, HeaderRow, Row } from '../../sources/components';
 
 interface CompState {
     // tslint:disable-next-line:no-any
@@ -63,7 +63,7 @@ export class GridExample extends React.Component<{}, CompState> {
                         <TextColumn caption="ipAddress" propName="ipAddress" width={150} align="center" />
                         <TextColumn caption="creditCardType" propName="creditCardType" width={200} />
                         <TextColumn caption="creditCardNumber" propName="creditCardNumber" width={150} />
-                        <TextColumn caption="creditCardExpires" propName="creditCardExpires" width={80} align="center" />
+                        <DateColumn caption="creditCardExpires" propName="creditCardExpires" width={80} align="center" />
                         <TextColumn caption="city" propName="city" width={250} />
                         <TextColumn caption="company" propName="company" width={150} />
                         <TextColumn caption="department" propName="department" width={250} />

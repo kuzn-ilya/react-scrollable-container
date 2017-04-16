@@ -15,9 +15,11 @@ export interface GridProps {
     readonly selectedRowIndexes?: number[];
     readonly fixedHeaderRowClass: ComponentClass<HeaderRowProps>;
     readonly fixedRowClass: ComponentClass<RowProps>;
-    readonly onRowClick?: (rowIndex: number) => void;
     readonly scrollableHeaderRowClass: ComponentClass<HeaderRowProps>;
     readonly scrollableRowClass: ComponentClass<RowProps>;
+    readonly multiSelectRows?: boolean;
+    readonly onRowClick?: (rowIndex: number) => void;
+    readonly onRowSelectionChanged?: (rowIndexes: Array<number>) => void;
 }
 
 export const gridPropTypes: ValidationMap<GridProps> = {
@@ -29,7 +31,9 @@ export const gridPropTypes: ValidationMap<GridProps> = {
     fixedRowClass: PropTypes.any.isRequired,
     fixedRowCount: PropTypes.number,
     headerHeight: PropTypes.number.isRequired,
+    multiSelectRows: PropTypes.bool,
     onRowClick: PropTypes.func,
+    onRowSelectionChanged: PropTypes.func,
     rowData: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
     rowHeight: PropTypes.number.isRequired,
     // TODO: Find more appropriate prop type

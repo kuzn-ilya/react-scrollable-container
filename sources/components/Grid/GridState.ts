@@ -9,6 +9,7 @@ export interface GridState {
     // tslint:disable-next-line:no-any
     scrollableColumns?: List<ColumnProps<any>>;
     colsThumbHeight?: number;
+    selectedRowIndexes: number[];
     scrollLeft?: number;
     scrollTop?: number;
 }

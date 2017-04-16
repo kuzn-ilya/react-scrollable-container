@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { List } from 'immutable';
 import * as objectAssign from 'object-assign';
+import * as shallowEqual from 'fbjs/lib/shallowEqual';
 
 import { GridProps, gridPropTypes } from './GridProps';
 import { GridState } from './GridState';
@@ -20,8 +21,10 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
         fixedColumnCount: 0,
         fixedRowCount: 0,
         headerHeight: 0,
+        multiSelectRows: false,
         rowData: [],
-        rowHeight: 0
+        rowHeight: 0,
+        selectedRowIndexes: []
     };
 
     constructor(props?: GridProps) {
@@ -30,7 +33,18 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
         this.handleVerticalScrollPosChanged = this.handleVerticalScrollPosChanged.bind(this);
         this.handleHorizontalScrollVisibilityChanged = this.handleHorizontalScrollVisibilityChanged.bind(this);
         this.handleScrollableColumnsResize = this.handleScrollableColumnsResize.bind(this);
-        this.state = this.calculateState();
+        this.handleRowClick = this.handleRowClick.bind(this);
+        this.state = objectAssign({}, {
+            selectedRowIndexes: this.props.selectedRowIndexes
+        }, this.calculateState());
+    }
+
+    componentWillReceiveProps(nextProps: GridProps): void {
+        if (!shallowEqual(nextProps.selectedRowIndexes, this.props.selectedRowIndexes)) {
+            this.setState({
+                selectedRowIndexes: nextProps.selectedRowIndexes
+            } as GridState);
+        }
     }
 
     handleVerticalScrollPosChanged: (scrollLeft: number, scrollTop: number) => void = (scrollLeft, scrollTop) => {
@@ -41,7 +55,34 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
             this.setState({
                 scrollLeft,
                 scrollTop
+            } as GridState);
+        }
+    }
+
+    handleRowClick: (rowIndex: number) => void = (rowIndex) => {
+        if (this.props.onRowClick) {
+            this.props.onRowClick(rowIndex);
+        }
+
+        if (this.props.multiSelectRows) {
+            if (this.state.selectedRowIndexes!.indexOf(rowIndex) === -1) {
+                let selectedRowIndexes = [...this.state.selectedRowIndexes];
+                selectedRowIndexes.push(rowIndex);
+                this.setState({
+                    selectedRowIndexes
+                });
+                if (this.props.onRowSelectionChanged) {
+                    this.props.onRowSelectionChanged(selectedRowIndexes);
+                }
+            }
+        } else {
+            let selectedRowIndexes = [rowIndex];
+            this.setState({
+                selectedRowIndexes
             });
+            if (this.props.onRowSelectionChanged) {
+                this.props.onRowSelectionChanged(selectedRowIndexes);
+            }
         }
     }
 
@@ -72,8 +113,8 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
                         scrollTop={this.state.scrollTop}
                         headerRowClass={this.props.fixedHeaderRowClass}
                         rowClass={this.props.fixedRowClass}
-                        selectedRowIndexes={this.props.selectedRowIndexes}
-                        onRowClick={this.props.onRowClick}
+                        selectedRowIndexes={this.state.selectedRowIndexes}
+                        onRowClick={this.handleRowClick}
                     />
                 </LayoutPanel>
                 <LayoutSplitter />
@@ -93,8 +134,8 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
                         onResize={this.handleScrollableColumnsResize}
                         headerRowClass={this.props.scrollableHeaderRowClass}
                         rowClass={this.props.scrollableRowClass}
-                        selectedRowIndexes={this.props.selectedRowIndexes}
-                        onRowClick={this.props.onRowClick}
+                        selectedRowIndexes={this.state.selectedRowIndexes}
+                        onRowClick={this.handleRowClick}
                     />
                 </LayoutPanel>
             </Layout>
@@ -104,7 +145,7 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
     handleHorizontalScrollVisibilityChanged: (visible: boolean, thumbHeight: number) => void = (visible: boolean, thumbHeight: number) => {
         this.setState({
             colsThumbHeight: thumbHeight
-        });
+        } as GridState);
     }
 
     handleScrollableColumnsResize: () => void = () => {
@@ -120,7 +161,7 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
             this.setState({
                 fixedColumns,
                 fixedColumnsWidth: newFixedColumnsWidth
-            });
+            } as GridState);
         }
     }
 
@@ -159,6 +200,6 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
             fixedColumnMinWidth,
             fixedColumnsWidth,
             scrollableColumns: List(scrollableColumns)
-        };
+        } as GridState;
     }
 }

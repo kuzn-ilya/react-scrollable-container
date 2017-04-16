@@ -9,6 +9,7 @@ interface CompState {
     data: Data[];
     customScrollBar?: boolean;
     selectedRowIndexes?: Array<number>;
+    propSelectedRowIndexes?: Array<number>;
 }
 
 export class GridExample extends React.Component<{}, CompState> {
@@ -17,11 +18,12 @@ export class GridExample extends React.Component<{}, CompState> {
         this.state = {
             customScrollBar: false,
             data: fakeData,
+            propSelectedRowIndexes: [],
             selectedRowIndexes: []
         };
         this.handleDeleteSelectedItem = this.handleDeleteSelectedItem.bind(this);
         this.handleCustomScrollBarChanged = this.handleCustomScrollBarChanged.bind(this);
-        this.handleRowClick = this.handleRowClick.bind(this);
+        this.handleRowSelectionChanged = this.handleRowSelectionChanged.bind(this);
     }
 
     handleDeleteSelectedItem: () => void = () => {
@@ -35,6 +37,7 @@ export class GridExample extends React.Component<{}, CompState> {
         }
         this.setState({
             data,
+            propSelectedRowIndexes: [],
             selectedRowIndexes: []
         });
     }
@@ -45,9 +48,9 @@ export class GridExample extends React.Component<{}, CompState> {
         } as CompState);
     }
 
-    handleRowClick: (rowIndex: number) => void = (rowIndex) => {
+    handleRowSelectionChanged: (rowIndex: number[]) => void = (rowIndex) => {
         this.setState({
-            selectedRowIndexes: [rowIndex]
+            selectedRowIndexes: rowIndex
         } as CompState)
     }
 
@@ -81,8 +84,9 @@ export class GridExample extends React.Component<{}, CompState> {
                         fixedColumnCount={2}
                         rowHeight={20}
                         headerHeight={51}
-                        selectedRowIndexes={this.state.selectedRowIndexes}
-                        onRowClick={this.handleRowClick}
+                        onRowSelectionChanged={this.handleRowSelectionChanged}
+                        multiSelectRows
+                        selectedRowIndexes={this.state.propSelectedRowIndexes}
                     >
                         <TextColumn caption="id" propName="id" width={30} align="right" />
                         <TextColumn caption="firstName" propName="firstName" width={150} />

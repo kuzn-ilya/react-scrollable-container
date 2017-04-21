@@ -26,18 +26,6 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
 
     constructor(props?: ScrollBarProps) {
         super(props);
-
-        this.handlePrevButtonClick = this.handlePrevButtonClick.bind(this);
-        this.handleNextButtonClick = this.handleNextButtonClick.bind(this);
-        this.handleMouseDown = this.handleMouseDown.bind(this);
-        this.handleMouseUp = this.handleMouseUp.bind(this);
-        this.handleMouseMove = this.handleMouseMove.bind(this);
-        this.handleThumbDragging = this.handleThumbDragging.bind(this);
-        this.handleResize = this.handleResize.bind(this);
-
-        this.doScroll = this.doScroll.bind(this);
-        this.setRef = this.setRef.bind(this);
-
         this.state = this.calculateState(0, this.props);
     }
 
@@ -129,31 +117,31 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
         }
     }
 
-    private setRef: (ref: HTMLDivElement) => void = (ref) => {
+    private setRef = (ref: HTMLDivElement): void => {
         this.ref = ref;
         if (ref && this.state.scrollBarSize !== this.calculateScrollBarSize()) {
             this.updateState(this.props, this.state.position);
         }
     }
 
-    private handlePrevButtonClick: () => void = () => {
+    private handlePrevButtonClick = (): void => {
         this.moveBy(-this.props.smallChange);
     }
 
-    private handleNextButtonClick: () => void = () => {
+    private handleNextButtonClick = (): void => {
         this.moveBy(this.props.smallChange);
     }
 
-    private handleMouseDown: (event: React.MouseEvent<HTMLDivElement>) => void = (event) => {
+    private handleMouseDown = (event: React.MouseEvent<HTMLDivElement>): void => {
         this.updateMousePos(event);
-        this.doScroll();
+        this.handleScroll();
     }
 
-    private handleMouseMove: (event: React.MouseEvent<HTMLDivElement>) => void = (event) => {
+    private handleMouseMove = (event: React.MouseEvent<HTMLDivElement>): void => {
         this.updateMousePos(event);
     }
 
-    private handleMouseUp: (event: React.MouseEvent<HTMLDivElement>) => void = (event) => {
+    private handleMouseUp = (event: React.MouseEvent<HTMLDivElement>): void => {
         this.mousePos = undefined;
         if (this.timerId) {
             clearTimeout(this.timerId);
@@ -161,24 +149,24 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
         }
     }
 
-    private handleThumbDragging: (newPosition: number) => void = (newPosition) => {
+    private handleThumbDragging = (newPosition: number): void => {
         let newPos = this.thumbPositionToPosition(newPosition);
         this.updateState(this.props, newPos);
     }
 
-    private handleResize: () => void = () => {
+    private handleResize = (): void => {
         this.updateState(this.props, this.state.position);
     }
 
-    private doScroll: () => void = () => {
+    private handleScroll = (): void => {
         let mousePos = this.mousePos || 0;
         let thumbPosition = this.state.thumbPosition || 0;
         if (mousePos < thumbPosition) {
             this.moveBy(-this.props.largeChange);
-            this.timerId = setTimeout(this.doScroll, SCROLL_TIME);
+            this.timerId = setTimeout(this.handleScroll, SCROLL_TIME);
         } else if (mousePos > thumbPosition + (this.state.thumbSize || 0)) {
             this.moveBy(this.props.largeChange);
-            this.timerId = setTimeout(this.doScroll, SCROLL_TIME);
+            this.timerId = setTimeout(this.handleScroll, SCROLL_TIME);
         }
     }
 

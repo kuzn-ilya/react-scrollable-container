@@ -29,10 +29,6 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
     constructor(props?: GridProps) {
         super(props);
 
-        this.handleVerticalScrollPosChanged = this.handleVerticalScrollPosChanged.bind(this);
-        this.handleHorizontalScrollVisibilityChanged = this.handleHorizontalScrollVisibilityChanged.bind(this);
-        this.handleScrollableColumnsResize = this.handleScrollableColumnsResize.bind(this);
-        this.handleRowClick = this.handleRowClick.bind(this);
         this.state = objectAssign({}, {
             selectedRowIndexes: this.props.selectedRowIndexes
         }, this.calculateState());
@@ -46,7 +42,7 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
         }
     }
 
-    handleVerticalScrollPosChanged: (scrollLeft: number, scrollTop: number) => void = (scrollLeft, scrollTop) => {
+    handleVerticalScrollPosChanged = (scrollLeft: number, scrollTop: number): void  => {
         if (this.fixedColumnGroup) {
             this.fixedColumnGroup.setScrollTop(scrollTop);
         }
@@ -58,7 +54,7 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
         }
     }
 
-    handleRowClick: (rowIndex: number, e: React.MouseEvent<HTMLElement>) => void = (rowIndex, e) => {
+    handleRowClick = (rowIndex: number, e: React.MouseEvent<HTMLElement>): void  => {
         if (this.props.onRowClick) {
             this.props.onRowClick(rowIndex);
         }
@@ -144,13 +140,13 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
         );
     }
 
-    handleHorizontalScrollVisibilityChanged: (visible: boolean, thumbHeight: number) => void = (visible: boolean, thumbHeight: number) => {
+    handleHorizontalScrollVisibilityChanged = (visible: boolean, thumbHeight: number): void => {
         this.setState({
             colsThumbHeight: thumbHeight
         } as GridState);
     }
 
-    handleScrollableColumnsResize: () => void = () => {
+    handleScrollableColumnsResize = (): void => {
         if (this.scrollableColumnGroup && this.fixedColumnGroup && this.ref) {
             let layoutDom = ReactDOM.findDOMNode(this.ref);
             let scrollableColumnGroupDom = ReactDOM.findDOMNode(this.scrollableColumnGroup);

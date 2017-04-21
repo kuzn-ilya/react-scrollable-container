@@ -23,13 +23,9 @@ export class GridExample extends React.Component<{}, CompState> {
             propSelectedRowIndexes: [],
             selectedRowIndexes: []
         };
-        this.handleDeleteSelectedItem = this.handleDeleteSelectedItem.bind(this);
-        this.handleCustomScrollBarChanged = this.handleCustomScrollBarChanged.bind(this);
-        this.handleRowSelectionChanged = this.handleRowSelectionChanged.bind(this);
-        this.handleMultiSelectRowsChanged = this.handleMultiSelectRowsChanged.bind(this);
     }
 
-    handleDeleteSelectedItem: () => void = () => {
+    handleDeleteSelectedItem = (): void => {
         let data = new Array<Data>(...this.state.data!);
 
         if (this.state.selectedRowIndexes) {
@@ -45,19 +41,19 @@ export class GridExample extends React.Component<{}, CompState> {
         });
     }
 
-    handleCustomScrollBarChanged: (e: React.FormEvent<HTMLInputElement>) => void = (e) => {
+    handleCustomScrollBarChanged = (e: React.FormEvent<HTMLInputElement>): void => {
         this.setState({
             customScrollBar: e.currentTarget.checked
         } as CompState);
     }
 
-    handleMultiSelectRowsChanged: (e: React.FormEvent<HTMLInputElement>) => void = (e) => {
+    handleMultiSelectRowsChanged = (e: React.FormEvent<HTMLInputElement>): void => {
         this.setState({
             multiSelectRows: e.currentTarget.checked
         } as CompState);
     }
 
-    handleRowSelectionChanged: (rowIndex: number[]) => void = (rowIndex) => {
+    handleRowSelectionChanged = (rowIndex: number[]): void => {
         this.setState({
             selectedRowIndexes: rowIndex
         } as CompState)

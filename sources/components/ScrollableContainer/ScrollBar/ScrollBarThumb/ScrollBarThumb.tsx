@@ -20,10 +20,6 @@ export class ScrollBarThumb extends React.PureComponent<ScrollBarThumbProps, Scr
 
     constructor(props?: ScrollBarThumbProps) {
         super(props);
-
-        this.handleMouseDown = this.handleMouseDown.bind(this);
-        this.handleMouseMove = this.handleMouseMove.bind(this);
-        this.handleMouseUp = this.handleMouseUp.bind(this);
         this.state = {
             isActive: false
         };
@@ -33,7 +29,7 @@ export class ScrollBarThumb extends React.PureComponent<ScrollBarThumbProps, Scr
     private startPosition: number = 0;
     private mouseCapture?: MouseCapture = undefined;
 
-    private handleMouseDown: React.EventHandler<React.MouseEvent<HTMLDivElement>> = (e) => {
+    private handleMouseDown = (e: React.MouseEvent<HTMLDivElement>): void => {
         if (e.button !== 0) {
             return;
         }
@@ -48,12 +44,12 @@ export class ScrollBarThumb extends React.PureComponent<ScrollBarThumbProps, Scr
         });
     }
 
-    private handleMouseMove: (deltaX: number, deltaY: number) => void = (deltaX, deltaY) => {
+    private handleMouseMove = (deltaX: number, deltaY: number): void => {
         let newPosition = this.calcNewPosition(deltaX, deltaY);
         this.props.onDragging!(newPosition);
     }
 
-    private handleMouseUp: () => void = () => {
+    private handleMouseUp = (): void => {
         if (this.mouseCapture) {
             this.mouseCapture = undefined;
 
@@ -98,5 +94,4 @@ export class ScrollBarThumb extends React.PureComponent<ScrollBarThumbProps, Scr
     private calcNewPosition(deltaX: number, deltaY: number): number {
         return (this.isVertical() ? deltaY : deltaX) + this.props.position;
     }
-
 }

@@ -23,8 +23,6 @@ export class ScrollableContent extends React.PureComponent<ScrollableContentProp
     static propTypes = scrollableContentPropTypes;
     constructor(props?: ScrollableContentProps) {
         super(props);
-        this.handleResize = this.handleResize.bind(this);
-        this.setRef = this.setRef.bind(this);
         this.state = {
             style: this.calculateStyle(this.props)
         };
@@ -33,13 +31,13 @@ export class ScrollableContent extends React.PureComponent<ScrollableContentProp
     private removeResizeEventListener: () => void = emptyFunction;
     private ref: HTMLDivElement;
 
-    private handleResize: () => void = () => {
+    private handleResize = (): void => {
         if (this.ref) {
             this.props.onResize!(this.ref.offsetWidth, this.ref.offsetHeight);
         }
     }
 
-    private setRef: (ref: HTMLDivElement) => void = (ref) => {
+    private setRef = (ref: HTMLDivElement): void => {
         this.ref = ref;
         this.handleResize();
     }

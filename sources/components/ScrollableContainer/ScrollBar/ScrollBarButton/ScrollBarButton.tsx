@@ -15,14 +15,6 @@ export class ScrollBarButton extends React.PureComponent<ScrollBarButtonProps, S
         onScroll: emptyFunction
     };
 
-    constructor(props?: ScrollBarButtonProps) {
-        super(props);
-
-        this.handleMouseDown = this.handleMouseDown.bind(this);
-        this.handleMouseUp = this.handleMouseUp.bind(this);
-        this.doScroll = this.doScroll.bind(this);
-    }
-
     render(): JSX.Element {
         let buttonStyle = {
             height: this.props.size,
@@ -58,20 +50,20 @@ export class ScrollBarButton extends React.PureComponent<ScrollBarButtonProps, S
     // tslint:disable-next-line:no-any
     private timerId: any;
 
-    private doScroll: () => void = () => {
+    private handleScroll = (): void => {
         if (!this.props.disabled) {
             this.props.onScroll!();
-            this.timerId = setTimeout(this.doScroll, SCROLL_TIME);
+            this.timerId = setTimeout(this.handleScroll, SCROLL_TIME);
         }
     }
 
-    private handleMouseDown: (event: React.MouseEvent<HTMLDivElement>) => void = (event) => {
+    private handleMouseDown = (event: React.MouseEvent<HTMLDivElement>): void => {
         event.preventDefault();
 
-        this.doScroll();
+        this.handleScroll();
     }
 
-    private handleMouseUp: (event: React.MouseEvent<HTMLDivElement>) => void = (event) => {
+    private handleMouseUp = (event: React.MouseEvent<HTMLDivElement>): void => {
         event.preventDefault();
 
         if (this.timerId) {

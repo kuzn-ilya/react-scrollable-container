@@ -29,20 +29,15 @@ export class ScrollBarExample extends React.Component<{}, CompState> {
             smallChange: 1
         };
 
-        this.handleOrientationChanged = this.handleOrientationChanged.bind(this);
-        this.handleShowButtonsChanged = this.handleShowButtonsChanged.bind(this);
-
         this.handleMinChanged = this.handleNumberPropChanged.bind(this, 'min');
         this.handleMaxChanged = this.handleNumberPropChanged.bind(this, 'max');
         this.handleInitialPositionChanged = this.handleNumberPropChanged.bind(this, 'initialPosition');
         this.handlePageSizeChanged = this.handleNumberPropChanged.bind(this, 'pageSize');
         this.handleSmallChangeChanged = this.handleNumberPropChanged.bind(this, 'smallChange');
         this.handleLargeChangeChanged = this.handleNumberPropChanged.bind(this, 'largeChange');
-
-        this.handleScroll = this.handleScroll.bind(this);
     }
 
-    handleOrientationChanged: (e: React.FormEvent<HTMLInputElement>) => void = (e) => {
+    handleOrientationChanged = (e: React.FormEvent<HTMLInputElement>): void => {
         if (e.currentTarget.value === 'horizontal' || e.currentTarget.value === 'vertical') {
             this.setState({
                 orientation: e.currentTarget.value
@@ -50,7 +45,7 @@ export class ScrollBarExample extends React.Component<{}, CompState> {
         }
     }
 
-    handleShowButtonsChanged: (e: React.FormEvent<HTMLInputElement>) => void = (e) => {
+    handleShowButtonsChanged = (e: React.FormEvent<HTMLInputElement>): void => {
         this.setState({
             showButtons: e.currentTarget.checked
         } as CompState);
@@ -73,7 +68,7 @@ export class ScrollBarExample extends React.Component<{}, CompState> {
     handleLargeChangeChanged: (e: React.FormEvent<HTMLInputElement>) => void;
     handleSmallChangeChanged: (e: React.FormEvent<HTMLInputElement>) => void;
 
-    handleScroll: (newPosition: number) => void = (newPosition) => {
+    handleScroll = (newPosition: number): void => {
         this.setState({
             position: newPosition
         } as CompState);

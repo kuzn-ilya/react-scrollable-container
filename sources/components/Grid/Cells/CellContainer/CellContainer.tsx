@@ -6,12 +6,7 @@ import '../../../../styles/grid.css';
 export class CellContainer extends React.PureComponent<CellContainerProps, {}> {
     static propTypes = cellContainerPropTypes;
 
-    constructor(props: CellContainerProps) {
-        super(props);
-        this.handleClick = this.handleClick.bind(this);
-    }
-
-    handleClick: (e: React.MouseEvent<HTMLDivElement>) => void = (e) => {
+    handleClick = (e: React.MouseEvent<HTMLDivElement>): void => {
         if (this.props.columnProps.onCellClick) {
             this.props.columnProps.onCellClick(this.props.rowIndex, this.props.columnProps.propName);
         }

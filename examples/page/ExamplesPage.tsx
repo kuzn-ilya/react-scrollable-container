@@ -19,11 +19,9 @@ export class ExamplesPage extends React.PureComponent<ExamplesPageProps, Example
         this.state = {
             selectedIndex: 0
         };
-
-        this.handleSelectedIndexChanged = this.handleSelectedIndexChanged.bind(this);
     }
 
-    handleSelectedIndexChanged: (index: number) => void = (index) => {
+    handleSelectedIndexChanged = (index: number): void => {
         this.setState({
             selectedIndex: index
         });

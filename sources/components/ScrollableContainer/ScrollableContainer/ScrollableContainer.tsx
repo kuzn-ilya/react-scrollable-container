@@ -40,13 +40,6 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
 
     constructor(props?: ScrollableContainerProps) {
         super(props);
-        this.handleScroll = this.handleScroll.bind(this);
-        this.handleVertScroll = this.handleVertScroll.bind(this);
-        this.handleHorzScroll = this.handleHorzScroll.bind(this);
-        this.handleResize = this.handleResize.bind(this);
-        this.handleContentResize = this.handleContentResize.bind(this);
-        this.setRef = this.setRef.bind(this);
-        this.setScrollableContentRef = this.setScrollableContentRef.bind(this);
 
         let scrollLeft = this.props.scrollLeft || 0;
         let scrollTop = this.props.scrollTop || 0;
@@ -123,12 +116,12 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
     private ref: HTMLDivElement;
     private scrollableContentDOMRef: HTMLElement;
 
-    private setRef: (ref: HTMLDivElement) => void = (ref) => {
+    private setRef = (ref: HTMLDivElement): void => {
         this.ref = ref;
         this.handleResize();
     }
 
-    private setScrollableContentRef: (ref: ScrollableContent) => void = (ref) => {
+    private setScrollableContentRef = (ref: ScrollableContent): void => {
         this.scrollableContentDOMRef = ReactDOM.findDOMNode(ref) as HTMLElement;
         if (this.scrollableContentDOMRef) {
             this.handleContentResize(this.scrollableContentDOMRef.offsetWidth, this.scrollableContentDOMRef.offsetHeight);
@@ -137,7 +130,7 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
         }
     }
 
-    handleResize: () => void = () => {
+    public handleResize = (): void => {
         this.setStateInternal({
             containerHeight: this.ref ? this.ref.offsetHeight : 0,
             containerWidth: this.ref ? this.ref.offsetWidth : 0
@@ -145,7 +138,7 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
         this.measureScrollbars();
     }
 
-    private handleContentResize: (newWidth: number, newHeight: number) => void = (newWidth, newHeight) => {
+    private handleContentResize = (newWidth: number, newHeight: number): void => {
         this.setStateInternal({
             contentHeight: newHeight,
             contentWidth: newWidth
@@ -234,7 +227,7 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
         );
     }
 
-    private handleScroll: (event: React.UIEvent<HTMLDivElement>) => void = (event) => {
+    private handleScroll = (event: React.UIEvent<HTMLDivElement>): void => {
         let scrollLeft = (event.currentTarget as Element).scrollLeft;
         let scrollTop = (event.currentTarget as Element).scrollTop;
         this.setStateInternal({
@@ -244,14 +237,14 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
         this.props.onScrollPosChanged!(scrollLeft, scrollTop);
     }
 
-    private handleVertScroll: (newPosition: number) => void = (newPosition) => {
+    private handleVertScroll = (newPosition: number): void => {
         this.setStateInternal({
             scrollTop: newPosition
         });
         this.props.onScrollPosChanged!(this.state.scrollLeft, newPosition);
     }
 
-    private handleHorzScroll: (newPosition: number) => void = (newPosition) => {
+    private handleHorzScroll = (newPosition: number): void => {
         this.setStateInternal({
             scrollLeft: newPosition
         });
@@ -315,7 +308,7 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
         this.setState(state as ScrollableContainerState);
     }
 
-    private measureScrollbars: () => void = () => {
+    private measureScrollbars(): void  {
         if (this.ref && this.scrollableContentDOMRef) {
             let newState = this.calculateScrollThumbsMeasurements();
             if (this.vertScrollThumbWidth !== newState.vertScrollThumbWidth) {

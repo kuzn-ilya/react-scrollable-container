@@ -19,9 +19,6 @@ export namespace Internal {
 
         constructor(props?: LayoutSplitterProps) {
             super(props);
-            this.handleMouseDown = this.handleMouseDown.bind(this);
-            this.handleMouseMove = this.handleMouseMove.bind(this);
-            this.handleMouseUp = this.handleMouseUp.bind(this);
             this.state = {
                 isActive: false
             };
@@ -29,7 +26,7 @@ export namespace Internal {
 
         mouseCapture?: MouseCapture = undefined;
 
-        handleMouseDown: React.EventHandler<React.MouseEvent<HTMLDivElement>> = (e) => {
+        handleMouseDown = (e: React.MouseEvent<HTMLDivElement>): void => {
             if (e.button !== 0) {
                 return;
             }
@@ -41,12 +38,12 @@ export namespace Internal {
             });
         }
 
-        handleMouseMove: (deltaX: number, deltaY: number) => void = (deltaX, deltaY) => {
+        handleMouseMove = (deltaX: number, deltaY: number): void => {
             let newPosition = this.calcNewPosition(deltaX, deltaY);
             this.props.onResizing!(newPosition);
         }
 
-        handleMouseUp: () => void = () => {
+        handleMouseUp = (): void => {
             if (this.mouseCapture) {
                 this.mouseCapture = undefined;
                 this.props.onResizeEnd!();

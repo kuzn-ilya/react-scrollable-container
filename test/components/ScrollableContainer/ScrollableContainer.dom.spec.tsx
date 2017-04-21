@@ -184,14 +184,13 @@ describe('DOM: ScrollableContainer', () => {
         class Comp extends React.Component<{}, { x: number, y: number }> {
             constructor(props: {}) {
                 super(props);
-                this.handleScrollPosChanged = this.handleScrollPosChanged.bind(this);
                 this.state = {
                     x: 0,
                     y: 0
                 };
             }
 
-            handleScrollPosChanged: (x: number, y: number) => void = (x, y) => {
+            handleScrollPosChanged = (x: number, y: number): void => {
                 this.setState( {x, y} );
             }
 

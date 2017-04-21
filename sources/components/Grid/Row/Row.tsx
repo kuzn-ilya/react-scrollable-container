@@ -7,12 +7,7 @@ import { classNames } from '../../../utils';
 export class Row extends React.PureComponent<RowProps, {}> {
     static propTypes = rowPropTypes;
 
-    constructor(props: RowProps) {
-        super(props);
-        this.handleClick = this.handleClick.bind(this);
-    }
-
-    handleClick: (e: React.MouseEvent<HTMLDivElement>) => void = (e) => {
+    handleClick = (e: React.MouseEvent<HTMLDivElement>): void => {
         if (this.props.onClick) {
             this.props.onClick(this.props.rowIndex, e);
         }

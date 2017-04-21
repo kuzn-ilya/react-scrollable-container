@@ -16,17 +16,15 @@ export class GanttExample extends React.Component<{}, CompState> {
             customScrollBar: false,
             data: fakeData
         };
-        this.removeLastItem = this.removeLastItem.bind(this);
-        this.handleCustomScrollBarChanged = this.handleCustomScrollBarChanged.bind(this);
     }
 
-    removeLastItem: () => void = () => {
+    removeLastItem = (): void => {
         this.setState({
             data: this.state.data!.slice(0, this.state.data!.length - 1)
         });
     }
 
-    handleCustomScrollBarChanged: (e: React.FormEvent<HTMLInputElement>) => void = (e) => {
+    handleCustomScrollBarChanged = (e: React.FormEvent<HTMLInputElement>): void => {
         this.setState({
             customScrollBar: e.currentTarget.checked
         } as CompState);

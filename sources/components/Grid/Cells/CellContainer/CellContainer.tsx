@@ -45,17 +45,26 @@ export class CellContainer<V> extends React.PureComponent<CellContainerProps<V>,
     }
 
     handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>): void => {
+        let direction: undefined | 'down' | 'left' | 'right' | 'up' = undefined;
         switch (e.keyCode) {
             case ARROW_DOWN:
+                direction = 'down';
                 break;
             case ARROW_LEFT:
+                direction = 'left';
                 break;
             case ARROW_RIGHT:
+                direction = 'right';
                 break;
             case ARROW_UP:
+                direction = 'up';
                 break;
             default:
                 break;
+        }
+
+        if (direction && this.props.onMove) {
+            this.props.onMove(direction, this.props.rowIndex, this.props.columnProps.propName);
         }
     }
 

@@ -9,6 +9,7 @@ export interface CellContainerProps<V> {
     width: number;
     columnProps: ColumnProps<V>;
     value: V;
+    onMove?: (direction: 'left' | 'right' | 'down' | 'up', rowIndex: number, propName: string) => void;
 }
 
 // tslint:disable-next-line:no-any
@@ -16,6 +17,7 @@ export const cellContainerPropTypes: ValidationMap<CellContainerProps<any>> = {
     columnProps: PropTypes.any.isRequired,
     firstCell: PropTypes.bool,
     height: PropTypes.number.isRequired,
+    onMove: PropTypes.func,
     rowIndex: PropTypes.number.isRequired,
     value: PropTypes.any.isRequired,
     width: PropTypes.number.isRequired

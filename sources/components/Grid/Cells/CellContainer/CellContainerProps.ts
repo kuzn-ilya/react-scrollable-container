@@ -10,12 +10,14 @@ export interface CellContainerProps<V> {
     columnProps: ColumnProps<V>;
     value: V;
     onMove?: (direction: 'left' | 'right' | 'down' | 'up', rowIndex: number, propName: string) => void;
+    focused?: boolean;
 }
 
 // tslint:disable-next-line:no-any
 export const cellContainerPropTypes: ValidationMap<CellContainerProps<any>> = {
     columnProps: PropTypes.any.isRequired,
     firstCell: PropTypes.bool,
+    focused: PropTypes.bool,
     height: PropTypes.number.isRequired,
     onMove: PropTypes.func,
     rowIndex: PropTypes.number.isRequired,

@@ -101,7 +101,7 @@ export class GridExample extends React.Component<{}, CompState> {
                         <TextColumn caption="id" propName="id" width={30} align="right" readonly />
                         <TextColumn caption="firstName" propName="firstName" width={150} />
                         <TextColumn caption="id" propName="id" width={30} align="right" readonly />
-                        <TextColumn caption="lastName" propName="lastName" width={150} />
+                        <TextColumn caption="lastName" propName="lastName" width={150} readonly />
                         <TextColumn caption="email" propName="email" width={150} />
                         <TextColumn caption="gender" propName="gender" width={80} />
                         <TextColumn caption="ipAddress" propName="ipAddress" width={150} align="center" />

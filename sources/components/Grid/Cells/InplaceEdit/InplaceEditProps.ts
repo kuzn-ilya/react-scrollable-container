@@ -6,9 +6,11 @@ export interface InplaceEditProps {
     // tslint:disable-next-line:no-any
     value: any;
     onBlur?: () => void;
+    onMove?: (direction: 'down' | 'left' | 'right' | 'up') => void;
 }
 
 export const inplaceEditPropTypes: ValidationMap<InplaceEditProps> = {
     onBlur: PropTypes.func,
+    onMove: PropTypes.func,
     value: PropTypes.any.isRequired
 };

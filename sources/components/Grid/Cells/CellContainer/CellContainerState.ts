@@ -1,3 +1,3 @@
 export interface CellContainerState {
-    editing: boolean;
+    focused: boolean;
 }

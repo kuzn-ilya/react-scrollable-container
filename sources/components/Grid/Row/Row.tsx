@@ -1,14 +1,40 @@
 import * as React from 'react';
-import { RowProps, rowPropTypes } from './RowProps';
-import { ColumnProps } from '../Columns/Column/ColumnProps';
-import { classNames } from '../../../utils';
 
-export class Row extends React.PureComponent<RowProps, {}> {
+import { classNames } from '../../../utils';
+import { RowProps, rowPropTypes } from './RowProps';
+import { RowState } from './RowState';
+import { ColumnProps } from '../Columns/Column/ColumnProps';
+
+export class Row extends React.PureComponent<RowProps, RowState> {
     static propTypes = rowPropTypes;
+
+    constructor(props?: RowProps) {
+        super(props);
+        this.state = {};
+    }
 
     handleClick = (e: React.MouseEvent<HTMLDivElement>): void => {
         if (this.props.onClick) {
             this.props.onClick(this.props.rowIndex, e);
+        }
+    }
+
+    handleMove = (direction: string, rowIndex: number, propName: string): void => {
+        if (direction === 'right' || direction === 'left') {
+            let index = this.props.columnProps.findIndex((columnProps) =>
+                (columnProps && columnProps.propName) === propName
+            );
+
+            let focusedCellPropName = propName;
+            if (index > 0 && direction === 'left') {
+                focusedCellPropName = this.props.columnProps.get(index - 1).propName;
+            } else if (index < this.props.columnProps.size - 1 && direction === 'right') {
+                focusedCellPropName = this.props.columnProps.get(index + 1).propName;
+            }
+
+            this.setState({
+                focusedCellPropName
+            });
         }
     }
 
@@ -34,6 +60,8 @@ export class Row extends React.PureComponent<RowProps, {}> {
                     columnProps={value}
                     rowIndex={this.props.rowIndex}
                     value={this.props.data[value.propName]}
+                    onMove={this.handleMove}
+                    focused={this.state.focusedCellPropName === value.propName}
                 />
             );
         });

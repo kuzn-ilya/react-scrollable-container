@@ -2,7 +2,10 @@ import * as React from 'react';
 import * as warning from 'fbjs/lib/warning';
 
 import { TextColumnProps, textColumnPropTypes } from './TextColumnProps';
-import { TextCell, HeaderCell } from '../../Cells';
+import { TextCell, HeaderCell, InplaceEdit, CellContainer } from '../../Cells';
+
+class TextCellContainer extends CellContainer<string> {
+}
 
 export class TextColumn extends React.PureComponent<TextColumnProps, {}> {
 
@@ -10,7 +13,9 @@ export class TextColumn extends React.PureComponent<TextColumnProps, {}> {
 
     static defaultProps: Partial<TextColumnProps> = {
         cellClass: TextCell,
-        headerCellClass: HeaderCell
+        cellContainerClass: TextCellContainer,
+        headerCellClass: HeaderCell,
+        inplaceEditClass: InplaceEdit
     };
 
     render(): null {

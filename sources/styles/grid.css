@@ -72,3 +72,13 @@
 .selected-row {
     background-color: $GRID_SELECTED_ROW_COLOR;
 }
+
+.inplace-edit {
+    font: $GRID_CELL_FONT;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    border: none;
+    padding-left: $(GRID_CELL_HORZ_PADDING)px;
+    padding-right: $(GRID_CELL_HORZ_PADDING)px;
+}

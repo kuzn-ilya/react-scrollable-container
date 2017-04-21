@@ -3,7 +3,7 @@ import * as warning from 'fbjs/lib/warning';
 
 import { GanttColumnProps, ganttColumnPropTypes } from './GanttColumnProps';
 
-import { GanttCell, HeaderGanttCell } from '../../Cells';
+import { GanttCell, HeaderGanttCell, InplaceEdit } from '../../Cells';
 
 export class GanttColumn extends React.PureComponent<GanttColumnProps, {}> {
 
@@ -11,7 +11,8 @@ export class GanttColumn extends React.PureComponent<GanttColumnProps, {}> {
 
     static defaultProps: Partial<GanttColumnProps> = {
         cellClass: GanttCell,
-        headerCellClass: HeaderGanttCell
+        headerCellClass: HeaderGanttCell,
+        inplaceEditClass: InplaceEdit
     };
 
     render(): null {

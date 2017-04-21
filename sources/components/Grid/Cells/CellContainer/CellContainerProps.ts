@@ -2,19 +2,21 @@ import { PropTypes } from 'react';
 import { ValidationMap } from '../../../../react';
 import { ColumnProps } from '../../Columns/Column/ColumnProps';
 
-export interface CellContainerProps {
+export interface CellContainerProps<V> {
     firstCell?: boolean;
     height: number;
     rowIndex: number;
     width: number;
-    // tslint:disable-next-line:no-any
-    columnProps: ColumnProps<any>;
+    columnProps: ColumnProps<V>;
+    value: V;
 }
 
-export const cellContainerPropTypes: ValidationMap<CellContainerProps> = {
+// tslint:disable-next-line:no-any
+export const cellContainerPropTypes: ValidationMap<CellContainerProps<any>> = {
     columnProps: PropTypes.any.isRequired,
     firstCell: PropTypes.bool,
     height: PropTypes.number.isRequired,
     rowIndex: PropTypes.number.isRequired,
+    value: PropTypes.any.isRequired,
     width: PropTypes.number.isRequired
 };

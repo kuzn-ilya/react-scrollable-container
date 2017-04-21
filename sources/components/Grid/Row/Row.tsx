@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { RowProps, rowPropTypes } from './RowProps';
 import { ColumnProps } from '../Columns/Column/ColumnProps';
-import { CellContainer } from '../Cells/CellContainer';
 import { classNames } from '../../../utils';
 
 export class Row extends React.PureComponent<RowProps, {}> {
@@ -26,7 +25,7 @@ export class Row extends React.PureComponent<RowProps, {}> {
         // tslint:disable-next-line:no-any
         return this.props.columnProps.map((value: ColumnProps<any>, index: number) => {
             // tslint:disable-next-line:variable-name
-            let Cell = value.cellClass!;
+            let CellContainer = value.cellContainerClass!;
             return (
                 <CellContainer key={index}
                     firstCell={index === 0 && this.props.showEdgeForTheLeftCell}
@@ -34,12 +33,8 @@ export class Row extends React.PureComponent<RowProps, {}> {
                     height={this.props.height}
                     columnProps={value}
                     rowIndex={this.props.rowIndex}
-                >
-                    <Cell rowIndex={this.props.rowIndex}
-                        value={this.props.data[value.propName]}
-                        columnProps={value}
-                    />
-                </CellContainer>
+                    value={this.props.data[value.propName]}
+                />
             );
         });
     }

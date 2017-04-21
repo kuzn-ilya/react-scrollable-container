@@ -2,7 +2,10 @@ import * as React from 'react';
 import * as warning from 'fbjs/lib/warning';
 
 import { DateColumnProps, dateColumnPropTypes } from './DateColumnProps';
-import { DateCell, HeaderCell } from '../../Cells';
+import { DateCell, HeaderCell, InplaceEdit, CellContainer } from '../../Cells';
+
+class DateCellContainer extends CellContainer<Date> {
+}
 
 export class DateColumn extends React.PureComponent<DateColumnProps, {}> {
 
@@ -10,7 +13,9 @@ export class DateColumn extends React.PureComponent<DateColumnProps, {}> {
 
     static defaultProps: Partial<DateColumnProps> = {
         cellClass: DateCell,
-        headerCellClass: HeaderCell
+        cellContainerClass: DateCellContainer,
+        headerCellClass: HeaderCell,
+        inplaceEditClass: InplaceEdit
     };
 
     render(): null {

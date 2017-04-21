@@ -98,9 +98,9 @@ export class GridExample extends React.Component<{}, CompState> {
                         multiSelectRows={this.state.multiSelectRows}
                         selectedRowIndexes={this.state.propSelectedRowIndexes}
                     >
-                        <TextColumn caption="id" propName="id" width={30} align="right" />
+                        <TextColumn caption="id" propName="id" width={30} align="right" readonly />
                         <TextColumn caption="firstName" propName="firstName" width={150} />
-                        <TextColumn caption="id" propName="id" width={30} align="right" />
+                        <TextColumn caption="id" propName="id" width={30} align="right" readonly />
                         <TextColumn caption="lastName" propName="lastName" width={150} />
                         <TextColumn caption="email" propName="email" width={150} />
                         <TextColumn caption="gender" propName="gender" width={80} />

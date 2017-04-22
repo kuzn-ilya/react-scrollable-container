@@ -134,7 +134,27 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
     }
 
     handleRowMove = (direction: 'left' | 'right' | 'down' | 'up', rowIndex: number, propName: string): void => {
-        if (direction === 'down' && rowIndex < this.props.rowData.length - 1) {
+        let index = this.props.columnProps.findIndex((columnProps) =>
+            (columnProps && columnProps.propName) === propName
+        );
+
+        let nextCellPropName = propName;
+        if (direction === 'left' || direction === 'right') {
+            if (index > 0 && direction === 'left') {
+                nextCellPropName = this.props.columnProps.get(index - 1).propName;
+            } else if (index < this.props.columnProps.size - 1 && direction === 'right') {
+                nextCellPropName = this.props.columnProps.get(index + 1).propName;
+            }
+
+            this.setState({
+                rowState: {
+                    data: this.state.rowState.data,
+                    focusedCellPropName: nextCellPropName,
+                    focusedCellRowIndex: rowIndex,
+                    selectedIndexes: this.state.rowState.selectedIndexes
+                }
+            } as ColumnGroupState);
+        } else if (direction === 'down' && rowIndex < this.props.rowData.length - 1) {
             this.setState({
                 rowState: {
                     data: this.state.rowState.data,

@@ -8,7 +8,7 @@
     vertical-align: top;
 }
 
-.cell, .cell-first {
+.cell-wrapper, .cell-wrapper-first {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -48,7 +48,7 @@
     border-left: solid 1px $GRID_HEADER_CELL_BORDER_COLOR;
 }
 
-.cell-first {
+.cell-wrapper-first {
     border-left: solid 1px $GRID_CELL_BORDER_COLOR;
 }
 

@@ -15,8 +15,14 @@ export class CellContainer<V> extends React.PureComponent<CellContainerProps<V>,
         };
     }
 
+    componentDidMount(): void {
+        if (this.props.columnProps.readonly && this.state.focused) {
+            this.ref.focus();
+        }
+    }
+
     componentDidUpdate(prevProps: CellContainerProps<V>, prevState: CellContainerState): void {
-        if (this.props.columnProps.readonly) {
+        if (this.props.columnProps.readonly && this.state.focused) {
             if (this.ref) {
                 this.ref.focus();
             }
@@ -31,33 +37,15 @@ export class CellContainer<V> extends React.PureComponent<CellContainerProps<V>,
         }
     }
 
-    handleBlur = (): void => {
-        if (this.state.focused) {
-            this.setState({
-                focused: false
-            });
-        }
-    }
-
     handleClick = (e: React.MouseEvent<HTMLDivElement>): void => {
         if (this.props.columnProps.onCellClick) {
             this.props.columnProps.onCellClick(this.props.rowIndex, this.props.columnProps.propName);
-        }
-
-        this.setState({
-            focused: true
-        });
-
-        if (this.props.columnProps.readonly) {
-            if (this.ref) {
-                this.ref.focus();
-            }
         }
     }
 
     handleKeyUp = (e: React.KeyboardEvent<HTMLDivElement>): void => {
         let direction: undefined | 'down' | 'left' | 'right' | 'up' = undefined;
-        switch (e.keyCode) {
+        switch (e.key) {
             case KeyConsts.ARROW_DOWN:
                 direction = 'down';
                 break;
@@ -74,15 +62,36 @@ export class CellContainer<V> extends React.PureComponent<CellContainerProps<V>,
                 break;
         }
 
-        e.stopPropagation();
         if (direction && this.props.onMove) {
             this.props.onMove(direction, this.props.rowIndex, this.props.columnProps.propName);
         }
     }
 
-    handleInlaceEditMove = (direction: 'down' | 'left' | 'right' | 'up'): void => {
+    handleInplaceEditMove = (direction: 'down' | 'left' | 'right' | 'up'): void => {
         if (this.props.onMove) {
             this.props.onMove(direction, this.props.rowIndex, this.props.columnProps.propName);
+        }
+    }
+
+    handleBlur = (e: React.FocusEvent<HTMLElement>): void => {
+        if (this.state.focused) {
+            this.setState({
+                focused: false
+            });
+        }
+        if (this.props.onBlur) {
+            this.props.onBlur(this.props.rowIndex, this.props.columnProps.propName);
+        }
+    }
+
+    handleFocus = (e: React.FocusEvent<HTMLElement>): void => {
+        if (!this.state.focused) {
+            this.setState({
+                focused: true
+            });
+        }
+        if (this.props.onFocus) {
+            this.props.onFocus(this.props.rowIndex, this.props.columnProps.propName);
         }
     }
 
@@ -100,13 +109,17 @@ export class CellContainer<V> extends React.PureComponent<CellContainerProps<V>,
         let Cell = this.props.columnProps.cellClass!;
 
         let innerComponent = this.state.focused && !this.props.columnProps.readonly
-            ? <InplaceEdit value={this.props.value} onBlur={this.handleBlur} onMove={this.handleInlaceEditMove}/>
+            ? <InplaceEdit value={this.props.value}
+                onBlur={this.handleBlur}
+                onFocus={this.handleFocus}
+                onMove={this.handleInplaceEditMove}/>
             : (
-                <div className={this.props.firstCell ? 'cell-first' : 'cell'}
-                    onBlur={this.handleBlur}
+                <div className={this.props.firstCell ? 'cell-wrapper-first' : 'cell-wrapper'}
                     onKeyUp={this.handleKeyUp}
-                    ref={(ref) => this.ref = ref}
+                    onBlur={this.handleBlur}
+                    onFocus={this.handleFocus}
                     tabIndex={0}
+                    ref={(ref) => this.ref = ref}
                 >
                     <Cell rowIndex={this.props.rowIndex}
                         value={this.props.value}
@@ -115,7 +128,10 @@ export class CellContainer<V> extends React.PureComponent<CellContainerProps<V>,
                 </div>
             );
         return (
-            <div style={style} className="cell-container" onClick={this.handleClick}>
+            <div style={style}
+                className="cell-container"
+                onClick={this.handleClick}
+            >
                 {innerComponent}
             </div>
         );

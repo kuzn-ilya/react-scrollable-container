@@ -45,3 +45,22 @@ export function simulateScroll(element: Element, scrollLeft?: number, scrollTop?
     e.initCustomEvent('scroll', true, true, null);
     element.dispatchEvent(e);
 }
+
+export function simulateKeyDown(element: Element, key: string) {
+    let e = document.createEvent('KeyboardEvent');
+    e.initKeyboardEvent('keydown', true, true, window, key, 0, '', false, '');
+    element.dispatchEvent(e);
+}
+
+export function simulateKeyUp(element: Element, key: string) {
+    let e = document.createEvent('KeyboardEvent');
+    e.initKeyboardEvent('keyup', true, true, window, key, 39, '', false, '');
+    element.dispatchEvent(e);
+}
+
+export function simulateKeyPress(element: Element, key: string) {
+    let e = document.createEvent('KeyboardEvent');
+    e.initKeyboardEvent('keypress', true, true, window, key, 39, '', false, '');
+    element.dispatchEvent(e);
+}
+

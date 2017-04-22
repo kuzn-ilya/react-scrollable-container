@@ -17,6 +17,7 @@ export class Row extends React.PureComponent<RowProps, RowState> {
 
     componentWillReceiveProps(nextProps: RowProps): void {
         if (this.props.focusedCellPropName !== nextProps.focusedCellPropName) {
+            console.log('componentWillReceiveProps', this.props.focusedCellPropName, nextProps.focusedCellPropName);
             this.setState({
                 focusedCellPropName: nextProps.focusedCellPropName
             });
@@ -29,23 +30,21 @@ export class Row extends React.PureComponent<RowProps, RowState> {
         }
     }
 
+    handleCellContainerFocus = (rowIndex: number, propName: string): void => {
+        console.log('focus', rowIndex, propName);
+        this.setState({
+            focusedCellPropName: propName
+        });
+    }
+
+    handleCellContainerBlur = (rowIndex: number, propName: string): void => {
+        console.log('blur', rowIndex, propName);
+        this.setState({
+            focusedCellPropName: undefined
+        });
+    }
+
     handleMove = (direction: 'left' | 'right' | 'down' | 'up', rowIndex: number, propName: string): void => {
-        let index = this.props.columnProps.findIndex((columnProps) =>
-            (columnProps && columnProps.propName) === propName
-        );
-
-        let nextCellPropName = propName;
-        if (direction === 'left' || direction === 'right') {
-            if (index > 0 && direction === 'left') {
-                nextCellPropName = this.props.columnProps.get(index - 1).propName;
-            } else if (index < this.props.columnProps.size - 1 && direction === 'right') {
-                nextCellPropName = this.props.columnProps.get(index + 1).propName;
-            }
-            this.setState({
-                focusedCellPropName: nextCellPropName
-            });
-        }
-
         if (this.props.onMove) {
             this.props.onMove(direction, this.props.rowIndex, propName);
         }
@@ -73,6 +72,8 @@ export class Row extends React.PureComponent<RowProps, RowState> {
                     columnProps={value}
                     rowIndex={this.props.rowIndex}
                     value={this.props.data[value.propName]}
+                    onFocus={this.handleCellContainerFocus}
+                    onBlur={this.handleCellContainerBlur}
                     onMove={this.handleMove}
                     focused={this.state.focusedCellPropName === value.propName}
                 />

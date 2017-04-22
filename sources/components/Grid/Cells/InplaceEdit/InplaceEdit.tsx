@@ -15,18 +15,28 @@ export class InplaceEdit extends React.PureComponent<InplaceEditProps, {}> {
         }
     }
 
+    componentDidUpdate(prevProps: InplaceEditProps, prevState: {}): void {
+        if (this.ref) {
+            this.ref.focus();
+        }
+    }
+
     handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>): void => {
         if (this.props.onMove) {
-            if (e.currentTarget.selectionEnd >= e.currentTarget.value.length && e.keyCode === KeyConsts.ARROW_RIGHT) {
+            if (e.currentTarget.selectionEnd >= e.currentTarget.value.length && e.key === KeyConsts.ARROW_RIGHT) {
                 this.props.onMove('right');
-            } else if (e.currentTarget.selectionStart <= 0 && e.keyCode === KeyConsts.ARROW_LEFT) {
+            } else if (e.currentTarget.selectionStart <= 0 && e.key === KeyConsts.ARROW_LEFT) {
                 this.props.onMove('left');
-            } else if (e.keyCode === KeyConsts.ARROW_DOWN) {
+            } else if (e.key === KeyConsts.ARROW_DOWN) {
                 this.props.onMove('down');
-            } else if (e.keyCode === KeyConsts.ARROW_UP) {
+            } else if (e.key === KeyConsts.ARROW_UP) {
                 this.props.onMove('up');
             }
         }
+    }
+
+    handleChange = (e: React.FormEvent<HTMLInputElement>): void => {
+        // TODO: Not implemented yet
     }
 
     render(): JSX.Element {
@@ -36,7 +46,9 @@ export class InplaceEdit extends React.PureComponent<InplaceEditProps, {}> {
                 ref={(ref) => this.ref = ref}
                 value={this.props.value}
                 onBlur={this.props.onBlur}
+                onFocus={this.props.onFocus}
                 onKeyDown={this.handleKeyDown}
+                onChange={this.handleChange}
             >
             </input>
         );

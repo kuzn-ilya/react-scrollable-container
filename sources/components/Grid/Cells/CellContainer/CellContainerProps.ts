@@ -8,7 +8,7 @@ export interface CellContainerProps<V> {
     rowIndex: number;
     width: number;
     columnProps: ColumnProps<V>;
-    value: V;
+    value?: V;
     onMove?: (direction: 'left' | 'right' | 'down' | 'up', rowIndex: number, propName: string) => void;
     focused?: boolean;
 }
@@ -21,6 +21,6 @@ export const cellContainerPropTypes: ValidationMap<CellContainerProps<any>> = {
     height: PropTypes.number.isRequired,
     onMove: PropTypes.func,
     rowIndex: PropTypes.number.isRequired,
-    value: PropTypes.any.isRequired,
+    value: PropTypes.any,
     width: PropTypes.number.isRequired
 };

@@ -21,9 +21,9 @@ export class InplaceEdit extends React.PureComponent<InplaceEditProps, {}> {
                 this.props.onMove('right');
             } else if (e.currentTarget.selectionStart <= 0 && e.keyCode === KeyConsts.ARROW_LEFT) {
                 this.props.onMove('left');
-            } else if (KeyConsts.ARROW_DOWN) {
+            } else if (e.keyCode === KeyConsts.ARROW_DOWN) {
                 this.props.onMove('down');
-            } else if (KeyConsts.ARROW_UP) {
+            } else if (e.keyCode === KeyConsts.ARROW_UP) {
                 this.props.onMove('up');
             }
         }

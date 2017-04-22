@@ -42,6 +42,30 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
         }
     }
 
+    handleFixedRowMove = (direction: 'left' | 'right' | 'down' | 'up', rowIndex: number, propName: string): void => {
+        // TODO Check last / first for existence
+        if (direction === 'right' && propName === this.state.fixedColumns!.last().propName) {
+            this.setState({
+                fixedFocusedCellPropName: undefined,
+                fixedFocusedCellRowIndex: undefined,
+                scrollableFocusedCellPropName: this.state.scrollableColumns!.first().propName,
+                scrollableFocusedCellRowIndex: rowIndex
+            } as GridState);
+        }
+    }
+
+    handleScrollableRowMove = (direction: 'left' | 'right' | 'down' | 'up', rowIndex: number, propName: string): void => {
+        // TODO Check last / first for existence
+        if (direction === 'left' && propName === this.state.scrollableColumns!.first().propName) {
+            this.setState({
+                fixedFocusedCellPropName: this.state.fixedColumns!.last().propName,
+                fixedFocusedCellRowIndex: rowIndex,
+                scrollableFocusedCellPropName: undefined,
+                scrollableFocusedCellRowIndex: undefined
+            } as GridState);
+        }
+    }
+
     handleVerticalScrollPosChanged = (scrollLeft: number, scrollTop: number): void  => {
         if (this.fixedColumnGroup) {
             this.fixedColumnGroup.setScrollTop(scrollTop);
@@ -113,6 +137,9 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
                         rowClass={this.props.fixedRowClass}
                         selectedRowIndexes={this.state.selectedRowIndexes}
                         onRowClick={this.handleRowClick}
+                        onRowMove={this.handleFixedRowMove}
+                        focusedCellPropName={this.state.fixedFocusedCellPropName}
+                        focusedCellRowIndex={this.state.fixedFocusedCellRowIndex}
                     />
                 </LayoutPanel>
                 <LayoutSplitter />
@@ -134,6 +161,9 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
                         rowClass={this.props.scrollableRowClass}
                         selectedRowIndexes={this.state.selectedRowIndexes}
                         onRowClick={this.handleRowClick}
+                        onRowMove={this.handleScrollableRowMove}
+                        focusedCellPropName={this.state.scrollableFocusedCellPropName}
+                        focusedCellRowIndex={this.state.scrollableFocusedCellRowIndex}
                     />
                 </LayoutPanel>
             </Layout>

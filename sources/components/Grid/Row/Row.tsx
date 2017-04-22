@@ -10,7 +10,17 @@ export class Row extends React.PureComponent<RowProps, RowState> {
 
     constructor(props?: RowProps) {
         super(props);
-        this.state = {};
+        this.state = {
+            focusedCellPropName: this.props.focusedCellPropName
+        };
+    }
+
+    componentWillReceiveProps(nextProps: RowProps): void {
+        if (this.props.focusedCellPropName !== nextProps.focusedCellPropName) {
+            this.setState({
+                focusedCellPropName: nextProps.focusedCellPropName
+            });
+        }
     }
 
     handleClick = (e: React.MouseEvent<HTMLDivElement>): void => {
@@ -19,22 +29,25 @@ export class Row extends React.PureComponent<RowProps, RowState> {
         }
     }
 
-    handleMove = (direction: string, rowIndex: number, propName: string): void => {
-        if (direction === 'right' || direction === 'left') {
-            let index = this.props.columnProps.findIndex((columnProps) =>
-                (columnProps && columnProps.propName) === propName
-            );
+    handleMove = (direction: 'left' | 'right' | 'down' | 'up', rowIndex: number, propName: string): void => {
+        let index = this.props.columnProps.findIndex((columnProps) =>
+            (columnProps && columnProps.propName) === propName
+        );
 
-            let focusedCellPropName = propName;
+        let nextCellPropName = propName;
+        if (direction === 'left' || direction === 'right') {
             if (index > 0 && direction === 'left') {
-                focusedCellPropName = this.props.columnProps.get(index - 1).propName;
+                nextCellPropName = this.props.columnProps.get(index - 1).propName;
             } else if (index < this.props.columnProps.size - 1 && direction === 'right') {
-                focusedCellPropName = this.props.columnProps.get(index + 1).propName;
+                nextCellPropName = this.props.columnProps.get(index + 1).propName;
             }
-
             this.setState({
-                focusedCellPropName
+                focusedCellPropName: nextCellPropName
             });
+        }
+
+        if (this.props.onMove) {
+            this.props.onMove(direction, this.props.rowIndex, propName);
         }
     }
 

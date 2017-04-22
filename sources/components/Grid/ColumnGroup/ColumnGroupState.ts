@@ -7,6 +7,8 @@ export interface RowState {
     // tslint:disable-next-line:no-any
     data: RowData<any>;
     selectedIndexes: number[];
+    focusedCellPropName?: string;
+    focusedCellRowIndex?: number;
 }
 
 export interface ColumnGroupState {

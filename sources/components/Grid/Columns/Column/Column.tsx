@@ -10,7 +10,7 @@ export class Column<V> extends React.PureComponent<ColumnProps<V>, {}> {
     // tslint:disable-next-line:no-any
     static defaultProps: Partial<ColumnProps<any>> = {
         readonly: false
-    }
+    };
 
     render(): null {
         warning(false, 'Component <Column /> should never render.');

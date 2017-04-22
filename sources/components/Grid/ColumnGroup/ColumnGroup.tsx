@@ -38,12 +38,29 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
             this.updateColumnState(nextProps, this.state.rowsThumbWidth || 0);
         }
 
-        if (nextProps.rowData !== this.props.rowData || nextProps.selectedRowIndexes !== this.props.selectedRowIndexes) {
+        if (nextProps.rowData !== this.props.rowData || nextProps.selectedRowIndexes !== this.props.selectedRowIndexes
+            || nextProps.focusedCellPropName !== this.props.focusedCellPropName
+            || nextProps.focusedCellRowIndex !== this.props.focusedCellRowIndex) {
+            let rowState = objectAssign({}, this.state.rowState);
+
+            if (nextProps.rowData !== this.props.rowData) {
+                rowState.data = nextProps.rowData;
+            }
+
+            if (nextProps.selectedRowIndexes !== this.props.selectedRowIndexes) {
+                rowState.selectedIndexes = nextProps.selectedRowIndexes || [];
+            }
+
+            if (nextProps.focusedCellPropName !== this.props.focusedCellPropName) {
+                rowState.focusedCellPropName = nextProps.focusedCellPropName;
+            }
+
+            if (nextProps.focusedCellRowIndex !== this.props.focusedCellRowIndex) {
+                rowState.focusedCellRowIndex = nextProps.focusedCellRowIndex;
+            }
+
             this.setState({
-                rowState: {
-                    data: nextProps.rowData,
-                    selectedIndexes: nextProps.selectedRowIndexes
-                }
+                rowState
             } as ColumnGroupState);
         }
     }
@@ -109,8 +126,36 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
                 showEdgeForTheLeftCell={this.props.showEdgeForTheLeftCell}
                 selected={!!(rowData.selectedIndexes && (rowData.selectedIndexes.indexOf(index) >= 0))}
                 onClick={this.props.onRowClick}
+                onMove={this.handleRowMove}
+                focusedCellPropName={rowData.focusedCellRowIndex === index && rowData.focusedCellPropName
+                    ? rowData.focusedCellPropName : undefined}
             />
         );
+    }
+
+    handleRowMove = (direction: 'left' | 'right' | 'down' | 'up', rowIndex: number, propName: string): void => {
+        if (direction === 'down' && rowIndex < this.props.rowData.length - 1) {
+            this.setState({
+                rowState: {
+                    data: this.state.rowState.data,
+                    focusedCellPropName: propName,
+                    focusedCellRowIndex: rowIndex + 1,
+                    selectedIndexes: this.state.rowState.selectedIndexes
+                }
+            } as ColumnGroupState);
+        } else if (direction === 'up' && rowIndex > 0) {
+            this.setState({
+                rowState: {
+                    data: this.state.rowState.data,
+                    focusedCellPropName: propName,
+                    focusedCellRowIndex: rowIndex - 1,
+                    selectedIndexes: this.state.rowState.selectedIndexes
+                }
+            } as ColumnGroupState);
+        }
+        if (this.props.onRowMove) {
+            this.props.onRowMove(direction, rowIndex, propName);
+        }
     }
 
     handleVerticalScrollVisibilityChanged = (visible: boolean, thumbWidth: number): void => {

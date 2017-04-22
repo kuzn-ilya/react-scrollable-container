@@ -16,6 +16,7 @@ export interface ColumnGroupProps {
 
     readonly onHorizontalScrollVisibilityChanged?: (visible: boolean, thumbHeight: number) => void;
     readonly onRowClick?: (rowIndex: number, e: MouseEvent<HTMLElement>) => void;
+    readonly onRowMove?: (direction: 'left' | 'right' | 'down' | 'up', rowIndex: number, propName: string) => void;
     readonly onScrollPosChanged?: (left: number, top: number) => void;
     readonly onResize?: () => void;
 
@@ -35,12 +36,16 @@ export interface ColumnGroupProps {
     readonly rowClass: ComponentClass<RowProps>;
 
     readonly selectedRowIndexes?: number[];
+    readonly focusedCellPropName?: string;
+    readonly focusedCellRowIndex?: number;
 }
 
 export const columnGroupPropTypes: ValidationMap<ColumnGroupProps> = {
     colsThumbHeight: PropTypes.number,
     columnProps: PropTypes.instanceOf(List).isRequired,
     customScrollBars: PropTypes.bool,
+    focusedCellPropName: PropTypes.string,
+    focusedCellRowIndex: PropTypes.number,
     headerHeight: PropTypes.number.isRequired,
 
     // TODO: Find more appropriate prop type
@@ -49,6 +54,7 @@ export const columnGroupPropTypes: ValidationMap<ColumnGroupProps> = {
     onHorizontalScrollVisibilityChanged: PropTypes.func,
     onResize: PropTypes.func,
     onRowClick: PropTypes.func,
+    onRowMove: PropTypes.func,
     onScrollPosChanged: PropTypes.func,
 
     overflowX: overflowPropType.isRequired,

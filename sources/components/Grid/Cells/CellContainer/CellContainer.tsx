@@ -8,21 +8,14 @@ import '../../../../styles/grid.css';
 export class CellContainer<V> extends React.PureComponent<CellContainerProps<V>, CellContainerState> {
     static propTypes = cellContainerPropTypes;
 
-    constructor(props: CellContainerProps<V>) {
-        super(props);
-        this.state = {
-            focused: !!this.props.focused
-        };
-    }
-
     componentDidMount(): void {
-        if (this.props.columnProps.readonly && this.state.focused) {
+        if (this.props.columnProps.readonly && this.props.focused) {
             this.ref.focus();
         }
     }
 
     componentDidUpdate(prevProps: CellContainerProps<V>, prevState: CellContainerState): void {
-        if (this.props.columnProps.readonly && this.state.focused) {
+        if (this.props.columnProps.readonly && this.props.focused) {
             if (this.ref) {
                 this.ref.focus();
             }
@@ -74,22 +67,12 @@ export class CellContainer<V> extends React.PureComponent<CellContainerProps<V>,
     }
 
     handleBlur = (e: React.FocusEvent<HTMLElement>): void => {
-        if (this.state.focused) {
-            this.setState({
-                focused: false
-            });
-        }
         if (this.props.onBlur) {
             this.props.onBlur(this.props.rowIndex, this.props.columnProps.propName);
         }
     }
 
     handleFocus = (e: React.FocusEvent<HTMLElement>): void => {
-        if (!this.state.focused) {
-            this.setState({
-                focused: true
-            });
-        }
         if (this.props.onFocus) {
             this.props.onFocus(this.props.rowIndex, this.props.columnProps.propName);
         }
@@ -108,7 +91,7 @@ export class CellContainer<V> extends React.PureComponent<CellContainerProps<V>,
         // tslint:disable-next-line:variable-name
         let Cell = this.props.columnProps.cellClass!;
 
-        let isEditing = this.state.focused && !this.props.columnProps.readonly;
+        let isEditing = this.props.focused && !this.props.columnProps.readonly;
         let innerComponent = isEditing
             ? 
             <div className={this.props.firstCell ? 'cell-wrapper-first' : 'cell-wrapper'}>

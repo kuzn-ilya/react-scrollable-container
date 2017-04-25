@@ -108,25 +108,29 @@ export class CellContainer<V> extends React.PureComponent<CellContainerProps<V>,
         // tslint:disable-next-line:variable-name
         let Cell = this.props.columnProps.cellClass!;
 
-        let innerComponent = this.state.focused && !this.props.columnProps.readonly
-            ? <InplaceEdit value={this.props.value}
-                onBlur={this.handleBlur}
-                onFocus={this.handleFocus}
-                onMove={this.handleInplaceEditMove}/>
-            : (
-                <div className={this.props.firstCell ? 'cell-wrapper-first' : 'cell-wrapper'}
-                    onKeyUp={this.handleKeyUp}
+        let isEditing = this.state.focused && !this.props.columnProps.readonly;
+        let innerComponent = isEditing
+            ? 
+            <div className={this.props.firstCell ? 'cell-wrapper-first' : 'cell-wrapper'}>
+                <InplaceEdit value={this.props.value}
                     onBlur={this.handleBlur}
                     onFocus={this.handleFocus}
-                    tabIndex={0}
-                    ref={(ref) => this.ref = ref}
-                >
-                    <Cell rowIndex={this.props.rowIndex}
-                        value={this.props.value}
-                        columnProps={this.props.columnProps}
-                    />
-                </div>
-            );
+                    onMove={this.handleInplaceEditMove}
+                />
+            </div>
+            :
+            <div className={this.props.firstCell ? 'cell-wrapper-first' : 'cell-wrapper'}
+                onKeyUp={this.handleKeyUp}
+                onBlur={this.handleBlur}
+                onFocus={this.handleFocus}
+                tabIndex={0}
+                ref={(ref) => this.ref = ref}
+            >
+                <Cell rowIndex={this.props.rowIndex}
+                    value={this.props.value}
+                    columnProps={this.props.columnProps}
+                />
+            </div>;
         return (
             <div style={style}
                 className="cell-container"

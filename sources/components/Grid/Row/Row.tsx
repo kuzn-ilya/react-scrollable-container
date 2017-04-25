@@ -31,14 +31,12 @@ export class Row extends React.PureComponent<RowProps, RowState> {
     }
 
     handleCellContainerFocus = (rowIndex: number, propName: string): void => {
-        console.log('focus', rowIndex, propName);
         this.setState({
             focusedCellPropName: propName
         });
     }
 
     handleCellContainerBlur = (rowIndex: number, propName: string): void => {
-        console.log('blur', rowIndex, propName);
         this.setState({
             focusedCellPropName: undefined
         });

@@ -61,7 +61,8 @@
     white-space: nowrap;
 }
 
-.text-cell {
+.text-cell, .date-cell {
+    pointer-events: none;
     overflow: hidden;
     text-overflow: ellipsis;
     padding-left: $(GRID_CELL_HORZ_PADDING)px;

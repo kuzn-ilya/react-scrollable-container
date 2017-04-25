@@ -10,7 +10,9 @@ export class TextCell extends React.PureComponent<CellProps<TextColumnProps, str
     render(): JSX.Element {
         return (
             <div className="text-cell"
-                style={{textAlign: this.props.columnProps.align}}
+                style={{
+                    textAlign: this.props.columnProps.align
+                }}
             >
                 {this.props.value ? this.props.value.toString() : '' }
             </div>

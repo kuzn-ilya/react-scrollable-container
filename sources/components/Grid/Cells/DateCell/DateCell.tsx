@@ -9,7 +9,11 @@ export class DateCell extends React.PureComponent<CellProps<DateColumnProps, Dat
 
     render(): JSX.Element {
         return (
-            <div style={{textAlign: this.props.columnProps.align}}>
+            <div className="date-cell"
+                style={{
+                    textAlign: this.props.columnProps.align
+                }}
+            >
                 {this.props.value ? this.props.value.toString() : '' }
             </div>
         );

@@ -67,12 +67,14 @@ export class CellContainer<V> extends React.PureComponent<CellContainerProps<V>,
     }
 
     handleBlur = (e: React.FocusEvent<HTMLElement>): void => {
+        console.log('blur', e.target);
         if (this.props.onBlur) {
             this.props.onBlur(this.props.rowIndex, this.props.columnProps.propName);
         }
     }
 
     handleFocus = (e: React.FocusEvent<HTMLElement>): void => {
+        console.log('focus', e.target);
         if (this.props.onFocus) {
             this.props.onFocus(this.props.rowIndex, this.props.columnProps.propName);
         }

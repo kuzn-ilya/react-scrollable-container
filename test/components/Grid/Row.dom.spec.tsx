@@ -3,8 +3,8 @@ import * as ReactDOM from 'react-dom';
 import { List } from 'immutable';
 import * as chai from 'chai';
 import * as chaiSpies from 'chai-spies';
-import { simulateKeyDown, simulateKeyUp, simulateKeyPress } from './../../TestUtils';
-import { ARROW_RIGHT } from '../../../sources/utils/KeyConsts';
+import { simulateKeyDown, simulateKeyUp } from './../../TestUtils';
+import { KeyConsts } from '../../../sources/utils';
 
 import { Row, TextColumn } from '../../../sources';
 import { TextColumnProps } from '../../../sources/components/Grid/Columns/TextColumn/TextColumnProps';
@@ -137,9 +137,8 @@ describe('DOM: Row', () => {
         expect(firstCell.tagName).equals('DIV');
         expect(firstCell.className).equals('cell-wrapper');
 
-        simulateKeyDown(firstCell, ARROW_RIGHT);
-        simulateKeyUp(firstCell, ARROW_RIGHT);
-        simulateKeyPress(firstCell, ARROW_RIGHT);
+        simulateKeyDown(firstCell, KeyConsts.ARROW_RIGHT);
+        simulateKeyUp(firstCell, KeyConsts.ARROW_RIGHT);
 
         // expect(handleMoveSpy).called.once.and.called.with('right', 0, 'first');
 

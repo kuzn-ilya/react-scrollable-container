@@ -11,3 +11,4 @@ export * from './listenToResize';
 
 export * from './TimelineUtils';
 export * from './DateTimeUtils';
+export * from './KeyConsts';

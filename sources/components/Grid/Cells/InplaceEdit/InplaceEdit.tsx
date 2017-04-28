@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as KeyConsts from '../../../../utils/KeyConsts';
+import { KeyConsts } from '../../../../utils';
 import { InplaceEditProps, inplaceEditPropTypes } from './InplaceEditProps';
 
 import '../../../../styles/grid.css';
@@ -22,13 +22,13 @@ export class InplaceEdit extends React.PureComponent<InplaceEditProps, {}> {
     }
     handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>): void => {
         if (this.props.onMove) {
-            if (e.currentTarget.selectionEnd >= e.currentTarget.value.length && e.key === KeyConsts.ARROW_RIGHT) {
+            if (e.currentTarget.selectionEnd >= e.currentTarget.value.length && e.keyCode === KeyConsts.ARROW_RIGHT) {
                 this.props.onMove('right');
-            } else if (e.currentTarget.selectionStart <= 0 && e.key === KeyConsts.ARROW_LEFT) {
+            } else if (e.currentTarget.selectionStart <= 0 && e.keyCode === KeyConsts.ARROW_LEFT) {
                 this.props.onMove('left');
-            } else if (e.key === KeyConsts.ARROW_DOWN) {
+            } else if (e.keyCode === KeyConsts.ARROW_DOWN) {
                 this.props.onMove('down');
-            } else if (e.key === KeyConsts.ARROW_UP) {
+            } else if (e.keyCode === KeyConsts.ARROW_UP) {
                 this.props.onMove('up');
             }
         }

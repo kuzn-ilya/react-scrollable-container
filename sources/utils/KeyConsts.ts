@@ -1,4 +1,6 @@
-export const ARROW_LEFT = 'ArrowLeft';
-export const ARROW_UP = 'ArrowUp';
-export const ARROW_RIGHT = 'ArrowRight';
-export const ARROW_DOWN = 'ArrowDown';
+export enum KeyConsts {
+    ARROW_LEFT = 37,
+    ARROW_UP = 38,
+    ARROW_RIGHT = 39,
+    ARROW_DOWN = 40
+};

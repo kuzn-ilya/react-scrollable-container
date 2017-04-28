@@ -10,6 +10,7 @@ export class CellContainer<V> extends React.PureComponent<CellContainerProps<V>,
 
     componentDidMount(): void {
         if (this.props.columnProps.readonly && this.props.focused) {
+            console.log('componentDidMount: focus');
             this.ref.focus();
         }
     }
@@ -17,6 +18,7 @@ export class CellContainer<V> extends React.PureComponent<CellContainerProps<V>,
     componentDidUpdate(prevProps: CellContainerProps<V>, prevState: CellContainerState): void {
         if (this.props.columnProps.readonly && this.props.focused) {
             if (this.ref) {
+                console.log('componentDidUpdate: focus');
                 this.ref.focus();
             }
         }
@@ -71,6 +73,7 @@ export class CellContainer<V> extends React.PureComponent<CellContainerProps<V>,
         if (this.props.onBlur) {
             this.props.onBlur(this.props.rowIndex, this.props.columnProps.propName);
         }
+
     }
 
     handleFocus = (e: React.FocusEvent<HTMLElement>): void => {
@@ -94,8 +97,11 @@ export class CellContainer<V> extends React.PureComponent<CellContainerProps<V>,
         let Cell = this.props.columnProps.cellClass!;
 
         let isEditing = this.props.focused && !this.props.columnProps.readonly;
+        if (isEditing) {
+            console.log('render');
+        }
         let innerComponent = isEditing
-            ? 
+            ?
             <div className={this.props.firstCell ? 'cell-wrapper-first' : 'cell-wrapper'}>
                 <InplaceEdit value={this.props.value}
                     onBlur={this.handleBlur}

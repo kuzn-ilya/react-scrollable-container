@@ -1,4 +1,5 @@
-import { PropTypes, MouseEvent } from 'react';
+import * as PropTypes from 'prop-types';
+import { MouseEvent } from 'react';
 import { ValidationMap } from '../../../react';
 import { ColumnProps } from '../Columns/Column/ColumnProps';
 import { List } from 'immutable';

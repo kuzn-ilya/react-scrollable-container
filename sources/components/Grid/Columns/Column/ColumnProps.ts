@@ -1,4 +1,5 @@
-import { PropTypes, ComponentClass } from 'react';
+import * as PropTypes from 'prop-types';
+import { ComponentClass } from 'react';
 import { ValidationMap } from '../../../../react';
 import { CellProps } from '../../Cells/Cell/CellProps';
 import { HeaderCellProps } from '../../Cells/HeaderCell/HeaderCellProps';

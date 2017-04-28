@@ -1,4 +1,4 @@
-import { PropTypes } from 'react';
+import * as PropTypes from 'prop-types';
 import { ValidationMap } from '../../../react';
 import { Size, sizePropType } from '../../../utils';
 

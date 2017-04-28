@@ -1,4 +1,5 @@
-import { PropTypes, ComponentClass, MouseEvent } from 'react';
+import * as PropTypes from 'prop-types';
+import { ComponentClass, MouseEvent } from 'react';
 import { ValidationMap } from '../../react';
 import { RowData } from './RowData';
 import { RowProps } from './Row/RowProps';

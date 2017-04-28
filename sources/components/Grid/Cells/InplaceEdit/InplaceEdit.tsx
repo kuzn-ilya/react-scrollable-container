@@ -11,18 +11,24 @@ export class InplaceEdit extends React.PureComponent<InplaceEditProps, {}> {
 
     componentDidMount(): void {
         if (this.ref) {
+            console.log('InplaceEdit.componentDidMount: focus');
             this.ref.focus();
         }
     }
 
     componentDidUpdate(prevProps: InplaceEditProps, prevState: {}): void {
         if (this.ref) {
+            console.log('InplaceEdit.componentDidUpdate: focus');
             this.ref.focus();
         }
+    }
+    componentWillUnmount(): void {
+        console.log('InplaceEdit.componentWillUnmount');
     }
 
     handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>): void => {
         if (this.props.onMove) {
+            console.log('handleKeyDown');
             if (e.currentTarget.selectionEnd >= e.currentTarget.value.length && e.key === KeyConsts.ARROW_RIGHT) {
                 this.props.onMove('right');
             } else if (e.currentTarget.selectionStart <= 0 && e.key === KeyConsts.ARROW_LEFT) {

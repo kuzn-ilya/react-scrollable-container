@@ -31,8 +31,9 @@
     "fbjs": "^0.8.11",
     "immutable": "^3.8.1",
     "object-assign": "^4.1.1",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "prop-types": "^15.5.8",
+    "react": "^15.5.0",
+    "react-dom": "^15.5.0"
   },
   "devDependencies": {
     "@types/chai": "^3.4.34",
@@ -40,6 +41,7 @@
     "@types/mocha": "^2.2.40",
     "@types/node": "^6.0.68",
     "@types/object-assign": "^4.0.30",
+    "@types/prop-types": "^15.5.1",
     "@types/react": "^0.14.57",
     "@types/react-addons-perf": "^0.14.18",
     "@types/react-addons-test-utils": "^0.14.17",
@@ -83,7 +85,7 @@
     "source-map-loader": "^0.1.6",
     "style-loader": "^0.13.1",
     "tslint": "^3.15.1",
-    "typescript": "^2.2.2",
+    "typescript": "^2.3.1",
     "ua-parser-js": "^0.7.12",
     "webpack": "^1.14.0",
     "webpack-dev-server": "^1.16.3",

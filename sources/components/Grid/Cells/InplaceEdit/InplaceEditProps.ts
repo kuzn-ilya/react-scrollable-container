@@ -1,4 +1,5 @@
-import { PropTypes, FocusEvent } from 'react';
+import * as PropTypes from 'prop-types';
+import { FocusEvent } from 'react';
 import { ValidationMap } from '../../../../react';
 
 export interface InplaceEditProps {

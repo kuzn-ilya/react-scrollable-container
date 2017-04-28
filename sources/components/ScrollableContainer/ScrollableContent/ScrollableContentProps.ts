@@ -1,4 +1,5 @@
-import { PropTypes, CSSProperties } from 'react';
+import * as PropTypes from 'prop-types';
+import { CSSProperties } from 'react';
 import { Size, sizePropType } from '../../../utils';
 import { ValidationMap } from '../../../react';
 

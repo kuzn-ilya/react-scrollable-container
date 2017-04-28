@@ -1,4 +1,4 @@
-import { PropTypes } from 'react';
+import * as PropTypes from 'prop-types';
 import * as sprintf from 'fbjs/lib/sprintf';
 
 export type Overflow = 'auto' | 'hidden' | 'scroll' | 'visible';

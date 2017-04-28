@@ -44,9 +44,6 @@ describe('DOM: Row', () => {
     it('should be able to focus readonly TextCell', () => {
         let columnProps = (<TextColumn readonly propName="first" width={30} />).props;
 
-        let handleFocus = (rowIndex: number, propName: string): void => void 0;
-        let handleFocusSpy = chai.spy(handleFocus);
-
         ReactDOM.render(
                 <CellContainer
                     columnProps={columnProps}
@@ -54,7 +51,6 @@ describe('DOM: Row', () => {
                     width={50}
                     rowIndex={0}
                     focused
-                    onFocus={handleFocusSpy}
                 >
                 </CellContainer>,
             div);
@@ -62,14 +58,10 @@ describe('DOM: Row', () => {
         expect(document.activeElement).to.exist;
         expect(document.activeElement.tagName).equals('DIV');
         expect(document.activeElement.className).equals('cell-wrapper');
-        expect(handleFocusSpy).to.have.been.called.with(0, 'first').and.to.have.been.called.once;
     });
 
     it('should be able to focus editable TextCell', () => {
         let columnProps = (<TextColumn propName="first" width={30} />).props;
-
-        let handleFocus = (rowIndex: number, propName: string): void => void 0;
-        let handleFocusSpy = chai.spy(handleFocus);
 
         ReactDOM.render(
                 <CellContainer
@@ -78,7 +70,6 @@ describe('DOM: Row', () => {
                     width={50}
                     rowIndex={0}
                     focused
-                    onFocus={handleFocusSpy}
                 >
                 </CellContainer>,
             div);
@@ -86,6 +77,5 @@ describe('DOM: Row', () => {
         expect(document.activeElement).to.exist;
         expect(document.activeElement.tagName).equals('INPUT');
         expect(document.activeElement.className).equals('inplace-edit');
-        expect(handleFocusSpy).to.have.been.called.with(0, 'first').and.to.have.been.called.once;
     });
 });

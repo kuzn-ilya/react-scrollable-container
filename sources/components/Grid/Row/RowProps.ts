@@ -15,7 +15,7 @@ export interface RowProps {
     height: number;
     selected: boolean;
     showEdgeForTheLeftCell?: boolean;
-    onClick?: (rowIndex: number, e?: MouseEvent<HTMLElement>) => void;
+    onClick?: (rowIndex: number, propName: string, e?: MouseEvent<HTMLElement>) => void;
     onMove?: (direction: 'left' | 'right' | 'down' | 'up', rowIndex: number, propName: string) => void;
 }
 

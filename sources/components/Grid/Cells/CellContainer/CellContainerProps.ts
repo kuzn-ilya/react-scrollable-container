@@ -1,4 +1,5 @@
 import * as PropTypes from 'prop-types';
+import { MouseEvent } from 'react';
 import { ValidationMap } from '../../../../react';
 import { ColumnProps } from '../../Columns/Column/ColumnProps';
 
@@ -10,6 +11,7 @@ export interface CellContainerProps<V> {
     columnProps: ColumnProps<V>;
     value?: V;
     onBlur?: (rowIndex: number, propName: string) => void;
+    onClick?: (rowIndex: number, propName: string, e?: MouseEvent<HTMLElement>) => void;
     onFocus?: (rowIndex: number, propName: string) => void;
     onMove?: (direction: 'left' | 'right' | 'down' | 'up', rowIndex: number, propName: string) => void;
     focused?: boolean;
@@ -22,6 +24,7 @@ export const cellContainerPropTypes: ValidationMap<CellContainerProps<any>> = {
     focused: PropTypes.bool,
     height: PropTypes.number.isRequired,
     onBlur: PropTypes.func,
+    onClick: PropTypes.func,
     onFocus: PropTypes.func,
     onMove: PropTypes.func,
     rowIndex: PropTypes.number.isRequired,

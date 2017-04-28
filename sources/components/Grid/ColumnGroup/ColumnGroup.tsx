@@ -125,12 +125,26 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
                 height={this.props.rowHeight}
                 showEdgeForTheLeftCell={this.props.showEdgeForTheLeftCell}
                 selected={!!(rowData.selectedIndexes && (rowData.selectedIndexes.indexOf(index) >= 0))}
-                onClick={this.props.onRowClick}
+                onClick={this.handleRowClick}
                 onMove={this.handleRowMove}
                 focusedCellPropName={rowData.focusedCellRowIndex === index && rowData.focusedCellPropName
                     ? rowData.focusedCellPropName : undefined}
             />
         );
+    }
+    handleRowClick = (rowIndex: number, propName: string, e: React.MouseEvent<HTMLElement>) => {
+        if (this.props.onRowClick) {
+            this.props.onRowClick(rowIndex, propName, e);
+        }
+
+        this.setState({
+            rowState: {
+                data: this.state.rowState.data,
+                focusedCellPropName: propName,
+                focusedCellRowIndex: rowIndex,
+                selectedIndexes: this.state.rowState.selectedIndexes
+            }
+        } as ColumnGroupState);
     }
 
     handleRowMove = (direction: 'left' | 'right' | 'down' | 'up', rowIndex: number, propName: string): void => {

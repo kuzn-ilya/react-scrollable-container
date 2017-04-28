@@ -2,6 +2,7 @@ import * as React from 'react';
 import { CellContainerProps, cellContainerPropTypes } from './CellContainerProps';
 import { CellContainerState } from './CellContainerState';
 import * as KeyConsts from '../../../../utils/KeyConsts';
+import { classNames } from '../../../../utils';
 
 import '../../../../styles/grid.css';
 
@@ -10,7 +11,6 @@ export class CellContainer<V> extends React.PureComponent<CellContainerProps<V>,
 
     componentDidMount(): void {
         if (this.props.columnProps.readonly && this.props.focused) {
-            console.log('componentDidMount: focus');
             this.ref.focus();
         }
     }
@@ -18,27 +18,26 @@ export class CellContainer<V> extends React.PureComponent<CellContainerProps<V>,
     componentDidUpdate(prevProps: CellContainerProps<V>, prevState: CellContainerState): void {
         if (this.props.columnProps.readonly && this.props.focused) {
             if (this.ref) {
-                console.log('componentDidUpdate: focus');
                 this.ref.focus();
             }
         }
     }
 
-    componentWillReceiveProps(nextProps: CellContainerProps<V>): void {
-        if (this.props.focused !== nextProps.focused) {
-            this.setState({
-                focused: !!nextProps.focused
-            });
-        }
-    }
-
     handleClick = (e: React.MouseEvent<HTMLDivElement>): void => {
+        if (this.ref) {
+            this.ref.focus();
+        }
+
+        if (this.props.onClick) {
+            this.props.onClick(this.props.rowIndex, this.props.columnProps.propName, e);
+        }
+
         if (this.props.columnProps.onCellClick) {
             this.props.columnProps.onCellClick(this.props.rowIndex, this.props.columnProps.propName);
         }
     }
 
-    handleKeyUp = (e: React.KeyboardEvent<HTMLDivElement>): void => {
+    handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>): void => {
         let direction: undefined | 'down' | 'left' | 'right' | 'up' = undefined;
         switch (e.key) {
             case KeyConsts.ARROW_DOWN:
@@ -69,7 +68,6 @@ export class CellContainer<V> extends React.PureComponent<CellContainerProps<V>,
     }
 
     handleBlur = (e: React.FocusEvent<HTMLElement>): void => {
-        console.log('blur', e.target);
         if (this.props.onBlur) {
             this.props.onBlur(this.props.rowIndex, this.props.columnProps.propName);
         }
@@ -77,7 +75,6 @@ export class CellContainer<V> extends React.PureComponent<CellContainerProps<V>,
     }
 
     handleFocus = (e: React.FocusEvent<HTMLElement>): void => {
-        console.log('focus', e.target);
         if (this.props.onFocus) {
             this.props.onFocus(this.props.rowIndex, this.props.columnProps.propName);
         }
@@ -97,9 +94,6 @@ export class CellContainer<V> extends React.PureComponent<CellContainerProps<V>,
         let Cell = this.props.columnProps.cellClass!;
 
         let isEditing = this.props.focused && !this.props.columnProps.readonly;
-        if (isEditing) {
-            console.log('render');
-        }
         let innerComponent = isEditing
             ?
             <div className={this.props.firstCell ? 'cell-wrapper-first' : 'cell-wrapper'}>
@@ -110,8 +104,12 @@ export class CellContainer<V> extends React.PureComponent<CellContainerProps<V>,
                 />
             </div>
             :
-            <div className={this.props.firstCell ? 'cell-wrapper-first' : 'cell-wrapper'}
-                onKeyUp={this.handleKeyUp}
+            <div
+                className={classNames({
+                    'cell-wrapper-first': !!this.props.firstCell,
+                    'cell-wrapper': !this.props.firstCell
+                })}
+                onKeyDown={this.handleKeyDown}
                 onBlur={this.handleBlur}
                 onFocus={this.handleFocus}
                 tabIndex={0}

@@ -20,6 +20,10 @@
     display: inline-block;
 }
 
+.cell-wrapper:focus, .cell-wrapper-first:focus {
+    outline: #D1E7F6 auto 5px
+}
+
 .header-cell-container {
     display: inline-block;
     overflow: hidden;

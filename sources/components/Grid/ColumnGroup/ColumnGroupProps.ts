@@ -16,7 +16,7 @@ export interface ColumnGroupProps {
     readonly headerHeight: number;
 
     readonly onHorizontalScrollVisibilityChanged?: (visible: boolean, thumbHeight: number) => void;
-    readonly onRowClick?: (rowIndex: number, e: MouseEvent<HTMLElement>) => void;
+    readonly onRowClick?: (rowIndex: number, propName: string, e: MouseEvent<HTMLElement>) => void;
     readonly onRowMove?: (direction: 'left' | 'right' | 'down' | 'up', rowIndex: number, propName: string) => void;
     readonly onScrollPosChanged?: (left: number, top: number) => void;
     readonly onResize?: () => void;

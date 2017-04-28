@@ -8,52 +8,22 @@ import { ColumnProps } from '../Columns/Column/ColumnProps';
 export class Row extends React.PureComponent<RowProps, RowState> {
     static propTypes = rowPropTypes;
 
-    constructor(props?: RowProps) {
-        super(props);
-        this.state = {
-            focusedCellPropName: this.props.focusedCellPropName
-        };
-    }
-
-    componentWillReceiveProps(nextProps: RowProps): void {
-        if (this.props.focusedCellPropName !== nextProps.focusedCellPropName) {
-            console.log('componentWillReceiveProps', this.props.focusedCellPropName, nextProps.focusedCellPropName);
-            this.setState({
-                focusedCellPropName: nextProps.focusedCellPropName
-            });
-        }
-    }
-
-    handleClick = (e: React.MouseEvent<HTMLDivElement>): void => {
-        if (this.props.onClick) {
-            this.props.onClick(this.props.rowIndex, e);
-        }
-    }
-
-    handleCellContainerFocus = (rowIndex: number, propName: string): void => {
-        console.log('handleCellContainerFocus', rowIndex, propName);
-        this.setState({
-            focusedCellPropName: propName
-        });
-    }
-
-    handleCellContainerBlur = (rowIndex: number, propName: string): void => {
-        console.log('handleCellContainerBlur', rowIndex, propName);
-        this.setState({
-            focusedCellPropName: undefined
-        });
-    }
-
     handleMove = (direction: 'left' | 'right' | 'down' | 'up', rowIndex: number, propName: string): void => {
         if (this.props.onMove) {
             this.props.onMove(direction, this.props.rowIndex, propName);
         }
     }
 
+    handleClick = (rowIndex: number, propName: string): void => {
+        if (this.props.onClick) {
+            this.props.onClick(rowIndex, propName);
+        }
+    }
+
     render(): JSX.Element {
         return (
             <div className={classNames({'selected-row': this.props.selected})}
-                key={this.props.rowIndex} style={{height: this.props.height }} onClick={this.handleClick}>
+                key={this.props.rowIndex} style={{height: this.props.height }}>
                 {this.renderCells()}
             </div>
         );
@@ -72,10 +42,9 @@ export class Row extends React.PureComponent<RowProps, RowState> {
                     columnProps={value}
                     rowIndex={this.props.rowIndex}
                     value={this.props.data[value.propName]}
-                    onFocus={this.handleCellContainerFocus}
-                    onBlur={this.handleCellContainerBlur}
                     onMove={this.handleMove}
-                    focused={this.state.focusedCellPropName === value.propName}
+                    onClick={this.handleClick}
+                    focused={this.props.focusedCellPropName === value.propName}
                 />
             );
         });

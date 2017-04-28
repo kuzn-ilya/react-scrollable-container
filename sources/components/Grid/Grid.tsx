@@ -78,7 +78,7 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
         }
     }
 
-    handleRowClick = (rowIndex: number, e: React.MouseEvent<HTMLElement>): void  => {
+    handleRowClick = (rowIndex: number, propName: string, e: React.MouseEvent<HTMLElement>): void  => {
         if (this.props.onRowClick) {
             this.props.onRowClick(rowIndex);
         }

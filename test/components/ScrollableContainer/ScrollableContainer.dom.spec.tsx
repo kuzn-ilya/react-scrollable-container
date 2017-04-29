@@ -70,7 +70,7 @@ describe('DOM: ScrollableContainer', () => {
     });
 
     it('should fire onScrollPosChanged event when it is scrolled', () => {
-        let handleScrollPosChanged = chai.spy((left: number, top: number) => { return; });
+        let handleScrollPosChanged = chai.spy((left: number, top: number) => void 0);
 
         let container = ReactDOM.render(
             <ScrollableContainer id="container"
@@ -253,11 +253,7 @@ describe('DOM: ScrollableContainer', () => {
     });
 
     it('should fire onVerticalScrollBarVisibilityChanged if ContentHeight is greater than height', () => {
-        let handleVerticalScrollVisibilityChanged = chai.spy((visible: boolean, thumbWidth: number) => {
-            // TODO: make this test working
-            // expect(visible).to.be.equal(true);
-            // expect(thumbWidth).to.be.greaterThan(0);
-        });
+        let handleVerticalScrollVisibilityChanged = chai.spy((visible: boolean, thumbWidth: number) => void 0);
 
         let container = ReactDOM.render(
             <ScrollableContainer id="container"
@@ -277,15 +273,11 @@ describe('DOM: ScrollableContainer', () => {
         let scrollable = element!.querySelector('.scrollable-container-scrollable');
         expect(scrollable).to.exist;
 
-        expect(handleVerticalScrollVisibilityChanged).to.have.been.called.once;
+        expect(handleVerticalScrollVisibilityChanged).to.have.been.called.once.and.called.with.exactly(true, 17);
     });
 
     it('should fire onHorizontalScrollBarVisibilityChanged if ContentWidth is greater than width', () => {
-        let handleHorizontalScrollVisibilityChanged = chai.spy((visible: boolean, thumbWidth: number) => {
-            // TODO: make this test working
-            // expect(visible).equal(true);
-            // expect(thumbWidth).to.be.greaterThan(0);
-        });
+        let handleHorizontalScrollVisibilityChanged = chai.spy((visible: boolean, thumbWidth: number) => void 0);
 
         let container = ReactDOM.render(
             <ScrollableContainer id="container"
@@ -305,13 +297,11 @@ describe('DOM: ScrollableContainer', () => {
         let scrollable = element!.querySelector('.scrollable-container-scrollable');
         expect(scrollable).to.exist;
 
-        expect(handleHorizontalScrollVisibilityChanged).to.have.been.called.once;
+        expect(handleHorizontalScrollVisibilityChanged).to.have.been.called.once.and.called.with.exactly(true, 17);
     });
 
     it('should fire onHorizontalScrollBarVisibilityChanged if ContentWidth becomes less than width', () => {
-        let handleHorizontalScrollVisibilityChanged = chai.spy((visible: boolean, thumbWidth: number) => {
-            return;
-        });
+        let handleHorizontalScrollVisibilityChanged = chai.spy((visible: boolean, thumbWidth: number) => void 0);
 
         let container = ReactDOM.render(
             <ScrollableContainer id="container"
@@ -340,9 +330,7 @@ describe('DOM: ScrollableContainer', () => {
     });
 
     it('should fire onVerticalScrollBarVisibilityChanged if ContentHeight becomes less than height', () => {
-        let handleVerticalScrollVisibilityChanged = chai.spy((visible: boolean, thumbHeight: number) => {
-            return;
-        });
+        let handleVerticalScrollVisibilityChanged = chai.spy((visible: boolean, thumbHeight: number) => 0);
 
         let container = ReactDOM.render(
             <ScrollableContainer id="container"
@@ -369,5 +357,4 @@ describe('DOM: ScrollableContainer', () => {
         expect(handleVerticalScrollVisibilityChanged).to.have.been.called.with(true);
         expect(handleVerticalScrollVisibilityChanged).to.have.been.called.with(false, 0);
     });
-
 });

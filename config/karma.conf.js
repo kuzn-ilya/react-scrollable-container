@@ -39,11 +39,29 @@ module.exports = function (config) {
         ]
     },
 
+    customLaunchers: {
+      PhantomJSCustom: {
+          base: 'PhantomJS',
+          options: {
+              onCallback: function(data) {
+                  if (data.type === 'sendEvent') {
+                      page.sendEvent(data.event, data.key);
+                  }
+              }
+          }
+      },
+      ChromeDebug: {
+          base: 'Chrome',
+          flags: ['--remote-debugging-port=9222'],
+          debug: true
+      }
+    },
+
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['PhantomJS'],
+    browsers: ['PhantomJSCustom'],
     singleRun: true,
     concurrency: Infinity
   })

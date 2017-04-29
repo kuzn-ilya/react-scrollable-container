@@ -108,7 +108,7 @@ describe('DOM: Row', () => {
         expect(document.activeElement.className).equals('cell-wrapper');
     });
 
-    it('should be able to change focused TextCell by keyboard "arrow right"', () => {
+    it('should fire onMove event by keyboard "arrow right"', () => {
         // TODO: Not Implemented yet
         let columnProps = List<TextColumnProps>([
             <TextColumn readonly propName="first" width={30} />,
@@ -140,12 +140,6 @@ describe('DOM: Row', () => {
         simulateKeyDown(firstCell, KeyConsts.ARROW_RIGHT);
         simulateKeyUp(firstCell, KeyConsts.ARROW_RIGHT);
 
-        // expect(handleMoveSpy).called.once.and.called.with('right', 0, 'first');
-
-        let secondCell = document.activeElement;
-        expect(secondCell.tagName).equals('DIV');
-        expect(secondCell.className).equals('cell-wrapper');
-
-        // expect(secondCell !== firstCell).to.be.true;
+        expect(handleMoveSpy).to.have.been.called.once.and.called.with.exactly('right', 0, 'first');
     });
 });

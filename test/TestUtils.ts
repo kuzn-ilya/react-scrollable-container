@@ -54,18 +54,46 @@ const keyCodeToKey: { [keyCode: number]: string} = {
     [KeyConsts.ARROW_RIGHT]: 'ArrowRight',
 }
 
+// See https://github.com/ariya/phantomjs/commit/cab2635e66d74b7e665c44400b8b20a8f225153a for details
+const keyCodeToPhantomJSKey: { [keyCode: number]: number} = {
+    [KeyConsts.ARROW_DOWN]: 16777237,
+    [KeyConsts.ARROW_UP]: 16777235,
+    [KeyConsts.ARROW_LEFT]: 16777234,
+    [KeyConsts.ARROW_RIGHT]: 16777236
+}
+
 function simulateKeyEvent(element: Element, type: 'keyup' | 'keydown'| 'keypress', keyCode: KeyConsts): void {
-    let key = keyCodeToKey[keyCode];
-    let e = document.createEvent('KeyboardEvent');
-    if ('initKeyEvent' in e) {
-        // FF
+    // tslint:disable-next-line:no-any
+    if ((window.top as any).callPhantom) {
+        // PhantomJS
+        let key = keyCodeToPhantomJSKey[keyCode];
         // tslint:disable-next-line:no-any
-        (e as any).initKeyEvent(type, true, true, window, false, false, false, false, keyCode, 0);
+        (window.top as any).callPhantom({
+            event: type,
+            key,
+            type: 'sendEvent'
+        });
     } else {
-        // Chrome, PhantomJS, IE ...
-        e.initKeyboardEvent(type, true, true, window, key, 0, '', false, '');
+        let key = keyCodeToKey[keyCode];
+        let e = document.createEvent('KeyboardEvent');
+        if ('initKeyEvent' in e) {
+            // FF
+            // tslint:disable-next-line:no-any
+            (e as any).initKeyEvent(type, true, true, window, false, false, false, false, keyCode, 0);
+        } else {
+            // Chrome, IE ...
+            e.initKeyboardEvent(type, true, true, window, key, 0, '', false, '');
+            Object.defineProperties(e, {
+                keyCode: {
+                    get: () => keyCode
+                },
+                which: {
+                    get: () => keyCode
+                }
+            });
+        }
+        element.dispatchEvent(e);
     }
-    element.dispatchEvent(e);
 }
 
 export function simulateKeyDown(element: Element, keyCode: KeyConsts) {

@@ -4,7 +4,6 @@
     position: relative;
     font: $GRID_CELL_FONT;
     line-height: 18px;
-    height: 18px;
     vertical-align: top;
 }
 
@@ -34,7 +33,6 @@
     position: relative;
     font: $GRID_HEADER_CELL_FONT;
     line-height: 18px;
-    height: 18px;
     vertical-align: top;
 }
 
@@ -90,4 +88,13 @@
     border: none;
     padding-left: $(GRID_CELL_HORZ_PADDING)px;
     padding-right: $(GRID_CELL_HORZ_PADDING)px;
+    outline: 0;
+    line-height: 18px;
+    vertical-align: top;
+    padding-top: 0; /* Override default Chrome styles */
+    padding-bottom: 0; /* Override default Chrome styles */
+}
+
+.inplace-edit::-ms-clear {
+    display: none;
 }

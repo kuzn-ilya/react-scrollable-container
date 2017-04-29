@@ -1,6 +1,7 @@
 import * as PropTypes from 'prop-types';
 import { FocusEvent } from 'react';
 import { ValidationMap } from '../../../../react';
+import { Direction } from '../../../../utils';
 
 export interface InplaceEditProps {
     // TODO: get rid of any type
@@ -8,7 +9,7 @@ export interface InplaceEditProps {
     value?: any;
     onBlur?: (e: FocusEvent<HTMLInputElement>) => void;
     onFocus?: (e: FocusEvent<HTMLInputElement>) => void;
-    onMove?: (direction: 'down' | 'left' | 'right' | 'up') => void;
+    onMove?: (direction: Direction) => void;
 }
 
 export const inplaceEditPropTypes: ValidationMap<InplaceEditProps> = {

@@ -2,6 +2,7 @@ import * as PropTypes from 'prop-types';
 import { MouseEvent } from 'react';
 import { ValidationMap } from '../../../../react';
 import { ColumnProps } from '../../Columns/Column/ColumnProps';
+import { Direction } from '../../../../utils';
 
 export interface CellContainerProps<V> {
     firstCell?: boolean;
@@ -13,7 +14,7 @@ export interface CellContainerProps<V> {
     onBlur?: (rowIndex: number, propName: string) => void;
     onClick?: (rowIndex: number, propName: string, e?: MouseEvent<HTMLElement>) => void;
     onFocus?: (rowIndex: number, propName: string) => void;
-    onMove?: (direction: 'left' | 'right' | 'down' | 'up', rowIndex: number, propName: string) => void;
+    onMove?: (direction: Direction, rowIndex: number, propName: string) => void;
     focused?: boolean;
 }
 

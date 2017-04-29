@@ -4,7 +4,7 @@ import { ValidationMap } from '../../../react';
 import { ColumnProps } from '../Columns/Column/ColumnProps';
 import { RowProps } from '../Row/RowProps';
 import { HeaderRowProps } from '../HeaderRow/HeaderRowProps';
-import { Overflow, overflowPropType } from '../../../utils';
+import { Overflow, overflowPropType, Direction } from '../../../utils';
 import { RowData } from '../RowData';
 import { List } from 'immutable';
 
@@ -17,7 +17,7 @@ export interface ColumnGroupProps {
 
     readonly onHorizontalScrollVisibilityChanged?: (visible: boolean, thumbHeight: number) => void;
     readonly onRowClick?: (rowIndex: number, propName: string, e: MouseEvent<HTMLElement>) => void;
-    readonly onRowMove?: (direction: 'left' | 'right' | 'down' | 'up', rowIndex: number, propName: string) => void;
+    readonly onRowMove?: (direction: Direction, rowIndex: number, propName: string) => void;
     readonly onScrollPosChanged?: (left: number, top: number) => void;
     readonly onResize?: () => void;
 

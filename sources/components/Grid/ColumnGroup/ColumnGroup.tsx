@@ -8,7 +8,7 @@ import { ColumnGroupState, RowState } from './ColumnGroupState';
 import { ColumnProps } from '../Columns/Column/ColumnProps';
 import { ScrollableContainer } from '../../ScrollableContainer';
 import { Layout, LayoutPanel } from '../../Layout';
-import { classNames } from '../../../utils';
+import { classNames, Direction } from '../../../utils';
 
 import * as emptyFunction from 'fbjs/lib/emptyFunction';
 
@@ -147,7 +147,7 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
         } as ColumnGroupState);
     }
 
-    handleRowMove = (direction: 'left' | 'right' | 'down' | 'up', rowIndex: number, propName: string): void => {
+    handleRowMove = (direction: Direction, rowIndex: number, propName: string): void => {
         let index = this.props.columnProps.findIndex((columnProps) =>
             (columnProps && columnProps.propName) === propName
         );

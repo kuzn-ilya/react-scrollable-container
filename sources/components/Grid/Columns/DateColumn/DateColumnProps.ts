@@ -1,13 +1,13 @@
-import * as PropTypes from 'prop-types';
 import { ValidationMap } from '../../../../react';
 import * as objectAssign from 'object-assign';
+import { TextAlign, textAlignPropType } from '../../../../utils';
 
 import { ColumnProps, columnPropTypes } from '../Column/ColumnProps';
 
 export interface DateColumnProps extends ColumnProps<Date> {
-    align?: 'left' | 'right' | 'center';
+    align?: TextAlign;
 }
 
 export const dateColumnPropTypes: ValidationMap<DateColumnProps> = objectAssign({}, columnPropTypes, {
-    align: PropTypes.oneOf(['left', 'right', 'center'])
+    align: textAlignPropType
 });

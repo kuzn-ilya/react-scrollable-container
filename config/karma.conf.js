@@ -27,6 +27,12 @@ module.exports = function (config) {
       'mocha',
       'coverage'
     ],
+
+    client: {
+      mocha: {
+        timeout: 20000
+      }
+    },
     
     coverageReporter: {
         dir: 'coverage',

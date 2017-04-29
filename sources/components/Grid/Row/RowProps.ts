@@ -3,6 +3,7 @@ import { MouseEvent } from 'react';
 import { ValidationMap } from '../../../react';
 import { ColumnProps } from '../Columns/Column/ColumnProps';
 import { List } from 'immutable';
+import { Direction } from '../../../utils';
 
 export interface RowProps {
     // tslint:disable-next-line:no-any
@@ -16,7 +17,7 @@ export interface RowProps {
     selected: boolean;
     showEdgeForTheLeftCell?: boolean;
     onClick?: (rowIndex: number, propName: string, e?: MouseEvent<HTMLElement>) => void;
-    onMove?: (direction: 'left' | 'right' | 'down' | 'up', rowIndex: number, propName: string) => void;
+    onMove?: (direction: Direction, rowIndex: number, propName: string) => void;
 }
 
 export const rowPropTypes: ValidationMap<RowProps> = {

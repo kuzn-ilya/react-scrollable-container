@@ -8,6 +8,7 @@ import { GridState } from './GridState';
 import { ColumnGroup } from './ColumnGroup';
 import { ColumnProps } from './Columns/Column/ColumnProps';
 import { Layout, LayoutPanel, LayoutSplitter } from '../Layout';
+import { Direction } from '../../utils';
 
 import '../../styles/common.css';
 
@@ -42,7 +43,7 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
         }
     }
 
-    handleFixedRowMove = (direction: 'left' | 'right' | 'down' | 'up', rowIndex: number, propName: string): void => {
+    handleFixedRowMove = (direction: Direction, rowIndex: number, propName: string): void => {
         // TODO Check last / first for existence
         if (direction === 'right' && propName === this.state.fixedColumns!.last().propName) {
             this.setState({

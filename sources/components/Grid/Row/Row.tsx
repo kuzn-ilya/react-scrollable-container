@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { classNames } from '../../../utils';
+import { classNames, Direction } from '../../../utils';
 import { RowProps, rowPropTypes } from './RowProps';
 import { RowState } from './RowState';
 import { ColumnProps } from '../Columns/Column/ColumnProps';
@@ -8,7 +8,7 @@ import { ColumnProps } from '../Columns/Column/ColumnProps';
 export class Row extends React.PureComponent<RowProps, RowState> {
     static propTypes = rowPropTypes;
 
-    handleMove = (direction: 'left' | 'right' | 'down' | 'up', rowIndex: number, propName: string): void => {
+    handleMove = (direction: Direction, rowIndex: number, propName: string): void => {
         if (this.props.onMove) {
             this.props.onMove(direction, this.props.rowIndex, propName);
         }

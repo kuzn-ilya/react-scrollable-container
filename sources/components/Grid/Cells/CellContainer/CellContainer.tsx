@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { CellContainerProps, cellContainerPropTypes } from './CellContainerProps';
 import { CellContainerState } from './CellContainerState';
-import { classNames, KeyConsts } from '../../../../utils';
+import { classNames, KeyConsts, Direction } from '../../../../utils';
 
 import '../../../../styles/grid.css';
 
@@ -37,7 +37,7 @@ export class CellContainer<V> extends React.PureComponent<CellContainerProps<V>,
     }
 
     handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>): void => {
-        let direction: undefined | 'down' | 'left' | 'right' | 'up' = undefined;
+        let direction: Direction | undefined = undefined;
         switch (e.keyCode) {
             case KeyConsts.ARROW_DOWN:
                 direction = 'down';
@@ -60,7 +60,7 @@ export class CellContainer<V> extends React.PureComponent<CellContainerProps<V>,
         }
     }
 
-    handleInplaceEditMove = (direction: 'down' | 'left' | 'right' | 'up'): void => {
+    handleInplaceEditMove = (direction: Direction): void => {
         if (this.props.onMove) {
             this.props.onMove(direction, this.props.rowIndex, this.props.columnProps.propName);
         }

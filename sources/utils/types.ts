@@ -55,3 +55,13 @@ export function isHorizontal(align: Edge): boolean {
 export function isVertical(align: Edge): boolean {
     return align === 'top' || align === 'bottom';
 }
+
+export type Direction = 'left' | 'right' | 'up' | 'down';
+
+export type TextAlign = 'left' | 'right' | 'center';
+
+export const textAlignPropType = PropTypes.oneOf([
+    'left',
+    'right',
+    'center'
+]);

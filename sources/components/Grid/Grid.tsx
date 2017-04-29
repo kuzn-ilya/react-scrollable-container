@@ -68,9 +68,9 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
     }
 
     handleVerticalScrollPosChanged = (scrollLeft: number, scrollTop: number): void  => {
-        if (this.fixedColumnGroup) {
-            this.fixedColumnGroup.setScrollTop(scrollTop);
-        }
+        // if (this.fixedColumnGroup) {
+        //     this.fixedColumnGroup.setScrollTop(scrollTop);
+        // }
         if (this.state.scrollTop !== scrollTop || this.state.scrollLeft !== scrollLeft) {
             this.setState({
                 scrollLeft,

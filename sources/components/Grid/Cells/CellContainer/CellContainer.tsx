@@ -55,8 +55,11 @@ export class CellContainer<V> extends React.PureComponent<CellContainerProps<V>,
                 break;
         }
 
-        if (direction && this.props.onMove) {
-            this.props.onMove(direction, this.props.rowIndex, this.props.columnProps.propName);
+        if (direction) {
+            e.preventDefault();
+            if (this.props.onMove) {
+                this.props.onMove(direction, this.props.rowIndex, this.props.columnProps.propName);
+            }
         }
     }
 
@@ -74,6 +77,7 @@ export class CellContainer<V> extends React.PureComponent<CellContainerProps<V>,
     }
 
     handleFocus = (e: React.FocusEvent<HTMLElement>): void => {
+        e.preventDefault();
         if (this.props.onFocus) {
             this.props.onFocus(this.props.rowIndex, this.props.columnProps.propName);
         }

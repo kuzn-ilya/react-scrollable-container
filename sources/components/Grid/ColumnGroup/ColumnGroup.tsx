@@ -261,6 +261,7 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
                         onVerticalScrollVisibilityChanged={this.handleVerticalScrollVisibilityChanged}
                         ref={(ref: ScrollableContainer) => this.rows = ref}
                         showShadowForReplacer
+                        scrollLeft={this.state.scrollLeft}
                         scrollTop={this.props.scrollTop}
                     />
                 </LayoutPanel>
@@ -268,6 +269,7 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
             : null;
     }
 
+    // TODO: Now setScrollTop is not used anymore.
     setScrollTop(position: number): void {
         if (this.rows && !this.props.customScrollBars) {
             this.rows.setScrollTop(position);

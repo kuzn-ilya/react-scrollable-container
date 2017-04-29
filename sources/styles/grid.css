@@ -21,7 +21,11 @@
 }
 
 .cell-wrapper:focus, .cell-wrapper-first:focus {
-    outline: #D1E7F6 auto 5px
+    border-color: $GRID_SELECTED_CELL_OUTLINE;
+    border-style: solid;
+    border-width: 1px;
+    outline: 0;
+    box-sizing: border-box;    
 }
 
 .header-cell-container {

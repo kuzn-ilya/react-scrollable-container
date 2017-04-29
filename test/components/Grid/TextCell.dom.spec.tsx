@@ -97,7 +97,6 @@ describe('DOM: Row', () => {
         let handleMove = (direction: string, rowIndex: number, propName: string) => void 0;
         let spyHanldeMove = chai.spy(handleMove);
 
-
         ReactDOM.render(
                 <CellContainer
                     columnProps={columnProps}

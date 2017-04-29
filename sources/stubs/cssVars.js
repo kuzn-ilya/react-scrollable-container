@@ -33,6 +33,7 @@ var CSS_STRING_VARS = {
     'GRID_CELL_FONT': 'normal 11px \'Roboto\', sans-serif',
     'GRID_HEADER_CELL_BACKGROUND_COLOR': '#d6d6d6',
     'GRID_HEADER_CELL_BORDER_COLOR': '#6C7A89',
+    'GRID_SELECTED_CELL_OUTLINE': 'black',
 
     // Gantt shift
     'GRID_SHIFT_FONT': 'normal 11px \'Roboto\', sans-serif',

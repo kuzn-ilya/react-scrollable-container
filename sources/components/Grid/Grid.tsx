@@ -85,7 +85,7 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
         } as GridState);
     }
 
-    handleVerticalScrollPosChanged = (scrollLeft: number, scrollTop: number): void  => {
+    handleScrollPosChanged = (scrollLeft: number, scrollTop: number): void  => {
         // if (this.fixedColumnGroup) {
         //     this.fixedColumnGroup.setScrollTop(scrollTop);
         // }
@@ -151,6 +151,7 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
                         colsThumbHeight={this.state.colsThumbHeight}
                         overflowX="hidden"
                         overflowY="hidden"
+                        onScrollPosChanged={this.handleScrollPosChanged}
                         scrollTop={this.state.scrollTop}
                         headerRowClass={this.props.fixedHeaderRowClass}
                         rowClass={this.props.fixedRowClass}
@@ -174,7 +175,8 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
                         rowHeight={this.props.rowHeight}
                         overflowX="auto"
                         overflowY="auto"
-                        onScrollPosChanged={this.handleVerticalScrollPosChanged}
+                        onScrollPosChanged={this.handleScrollPosChanged}
+                        scrollTop={this.state.scrollTop}
                         onHorizontalScrollVisibilityChanged={this.handleHorizontalScrollVisibilityChanged}
                         onResize={this.handleScrollableColumnsResize}
                         headerRowClass={this.props.scrollableHeaderRowClass}

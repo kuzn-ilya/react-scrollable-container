@@ -46,6 +46,13 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
             };
             this.setState(newState as ColumnGroupState);
         }
+
+        if (nextProps.scrollTop !== this.props.scrollTop) {
+            let newState = {
+                scrollTop: nextProps.scrollTop
+            };
+            this.setState(newState as ColumnGroupState);
+        }
     }
 
     componentDidMount(): void {
@@ -136,6 +143,21 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
             focusedCellRowIndex: rowIndex
         } as ColumnGroupState);
 
+        if (this.rows) {
+            if (this.state.scrollTop / this.props.rowHeight > rowIndex) {
+                this.setState({
+                    scrollTop: this.props.rowHeight * rowIndex
+                } as ColumnGroupState);
+            } else {
+                let element = ReactDOM.findDOMNode(this.rows) as HTMLElement;
+                if ((this.state.scrollTop + element.offsetHeight) / this.props.rowHeight < rowIndex) {
+                    this.setState({
+                        scrollTop: this.props.rowHeight * rowIndex
+                    } as ColumnGroupState);
+                }
+            }
+        }
+
         if (this.props.onCellFocus) {
             this.props.onCellFocus(rowIndex, propName);
         }
@@ -214,7 +236,7 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
                         ref={(ref: ScrollableContainer) => this.rows = ref}
                         showShadowForReplacer
                         scrollLeft={this.state.scrollLeft}
-                        scrollTop={this.props.scrollTop}
+                        scrollTop={this.state.scrollTop}
                     >
                         <Rows
                             columnProps={this.props.columnProps}

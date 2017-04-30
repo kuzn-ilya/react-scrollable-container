@@ -273,7 +273,7 @@ describe('DOM: ScrollableContainer', () => {
         let scrollable = element!.querySelector('.scrollable-container-scrollable');
         expect(scrollable).to.exist;
 
-        expect(handleVerticalScrollVisibilityChanged).to.have.been.called.once.and.called.with.exactly(true, 17);
+        expect(handleVerticalScrollVisibilityChanged).to.have.been.called.once.and.called.with(true);
     });
 
     it('should fire onHorizontalScrollBarVisibilityChanged if ContentWidth is greater than width', () => {
@@ -297,7 +297,7 @@ describe('DOM: ScrollableContainer', () => {
         let scrollable = element!.querySelector('.scrollable-container-scrollable');
         expect(scrollable).to.exist;
 
-        expect(handleHorizontalScrollVisibilityChanged).to.have.been.called.once.and.called.with.exactly(true, 17);
+        expect(handleHorizontalScrollVisibilityChanged).to.have.been.called.once.and.called.with(true);
     });
 
     it('should fire onHorizontalScrollBarVisibilityChanged if ContentWidth becomes less than width', () => {

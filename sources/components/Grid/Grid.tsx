@@ -92,17 +92,17 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
                 selectedRowIndexes.splice(rowIndex, 1);
             }
 
-            this.setState({
-                selectedRowIndexes
-            });
+            // this.setState({
+            //     selectedRowIndexes
+            // });
             if (this.props.onRowSelectionChanged) {
                 this.props.onRowSelectionChanged(selectedRowIndexes);
             }
         } else if (this.state.selectedRowIndexes.indexOf(rowIndex) === -1) {
             let selectedRowIndexes = [rowIndex];
-            this.setState({
-                selectedRowIndexes
-            });
+            // this.setState({
+            //     selectedRowIndexes
+            // });
             if (this.props.onRowSelectionChanged) {
                 this.props.onRowSelectionChanged(selectedRowIndexes);
             }

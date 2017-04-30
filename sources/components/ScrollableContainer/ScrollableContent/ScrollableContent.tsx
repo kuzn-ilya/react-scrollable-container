@@ -14,7 +14,6 @@ export class ScrollableContent extends React.PureComponent<ScrollableContentProp
     static defaultProps: ScrollableContentProps = {
         contentHeight: '100%',
         contentWidth: '100%',
-        dataRenderer: emptyFunction.thatReturns<React.ReactNode>(null),
         onResize: emptyFunction,
         style: {
         }
@@ -60,7 +59,6 @@ export class ScrollableContent extends React.PureComponent<ScrollableContentProp
                 className={classNames('scrollable-content', 'transform-boost')}
                 ref={this.setRef}
             >
-                {this.props.dataRenderer!(this.props.data)}
                 {this.props.children}
                 {wrapper}
             </div>

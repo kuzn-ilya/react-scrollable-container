@@ -34,6 +34,8 @@ export class CellContainer<V> extends React.PureComponent<CellContainerProps<V>,
         if (this.props.columnProps.onCellClick) {
             this.props.columnProps.onCellClick(this.props.rowIndex, this.props.columnProps.propName);
         }
+
+        e.preventDefault();
     }
 
     handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>): void => {

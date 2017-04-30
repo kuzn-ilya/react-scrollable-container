@@ -4,8 +4,9 @@ import { List } from 'immutable';
 import * as objectAssign from 'object-assign';
 
 import { ColumnGroupProps, columnGroupPropTypes } from './ColumnGroupProps';
-import { ColumnGroupState, RowState } from './ColumnGroupState';
+import { ColumnGroupState } from './ColumnGroupState';
 import { ColumnProps } from '../Columns/Column/ColumnProps';
+import { Rows } from '../Rows';
 import { ScrollableContainer } from '../../ScrollableContainer';
 import { Layout, LayoutPanel } from '../../Layout';
 import { classNames, Direction } from '../../../utils';
@@ -24,12 +25,9 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
     constructor(props?: ColumnGroupProps) {
         super(props);
         this.state = objectAssign({}, this.calculateColumnState(this.props.columnProps, 0), {
-            rowState: {
-                data: this.props.rowData,
-                selectedIndexes: []
-            },
             scrollLeft: 0,
-            scrollTop: 0
+            scrollTop: 0,
+            selectedIndexes: []
         }) as ColumnGroupState;
     }
 
@@ -38,30 +36,15 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
             this.updateColumnState(nextProps, this.state.rowsThumbWidth || 0);
         }
 
-        if (nextProps.rowData !== this.props.rowData || nextProps.selectedRowIndexes !== this.props.selectedRowIndexes
+        if (nextProps.selectedRowIndexes !== this.props.selectedRowIndexes
             || nextProps.focusedCellPropName !== this.props.focusedCellPropName
             || nextProps.focusedCellRowIndex !== this.props.focusedCellRowIndex) {
-            let rowState = objectAssign({}, this.state.rowState);
-
-            if (nextProps.rowData !== this.props.rowData) {
-                rowState.data = nextProps.rowData;
-            }
-
-            if (nextProps.selectedRowIndexes !== this.props.selectedRowIndexes) {
-                rowState.selectedIndexes = nextProps.selectedRowIndexes || [];
-            }
-
-            if (nextProps.focusedCellPropName !== this.props.focusedCellPropName) {
-                rowState.focusedCellPropName = nextProps.focusedCellPropName;
-            }
-
-            if (nextProps.focusedCellRowIndex !== this.props.focusedCellRowIndex) {
-                rowState.focusedCellRowIndex = nextProps.focusedCellRowIndex;
-            }
-
-            this.setState({
-                rowState
-            } as ColumnGroupState);
+            let newState = {
+                focusedCellPropName: nextProps.focusedCellPropName,
+                focusedCellRowIndex: nextProps.focusedCellRowIndex,
+                selectedIndexes: nextProps.selectedRowIndexes
+            };
+            this.setState(newState as ColumnGroupState);
         }
     }
 
@@ -103,47 +86,14 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
         };
     }
 
-    renderHeader = (data: undefined): React.ReactNode => {
-        // tslint:disable-next-line:variable-name
-        let HeaderRow = this.props.headerRowClass;
-        return <HeaderRow columnProps={this.state.columnProps}
-            showEdgeForTheLeftCell={this.props.showEdgeForTheLeftCell}
-            height={this.props.headerHeight}
-        />;
-    }
-
-    // tslint:disable-next-line:no-any
-    renderRows = (rowData: RowState): React.ReactNode => {
-        // tslint:disable-next-line:variable-name
-        let Row = this.props.rowClass;
-        // tslint:disable-next-line:no-any
-        return Array.prototype.map.call(rowData.data, (value: any, index: number) =>
-            <Row data={value}
-                key={index}
-                rowIndex={index}
-                columnProps={this.state.columnProps}
-                height={this.props.rowHeight}
-                showEdgeForTheLeftCell={this.props.showEdgeForTheLeftCell}
-                selected={!!(rowData.selectedIndexes && (rowData.selectedIndexes.indexOf(index) >= 0))}
-                onClick={this.handleRowClick}
-                onMove={this.handleRowMove}
-                focusedCellPropName={rowData.focusedCellRowIndex === index && rowData.focusedCellPropName
-                    ? rowData.focusedCellPropName : undefined}
-            />
-        );
-    }
     handleRowClick = (rowIndex: number, propName: string, e: React.MouseEvent<HTMLElement>) => {
         if (this.props.onRowClick) {
             this.props.onRowClick(rowIndex, propName, e);
         }
 
         this.setState({
-            rowState: {
-                data: this.state.rowState.data,
-                focusedCellPropName: propName,
-                focusedCellRowIndex: rowIndex,
-                selectedIndexes: this.state.rowState.selectedIndexes
-            }
+            focusedCellPropName: propName,
+            focusedCellRowIndex: rowIndex
         } as ColumnGroupState);
     }
 
@@ -161,30 +111,18 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
             }
 
             this.setState({
-                rowState: {
-                    data: this.state.rowState.data,
-                    focusedCellPropName: nextCellPropName,
-                    focusedCellRowIndex: rowIndex,
-                    selectedIndexes: this.state.rowState.selectedIndexes
-                }
+                focusedCellPropName: nextCellPropName,
+                focusedCellRowIndex: rowIndex
             } as ColumnGroupState);
         } else if (direction === 'down' && rowIndex < this.props.rowData.length - 1) {
             this.setState({
-                rowState: {
-                    data: this.state.rowState.data,
-                    focusedCellPropName: propName,
-                    focusedCellRowIndex: rowIndex + 1,
-                    selectedIndexes: this.state.rowState.selectedIndexes
-                }
+                focusedCellPropName: propName,
+                focusedCellRowIndex: rowIndex + 1
             } as ColumnGroupState);
         } else if (direction === 'up' && rowIndex > 0) {
             this.setState({
-                rowState: {
-                    data: this.state.rowState.data,
-                    focusedCellPropName: propName,
-                    focusedCellRowIndex: rowIndex - 1,
-                    selectedIndexes: this.state.rowState.selectedIndexes
-                }
+                focusedCellPropName: propName,
+                focusedCellRowIndex: rowIndex - 1
             } as ColumnGroupState);
         }
         if (this.props.onRowMove) {
@@ -217,6 +155,8 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
     }
 
     render(): JSX.Element | null {
+        // tslint:disable-next-line:variable-name
+        let HeaderRow = this.props.headerRowClass;
         return this.state.columnsWidth ?
             <Layout height="100%"
                 width={this.props.width}
@@ -233,26 +173,27 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
                         contentWidth={this.state.columnsWidth}
                         contentHeight={this.props.headerHeight}
                         overflowX="hidden" overflowY="hidden"
-                        data={undefined}
-                        dataRenderer={this.renderHeader}
                         width="100%"
                         height={this.props.headerHeight}
                         vertScrollBarReplacerWidth={this.state.rowsThumbWidth}
                         ref={(ref: ScrollableContainer) => this.header = ref}
                         showShadowForReplacer
                         scrollLeft={this.state.scrollLeft}
-                    />
+                    >
+                        <HeaderRow columnProps={this.state.columnProps}
+                            showEdgeForTheLeftCell={this.props.showEdgeForTheLeftCell}
+                            height={this.props.headerHeight}
+                        />;
+                    </ScrollableContainer>
                 </LayoutPanel>
                 <LayoutPanel align="client">
                     <ScrollableContainer
                         customScrollBars={this.props.customScrollBars}
                         key="body"
                         contentWidth={this.state.columnsWidth}
-                        contentHeight={this.state.rowState.data.length * this.props.rowHeight}
+                        contentHeight={this.props.rowData.length * this.props.rowHeight}
                         overflowX={this.props.overflowX}
                         overflowY={this.props.overflowY}
-                        data={this.state.rowState}
-                        dataRenderer={this.renderRows}
                         width="100%"
                         height="100%"
                         horzScrollBarReplacerHeight={this.props.colsThumbHeight }
@@ -263,7 +204,20 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
                         showShadowForReplacer
                         scrollLeft={this.state.scrollLeft}
                         scrollTop={this.props.scrollTop}
-                    />
+                    >
+                        <Rows
+                            columnProps={this.props.columnProps}
+                            rowData={this.props.rowData}
+                            selectedIndexes={this.state.selectedIndexes}
+                            rowClass={this.props.rowClass}
+                            rowHeight={this.props.rowHeight}
+                            onRowClick={this.handleRowClick}
+                            onRowMove={this.handleRowMove}
+                            showEdgeForTheLeftCell={this.props.showEdgeForTheLeftCell}
+                            focusedCellPropName={this.state.focusedCellPropName}
+                            focusedCellRowIndex={this.state.focusedCellRowIndex}
+                        />
+                    </ScrollableContainer>
                 </LayoutPanel>
             </Layout>
             : null;

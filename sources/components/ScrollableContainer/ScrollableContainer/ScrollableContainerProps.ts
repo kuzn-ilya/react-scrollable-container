@@ -17,10 +17,6 @@ export interface ScrollableContainerProps {
     readonly onHorizontalScrollVisibilityChanged?: (visible: boolean, thumbHeight: number) => void;
     readonly onVerticalScrollVisibilityChanged?: (visible: boolean, thumbWidth: number) => void;
 
-    // tslint:disable-next-line:no-any
-    readonly dataRenderer?: (data: any) => React.ReactNode;
-    // tslint:disable-next-line:no-any
-    readonly data?: any;
     readonly width: string | number;
     readonly height: string | number;
 
@@ -46,8 +42,6 @@ export const scrollableContainerPropTypes: ValidationMap<ScrollableContainerProp
     contentHeight: sizePropType,
     contentWidth: sizePropType,
     customScrollBars: PropTypes.bool,
-    data: PropTypes.any,
-    dataRenderer: PropTypes.func,
     height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     horzScrollBarReplacerHeight: PropTypes.number,
     id: PropTypes.string,

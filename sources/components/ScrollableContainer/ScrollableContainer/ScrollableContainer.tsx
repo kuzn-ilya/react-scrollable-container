@@ -181,8 +181,6 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
 
         let scrollableContent = (
             <ScrollableContent contentWidth={this.props.contentWidth} contentHeight={this.props.contentHeight}
-                dataRenderer={this.props.dataRenderer}
-                data={this.props.data}
                 onResize={this.handleContentResize}
                 ref={this.setScrollableContentRef}
             >

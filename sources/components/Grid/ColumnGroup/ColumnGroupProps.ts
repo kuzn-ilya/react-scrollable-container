@@ -20,6 +20,7 @@ export interface ColumnGroupProps {
     readonly onRowMove?: (direction: Direction, rowIndex: number, propName: string) => void;
     readonly onScrollPosChanged?: (left: number, top: number) => void;
     readonly onResize?: () => void;
+    readonly onCellFocus?: (rowIndex: number, propName: string) => void;
 
     readonly overflowX: Overflow;
     readonly overflowY: Overflow;
@@ -52,6 +53,7 @@ export const columnGroupPropTypes: ValidationMap<ColumnGroupProps> = {
     // TODO: Find more appropriate prop type
     headerRowClass: PropTypes.any.isRequired,
 
+    onCellFocus: PropTypes.func,
     onHorizontalScrollVisibilityChanged: PropTypes.func,
     onResize: PropTypes.func,
     onRowClick: PropTypes.func,

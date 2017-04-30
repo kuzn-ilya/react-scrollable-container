@@ -130,6 +130,17 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
         }
     }
 
+    handleCellFocus = (rowIndex: number, propName: string): void => {
+        this.setState({
+            focusedCellPropName: propName,
+            focusedCellRowIndex: rowIndex
+        } as ColumnGroupState);
+
+        if (this.props.onCellFocus) {
+            this.props.onCellFocus(rowIndex, propName);
+        }
+    }
+
     handleVerticalScrollVisibilityChanged = (visible: boolean, thumbWidth: number): void => {
         this.setState({
             rowsThumbWidth: thumbWidth
@@ -211,6 +222,7 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
                             selectedIndexes={this.state.selectedIndexes}
                             rowClass={this.props.rowClass}
                             rowHeight={this.props.rowHeight}
+                            onCellFocus={this.handleCellFocus}
                             onRowClick={this.handleRowClick}
                             onRowMove={this.handleRowMove}
                             showEdgeForTheLeftCell={this.props.showEdgeForTheLeftCell}

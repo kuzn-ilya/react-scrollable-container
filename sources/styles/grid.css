@@ -7,7 +7,7 @@
     vertical-align: top;
 }
 
-.cell-wrapper, .cell-wrapper-first {
+.cell-wrapper {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -17,14 +17,13 @@
     border-bottom: solid 1px $GRID_CELL_BORDER_COLOR;
     border-right: solid 1px $GRID_CELL_BORDER_COLOR;
     display: inline-block;
+    box-sizing: border-box;
 }
 
-.cell-wrapper:focus, .cell-wrapper-first:focus {
-    border-color: $GRID_SELECTED_CELL_OUTLINE;
-    border-style: solid;
-    border-width: 1px;
+.cell-wrapper:focus, .cell-wrapper-first:focus, .cell-wrapper-focused {
+    border: solid 1px $GRID_SELECTED_CELL_OUTLINE;
     outline: 0;
-    box-sizing: border-box;    
+    box-sizing: border-box;
 }
 
 .header-cell-container {
@@ -84,13 +83,11 @@
     font: $GRID_CELL_FONT;
     width: 100%;
     height: 100%;
-    box-sizing: border-box;
     border: none;
     padding-left: $(GRID_CELL_HORZ_PADDING)px;
     padding-right: $(GRID_CELL_HORZ_PADDING)px;
-    outline: 0;
+    outline: 0; /* Override default Chrome styles */
     line-height: 18px;
-    vertical-align: top;
     padding-top: 0; /* Override default Chrome styles */
     padding-bottom: 0; /* Override default Chrome styles */
 }

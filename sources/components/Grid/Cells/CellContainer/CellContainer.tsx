@@ -99,7 +99,13 @@ export class CellContainer<V> extends React.PureComponent<CellContainerProps<V>,
         let isEditing = this.props.focused && !this.props.columnProps.readonly;
         let innerComponent = isEditing
             ?
-            <div className={this.props.firstCell ? 'cell-wrapper-first' : 'cell-wrapper'}>
+            <div
+                className={classNames({
+                    'cell-wrapper-first': !!this.props.firstCell,
+                    'cell-wrapper': true,
+                    'cell-wrapper-focused': true
+                })}
+            >
                 <InplaceEdit value={this.props.value}
                     onBlur={this.handleBlur}
                     onFocus={this.handleFocus}
@@ -110,7 +116,7 @@ export class CellContainer<V> extends React.PureComponent<CellContainerProps<V>,
             <div
                 className={classNames({
                     'cell-wrapper-first': !!this.props.firstCell,
-                    'cell-wrapper': !this.props.firstCell
+                    'cell-wrapper': true
                 })}
                 onKeyDown={this.handleKeyDown}
                 onBlur={this.handleBlur}

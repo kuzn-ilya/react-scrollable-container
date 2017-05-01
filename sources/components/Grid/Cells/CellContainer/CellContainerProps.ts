@@ -12,6 +12,8 @@ export interface CellContainerProps<V> {
     columnProps: ColumnProps<V>;
     value?: V;
     onBlur?: (rowIndex: number, propName: string, e?: FocusEvent<HTMLElement>) => void;
+    // tslint:disable-next-line:no-any
+    onChange?: (rowIndex: number, propName: string, newValue: any) => void;
     onClick?: (rowIndex: number, propName: string, e?: MouseEvent<HTMLElement>) => void;
     onFocus?: (rowIndex: number, propName: string, target: ReactInstance) => void;
     onMove?: (direction: Direction, rowIndex: number, propName: string) => void;
@@ -25,6 +27,7 @@ export const cellContainerPropTypes: ValidationMap<CellContainerProps<any>> = {
     focused: PropTypes.bool,
     height: PropTypes.number.isRequired,
     onBlur: PropTypes.func,
+    onChange: PropTypes.func,
     onClick: PropTypes.func,
     onFocus: PropTypes.func,
     onMove: PropTypes.func,

@@ -18,6 +18,8 @@ export interface RowProps {
     showEdgeForTheLeftCell?: boolean;
     // tslint:disable-next-line:no-any
     onCellFocus?: (rowIndex: number, propName: string, target: ReactInstance) => void;
+    // tslint:disable-next-line:no-any
+    onCellChange?: (rowIndex: number, propName: string, newValue: any) => void;
     onCellClick?: (rowIndex: number, propName: string, e?: MouseEvent<HTMLElement>) => void;
     onCellMove?: (direction: Direction, rowIndex: number, propName: string) => void;
 }
@@ -27,6 +29,7 @@ export const rowPropTypes: ValidationMap<RowProps> = {
     data: PropTypes.any.isRequired,
     focusedCellPropName: PropTypes.string,
     height: PropTypes.number.isRequired,
+    onCellChange: PropTypes.func,
     onCellClick: PropTypes.func,
     onCellFocus: PropTypes.func,
     onCellMove: PropTypes.func,

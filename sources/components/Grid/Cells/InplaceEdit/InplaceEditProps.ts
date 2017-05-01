@@ -10,10 +10,13 @@ export interface InplaceEditProps {
     onBlur?: (e: FocusEvent<HTMLInputElement>) => void;
     onFocus?: (e: FocusEvent<HTMLInputElement>) => void;
     onMove?: (direction: Direction) => void;
+    // tslint:disable-next-line:no-any
+    onChange?: (newValue: any) => void;
 }
 
 export const inplaceEditPropTypes: ValidationMap<InplaceEditProps> = {
     onBlur: PropTypes.func,
+    onChange: PropTypes.func,
     onFocus: PropTypes.func,
     onMove: PropTypes.func,
     value: PropTypes.any

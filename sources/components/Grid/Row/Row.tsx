@@ -45,6 +45,7 @@ export class Row extends React.PureComponent<RowProps, RowState> {
                     onMove={this.handleMove}
                     onClick={this.handleClick}
                     onFocus={this.props.onCellFocus}
+                    onChange={this.props.onCellChange}
                     focused={this.props.focusedCellPropName === value.propName}
                 />
             );

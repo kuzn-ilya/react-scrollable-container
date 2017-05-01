@@ -246,6 +246,7 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
                             selectedIndexes={this.state.selectedIndexes}
                             rowClass={this.props.rowClass}
                             rowHeight={this.props.rowHeight}
+                            onCellChange={this.props.onCellChange}
                             onCellSelect={this.handleCellSelect}
                             onCellFocus={this.handleCellFocus}
                             onRowClick={this.handleRowClick}

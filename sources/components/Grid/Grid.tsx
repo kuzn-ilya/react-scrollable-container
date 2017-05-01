@@ -161,6 +161,7 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
                         focusedCellPropName={this.state.fixedFocusedCellPropName}
                         focusedCellRowIndex={this.state.fixedFocusedCellRowIndex}
                         onCellSelect={this.handleFixedCellSelect}
+                        onCellChange={this.props.onCellChange}
                     />
                 </LayoutPanel>
                 <LayoutSplitter />
@@ -187,6 +188,7 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
                         focusedCellPropName={this.state.scrollableFocusedCellPropName}
                         focusedCellRowIndex={this.state.scrollableFocusedCellRowIndex}
                         onCellSelect={this.handleScrollableCellSelect}
+                        onCellChange={this.props.onCellChange}
                     />
                 </LayoutPanel>
             </Layout>

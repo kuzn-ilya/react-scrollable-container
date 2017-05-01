@@ -21,6 +21,8 @@ export interface GridProps {
     readonly multiSelectRows?: boolean;
     readonly onRowClick?: (rowIndex: number, e?: MouseEvent<HTMLElement>) => void;
     readonly onRowSelectionChanged?: (rowIndexes: Array<number>) => void;
+    // tslint:disable-next-line:no-any
+    readonly onCellChange?: (rowIndex: number, propName: string, newValue: any) => void;
 }
 
 export const gridPropTypes: ValidationMap<GridProps> = {
@@ -33,6 +35,7 @@ export const gridPropTypes: ValidationMap<GridProps> = {
     fixedRowCount: PropTypes.number,
     headerHeight: PropTypes.number.isRequired,
     multiSelectRows: PropTypes.bool,
+    onCellChange: PropTypes.func,
     onRowClick: PropTypes.func,
     onRowSelectionChanged: PropTypes.func,
     rowData: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,

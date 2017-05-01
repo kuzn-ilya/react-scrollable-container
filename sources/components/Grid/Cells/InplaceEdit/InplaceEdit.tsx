@@ -1,13 +1,21 @@
 import * as React from 'react';
 import { KeyConsts, Direction } from '../../../../utils';
 import { InplaceEditProps, inplaceEditPropTypes } from './InplaceEditProps';
+import { InplaceEditState } from './InplaceEditState';
 
 import '../../../../styles/grid.css';
 
-export class InplaceEdit extends React.PureComponent<InplaceEditProps, {}> {
+export class InplaceEdit extends React.PureComponent<InplaceEditProps, InplaceEditState> {
     static propTypes = inplaceEditPropTypes;
 
     private ref: HTMLInputElement;
+
+    constructor(props: InplaceEditProps) {
+        super(props);
+        this.state = {
+            value: props.value
+        };
+    }
 
     componentDidMount(): void {
         if (this.ref) {
@@ -18,6 +26,14 @@ export class InplaceEdit extends React.PureComponent<InplaceEditProps, {}> {
     componentDidUpdate(prevProps: InplaceEditProps, prevState: {}): void {
         if (this.ref) {
             this.ref.focus();
+        }
+    }
+
+    componentWillReceiveProps(nextProps: InplaceEditProps): void {
+        if (this.props.value !== nextProps.value) {
+            this.setState({
+                value: nextProps.value
+            });
         }
     }
 
@@ -41,8 +57,26 @@ export class InplaceEdit extends React.PureComponent<InplaceEditProps, {}> {
         }
     }
 
+    handleBlur = (e: React.FocusEvent<HTMLInputElement>): void => {
+        if (this.props.onBlur) {
+            this.props.onBlur(e);
+        }
+
+        if (this.state.value !== this.props.value && this.props.onChange) {
+            this.props.onChange(this.state.value);
+        }
+    }
+
+    componentWillUnmount(): void {
+        if (this.state.value !== this.props.value && this.props.onChange) {
+            this.props.onChange(this.state.value);
+        }
+    }
+
     handleChange = (e: React.FormEvent<HTMLInputElement>): void => {
-        // TODO: Not implemented yet
+        this.setState({
+            value: e.currentTarget.value
+        });
     }
 
     render(): JSX.Element {
@@ -50,8 +84,8 @@ export class InplaceEdit extends React.PureComponent<InplaceEditProps, {}> {
             <input className="inplace-edit"
                 type="text"
                 ref={(ref) => this.ref = ref}
-                value={this.props.value}
-                onBlur={this.props.onBlur}
+                value={this.state.value}
+                onBlur={this.handleBlur}
                 onFocus={this.props.onFocus}
                 onKeyDown={this.handleKeyDown}
                 onChange={this.handleChange}

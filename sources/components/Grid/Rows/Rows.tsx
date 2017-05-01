@@ -65,6 +65,7 @@ export class Rows extends React.PureComponent<RowsProps, {}> {
                 height={this.props.rowHeight}
                 showEdgeForTheLeftCell={this.props.showEdgeForTheLeftCell}
                 selected={!!(this.props.selectedIndexes && (this.props.selectedIndexes.indexOf(index) >= 0))}
+                onCellChange={this.props.onCellChange}
                 onCellClick={this.handleCellClick}
                 onCellMove={this.handleCellMove}
                 onCellFocus={this.props.onCellFocus}

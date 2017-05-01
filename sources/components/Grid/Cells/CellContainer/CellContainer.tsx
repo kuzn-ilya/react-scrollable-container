@@ -85,6 +85,13 @@ export class CellContainer<V> extends React.PureComponent<CellContainerProps<V>,
         }
     }
 
+    // tslint:disable-next-line:no-any
+    handleChange = (newValue: any) => {
+        if (this.props.onChange) {
+            this.props.onChange(this.props.rowIndex, this.props.columnProps.propName, newValue);
+        }
+    }
+
     private ref: HTMLDivElement;
 
     render(): JSX.Element {
@@ -110,6 +117,7 @@ export class CellContainer<V> extends React.PureComponent<CellContainerProps<V>,
             >
                 <InplaceEdit value={this.props.value}
                     onBlur={this.handleBlur}
+                    onChange={this.handleChange}
                     onFocus={this.handleFocus}
                     onMove={this.handleInplaceEditMove}
                 />

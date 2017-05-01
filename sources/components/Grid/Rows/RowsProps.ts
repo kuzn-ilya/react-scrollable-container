@@ -25,6 +25,7 @@ export interface RowsProps {
     readonly onRowClick?: (rowIndex: number, propName: string, e: MouseEvent<HTMLElement>) => void;
     readonly onRowMove?: (direction: Direction, rowIndex: number, propName: string) => void;
     // tslint:disable-next-line:no-any
+    readonly onCellChange?: (rowIndex: number, propName: string, newValue: any) => void;
     readonly onCellFocus?: (rowIndex: number, propName: string, target: ReactInstance) => void;
     readonly onCellSelect?: (rowIndex: number, propName: string) => void;
 }
@@ -33,6 +34,7 @@ export const rowsPropTypes: ValidationMap<RowsProps> = {
     columnProps: PropTypes.instanceOf(List).isRequired,
     focusedCellPropName: PropTypes.string,
     focusedCellRowIndex: PropTypes.number,
+    onCellChange: PropTypes.func,
     onCellFocus: PropTypes.func,
     onCellSelect: PropTypes.func,
     onRowClick: PropTypes.func,

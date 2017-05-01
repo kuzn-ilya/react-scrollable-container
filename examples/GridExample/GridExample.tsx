@@ -41,6 +41,22 @@ export class GridExample extends React.Component<{}, CompState> {
         });
     }
 
+    // tslint:disable-next-line:no-any
+    handleCellChange = (rowIndex: number, propName: keyof Data, newValue: any): void => {
+        let data = new Array<Data>(...this.state.data!);
+
+        let rowData = {
+            ...data[rowIndex]
+        };
+
+        rowData[propName] = newValue;
+        data.splice(rowIndex, 1, rowData);
+
+        this.setState({
+            data
+        });
+    }
+
     handleCustomScrollBarChanged = (e: React.FormEvent<HTMLInputElement>): void => {
         this.setState({
             customScrollBar: e.currentTarget.checked
@@ -97,6 +113,7 @@ export class GridExample extends React.Component<{}, CompState> {
                         onRowSelectionChanged={this.handleRowSelectionChanged}
                         multiSelectRows={this.state.multiSelectRows}
                         selectedRowIndexes={this.state.propSelectedRowIndexes}
+                        onCellChange={this.handleCellChange}
                     >
                         <TextColumn caption="id" propName="id" width={30} align="right" readonly />
                         <TextColumn caption="firstName" propName="firstName" width={150} />

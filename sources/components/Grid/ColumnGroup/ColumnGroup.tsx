@@ -33,7 +33,7 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
 
     componentWillReceiveProps(nextProps: ColumnGroupProps): void {
         if (nextProps.columnProps !== this.props.columnProps || nextProps.customScrollBars !== this.props.customScrollBars) {
-            this.updateColumnState(nextProps, this.state.rowsThumbWidth || 0);
+            this.updateColumnState(nextProps, this.state.vertScrollWidth || 0);
         }
 
         if (nextProps.selectedRowIndexes !== this.props.selectedRowIndexes
@@ -56,15 +56,15 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
     }
 
     componentDidMount(): void {
-        this.updateColumnState(this.props, this.state.rowsThumbWidth || 0);
+        this.updateColumnState(this.props, this.state.vertScrollWidth || 0);
     }
 
-    updateColumnState(props: ColumnGroupProps, rowsThumbWidth: number): void {
-        this.setState(this.calculateColumnState(props.columnProps, rowsThumbWidth) as ColumnGroupState);
+    updateColumnState(props: ColumnGroupProps, vertScrollWidth: number): void {
+        this.setState(this.calculateColumnState(props.columnProps, vertScrollWidth) as ColumnGroupState);
     }
 
     // tslint:disable-next-line:no-any
-    calculateColumnState(props: List<ColumnProps<any>>, rowsThumbWidth: number): Partial<ColumnGroupState> {
+    calculateColumnState(props: List<ColumnProps<any>>, vertScrollWidth: number): Partial<ColumnGroupState> {
         let columnsWidth = props
             // tslint:disable-next-line:no-any
             .map((value: ColumnProps<any>): number => value.width)
@@ -75,12 +75,12 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
         if (props.size > 0 && this.ref) {
             let refDom = ReactDOM.findDOMNode(this.ref) as HTMLElement;
             width = refDom.offsetWidth;
-            if (columnsWidth < width - rowsThumbWidth) {
+            if (columnsWidth < width - vertScrollWidth) {
                 let lastColumnProps = props.last();
                 let newLastcolumnProps = objectAssign({}, lastColumnProps);
 
-                newLastcolumnProps.width = width - columnsWidth + newLastcolumnProps.width - rowsThumbWidth;
-                columnsWidth = width - rowsThumbWidth;
+                newLastcolumnProps.width = width - columnsWidth + newLastcolumnProps.width - vertScrollWidth;
+                columnsWidth = width - vertScrollWidth;
 
                 let newProps = props.set(props.size - 1, newLastcolumnProps);
                 columnProps = newProps;
@@ -150,9 +150,11 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
                 } as ColumnGroupState);
             } else {
                 let element = ReactDOM.findDOMNode(this.rows) as HTMLElement;
-                if ((this.state.scrollTop + element.offsetHeight) / this.props.rowHeight < rowIndex) {
+                let horzScrollHeight = this.props.colsThumbHeight || this.state.horzScrollHeight || 0;
+                let clientHeight = element.offsetHeight - horzScrollHeight;
+                if (Math.floor((this.state.scrollTop + clientHeight) / this.props.rowHeight) <= rowIndex) {
                     this.setState({
-                        scrollTop: this.props.rowHeight * rowIndex
+                        scrollTop: this.props.rowHeight * (rowIndex + 1) - clientHeight
                     } as ColumnGroupState);
                 }
             }
@@ -165,9 +167,18 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
 
     handleVerticalScrollVisibilityChanged = (visible: boolean, thumbWidth: number): void => {
         this.setState({
-            rowsThumbWidth: thumbWidth
+            vertScrollWidth: thumbWidth
         } as ColumnGroupState);
         this.updateColumnState(this.props, thumbWidth);
+    }
+
+    handleHorizontalScrollVisibilityChanged = (visible: boolean, thumbWidth: number): void => {
+        if (this.props.onHorizontalScrollVisibilityChanged) {
+            this.props.onHorizontalScrollVisibilityChanged(visible, thumbWidth);
+        }
+        this.setState({
+            horzScrollHeight: thumbWidth
+        } as ColumnGroupState);
     }
 
     header: ScrollableContainer;
@@ -183,7 +194,7 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
     }
 
     handleResize = (): void => {
-        this.updateColumnState(this.props, this.state.rowsThumbWidth || 0);
+        this.updateColumnState(this.props, this.state.vertScrollWidth || 0);
         this.props.onResize!();
     }
 
@@ -208,7 +219,7 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
                         overflowX="hidden" overflowY="hidden"
                         width="100%"
                         height={this.props.headerHeight}
-                        vertScrollBarReplacerWidth={this.state.rowsThumbWidth}
+                        vertScrollBarReplacerWidth={this.state.vertScrollWidth}
                         ref={(ref: ScrollableContainer) => this.header = ref}
                         showShadowForReplacer
                         scrollLeft={this.state.scrollLeft}
@@ -229,9 +240,9 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
                         overflowY={this.props.overflowY}
                         width="100%"
                         height="100%"
-                        horzScrollBarReplacerHeight={this.props.colsThumbHeight }
+                        horzScrollBarReplacerHeight={this.props.colsThumbHeight}
                         onScrollPosChanged={this.handleScrollPosChanged}
-                        onHorizontalScrollVisibilityChanged={this.props.onHorizontalScrollVisibilityChanged}
+                        onHorizontalScrollVisibilityChanged={this.handleHorizontalScrollVisibilityChanged}
                         onVerticalScrollVisibilityChanged={this.handleVerticalScrollVisibilityChanged}
                         ref={(ref: ScrollableContainer) => this.rows = ref}
                         showShadowForReplacer

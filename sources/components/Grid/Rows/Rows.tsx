@@ -49,7 +49,6 @@ export class Rows extends React.PureComponent<RowsProps, {}> {
     }
 
     onCellFocus(rowIndex: number, propName: string): void {
-        console.log(rowIndex, propName);
         this.props.onCellFocus!(rowIndex, propName);
     }
 

@@ -4,7 +4,8 @@ import { ColumnProps } from '../Columns/Column/ColumnProps';
 
 export interface ColumnGroupState {
     columnsWidth: number;
-    rowsThumbWidth?: number;
+    vertScrollWidth?: number;
+    horzScrollHeight?: number;
 
     scrollLeft: number;
     scrollTop: number;

@@ -67,7 +67,7 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
         }
     }
 
-    handleFixedCellFocus = (rowIndex: number, propName: string): void => {
+    handleFixedCellSelect = (rowIndex: number, propName: string): void => {
         this.setState({
             fixedFocusedCellPropName: propName,
             fixedFocusedCellRowIndex: rowIndex,
@@ -76,7 +76,7 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
         } as GridState);
     }
 
-    handleScrollableCellFocus = (rowIndex: number, propName: string): void => {
+    handleScrollableCellSelect = (rowIndex: number, propName: string): void => {
         this.setState({
             fixedFocusedCellPropName: undefined,
             fixedFocusedCellRowIndex: undefined,
@@ -160,7 +160,7 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
                         onRowMove={this.handleFixedRowMove}
                         focusedCellPropName={this.state.fixedFocusedCellPropName}
                         focusedCellRowIndex={this.state.fixedFocusedCellRowIndex}
-                        onCellFocus={this.handleFixedCellFocus}
+                        onCellSelect={this.handleFixedCellSelect}
                     />
                 </LayoutPanel>
                 <LayoutSplitter />
@@ -186,7 +186,7 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
                         onRowMove={this.handleScrollableRowMove}
                         focusedCellPropName={this.state.scrollableFocusedCellPropName}
                         focusedCellRowIndex={this.state.scrollableFocusedCellRowIndex}
-                        onCellFocus={this.handleScrollableCellFocus}
+                        onCellSelect={this.handleScrollableCellSelect}
                     />
                 </LayoutPanel>
             </Layout>

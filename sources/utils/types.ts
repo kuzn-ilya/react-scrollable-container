@@ -58,6 +58,13 @@ export function isVertical(align: Edge): boolean {
 
 export type Direction = 'left' | 'right' | 'up' | 'down';
 
+export const directionPropTypes = PropTypes.oneOf([
+    'left',
+    'right',
+    'up',
+    'down'
+]);
+
 export type TextAlign = 'left' | 'right' | 'center';
 
 export const textAlignPropType = PropTypes.oneOf([

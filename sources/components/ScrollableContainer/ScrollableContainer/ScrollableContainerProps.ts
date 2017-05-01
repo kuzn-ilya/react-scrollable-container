@@ -1,5 +1,5 @@
 import * as PropTypes from 'prop-types';
-import { CSSProperties } from 'react';
+import { ReactInstance, CSSProperties } from 'react';
 import { Overflow, overflowPropType, Size, sizePropType } from '../../../utils';
 import { ValidationMap } from '../../../react';
 
@@ -35,6 +35,9 @@ export interface ScrollableContainerProps {
     readonly showShadowForReplacer?: boolean;
 
     readonly customScrollBars?: boolean;
+
+    // tslint:disable-next-line:no-any
+    readonly scrollToElement?: ReactInstance;
 }
 
 export const scrollableContainerPropTypes: ValidationMap<ScrollableContainerProps> = {
@@ -51,6 +54,7 @@ export const scrollableContainerPropTypes: ValidationMap<ScrollableContainerProp
     overflowX: overflowPropType.isRequired,
     overflowY: overflowPropType.isRequired,
     scrollLeft: PropTypes.number,
+    scrollToElement: PropTypes.any,
     scrollTop: PropTypes.number,
     showShadowForReplacer: PropTypes.bool,
     style: PropTypes.any,

@@ -137,32 +137,22 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
         }
     }
 
-    handleCellFocus = (rowIndex: number, propName: string): void => {
+    handleCellSelect = (rowIndex: number, propName: string): void => {
         this.setState({
             focusedCellPropName: propName,
             focusedCellRowIndex: rowIndex
         } as ColumnGroupState);
 
-        if (this.rows) {
-            if (this.state.scrollTop / this.props.rowHeight > rowIndex) {
-                this.setState({
-                    scrollTop: this.props.rowHeight * rowIndex
-                } as ColumnGroupState);
-            } else {
-                let element = ReactDOM.findDOMNode(this.rows) as HTMLElement;
-                let horzScrollHeight = this.props.colsThumbHeight || this.state.horzScrollHeight || 0;
-                let clientHeight = element.offsetHeight - horzScrollHeight;
-                if (Math.floor((this.state.scrollTop + clientHeight) / this.props.rowHeight) <= rowIndex) {
-                    this.setState({
-                        scrollTop: this.props.rowHeight * (rowIndex + 1) - clientHeight
-                    } as ColumnGroupState);
-                }
-            }
+        if (this.props.onCellSelect) {
+            this.props.onCellSelect(rowIndex, propName);
         }
+    }
 
-        if (this.props.onCellFocus) {
-            this.props.onCellFocus(rowIndex, propName);
-        }
+    // tslint:disable-next-line:no-any
+    handleCellFocus = (rowIndex: number, propName: string, target: React.ReactInstance): void => {
+        this.setState({
+            scrollToElement: target
+        } as ColumnGroupState);
     }
 
     handleVerticalScrollVisibilityChanged = (visible: boolean, thumbWidth: number): void => {
@@ -248,6 +238,7 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
                         showShadowForReplacer
                         scrollLeft={this.state.scrollLeft}
                         scrollTop={this.state.scrollTop}
+                        scrollToElement={this.state.scrollToElement}
                     >
                         <Rows
                             columnProps={this.props.columnProps}
@@ -255,6 +246,7 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
                             selectedIndexes={this.state.selectedIndexes}
                             rowClass={this.props.rowClass}
                             rowHeight={this.props.rowHeight}
+                            onCellSelect={this.handleCellSelect}
                             onCellFocus={this.handleCellFocus}
                             onRowClick={this.handleRowClick}
                             onRowMove={this.handleRowMove}

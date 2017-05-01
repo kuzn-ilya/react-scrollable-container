@@ -46,7 +46,7 @@ describe('DOM: Row', () => {
     it('should focus readonly TextCell', () => {
         let columnProps = (<TextColumn readonly propName="first" width={30} />).props;
 
-        let handleFocus = (rowIndex: number, propName: string) => void 0;
+        let handleFocus = (rowIndex: number, propName: string, target: React.ReactInstance) => void 0;
         let spyHandleFocus = chai.spy(handleFocus);
         ReactDOM.render(
                 <CellContainer
@@ -64,13 +64,13 @@ describe('DOM: Row', () => {
         expect(document.activeElement.tagName).equals('DIV');
         expect(document.activeElement.className).equals('cell-wrapper');
 
-        expect(spyHandleFocus).to.have.been.called.once.and.called.with.exactly(0, 'first');
+        expect(spyHandleFocus).to.have.been.called.once.and.called.with(0, 'first');
     });
 
     it('should focus editable TextCell', () => {
         let columnProps = (<TextColumn propName="first" width={30} />).props;
 
-        let handleFocus = (rowIndex: number, propName: string) => void 0;
+        let handleFocus = (rowIndex: number, propName: string, target: React.ReactInstance) => void 0;
         let spyHandleFocus = chai.spy(handleFocus);
 
         ReactDOM.render(
@@ -89,7 +89,7 @@ describe('DOM: Row', () => {
         expect(document.activeElement.tagName).equals('INPUT');
         expect(document.activeElement.className).equals('inplace-edit');
 
-        expect(spyHandleFocus).to.have.been.called.once.and.called.with.exactly(0, 'first');
+        expect(spyHandleFocus).to.have.been.called.once.and.called.with(0, 'first');
     });
 
     it('should fire onMove event whenever right key is pressed', () => {

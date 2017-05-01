@@ -1,3 +1,4 @@
+import { ReactInstance } from 'react';
 import { List } from 'immutable';
 
 import { ColumnProps } from '../Columns/Column/ColumnProps';
@@ -16,4 +17,5 @@ export interface ColumnGroupState {
     readonly selectedIndexes: number[];
     readonly focusedCellPropName?: string;
     readonly focusedCellRowIndex?: number;
+    readonly scrollToElement?: ReactInstance;
 }

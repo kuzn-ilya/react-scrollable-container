@@ -11,18 +11,18 @@ export class Rows extends React.PureComponent<RowsProps, {}> {
     static propTypes = rowsPropTypes;
 
     static defaultProps: Partial<RowsProps> = {
-        onCellFocus: emptyFunction
+        onCellSelect: emptyFunction
     };
 
-    handleRowClick = (rowIndex: number, propName: string, e: React.MouseEvent<HTMLElement>) => {
+    handleCellClick = (rowIndex: number, propName: string, e: React.MouseEvent<HTMLElement>) => {
         if (this.props.onRowClick) {
             this.props.onRowClick(rowIndex, propName, e);
         }
 
-        this.onCellFocus(rowIndex, propName);
+        this.onCellSelect(rowIndex, propName);
     }
 
-    handleRowMove = (direction: Direction, rowIndex: number, propName: string): void => {
+    handleCellMove = (direction: Direction, rowIndex: number, propName: string): void => {
         let index = this.props.columnProps.findIndex((columnProps) =>
             (columnProps && columnProps.propName) === propName
         );
@@ -35,12 +35,12 @@ export class Rows extends React.PureComponent<RowsProps, {}> {
                 nextCellPropName = this.props.columnProps.get(index + 1).propName;
             }
 
-            this.onCellFocus(rowIndex, nextCellPropName);
+            this.onCellSelect(rowIndex, nextCellPropName);
 
         } else if (direction === 'down' && rowIndex < this.props.rowData.length - 1) {
-            this.onCellFocus(rowIndex + 1, propName);
+            this.onCellSelect(rowIndex + 1, propName);
         } else if (direction === 'up' && rowIndex > 0) {
-            this.onCellFocus(rowIndex - 1, propName);
+            this.onCellSelect(rowIndex - 1, propName);
         }
 
         if (this.props.onRowMove) {
@@ -48,8 +48,8 @@ export class Rows extends React.PureComponent<RowsProps, {}> {
         }
     }
 
-    onCellFocus(rowIndex: number, propName: string): void {
-        this.props.onCellFocus!(rowIndex, propName);
+    onCellSelect(rowIndex: number, propName: string): void {
+        this.props.onCellSelect!(rowIndex, propName);
     }
 
     // tslint:disable-next-line:no-any
@@ -65,8 +65,9 @@ export class Rows extends React.PureComponent<RowsProps, {}> {
                 height={this.props.rowHeight}
                 showEdgeForTheLeftCell={this.props.showEdgeForTheLeftCell}
                 selected={!!(this.props.selectedIndexes && (this.props.selectedIndexes.indexOf(index) >= 0))}
-                onClick={this.handleRowClick}
-                onMove={this.handleRowMove}
+                onCellClick={this.handleCellClick}
+                onCellMove={this.handleCellMove}
+                onCellFocus={this.props.onCellFocus}
                 focusedCellPropName={this.props.focusedCellRowIndex === index && this.props.focusedCellPropName
                     ? this.props.focusedCellPropName : undefined}
             />

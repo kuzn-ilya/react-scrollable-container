@@ -1,5 +1,5 @@
 import * as PropTypes from 'prop-types';
-import { MouseEvent } from 'react';
+import { MouseEvent, ReactInstance } from 'react';
 import { ValidationMap } from '../../../react';
 import { ColumnProps } from '../Columns/Column/ColumnProps';
 import { List } from 'immutable';
@@ -16,8 +16,10 @@ export interface RowProps {
     height: number;
     selected: boolean;
     showEdgeForTheLeftCell?: boolean;
-    onClick?: (rowIndex: number, propName: string, e?: MouseEvent<HTMLElement>) => void;
-    onMove?: (direction: Direction, rowIndex: number, propName: string) => void;
+    // tslint:disable-next-line:no-any
+    onCellFocus?: (rowIndex: number, propName: string, target: ReactInstance) => void;
+    onCellClick?: (rowIndex: number, propName: string, e?: MouseEvent<HTMLElement>) => void;
+    onCellMove?: (direction: Direction, rowIndex: number, propName: string) => void;
 }
 
 export const rowPropTypes: ValidationMap<RowProps> = {
@@ -25,8 +27,9 @@ export const rowPropTypes: ValidationMap<RowProps> = {
     data: PropTypes.any.isRequired,
     focusedCellPropName: PropTypes.string,
     height: PropTypes.number.isRequired,
-    onClick: PropTypes.func,
-    onMove: PropTypes.func,
+    onCellClick: PropTypes.func,
+    onCellFocus: PropTypes.func,
+    onCellMove: PropTypes.func,
     rowIndex: PropTypes.number.isRequired,
     selected: PropTypes.bool.isRequired,
     showEdgeForTheLeftCell: PropTypes.bool

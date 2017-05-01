@@ -1,5 +1,5 @@
 import * as PropTypes from 'prop-types';
-import { ComponentClass, MouseEvent } from 'react';
+import { ComponentClass, MouseEvent, ReactInstance } from 'react';
 import { ValidationMap } from '../../../react';
 import { ColumnProps } from '../Columns/Column/ColumnProps';
 import { List } from 'immutable';
@@ -24,13 +24,17 @@ export interface RowsProps {
 
     readonly onRowClick?: (rowIndex: number, propName: string, e: MouseEvent<HTMLElement>) => void;
     readonly onRowMove?: (direction: Direction, rowIndex: number, propName: string) => void;
-    readonly onCellFocus?: (rowIndex: number, propName: string) => void;
+    // tslint:disable-next-line:no-any
+    readonly onCellFocus?: (rowIndex: number, propName: string, target: ReactInstance) => void;
+    readonly onCellSelect?: (rowIndex: number, propName: string) => void;
 }
 
 export const rowsPropTypes: ValidationMap<RowsProps> = {
     columnProps: PropTypes.instanceOf(List).isRequired,
     focusedCellPropName: PropTypes.string,
     focusedCellRowIndex: PropTypes.number,
+    onCellFocus: PropTypes.func,
+    onCellSelect: PropTypes.func,
     onRowClick: PropTypes.func,
     onRowMove: PropTypes.func,
     // TODO: Find more appropriate prop type

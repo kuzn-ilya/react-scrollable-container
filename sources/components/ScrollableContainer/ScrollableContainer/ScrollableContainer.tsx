@@ -87,19 +87,54 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
     }
 
     componentWillReceiveProps(newProps: ScrollableContainerProps): void {
-        if (newProps.scrollLeft !== this.propsScrollLeft
-            && newProps.scrollLeft !== this.state.scrollLeft) {
-            this.setStateInternal({
-                scrollLeft: newProps.scrollLeft || 0
-            });
-            this.propsScrollLeft = newProps.scrollLeft;
-        }
-        if (newProps.scrollTop !== this.propsScrollTop
-            && newProps.scrollTop !== this.state.scrollTop) {
-            this.setStateInternal({
-                scrollTop: newProps.scrollTop || 0
-            });
-            this.propsScrollTop = newProps.scrollTop;
+        if (newProps.scrollToElement && newProps.scrollToElement !== this.props.scrollToElement) {
+            let element = ReactDOM.findDOMNode(newProps.scrollToElement) as HTMLElement;
+            if (element) {
+                if (this.state.scrollTop > element.offsetTop) {
+                    this.setStateInternal({
+                        scrollTop: element.offsetTop
+                    });
+                } else {
+                    let container = ReactDOM.findDOMNode(this.ref) as HTMLElement;
+                    let horzScrollHeight = this.state.horzScrollThumbHeight;
+                    let clientHeight = container.offsetHeight - horzScrollHeight;
+                    if (this.state.scrollTop + clientHeight <= element.offsetTop + element.offsetHeight) {
+                        this.setStateInternal({
+                            scrollTop: element.offsetTop + element.offsetHeight - clientHeight
+                        });
+                    }
+                }
+
+                if (this.state.scrollLeft > element.offsetLeft) {
+                    this.setStateInternal({
+                        scrollLeft: element.offsetLeft
+                    });
+                } else {
+                    let container = ReactDOM.findDOMNode(this.ref) as HTMLElement;
+                    let vertScrollWidth = this.state.vertScrollThumbWidth;
+                    let clientWidth = container.offsetWidth - vertScrollWidth;
+                    if (this.state.scrollLeft + clientWidth <= element.offsetLeft + element.offsetWidth) {
+                        this.setStateInternal({
+                            scrollLeft: element.offsetLeft + element.offsetWidth - clientWidth
+                        });
+                    }
+                }
+            }
+        } else {
+            if (newProps.scrollLeft !== this.propsScrollLeft
+                && newProps.scrollLeft !== this.state.scrollLeft) {
+                this.setStateInternal({
+                    scrollLeft: newProps.scrollLeft || 0
+                });
+                this.propsScrollLeft = newProps.scrollLeft;
+            }
+            if (newProps.scrollTop !== this.propsScrollTop
+                && newProps.scrollTop !== this.state.scrollTop) {
+                this.setStateInternal({
+                    scrollTop: newProps.scrollTop || 0
+                });
+                this.propsScrollTop = newProps.scrollTop;
+            }
         }
 
         if (newProps.horzScrollBarReplacerHeight !== this.props.horzScrollBarReplacerHeight

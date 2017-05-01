@@ -9,14 +9,14 @@ export class Row extends React.PureComponent<RowProps, RowState> {
     static propTypes = rowPropTypes;
 
     handleMove = (direction: Direction, rowIndex: number, propName: string): void => {
-        if (this.props.onMove) {
-            this.props.onMove(direction, this.props.rowIndex, propName);
+        if (this.props.onCellMove) {
+            this.props.onCellMove(direction, this.props.rowIndex, propName);
         }
     }
 
     handleClick = (rowIndex: number, propName: string): void => {
-        if (this.props.onClick) {
-            this.props.onClick(rowIndex, propName);
+        if (this.props.onCellClick) {
+            this.props.onCellClick(rowIndex, propName);
         }
     }
 
@@ -44,6 +44,7 @@ export class Row extends React.PureComponent<RowProps, RowState> {
                     value={this.props.data[value.propName]}
                     onMove={this.handleMove}
                     onClick={this.handleClick}
+                    onFocus={this.props.onCellFocus}
                     focused={this.props.focusedCellPropName === value.propName}
                 />
             );

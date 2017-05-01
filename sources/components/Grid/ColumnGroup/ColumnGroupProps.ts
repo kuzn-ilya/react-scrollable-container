@@ -20,7 +20,7 @@ export interface ColumnGroupProps {
     readonly onRowMove?: (direction: Direction, rowIndex: number, propName: string) => void;
     readonly onScrollPosChanged?: (left: number, top: number) => void;
     readonly onResize?: () => void;
-    readonly onCellFocus?: (rowIndex: number, propName: string) => void;
+    readonly onCellSelect?: (rowIndex: number, propName: string) => void;
 
     readonly overflowX: Overflow;
     readonly overflowY: Overflow;

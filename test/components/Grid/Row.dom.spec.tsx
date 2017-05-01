@@ -129,7 +129,7 @@ describe('DOM: Row', () => {
                     rowIndex={0}
                     selected={false}
                     focusedCellPropName="first"
-                    onMove={handleMoveSpy}
+                    onCellMove={handleMoveSpy}
                 >
                 </Row>,
             div);

@@ -55,8 +55,6 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
             style: this.calculateStyle(this.props),
             vertScrollThumbWidth: 0
         };
-        this.propsScrollLeft = this.props.scrollLeft;
-        this.propsScrollTop = this.props.scrollTop;
     }
 
     private removeResizeEventListener: () => void = emptyFunction;
@@ -121,19 +119,15 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
                 }
             }
         } else {
-            if (newProps.scrollLeft !== this.propsScrollLeft
-                && newProps.scrollLeft !== this.state.scrollLeft) {
+            if (newProps.scrollLeft !== this.props.scrollLeft) {
                 this.setStateInternal({
                     scrollLeft: newProps.scrollLeft || 0
                 });
-                this.propsScrollLeft = newProps.scrollLeft;
             }
-            if (newProps.scrollTop !== this.propsScrollTop
-                && newProps.scrollTop !== this.state.scrollTop) {
+            if (newProps.scrollTop !== this.props.scrollTop) {
                 this.setStateInternal({
                     scrollTop: newProps.scrollTop || 0
                 });
-                this.propsScrollTop = newProps.scrollTop;
             }
         }
 
@@ -316,8 +310,6 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
 
     private vertScrollThumbWidth: number = 0;
     private horzScrollThumbWidth: number = 0;
-    private propsScrollLeft?: number;
-    private propsScrollTop?: number;
 
     setStateInternal(state: Partial<ScrollableContainerState>): void {
         if (state.horzScrollThumbHeight !== undefined) {

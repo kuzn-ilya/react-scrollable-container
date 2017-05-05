@@ -66,7 +66,7 @@ var config = merge.smart(common,
                 test: /\.css$/,
                 loaders: [
                     'style-loader', 
-                    'css-loader',
+                    'css-loader?modules=true&camelCase=true&localIdentName=[local]',
                     path.join(__dirname, 'cssLoader.js?') + JSON.stringify(cssVars.CSS_ALL_VARS)
                 ],
                 exclude: ["node_modules"]

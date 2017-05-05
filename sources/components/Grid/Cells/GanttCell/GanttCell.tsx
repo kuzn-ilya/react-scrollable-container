@@ -5,8 +5,6 @@ import { GanttColumnProps } from '../../Columns/GanttColumn/GanttColumnProps';
 import { isEntityInPeriod, calculateEntityGeometry, calculateTimeline, GanttCellModel, TimelineModel } from '../../../../utils';
 import { Shift } from './Shift';
 
-import '../../../../styles/grid.css';
-
 export class GanttCell extends React.PureComponent<CellProps<GanttColumnProps, Array<GanttCellModel>>, TimelineModel> {
     static propTypes = cellPropTypes;
 

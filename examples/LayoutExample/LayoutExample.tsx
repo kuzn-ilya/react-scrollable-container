@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { Layout, LayoutPanel, LayoutSplitter } from '../../sources/components';
-import '../page/styles.css';
+import * as classes from '../page/styles.css';
 
 interface CompState {
 }
@@ -17,22 +17,22 @@ export class LayoutExample extends React.Component<{}, CompState> {
         return (
             <Layout width="100%" height="100%">
                 <LayoutPanel align="top" height={50} minHeight={20} maxHeight={200}>
-                    <div className="div-text" style={{backgroundColor: 'yellow'}}>
+                    <div className={classes.divText} style={{backgroundColor: 'yellow'}}>
                     </div>
                 </LayoutPanel>
                 <LayoutSplitter liveUpdate />
                 <LayoutPanel align="left" width={50} minWidth={20} maxWidth={300}>
-                    <div className="div-text" style={{backgroundColor: 'white'}}>
+                    <div className={classes.divText} style={{backgroundColor: 'white'}}>
                     </div>
                 </LayoutPanel>
                 <LayoutSplitter liveUpdate />
                 <LayoutPanel align="right" width={50} minWidth={20} maxWidth={300}>
-                    <div className="div-text" style={{backgroundColor: 'white'}}>
+                    <div className={classes.divText} style={{backgroundColor: 'white'}}>
                     </div>
                 </LayoutPanel>
                 <LayoutSplitter liveUpdate />
                 <LayoutPanel align="client" minWidth={100} minHeight={20}>
-                    <div className="div-text" style={{backgroundColor: 'pink'}}>
+                    <div className={classes.divText} style={{backgroundColor: 'pink'}}>
                     </div>
                 </LayoutPanel>
             </Layout>

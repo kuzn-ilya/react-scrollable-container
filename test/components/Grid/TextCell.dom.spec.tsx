@@ -8,6 +8,8 @@ import { CellContainer } from '../../../sources/components/Grid/Cells/CellContai
 import { simulateKeyDown, simulateKeyUp} from '../../TestUtils';
 import { KeyConsts } from '../../../sources/utils';
 
+import * as classes from '../../../sources/styles/grid.css';
+
 const expect = chai.expect;
 chai.use(chaiSpies);
 
@@ -62,7 +64,7 @@ describe('DOM: Row', () => {
 
         expect(document.activeElement).to.exist;
         expect(document.activeElement.tagName).equals('DIV');
-        expect(document.activeElement.className).equals('cell-wrapper');
+        expect(document.activeElement.className).equals(classes.cellWrapper);
 
         expect(spyHandleFocus).to.have.been.called.once.and.called.with(0, 'first');
     });
@@ -87,7 +89,7 @@ describe('DOM: Row', () => {
 
         expect(document.activeElement).to.exist;
         expect(document.activeElement.tagName).equals('INPUT');
-        expect(document.activeElement.className).equals('inplace-edit');
+        expect(document.activeElement.className).equals(classes.inplaceEdit);
 
         expect(spyHandleFocus).to.have.been.called.once.and.called.with(0, 'first');
     });

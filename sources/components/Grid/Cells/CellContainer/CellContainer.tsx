@@ -3,7 +3,7 @@ import { CellContainerProps, cellContainerPropTypes } from './CellContainerProps
 import { CellContainerState } from './CellContainerState';
 import { classNames, KeyConsts, Direction } from '../../../../utils';
 
-import '../../../../styles/grid.css';
+import * as classes from '../../../../styles/grid.css';
 
 export class CellContainer<V> extends React.PureComponent<CellContainerProps<V>, CellContainerState> {
     static propTypes = cellContainerPropTypes;
@@ -106,13 +106,14 @@ export class CellContainer<V> extends React.PureComponent<CellContainerProps<V>,
         let Cell = this.props.columnProps.cellClass!;
 
         let isEditing = this.props.focused && !this.props.columnProps.readonly;
+        debugger;
         let innerComponent = isEditing
             ?
             <div
                 className={classNames({
-                    'cell-wrapper-first': !!this.props.firstCell,
-                    'cell-wrapper': true,
-                    'cell-wrapper-focused': true
+                    [classes.cellWrapperFirst]: !!this.props.firstCell,
+                    [classes.cellWrapper]: true,
+                    [classes.cellWrapperFocused]: true
                 })}
             >
                 <InplaceEdit value={this.props.value}
@@ -125,8 +126,8 @@ export class CellContainer<V> extends React.PureComponent<CellContainerProps<V>,
             :
             <div
                 className={classNames({
-                    'cell-wrapper-first': !!this.props.firstCell,
-                    'cell-wrapper': true
+                    [classes.cellWrapperFirst]: !!this.props.firstCell,
+                    [classes.cellWrapper]: true
                 })}
                 onKeyDown={this.handleKeyDown}
                 onBlur={this.handleBlur}
@@ -141,7 +142,7 @@ export class CellContainer<V> extends React.PureComponent<CellContainerProps<V>,
             </div>;
         return (
             <div style={style}
-                className="cell-container"
+                className={classes.cellContainer}
                 onClick={this.handleClick}
             >
                 {innerComponent}

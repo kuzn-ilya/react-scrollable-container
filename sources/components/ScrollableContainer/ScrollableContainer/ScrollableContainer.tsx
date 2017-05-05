@@ -12,8 +12,8 @@ import { ScrollBar } from '../ScrollBar';
 import * as emptyFunction from 'fbjs/lib/emptyFunction';
 import * as invariant from 'fbjs/lib/invariant';
 
-import '../../../styles/container.css';
-import '../../../styles/common.css';
+import * as classes from '../../../styles/container.css';
+import * as commonClasses from '../../../styles/common.css';
 
 export class ScrollableContainer extends React.PureComponent<ScrollableContainerProps, ScrollableContainerState> {
 
@@ -217,11 +217,12 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
             </ScrollableContent>
         );
 
-        if (this.props.customScrollBars) {
+        if (this.props.customScrollBars || (this.props.overflowX === 'hidden' && this.props.overflowY === 'hidden')) {
             scrollableContent = (
                 <TransformableContainer contentWidth={this.props.contentWidth} contentHeight={this.props.contentHeight}
                     scrollLeft={this.state.scrollLeft}
                     scrollTop={this.state.scrollTop}
+                    onScrollPosChanged={this.props.onScrollPosChanged}
                 >
                     {scrollableContent}
                 </TransformableContainer>
@@ -230,7 +231,7 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
 
         return (
             <div
-                className={classNames('scrollable-container', this.props.className!)}
+                className={classNames(classes.scrollableContainer, this.props.className!)}
                 style={{
                     height: this.props.height,
                     width: this.props.width
@@ -238,13 +239,14 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
                 id={this.props.id}
             >
                 <div className={classNames({
-                        'scrollable-container-scrollable': true,
-                        'right-shadow': Boolean(this.props.showShadowForReplacer && this.props.vertScrollBarReplacerWidth),
-                        'bottom-shadow': Boolean(this.props.showShadowForReplacer && this.props.horzScrollBarReplacerHeight)
+                        [classes.scrollableContainerScrollable]: true,
+                        [commonClasses.rightShadow]: Boolean(this.props.showShadowForReplacer && this.props.vertScrollBarReplacerWidth),
+                        [commonClasses.bottomShadow]: Boolean(this.props.showShadowForReplacer && this.props.horzScrollBarReplacerHeight)
                     })}
                     style={this.state.style}
                     ref={this.setRef}
-                    onScroll={this.props.customScrollBars ? undefined : this.handleScroll}
+                    onScroll={this.props.customScrollBars || (this.props.overflowX === 'hidden' && this.props.overflowY === 'hidden')
+                        ? undefined : this.handleScroll}
                 >
                     {scrollableContent}
                     {horzScrollBar}
@@ -280,7 +282,7 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
 
     private updateScrollPositions(): void {
         if (this.ref) {
-            if (this.props.customScrollBars) {
+            if (this.props.customScrollBars || (this.props.overflowX === 'hidden' && this.props.overflowY === 'hidden')) {
                 this.ref.scrollLeft = 0;
                 this.ref.scrollTop = 0;
             } else {
@@ -346,12 +348,14 @@ export class ScrollableContainer extends React.PureComponent<ScrollableContainer
         }
     }
 
+    // TODO: Now setScrollLeft is not used anymore.
     setScrollLeft(position: number): void {
         if (this.ref) {
             this.ref.scrollLeft = position;
         }
     }
 
+    // TODO: Now setScrollTop is not used anymore.
     setScrollTop(position: number): void {
         if (this.ref) {
             this.ref.scrollTop = position;

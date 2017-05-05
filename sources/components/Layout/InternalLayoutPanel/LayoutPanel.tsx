@@ -5,8 +5,8 @@ import { classNames } from '../../../utils';
 
 import * as warning from 'fbjs/lib/warning';
 
-import '../../../styles/layout.css';
-import '../../../styles/common.css';
+import * as classes from '../../../styles/layout.css';
+import * as commonClasses from '../../../styles/common.css';
 
 export namespace Internal {
     export class LayoutPanel extends React.PureComponent<LayoutPanelProps, {}> {
@@ -33,9 +33,9 @@ export namespace Internal {
 
             return (
                 <div className={classNames({
-                        'layout-panel': true,
-                        'bottom-shadow': Boolean(this.props.showBottomShadow),
-                        'right-shadow': Boolean(this.props.showRightShadow)
+                        [classes.layoutPanel]: true,
+                        [commonClasses.bottomShadow]: Boolean(this.props.showBottomShadow),
+                        [commonClasses.rightShadow]: Boolean(this.props.showRightShadow)
                     })}
                     style={layoutPaneStyle}
                 >

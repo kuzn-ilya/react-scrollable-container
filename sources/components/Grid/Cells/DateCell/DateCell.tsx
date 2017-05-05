@@ -2,14 +2,14 @@ import * as React from 'react';
 import { CellProps, cellPropTypes } from '../Cell/CellProps';
 import { DateColumnProps } from '../../Columns/DateColumn/DateColumnProps';
 
-import '../../../../styles/grid.css';
+import * as classes from '../../../../styles/grid.css';
 
 export class DateCell extends React.PureComponent<CellProps<DateColumnProps, Date>, {}> {
     static propTypes = cellPropTypes;
 
     render(): JSX.Element {
         return (
-            <div className="date-cell"
+            <div className={classes.dateCell}
                 style={{
                     textAlign: this.props.columnProps.align
                 }}

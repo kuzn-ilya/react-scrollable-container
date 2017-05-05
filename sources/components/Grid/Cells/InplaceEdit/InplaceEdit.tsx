@@ -3,7 +3,7 @@ import { KeyConsts, Direction } from '../../../../utils';
 import { InplaceEditProps, inplaceEditPropTypes } from './InplaceEditProps';
 import { InplaceEditState } from './InplaceEditState';
 
-import '../../../../styles/grid.css';
+import * as classes from '../../../../styles/grid.css';
 
 export class InplaceEdit extends React.PureComponent<InplaceEditProps, InplaceEditState> {
     static propTypes = inplaceEditPropTypes;
@@ -81,7 +81,7 @@ export class InplaceEdit extends React.PureComponent<InplaceEditProps, InplaceEd
 
     render(): JSX.Element {
         return (
-            <input className="inplace-edit"
+            <input className={classes.inplaceEdit}
                 type="text"
                 ref={(ref) => this.ref = ref}
                 value={this.state.value}

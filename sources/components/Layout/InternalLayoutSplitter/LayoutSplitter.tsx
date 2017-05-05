@@ -6,7 +6,7 @@ import { classNames, MouseCapture, isVertical } from  '../../../utils';
 
 import * as emptyFunction from 'fbjs/lib/emptyFunction';
 
-import '../../../styles/layout-splitter.css';
+import * as classes from '../../../styles/layout-splitter.css';
 
 export namespace Internal {
     export class LayoutSplitter extends React.PureComponent<LayoutSplitterProps, LayoutSplitterState> {
@@ -61,9 +61,9 @@ export namespace Internal {
 
         getClassName(): string | undefined {
             return classNames({
-                'layout-vert-splitter': isVertical(this.props.align),
-                'layout-horz-splitter': !isVertical(this.props.align),
-                'layout-splitter-active': this.state.isActive
+                [classes.layoutVertSplitter]: isVertical(this.props.align),
+                [classes.layoutHorzSplitter]: !isVertical(this.props.align),
+                [classes.layoutSplitterActive]: this.state.isActive
             });
         }
 

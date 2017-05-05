@@ -7,6 +7,7 @@ import { UAParser } from 'ua-parser-js';
 import { renderIntoDocument, unmountComponent, findRenderedComponentWithType } from '../../TestUtils';
 
 import { Overflow, ScrollableContainer, ScrollableContent } from '../../../sources';
+import * as classes from '../../../sources/styles/container.css';
 
 const expect = chai.expect;
 chai.use(chaiSpies);
@@ -88,14 +89,14 @@ describe('ScrollableContainer', () => {
         let domElement = ReactDOM.findDOMNode(container);
 
         expect(domElement.classList).to.have.length(1);
-        expect(domElement.classList[0]).equals('scrollable-container');
+        expect(domElement.classList[0]).equals(classes.scrollableContainer);
     });
 
     it('should have a class "scrollable-container-scrollable"', () => {
         let container = renderIntoDocument(<ScrollableContainer overflowX="auto" overflowY="auto" height={100} width={100}/>);
         let domElement = ReactDOM.findDOMNode(container).firstChild as HTMLElement;
 
-        expect(domElement.classList.contains('scrollable-container-scrollable')).to.be.true;
+        expect(domElement.classList.contains(classes.scrollableContainerScrollable)).to.be.true;
     });
 
     it('should have a child of type ScrollableContainerContent', () => {

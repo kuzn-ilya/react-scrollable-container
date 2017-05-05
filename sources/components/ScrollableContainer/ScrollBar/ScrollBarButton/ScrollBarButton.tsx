@@ -4,7 +4,7 @@ import { ScrollBarButtonState } from './ScrollBarButtonState';
 import { classNames } from '../../../../utils';
 import * as emptyFunction from 'fbjs/lib/emptyFunction';
 
-import '../../../../styles/scroll-bar.css';
+import * as classes from '../../../../styles/scroll-bar.css';
 
 const SCROLL_TIME = 50;
 
@@ -26,18 +26,18 @@ export class ScrollBarButton extends React.PureComponent<ScrollBarButtonProps, S
                 style={buttonStyle}
                 className={classNames(
                     {
-                        'scrollbar-button': !this.props.disabled,
-                        'scrollbar-button-disabled': !!this.props.disabled,
-                        'scrollbar-prev-button': this.props.type === 'top' || this.props.type === 'left',
-                        'scrollbar-next-button': this.props.type === 'bottom' || this.props.type === 'right',
-                        'scrollbar-up-button': this.props.type === 'top' && !this.props.disabled,
-                        'scrollbar-down-button': this.props.type === 'bottom' && !this.props.disabled,
-                        'scrollbar-left-button': this.props.type === 'left' && !this.props.disabled,
-                        'scrollbar-right-button': this.props.type === 'right' && !this.props.disabled,
-                        'scrollbar-up-button-disabled': this.props.type === 'top' && !!this.props.disabled,
-                        'scrollbar-down-button-disabled': this.props.type === 'bottom' && !!this.props.disabled,
-                        'scrollbar-left-button-disabled': this.props.type === 'left' && !!this.props.disabled,
-                        'scrollbar-right-button-disabled': this.props.type === 'right' && !!this.props.disabled
+                        [classes.scrollbarButton]: !this.props.disabled,
+                        [classes.scrollbarButtonDisabled]: !!this.props.disabled,
+                        [classes.scrollbarPrevButton]: this.props.type === 'top' || this.props.type === 'left',
+                        [classes.scrollbarNextButton]: this.props.type === 'bottom' || this.props.type === 'right',
+                        [classes.scrollbarUpButton]: this.props.type === 'top' && !this.props.disabled,
+                        [classes.scrollbarDownButton]: this.props.type === 'bottom' && !this.props.disabled,
+                        [classes.scrollbarLeftButton]: this.props.type === 'left' && !this.props.disabled,
+                        [classes.scrollbarRightButton]: this.props.type === 'right' && !this.props.disabled,
+                        [classes.scrollbarUpButtonDisabled]: this.props.type === 'top' && !!this.props.disabled,
+                        [classes.scrollbarDownButtonDisabled]: this.props.type === 'bottom' && !!this.props.disabled,
+                        [classes.scrollbarLeftButtonDisabled]: this.props.type === 'left' && !!this.props.disabled,
+                        [classes.scrollbarRightButtonDisabled]: this.props.type === 'right' && !!this.props.disabled
                     }
                 )}
                 onMouseDown={this.handleMouseDown}

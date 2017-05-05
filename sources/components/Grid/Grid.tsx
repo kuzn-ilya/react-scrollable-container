@@ -10,8 +10,6 @@ import { ColumnProps } from './Columns/Column/ColumnProps';
 import { Layout, LayoutPanel, LayoutSplitter } from '../Layout';
 import { Direction } from '../../utils';
 
-import '../../styles/common.css';
-
 export class Grid extends React.PureComponent<GridProps, GridState> {
 
     static propTypes = gridPropTypes;

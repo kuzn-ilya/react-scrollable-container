@@ -5,6 +5,8 @@ import { RowProps, rowPropTypes } from './RowProps';
 import { RowState } from './RowState';
 import { ColumnProps } from '../Columns/Column/ColumnProps';
 
+import * as classes from '../../../styles/grid.css';
+
 export class Row extends React.PureComponent<RowProps, RowState> {
     static propTypes = rowPropTypes;
 
@@ -22,7 +24,7 @@ export class Row extends React.PureComponent<RowProps, RowState> {
 
     render(): JSX.Element {
         return (
-            <div className={classNames({'selected-row': this.props.selected})}
+            <div className={classNames({[classes.selectedRow]: this.props.selected})}
                 key={this.props.rowIndex} style={{height: this.props.height }}>
                 {this.renderCells()}
             </div>

@@ -8,7 +8,7 @@ import { MouseCapture, classNames, updateCSSPosition } from '../../../../utils';
 
 import * as emptyFunction from 'fbjs/lib/emptyFunction';
 
-import '../../../../styles/scroll-bar.css';
+import * as classes from '../../../../styles/scroll-bar.css';
 
 export class ScrollBarThumb extends React.PureComponent<ScrollBarThumbProps, ScrollBarThumbState> {
     static propTypes = scrollBarThumbPropTypes;
@@ -76,8 +76,8 @@ export class ScrollBarThumb extends React.PureComponent<ScrollBarThumbProps, Scr
 
         return (
             <div
-                className={classNames('scrollbar-thumb', {
-                    'scrollbar-thumb-captured': this.state.isActive
+                className={classNames(classes.scrollbarThumb, {
+                    [classes.scrollbarThumbCaptured]: this.state.isActive
                 })}
                 style={style}
                 ref={(ref) => this.ref = ref}

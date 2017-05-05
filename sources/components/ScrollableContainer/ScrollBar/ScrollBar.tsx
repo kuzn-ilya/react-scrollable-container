@@ -9,7 +9,7 @@ import * as invariant from 'fbjs/lib/invariant';
 import * as emptyFunction from 'fbjs/lib/emptyFunction';
 import { CSS_NUMBER_VARS } from '../../../stubs/cssVars';
 
-import '../../../styles/scroll-bar.css';
+import * as classes from '../../../styles/scroll-bar.css';
 
 const SCROLL_TIME = 200;
 // tslint:disable-next-line:no-string-literal
@@ -212,9 +212,9 @@ export class ScrollBar extends React.PureComponent<ScrollBarProps, Partial<Scrol
         return (
             <div
                 ref={this.setRef}
-                className={classNames('scrollbar-container', {
-                    'scrollbar-container-vertical': this.props.orientation === 'vertical',
-                    'scrollbar-container-horizontal': this.props.orientation === 'horizontal'
+                className={classNames(classes.scrollbarContainer, {
+                    [classes.scrollbarContainerVertical]: this.props.orientation === 'vertical',
+                    [classes.scrollbarContainerHorizontal]: this.props.orientation === 'horizontal'
                 })}
                 onMouseDown={this.handleMouseDown}
                 onMouseUp={this.handleMouseUp}

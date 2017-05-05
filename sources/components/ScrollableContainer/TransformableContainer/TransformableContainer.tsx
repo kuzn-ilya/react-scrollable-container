@@ -18,6 +18,13 @@ export class TransformableContainer extends React.PureComponent<TransformableCon
         super(props);
     }
 
+    componentWillReceiveProps(nextProps: TransformableContainerProps) {
+        if (this.props.onScrollPosChanged
+            && (nextProps.scrollLeft !== this.props.scrollLeft || nextProps.scrollTop !== this.props.scrollTop)) {
+            this.props.onScrollPosChanged(nextProps.scrollLeft || 0, nextProps.scrollTop || 0);
+        }
+    }
+
     render(): JSX.Element {
         let style = {
             height: this.props.contentHeight,

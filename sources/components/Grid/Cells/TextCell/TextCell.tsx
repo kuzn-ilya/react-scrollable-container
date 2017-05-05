@@ -2,14 +2,14 @@ import * as React from 'react';
 import { CellProps, cellPropTypes } from '../Cell/CellProps';
 import { TextColumnProps } from '../../Columns/TextColumn/TextColumnProps';
 
-import '../../../../styles/grid.css';
+import * as classes from '../../../../styles/grid.css';
 
 export class TextCell extends React.PureComponent<CellProps<TextColumnProps, string>, {}> {
     static propTypes = cellPropTypes;
 
     render(): JSX.Element {
         return (
-            <div className="text-cell"
+            <div className={classes.textCell}
                 style={{
                     textAlign: this.props.columnProps.align
                 }}

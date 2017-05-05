@@ -6,8 +6,8 @@ import { ScrollableContentState } from './ScrollableContentState';
 import { listenToResize, classNames } from '../../../utils';
 import * as emptyFunction from 'fbjs/lib/emptyFunction';
 
-import '../../../styles/common.css';
-import '../../../styles/container.css';
+import * as commonClasses from '../../../styles/common.css';
+import * as classes from '../../../styles/container.css';
 
 export class ScrollableContent extends React.PureComponent<ScrollableContentProps, ScrollableContentState> {
 
@@ -45,7 +45,7 @@ export class ScrollableContent extends React.PureComponent<ScrollableContentProp
         let wrapper: React.ReactNode = null;
         if (this.props.contentWidth !== '100%' || this.props.contentHeight !== '100%') {
             wrapper = (
-                <div className="scrollable-container-wrapper"
+                <div className={classes.scrollableContainerWrapper}
                     style={{
                         left: this.props.contentWidth === '100%' ? 0 : (this.props.contentWidth || 0) - 1,
                         top: this.props.contentHeight === '100%' ? 0 : (this.props.contentHeight || 0) - 1
@@ -56,7 +56,7 @@ export class ScrollableContent extends React.PureComponent<ScrollableContentProp
 
         return (
             <div style={this.state.style}
-                className={classNames('scrollable-content', 'transform-boost')}
+                className={classNames(classes.scrollableContent, commonClasses.transformBoost)}
                 ref={this.setRef}
             >
                 {this.props.children}

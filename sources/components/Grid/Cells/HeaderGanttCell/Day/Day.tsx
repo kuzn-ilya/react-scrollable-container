@@ -6,6 +6,8 @@ import { classNames, getWeekDayName, isSameDay } from '../../../../../utils';
 import { DayProps } from './DayProps';
 import { Hour } from '../Hour';
 
+import * as classes from '../../../../../styles/shift.css';
+
 export class Day extends React.PureComponent<DayProps, {}> {
     public render(): JSX.Element {
         let hours: List<JSX.Element> = List<JSX.Element>();
@@ -27,19 +29,19 @@ export class Day extends React.PureComponent<DayProps, {}> {
 
         let isCurrentDay = isSameDay(this.props.day, new Date());
         let secondPartClassName = classNames({
-            'day-text-current': isCurrentDay,
-            'day-text': true
+            [classes.dayTextCurrent]: isCurrentDay,
+            [classes.dayText]: true
         });
 
         return (
-            <div className="day" style={styles} key={this.props.day.toString()}>
-                <span className="day-text">
+            <div className={classes.day} style={styles} key={this.props.day.toString()}>
+                <span className={classes.dayText}>
                     {firstPartOfDay}
                 </span>
                 <span className={secondPartClassName}>
                     {secondPartOfDay}
                 </span>
-                <div className="hours">
+                <div className={classes.hours}>
                     {hours}
                 </div>
             </div>

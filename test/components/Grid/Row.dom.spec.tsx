@@ -9,6 +9,8 @@ import { KeyConsts } from '../../../sources/utils';
 import { Row, TextColumn } from '../../../sources';
 import { TextColumnProps } from '../../../sources/components/Grid/Columns/TextColumn/TextColumnProps';
 
+import * as classes from '../../../sources/styles/grid.css';
+
 const expect = chai.expect;
 chai.use(chaiSpies);
 
@@ -105,7 +107,7 @@ describe('DOM: Row', () => {
             div);
         expect(document.activeElement).to.exist;
         expect(document.activeElement.tagName).equals('DIV');
-        expect(document.activeElement.className).equals('cell-wrapper');
+        expect(document.activeElement.className).equals(classes.cellWrapper);
     });
 
     it('should fire onMove event by keyboard "arrow right"', () => {
@@ -135,7 +137,7 @@ describe('DOM: Row', () => {
             div);
         let firstCell = document.activeElement;
         expect(firstCell.tagName).equals('DIV');
-        expect(firstCell.className).equals('cell-wrapper');
+        expect(firstCell.className).equals(classes.cellWrapper);
 
         simulateKeyDown(firstCell, KeyConsts.ARROW_RIGHT);
         simulateKeyUp(firstCell, KeyConsts.ARROW_RIGHT);

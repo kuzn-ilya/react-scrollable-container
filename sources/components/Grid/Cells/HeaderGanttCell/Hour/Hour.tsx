@@ -2,6 +2,8 @@ import * as React from 'react';
 
 import { HourProps } from './HourProps';
 
+import * as classes from '../../../../../styles/shift.css';
+
 export class Hour extends React.PureComponent<HourProps, {}> {
     public render(): JSX.Element {
         let styles = {
@@ -10,7 +12,7 @@ export class Hour extends React.PureComponent<HourProps, {}> {
         };
 
         return (
-            <div className="hour" style={styles} key={this.props.hour}>
+            <div className={classes.hour} style={styles} key={this.props.hour}>
                 {this.props.hour}
             </div>
         );

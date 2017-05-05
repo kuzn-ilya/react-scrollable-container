@@ -12,6 +12,7 @@ import { Layout, LayoutPanel } from '../../Layout';
 import { classNames, Direction } from '../../../utils';
 
 import * as emptyFunction from 'fbjs/lib/emptyFunction';
+import * as classes from '../../../styles/common.css';
 
 export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGroupState> {
     static propTypes = columnGroupPropTypes;
@@ -195,7 +196,7 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
             <Layout height="100%"
                 width={this.props.width}
                 className={classNames({
-                    'right-shadow': Boolean(this.props.showRightShadow)
+                    [classes.rightShadow]: Boolean(this.props.showRightShadow)
                 })}
                 onResize={this.handleResize}
                 ref={(ref: Layout) => this.ref = ref}

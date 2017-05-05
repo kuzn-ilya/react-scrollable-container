@@ -14,8 +14,7 @@ import { range, classNames, Edge, getOppositeEdge, isHorizontal, listenToResize 
 
 import * as sprintf from 'fbjs/lib/sprintf';
 
-import '../../../styles/layout.css';
-import '../../../styles/common.css';
+import * as classes from '../../../styles/layout.css';
 
 export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
 
@@ -183,7 +182,9 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
     }
 
     componentWillReceiveProps(nextProps: { children?: React.ReactNode }): void {
-        this.setState(this.calculateState(nextProps));
+        if (this.props.children !== nextProps.children) {
+            this.setState(this.calculateState(nextProps));
+        }
     }
 
     componentDidMount(): void {
@@ -243,14 +244,14 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
             return child;
         });
 
+        this.updateStyle();
+        let className = classNames(classes.layoutContainer, this.props.className);
+
         let component = (
             <div
-                className={classNames('layout-container', this.props.className)}
-                style={{
-                    height: this.props.height,
-                    width: this.props.width
-                }}
-                ref={(ref: HTMLDivElement) => this.ref = ref}
+                className={className}
+                style={this.style}
+                ref={this.setRef}
             >
                 {children}
             </div>
@@ -258,7 +259,22 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
 
         return component;
     }
+
+    private setRef = (ref: HTMLDivElement): void => {
+        this.ref = ref;
+    }
+
+    private style: React.CSSProperties;
+    private updateStyle(): void {
+        if (!this.style || this.style.height !== this.props.height || this.style.width !== this.props.width) {
+            this.style = {
+                height: this.props.height,
+                width: this.props.width
+            };
+        }
+    }
 }
+
 
 function isPanelPreviousForSplitter(sibling: LayoutChildState, splitter: LayoutSplitterChildState): boolean {
     // Only panel can be previous sibling of splitter

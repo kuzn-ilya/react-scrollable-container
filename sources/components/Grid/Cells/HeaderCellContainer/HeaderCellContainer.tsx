@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { HeaderCellContainerProps, headerCellContainerPropTypes } from './HeaderCellContainerProps';
 
-import '../../../../styles/grid.css';
+import * as classes from '../../../../styles/grid.css';
 
 export class HeaderCellContainer extends React.PureComponent<HeaderCellContainerProps, {}> {
     static propTypes = headerCellContainerPropTypes;
@@ -13,8 +13,8 @@ export class HeaderCellContainer extends React.PureComponent<HeaderCellContainer
         };
 
         return (
-            <div style={style} className="header-cell-container">
-                <div className={this.props.firstCell ? 'header-cell-first' : 'header-cell'}>
+            <div style={style} className={classes.headerCellContainer}>
+                <div className={this.props.firstCell ? classes.headerCellFirst : classes.headerCell}>
                     {this.props.children}
                 </div>
             </div>

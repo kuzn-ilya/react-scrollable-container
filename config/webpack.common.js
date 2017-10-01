@@ -10,14 +10,6 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.tsx?$/,
-                loader: 'awesome-typescript-loader?' + JSON.stringify({
-                    sourceMap: false,
-                    inlineSourceMap: true
-                }),
-                exclude: ["node_modules"]
-            },
-            {
                 test: /\.(jpe?g|png|gif|svg)$/i,
                 loaders: [
                     'file-loader'

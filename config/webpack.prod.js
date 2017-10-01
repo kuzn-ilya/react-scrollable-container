@@ -37,6 +37,14 @@ var config = merge.smart(common, {
     module: {
         rules: [
             {
+                test: /\.tsx?$/,
+                loader: 'awesome-typescript-loader?' + JSON.stringify({
+                    sourceMap: false,
+                    inlineSourceMap: true
+                }),
+                exclude: ["node_modules"]
+            },
+            {
                 test: /\.css$/,
                 use: ExtractTextPlugin.extract({
                     fallback: 'style-loader',

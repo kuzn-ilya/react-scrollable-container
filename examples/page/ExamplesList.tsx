@@ -12,7 +12,7 @@ interface ExamplesListState {
 }
 
 export class ExamplesList extends React.PureComponent<ExamplesListProps, ExamplesListState> {
-    constructor(props?: {}) {
+    constructor(props?: ExamplesListProps) {
         super(props);
         this.handleLinkClickArray = this.props.examples.map((example: Example, index: number) =>
             this.handleLinkClick.bind(this, index)

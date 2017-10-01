@@ -9,7 +9,7 @@ export class CellContainer<V> extends React.PureComponent<CellContainerProps<V>,
     static propTypes = cellContainerPropTypes;
 
     componentDidMount(): void {
-        if (this.props.columnProps.readonly && this.props.focused) {
+        if (this.props.columnProps.readonly && this.props.focused && this.ref) {
             this.ref.focus();
         }
     }
@@ -92,7 +92,7 @@ export class CellContainer<V> extends React.PureComponent<CellContainerProps<V>,
         }
     }
 
-    private ref: HTMLDivElement;
+    private ref: HTMLDivElement | null;
 
     render(): JSX.Element {
         let style: React.CSSProperties = {

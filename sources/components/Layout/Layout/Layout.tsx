@@ -205,7 +205,7 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
             if (childState) {
                 switch (childState.type) {
                     case 'panel':
-                        let panelProps = (child as React.ReactElement<LayoutPanelProps>).props;
+                        let panelProps = (child as React.ReactElement<LayoutPanelProps & {children: React.ReactChildren}>).props;
                         return (
                             <Internal.LayoutPanel
                                 key={index}

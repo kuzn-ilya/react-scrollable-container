@@ -1,5 +1,5 @@
 import * as ReactDOM from 'react-dom';
-import * as TestUtils from 'react-addons-test-utils';
+import * as TestUtils from 'react-dom/test-utils';
 import { KeyConsts } from '../sources/utils';
 
 export function renderIntoDocument<P, S, T extends React.Component<P, S>>(element: React.ReactElement<P>): T {

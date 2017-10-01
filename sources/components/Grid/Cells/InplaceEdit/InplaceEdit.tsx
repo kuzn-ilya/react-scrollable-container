@@ -8,7 +8,7 @@ import * as classes from '../../../../styles/grid.css';
 export class InplaceEdit extends React.PureComponent<InplaceEditProps, InplaceEditState> {
     static propTypes = inplaceEditPropTypes;
 
-    private ref: HTMLInputElement;
+    private ref: HTMLInputElement | null;
 
     constructor(props: InplaceEditProps) {
         super(props);

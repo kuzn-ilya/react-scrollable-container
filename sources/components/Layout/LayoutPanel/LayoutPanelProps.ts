@@ -12,7 +12,6 @@ export interface LayoutPanelProps {
     readonly showBottomShadow?: boolean;
     readonly showRightShadow?: boolean;
     readonly width?: number;
-    readonly children?: React.ReactChildren;
 }
 
 export const layoutPanelPropTypes: ValidationMap<LayoutPanelProps> = {

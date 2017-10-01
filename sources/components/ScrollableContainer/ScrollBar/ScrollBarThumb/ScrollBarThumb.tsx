@@ -25,7 +25,7 @@ export class ScrollBarThumb extends React.PureComponent<ScrollBarThumbProps, Scr
         };
     }
 
-    private ref: HTMLDivElement;
+    private ref: HTMLDivElement | null;
     private startPosition: number = 0;
     private mouseCapture?: MouseCapture = undefined;
 

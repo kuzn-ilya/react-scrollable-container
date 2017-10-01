@@ -56,7 +56,6 @@ export const columnGroupPropTypes: ValidationMap<ColumnGroupProps> = {
     headerRowClass: PropTypes.any.isRequired,
 
     onCellChange: PropTypes.func,
-    onCellFocus: PropTypes.func,
     onHorizontalScrollVisibilityChanged: PropTypes.func,
     onResize: PropTypes.func,
     onRowClick: PropTypes.func,
@@ -71,7 +70,6 @@ export const columnGroupPropTypes: ValidationMap<ColumnGroupProps> = {
 
     rowData: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
     rowHeight: PropTypes.number.isRequired,
-    scrollLeft: PropTypes.number,
     scrollTop: PropTypes.number,
     selectedRowIndexes: PropTypes.arrayOf(PropTypes.number),
     showEdgeForTheLeftCell: PropTypes.bool,

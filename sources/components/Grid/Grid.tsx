@@ -127,7 +127,7 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
 
     fixedColumnGroup: ColumnGroup;
     scrollableColumnGroup: ColumnGroup;
-    ref: Layout;
+    ref: Layout | null;
 
     render(): JSX.Element {
         return (

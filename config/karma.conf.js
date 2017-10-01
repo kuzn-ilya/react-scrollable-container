@@ -4,7 +4,7 @@ module.exports = function (config) {
   config.set({
     basePath: '',
 
-    frameworks: ['mocha', 'chai', 'source-map-support'],
+    frameworks: ['mocha', 'chai', 'source-map-support', 'es6-shim'],
 
     files: [
       './test/**/*.spec.ts',

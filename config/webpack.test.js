@@ -8,15 +8,15 @@ var cssVars = require('../sources/stubs/cssVars.js');
 var config = merge.smart(common, {
     devtool: 'inline-source-map',
 
-    // Externals are necessary for working karma.
-    externals: {
-        'react/addons': 'addons',
-        'react/lib/ExecutionEnvironment': 'ExecutionEnvironment',
-        'react/lib/ReactContext': 'ReactContext',
+    entry: {
+        libs: [
+            "react",
+            "react-dom"
+        ]
     },
 
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.json$/,
                 loader: 'json-loader'
@@ -29,10 +29,9 @@ var config = merge.smart(common, {
                     path.join(__dirname, 'cssLoader.js?') + JSON.stringify(cssVars.CSS_ALL_VARS)
                 ],
                 exclude: ["node_modules"]
-            }
-        ],
-        postLoaders: [
+            },
             {
+                enforce: 'post',
                 test: /\.tsx?$/,
                 loader: 'istanbul-instrumenter-loader',
                 exclude: [

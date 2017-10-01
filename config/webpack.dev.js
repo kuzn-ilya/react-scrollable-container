@@ -50,7 +50,7 @@ var config = merge.smart(common,
         ]
     },
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.tsx?$/,
                 loader: "react-hot-loader/webpack!awesome-typescript-loader?" + JSON.stringify({

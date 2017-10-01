@@ -3,12 +3,12 @@ var path = require('path');
 
 module.exports = {
     resolve: {
-        extensions: ['', '.js', '.ts', '.tsx', '.css', '.less', '.html'],
-        modulesDirectories: ['node_modules', 'sources']
+        extensions: ['.js', '.ts', '.tsx', '.css', '.less', '.html'],
+        modules: ['node_modules', 'sources']
     },
 
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.tsx?$/,
                 loader: 'awesome-typescript-loader?' + JSON.stringify({

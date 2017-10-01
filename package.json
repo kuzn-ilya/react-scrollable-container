@@ -51,7 +51,7 @@
     "css-loader": "0.25.0",
     "ejs-loader": "^0.3.0",
     "expose-loader": "^0.7.3",
-    "extract-text-webpack-plugin": "^1.0.1",
+    "extract-text-webpack-plugin": "3.0.0",
     "file-loader": "^0.9.0",
     "glob": "^7.1.1",
     "html-webpack-plugin": "^2.28.0",
@@ -83,8 +83,8 @@
     "tslint": "^3.15.1",
     "typescript": "2.3.2",
     "ua-parser-js": "^0.7.12",
-    "webpack": "^1.15.0",
-    "webpack-dev-server": "^1.16.5",
+    "webpack": "3.6.0",
+    "webpack-dev-server": "2.9.1",
     "webpack-merge": "^0.15.0",
     "yamlparser": "0.0.2"
   }

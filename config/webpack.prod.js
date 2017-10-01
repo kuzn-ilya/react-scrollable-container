@@ -11,7 +11,7 @@ var config = merge.smart(common, {
     output: {
         library: 'ReactScrollable',
         libraryTarget: 'umd',
-        path: 'build',
+        path: path.join(__dirname, '../build'),
         filename: '[name].js',
     },
 
@@ -35,13 +35,16 @@ var config = merge.smart(common, {
     },
 
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.css$/,
-                loader: ExtractTextPlugin.extract(
-                    'style-loader',
-                    'css-loader?modules=true&camelCase=true&localIdentName=[local]!' + path.join(__dirname, 'cssLoader.js?') + JSON.stringify(cssVars.CSS_ALL_VARS)
-                )
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: [
+                        'css-loader?modules=true&camelCase=true&localIdentName=[local]',
+                        path.join(__dirname, 'cssLoader.js?') + JSON.stringify(cssVars.CSS_ALL_VARS)
+                    ]
+                })
             }
         ]
     },

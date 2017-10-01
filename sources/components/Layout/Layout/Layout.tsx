@@ -275,7 +275,6 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
     }
 }
 
-
 function isPanelPreviousForSplitter(sibling: LayoutChildState, splitter: LayoutSplitterChildState): boolean {
     // Only panel can be previous sibling of splitter
     if (isPanel(sibling)) {

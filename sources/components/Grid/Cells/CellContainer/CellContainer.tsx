@@ -106,7 +106,6 @@ export class CellContainer<V> extends React.PureComponent<CellContainerProps<V>,
         let Cell = this.props.columnProps.cellClass!;
 
         let isEditing = this.props.focused && !this.props.columnProps.readonly;
-        debugger;
         let innerComponent = isEditing
             ?
             <div

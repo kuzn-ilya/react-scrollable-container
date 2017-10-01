@@ -18,7 +18,7 @@ export class TransformableContainer extends React.PureComponent<TransformableCon
         super(props);
     }
 
-    componentWillReceiveProps(nextProps: TransformableContainerProps) {
+    componentWillReceiveProps(nextProps: TransformableContainerProps): void {
         if (this.props.onScrollPosChanged
             && (nextProps.scrollLeft !== this.props.scrollLeft || nextProps.scrollTop !== this.props.scrollTop)) {
             this.props.onScrollPosChanged(nextProps.scrollLeft || 0, nextProps.scrollTop || 0);

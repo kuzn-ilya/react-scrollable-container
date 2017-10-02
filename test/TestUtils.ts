@@ -51,8 +51,8 @@ const keyCodeToKey: { [keyCode: number]: string} = {
     [KeyConsts.ARROW_DOWN]: 'ArrowDown',
     [KeyConsts.ARROW_UP]: 'ArrowUp',
     [KeyConsts.ARROW_LEFT]: 'ArrowLeft',
-    [KeyConsts.ARROW_RIGHT]: 'ArrowRight',
-}
+    [KeyConsts.ARROW_RIGHT]: 'ArrowRight'
+};
 
 // See https://github.com/ariya/phantomjs/commit/cab2635e66d74b7e665c44400b8b20a8f225153a for details
 const keyCodeToPhantomJSKey: { [keyCode: number]: number} = {
@@ -60,7 +60,7 @@ const keyCodeToPhantomJSKey: { [keyCode: number]: number} = {
     [KeyConsts.ARROW_UP]: 16777235,
     [KeyConsts.ARROW_LEFT]: 16777234,
     [KeyConsts.ARROW_RIGHT]: 16777236
-}
+};
 
 function simulateKeyEvent(element: Element, type: 'keyup' | 'keydown'| 'keypress', keyCode: KeyConsts): void {
     // tslint:disable-next-line:no-any
@@ -96,14 +96,14 @@ function simulateKeyEvent(element: Element, type: 'keyup' | 'keydown'| 'keypress
     }
 }
 
-export function simulateKeyDown(element: Element, keyCode: KeyConsts) {
+export function simulateKeyDown(element: Element, keyCode: KeyConsts): void {
     simulateKeyEvent(element, 'keydown', keyCode);
 }
 
-export function simulateKeyUp(element: Element, keyCode: KeyConsts) {
+export function simulateKeyUp(element: Element, keyCode: KeyConsts): void {
     simulateKeyEvent(element, 'keyup', keyCode);
 }
 
-export function simulateKeyPress(element: Element, keyCode: KeyConsts) {
+export function simulateKeyPress(element: Element, keyCode: KeyConsts): void {
     simulateKeyEvent(element, 'keypress', keyCode);
 }

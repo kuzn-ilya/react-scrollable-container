@@ -31,7 +31,7 @@ const GridComp = (props: {multiSelectRows?: boolean, customScrollBar?: boolean})
         <TextColumn caption="department" propName="department" width={250} />
         <TextColumn caption="currency" propName="currency" width={150} />
     </Grid>
-)
+);
 
 storiesOf('Grid', module)
     .add('default', () => <GridComp />)

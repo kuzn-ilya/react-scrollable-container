@@ -49,7 +49,7 @@ describe('DOM: Row', () => {
     it('should render TextCell', () => {
         let columnProps = List<TextColumnProps>([
             <TextColumn propName="first" width={30} />,
-            <TextColumn propName="second" width={50} />,
+            <TextColumn propName="second" width={50} />
         ].map((value) => value.props));
 
         ReactDOM.render(
@@ -88,7 +88,7 @@ describe('DOM: Row', () => {
     it('should focus focused TextCell', () => {
         let columnProps = List<TextColumnProps>([
             <TextColumn readonly propName="first" width={30} />,
-            <TextColumn propName="second" width={50} />,
+            <TextColumn propName="second" width={50} />
         ].map((value) => value.props));
 
         ReactDOM.render(
@@ -114,7 +114,7 @@ describe('DOM: Row', () => {
         // TODO: Not Implemented yet
         let columnProps = List<TextColumnProps>([
             <TextColumn readonly propName="first" width={30} />,
-            <TextColumn readonly propName="second" width={50} />,
+            <TextColumn readonly propName="second" width={50} />
         ].map((value) => value.props));
 
         let handleMove = (direction: string, rowIndex: number, propName: string): void => void 0;

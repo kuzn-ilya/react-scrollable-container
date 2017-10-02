@@ -31,4 +31,3 @@ const LayoutExample = () => (
 storiesOf('Layout', module).add('default', () =>
     <LayoutExample />
 );
-

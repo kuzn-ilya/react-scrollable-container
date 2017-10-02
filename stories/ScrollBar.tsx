@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
-import { action } from '@storybook/addon-actions'
+import { action } from '@storybook/addon-actions';
 import { ScrollBar } from '../sources/components';
 
 interface CompProps {
@@ -25,11 +25,11 @@ const ScrollBarExample = ({orientation, onScroll, showButtons = true}: CompProps
 
 storiesOf('ScrollBar', module)
     .add('vertical', () => (
-        <ScrollBarExample orientation='vertical' onScroll={action('scroll')} />
+        <ScrollBarExample orientation="vertical" onScroll={action('scroll')} />
     ))
     .add('horizontal', () => (
-        <ScrollBarExample orientation='horizontal' onScroll={action('scroll')} />
+        <ScrollBarExample orientation="horizontal" onScroll={action('scroll')} />
     ))
     .add('hide buttons', () => (
-        <ScrollBarExample orientation='horizontal' onScroll={action('scroll')} showButtons={false} />
+        <ScrollBarExample orientation="horizontal" onScroll={action('scroll')} showButtons={false} />
     ));

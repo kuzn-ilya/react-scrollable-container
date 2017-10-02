@@ -5,10 +5,7 @@ var common = require('./webpack.common.js');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var path = require('path');
 
-var cssVars1 = require('../sources/stubs/cssVars.js');
-var cssVars2 = require('../examples/page/cssVars.js');
-
-var cssVars = merge(cssVars1, cssVars2);
+var cssVars = require('../sources/stubs/cssVars.js');
 
 var config = merge.smart(common, 
 {

@@ -13,10 +13,11 @@
     "test:chrome": "karma start --browsers Chrome",
     "test:ie": "karma start --browsers IE",
     "test:all": "karma start --browsers PhantomJSCustom,Chrome,IE",
-    "examples": "webpack-dev-server --config ./config/webpack.dev.js",
     "storybook": "start-storybook -p 6006 -c .storybook",
     "test": "npm run test:karma && npm run test:coverage",
-    "tslint": "tslint sources/**/*.ts{,x}"
+    "tslint": "tslint sources/**/*.ts{,x}",
+    "tslint:stories": "tslint stories/**/*.ts{,x}",
+    "tslint:test": "tslint test/**/*.ts{,x}"
   },
   "repository": {
     "type": "git",

@@ -19,17 +19,32 @@ var config = merge.smart(common,
         rules: [
             {
                 test: /\.tsx?$/,
-                loader: "react-hot-loader/webpack!awesome-typescript-loader?" + JSON.stringify({
-                    forkChecker: true
-                }),
+                use: [
+                    'react-hot-loader/webpack',
+                    {
+                        loader: 'awesome-typescript-loader',
+                        options: {
+                            forkChecker: true
+                        }
+                    }
+                ],
                 exclude: [/node_modules/]
             },
             {
                 test: /\.css$/,
-                loaders: [
+                use: [
                     'style-loader', 
-                    'css-loader?modules=true&camelCase=true&localIdentName=[local]',
-                    path.join(__dirname, 'cssLoader.js?') + JSON.stringify(cssVars.CSS_ALL_VARS)
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            modules: true,
+                            camelCase: true,
+                            localIdentName: '[local]'
+                        }
+                    }, {
+                        loader: path.join(__dirname, 'cssLoader.js'),
+                        options: cssVars.CSS_ALL_VARS
+                    }
                 ],
                 exclude: ["node_modules"]
             }

@@ -38,10 +38,13 @@ var config = merge.smart(common, {
         rules: [
             {
                 test: /\.tsx?$/,
-                loader: 'awesome-typescript-loader?' + JSON.stringify({
-                    sourceMap: false,
-                    inlineSourceMap: true
-                }),
+                use: {
+                    loader: 'awesome-typescript-loader',
+                    options: {
+                        sourceMap: false,
+                        inlineSourceMap: true
+                    }
+                },
                 exclude: ["node_modules"]
             },
             {
@@ -49,8 +52,17 @@ var config = merge.smart(common, {
                 use: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
                     use: [
-                        'css-loader?modules=true&camelCase=true&localIdentName=[local]',
-                        path.join(__dirname, 'cssLoader.js?') + JSON.stringify(cssVars.CSS_ALL_VARS)
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                modules: true,
+                                camelCase: true,
+                                localIdentName: '[local]'
+                            }
+                        }, {
+                            loader: path.join(__dirname, 'cssLoader.js'),
+                            options: cssVars.CSS_ALL_VARS
+                        }
                     ]
                 })
             }

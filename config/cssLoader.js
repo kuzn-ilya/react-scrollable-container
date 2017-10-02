@@ -5,7 +5,9 @@ var postCssAdvancedVariables = require('postcss-advanced-variables');
 var autoPrefixer = require('autoprefixer');
 
 module.exports = function(content) {
-    var variables = JSON.parse(this.query.substring(1));
+    var variables = typeof this.query === 'string'
+      ? JSON.parse(this.query.substring(1))
+      : this.query;
 
     if (this && this.cacheable) {
       // Webpack specific call

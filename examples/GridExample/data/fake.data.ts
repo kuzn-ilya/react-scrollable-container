@@ -1,4 +1,4 @@
-import { Data } from './Data';
+import { Data } from './data';
 
 /* tslint:disable:object-literal-sort-keys */
 

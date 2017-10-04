@@ -181,7 +181,7 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
         return result;
     }
 
-    componentWillReceiveProps(nextProps: { children?: React.ReactNode }): void {
+    componentWillReceiveProps(nextProps: LayoutProps & { children?: React.ReactNode }): void {
         if (this.props.children !== nextProps.children) {
             this.setState(this.calculateState(nextProps));
         }
@@ -397,6 +397,9 @@ function calculateChildState(child: React.ReactChild, newPositions: Positions): 
 }
 
 function cloneLayoutChildState(state: LayoutChildState): LayoutChildState {
+    if (state === undefined) {
+        return undefined;
+    }
     let result = { ...state };
     return result;
 }

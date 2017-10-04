@@ -28,7 +28,8 @@ export class HeaderRow extends React.PureComponent<HeaderRowProps, {}> {
                 >
                     <HeaderCell
                         caption={value.caption}
-                        columnProps={value}/>
+                        columnProps={value}
+                    />
                 </ HeaderCellContainer>
             );
         });

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { List } from 'immutable';
-import * as objectAssign from 'object-assign';
 
 import { ColumnGroupProps, columnGroupPropTypes } from './ColumnGroupProps';
 import { ColumnGroupState } from './ColumnGroupState';
@@ -25,11 +24,12 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
 
     constructor(props?: ColumnGroupProps) {
         super(props);
-        this.state = objectAssign({}, this.calculateColumnState(this.props.columnProps, 0), {
+        this.state = {
+            ...this.calculateColumnState(this.props.columnProps, 0),
             scrollLeft: 0,
             scrollTop: 0,
             selectedIndexes: []
-        }) as ColumnGroupState;
+        } as ColumnGroupState;
     }
 
     componentWillReceiveProps(nextProps: ColumnGroupProps): void {
@@ -78,7 +78,7 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
             width = refDom.offsetWidth;
             if (columnsWidth < width - vertScrollWidth) {
                 let lastColumnProps = props.last();
-                let newLastcolumnProps = objectAssign({}, lastColumnProps);
+                let newLastcolumnProps = {...lastColumnProps};
 
                 newLastcolumnProps.width = width - columnsWidth + newLastcolumnProps.width - vertScrollWidth;
                 columnsWidth = width - vertScrollWidth;
@@ -149,7 +149,6 @@ export class ColumnGroup extends React.PureComponent<ColumnGroupProps, ColumnGro
         }
     }
 
-    // tslint:disable-next-line:no-any
     handleCellFocus = (rowIndex: number, propName: string, target: React.ReactInstance): void => {
         this.setState({
             scrollToElement: target

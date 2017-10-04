@@ -1,6 +1,5 @@
 import * as PropTypes from 'prop-types';
 import { ValidationMap } from '../../../../react';
-import * as objectAssign from 'object-assign';
 import { GanttCellModel } from '../../../../utils';
 
 import { ColumnProps, columnPropTypes } from '../Column/ColumnProps';
@@ -12,9 +11,10 @@ export interface GanttColumnProps extends ColumnProps<Array<GanttCellModel>> {
     endDate: Date;
 }
 
-export const ganttColumnPropTypes: ValidationMap<GanttColumnProps> = objectAssign({}, columnPropTypes, {
+export const ganttColumnPropTypes: ValidationMap<GanttColumnProps> = {
+    ...columnPropTypes,
     endDate: PropTypes.object.isRequired,
     startDate: PropTypes.object.isRequired,
     zoomEndDate: PropTypes.object.isRequired,
     zoomStartDate: PropTypes.object.isRequired
-});
+};

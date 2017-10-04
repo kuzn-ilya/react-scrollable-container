@@ -52,7 +52,6 @@ export class Rows extends React.PureComponent<RowsProps, {}> {
         this.props.onCellSelect!(rowIndex, propName);
     }
 
-    // tslint:disable-next-line:no-any
     render(): JSX.Element {
         // tslint:disable-next-line:variable-name
         let Row = this.props.rowClass;

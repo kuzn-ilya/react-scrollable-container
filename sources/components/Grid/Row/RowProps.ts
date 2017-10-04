@@ -16,7 +16,6 @@ export interface RowProps {
     height: number;
     selected: boolean;
     showEdgeForTheLeftCell?: boolean;
-    // tslint:disable-next-line:no-any
     onCellFocus?: (rowIndex: number, propName: string, target: ReactInstance) => void;
     // tslint:disable-next-line:no-any
     onCellChange?: (rowIndex: number, propName: string, newValue: any) => void;

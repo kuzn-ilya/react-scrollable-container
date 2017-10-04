@@ -3,18 +3,16 @@ import { FocusEvent } from 'react';
 import { ValidationMap } from '../../../../react';
 import { Direction } from '../../../../utils';
 
-export interface InplaceEditProps {
-    // TODO: get rid of any type
-    // tslint:disable-next-line:no-any
-    value?: any;
+export interface InplaceEditProps<V> {
+    value?: V;
     onBlur?: (e: FocusEvent<HTMLInputElement>) => void;
     onFocus?: (e: FocusEvent<HTMLInputElement>) => void;
     onMove?: (direction: Direction) => void;
-    // tslint:disable-next-line:no-any
-    onChange?: (newValue: any) => void;
+    onChange?: (newValue: V) => void;
 }
 
-export const inplaceEditPropTypes: ValidationMap<InplaceEditProps> = {
+// tslint:disable-next-line:no-any
+export const inplaceEditPropTypes: ValidationMap<InplaceEditProps<any>> = {
     onBlur: PropTypes.func,
     onChange: PropTypes.func,
     onFocus: PropTypes.func,

@@ -44,7 +44,7 @@ export class GanttCell extends React.PureComponent<CellProps<GanttColumnProps, A
                     entity={entity}
                 />
             );
-        }) as List<JSX.Element>;
+        }).toList();
 
         return (
             <div style={{height: '100%', width: '100%'}}>

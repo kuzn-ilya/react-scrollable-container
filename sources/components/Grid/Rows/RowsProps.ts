@@ -10,7 +10,6 @@ import { RowProps } from '../Row/RowProps';
 export interface RowsProps {
     // tslint:disable-next-line:no-any
     columnProps: List<ColumnProps<any>>;
-    // tslint:disable-next-line:no-any
     selectedIndexes: number[];
     focusedCellPropName?: string;
     focusedCellRowIndex?: number;

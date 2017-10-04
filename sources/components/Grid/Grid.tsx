@@ -1,7 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { List } from 'immutable';
-import * as objectAssign from 'object-assign';
 
 import { GridProps, gridPropTypes } from './GridProps';
 import { GridState } from './GridState';
@@ -28,9 +27,10 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
     constructor(props?: GridProps) {
         super(props);
 
-        this.state = objectAssign({}, {
-            selectedRowIndexes: this.props.selectedRowIndexes
-        }, this.calculateState());
+        this.state = {
+            selectedRowIndexes: this.props.selectedRowIndexes,
+            ...this.calculateState()
+        };
     }
 
     componentWillReceiveProps(nextProps: GridProps): void {
@@ -204,7 +204,7 @@ export class Grid extends React.PureComponent<GridProps, GridState> {
             let layoutDom = ReactDOM.findDOMNode(this.ref);
             let scrollableColumnGroupDom = ReactDOM.findDOMNode(this.scrollableColumnGroup);
             // tslint:disable-next-line:no-any
-            let lastFixedColumn: ColumnProps<any> = objectAssign({}, this.state.fixedColumns!.last());
+            let lastFixedColumn: ColumnProps<any> = {...this.state.fixedColumns!.last()};
             let oldFixedColumnsWidth = this.state.fixedColumnsWidth || 0;
             let newFixedColumnsWidth = layoutDom.clientWidth - scrollableColumnGroupDom.clientWidth;
             lastFixedColumn.width = lastFixedColumn.width - oldFixedColumnsWidth + newFixedColumnsWidth;

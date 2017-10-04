@@ -5,12 +5,14 @@ import { InplaceEditState } from './InplaceEditState';
 
 import * as classes from '../../../../styles/grid.css';
 
-export class InplaceEdit extends React.PureComponent<InplaceEditProps, InplaceEditState> {
+// tslint:disable-next-line:no-any
+export class InplaceEdit extends React.PureComponent<InplaceEditProps<any>, InplaceEditState<any>> {
     static propTypes = inplaceEditPropTypes;
 
     private ref: HTMLInputElement | null;
 
-    constructor(props: InplaceEditProps) {
+    // tslint:disable-next-line:no-any
+    constructor(props: InplaceEditProps<any>) {
         super(props);
         this.state = {
             value: props.value
@@ -23,13 +25,15 @@ export class InplaceEdit extends React.PureComponent<InplaceEditProps, InplaceEd
         }
     }
 
-    componentDidUpdate(prevProps: InplaceEditProps, prevState: {}): void {
+    // tslint:disable-next-line:no-any
+    componentDidUpdate(prevProps: InplaceEditProps<any>, prevState: {}): void {
         if (this.ref) {
             this.ref.focus();
         }
     }
 
-    componentWillReceiveProps(nextProps: InplaceEditProps): void {
+    // tslint:disable-next-line:no-any
+    componentWillReceiveProps(nextProps: InplaceEditProps<any>): void {
         if (this.props.value !== nextProps.value) {
             this.setState({
                 value: nextProps.value
@@ -89,8 +93,7 @@ export class InplaceEdit extends React.PureComponent<InplaceEditProps, InplaceEd
                 onFocus={this.props.onFocus}
                 onKeyDown={this.handleKeyDown}
                 onChange={this.handleChange}
-            >
-            </input>
+            />
         );
     }
 }

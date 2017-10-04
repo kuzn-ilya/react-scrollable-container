@@ -13,12 +13,9 @@ export interface ColumnProps<V> {
     propName: string;
     width: number;
     readonly?: boolean;
-    // tslint:disable-next-line:no-any
     cellClass?: ComponentClass<CellProps<ColumnProps<V>, V>>;
-    // tslint:disable-next-line:no-any
     headerCellClass?: ComponentClass<HeaderCellProps<ColumnProps<V>>>;
-    // tslint:disable-next-line:no-any
-    inplaceEditClass?: ComponentClass<InplaceEditProps>;
+    inplaceEditClass?: ComponentClass<InplaceEditProps<V>>;
     cellContainerClass?: ComponentClass<CellContainerProps<V>>;
     onCellClick?: (rowIndex: number, propName: string) => void;
 }

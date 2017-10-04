@@ -12,8 +12,7 @@ export interface CellContainerProps<V> {
     columnProps: ColumnProps<V>;
     value?: V;
     onBlur?: (rowIndex: number, propName: string, e?: FocusEvent<HTMLElement>) => void;
-    // tslint:disable-next-line:no-any
-    onChange?: (rowIndex: number, propName: string, newValue: any) => void;
+    onChange?: (rowIndex: number, propName: string, newValue: V) => void;
     onClick?: (rowIndex: number, propName: string, e?: MouseEvent<HTMLElement>) => void;
     onFocus?: (rowIndex: number, propName: string, target: ReactInstance) => void;
     onMove?: (direction: Direction, rowIndex: number, propName: string) => void;

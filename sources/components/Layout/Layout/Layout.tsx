@@ -13,6 +13,7 @@ import { LayoutSplitterProps } from '../LayoutSplitter/LayoutSplitterProps';
 import { range, classNames, Edge, getOppositeEdge, isHorizontal, listenToResize } from '../../../utils';
 
 import * as sprintf from 'fbjs/lib/sprintf';
+import * as warning from 'fbjs/lib/warning';
 
 import * as classes from '../../../styles/layout.css';
 
@@ -40,7 +41,7 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
 
         let childrenStates: LayoutChildState[] = React.Children.map(props.children, (child) =>
             calculateChildState(child, newPositions)
-        );
+        ) || [];
 
         childrenStates.forEach((state, index) => {
             if (isSplitter(state)) {
@@ -200,6 +201,8 @@ export class Layout extends React.PureComponent<LayoutProps, LayoutState> {
     }
 
     render(): JSX.Element {
+        warning(React.Children.count(this.props.children) > 0, 'Layout should have one child at least');
+
         let children: React.ReactNode = React.Children.map(this.props.children, (child, index) => {
             let childState = this.state.childrenStates.get(index);
             if (childState) {

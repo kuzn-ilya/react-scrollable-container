@@ -42,18 +42,25 @@ describe('DOM: Layout', () => {
 
     it('should have children with expected heights', () => {
         ReactDOM.render(
-            <Layout
-                width={200}
-                height={200}
-            >
-                <LayoutPanel align="top" height={10} />
-                <LayoutPanel align="client" />
-            </Layout>,
+            <div style={{width: '200px', height: '200px'}}>
+                <Layout
+                    width='100%'
+                    height='100%'
+                >
+                    <LayoutPanel align="top" height={10} />
+                    <LayoutPanel align="client" />
+                </Layout>
+            </div>,
             div);
 
         expect(div.children).to.exist;
         expect(div.children.length).to.be.equal(1);
-        let container = div.children[0] as HTMLElement;
+
+        let divChildren = div.children[0] as HTMLElement;
+        expect(divChildren.children).to.exist;
+        expect(divChildren.children.length).to.be.equal(1);
+
+        let container = divChildren.children[0] as HTMLElement;
         expect(container).to.exist;
 
         expect(container.offsetWidth).to.be.equal(200);
@@ -66,32 +73,35 @@ describe('DOM: Layout', () => {
         expect(first).to.exist;
         expect(first.offsetHeight).to.be.equal(10);
 
-        // let second = container.children[1] as HTMLElement;
-        // expect(second).to.exist;
-        // expect(second.offsetHeight).to.be.equal(190);
+        let second = container.children[1] as HTMLElement;
+        expect(second).to.exist;
+        expect(second.offsetHeight).to.be.equal(190);
     });
 
     it('should have children with expected widths', () => {
         ReactDOM.render(
-            <Layout
-                width={200}
-                height={200}
-            >
-                <LayoutPanel align="left" width={10}>
-                    <div style= {{display: 'block', height: '100%', width: '100%'}}/>
-                </LayoutPanel>
-                <LayoutPanel align="client">
-                    <div style= {{display: 'block', height: '100%', width: '100%'}}/>
-                </LayoutPanel>
-            </Layout>,
+            <div style={{width: '100px', height: '200px'}}>
+                <Layout
+                    width='100%'
+                    height='100%'
+                >
+                    <LayoutPanel align="left" width={10} />
+                    <LayoutPanel align="client" />
+                </Layout>
+            </div>,
             div);
 
         expect(div.children).to.exist;
         expect(div.children.length).to.be.equal(1);
-        let container = div.children[0] as HTMLElement;
+
+        let divChildren = div.children[0] as HTMLElement;
+        expect(divChildren.children).to.exist;
+        expect(divChildren.children.length).to.be.equal(1);
+
+        let container = divChildren.children[0] as HTMLElement;
         expect(container).to.exist;
 
-        expect(container.offsetWidth).to.be.equal(200);
+        expect(container.offsetWidth).to.be.equal(100);
         expect(container.offsetHeight).to.be.equal(200);
 
         expect(container.children).to.exist;
@@ -101,14 +111,8 @@ describe('DOM: Layout', () => {
         expect(first).to.exist;
         expect(first.offsetWidth).to.be.equal(10);
 
-        expect(first.children).to.exist;
-        expect(first.children.length).to.be.equal(1);
-
         let second = container.children[1] as HTMLElement;
-        // expect(second).to.exist;
-        // expect(second.offsetWidth).to.be.equal(190);
-
-        expect(second.children).to.exist;
-        expect(second.children.length).to.be.equal(1);
+        expect(second).to.exist;
+        expect(second.offsetWidth).to.be.equal(90);
     });
 });

@@ -2,6 +2,7 @@
   display: inline-block;
   vertical-align: middle;
   overflow: auto;
+  position: relative;
 }
 
 .layout-panel {
